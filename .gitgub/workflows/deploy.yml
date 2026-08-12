@@ -30,7 +30,7 @@ jobs:
       - name: Inject Token and Build
         run: |
           echo "Injecting GitHub Token..."
-          sed -i "s/GITHUB_TOKEN_PLACEHOLDER/${{ secrets.GITHUB_TOKEN_FOR_REPORTS }}/g" config.js
+          sed -i "s/GITHUB_TOKEN_PLACEHOLDER/${{ secrets.REPORT_TOKEN }}/g" config.js
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
