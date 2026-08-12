@@ -1,0 +1,16 @@
+[
+    { "date": "2026-04-06", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Модуль. Сложение и вычитание.", "material": "students/amina/urok1.pdf", "homework": "https://alyyya5.github.io/math-lessons-repeat-6/lessons/lesson1.html" },
+    { "date": "2026-04-13", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok2.pdf", "homework": "students/amina/hw2.pdf" },
+    { "date": "2026-04-20", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok3.pdf", "homework": "students/amina/hw3.pdf" },
+    { "date": "2026-04-27", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok4.pdf", "homework": "students/amina/hw4.pdf" },
+
+    { "date": "2026-05-04", "start": "10:00", "end": "11:00", "topic": ")", "material": "students/amina/urok5.pdf", "homework": "students/amina/hw5.pdf" },
+    { "date": "2026-05-11", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok6.pdf", "homework": "students/amina/hw6.pdf" },
+    { "date": "2026-05-18", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok7.pdf", "homework": "students/amina/hw7.pdf" },
+    { "date": "2026-05-25", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok8.pdf", "homework": "students/amina/hw8.pdf" },
+
+    { "date": "2026-06-01", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok9.pdf", "homework": "students/amina/hw9.pdf" },
+    { "date": "2026-06-08", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok10.pdf", "homework": "students/amina/hw10.pdf" },
+    { "date": "2026-06-15", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok11.pdf", "homework": "students/amina/hw11.pdf" },
+    { "date": "2026-06-22", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok12.pdf", "homework": "students/amina/hw12.pdf" }
+]
