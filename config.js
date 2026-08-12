@@ -1,15 +1,13 @@
-// config.js
 // ============================================================
-//  🔑  НАСТРОЙКИ GITHUB (общие для всех страниц)
+//  🔑  НАСТРОЙКИ GITHUB
 // ============================================================
-const GITHUB_OWNER = 'alyyya5';  
-const GITHUB_REPO  = 'Personal_account'; 
-const GITHUB_TOKEN = 'GITHUB_TOKEN_PLACEHOLDER';
+const GITHUB_OWNER = 'alyyya5';
+const GITHUB_REPO  = 'Personal_account';
+const GITHUB_TOKEN = 'GITHUB_TOKEN_PLACEHOLDER';   // ← БУДЕТ ЗАМЕНЁН АВТОМАТИЧЕСКИ!
 
 // ============================================================
-//  🧠  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ (общие для всех страниц)
+//  📤  ФУНКЦИЯ ДЛЯ ОТПРАВКИ ОТЧЁТА
 // ============================================================
-
 async function createGitHubIssue(title, body) {
     const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues`;
     try {
@@ -17,7 +15,7 @@ async function createGitHubIssue(title, body) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${GITHUB_TOKEN}`
+                'Authorization': `token ${GITHUB_TOKEN}`
             },
             body: JSON.stringify({
                 title: title,
@@ -37,12 +35,13 @@ async function createGitHubIssue(title, body) {
     }
 }
 
-// Функция для нормализации ответов (сравнение без учёта пробелов и регистра)
+// ============================================================
+//  🧠  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// ============================================================
 function normalizeAnswer(str) {
     return str.trim().replace(/\s+/g, '').toLowerCase();
 }
 
-// Функция для получения параметров из URL
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
