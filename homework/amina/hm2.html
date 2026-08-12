@@ -250,7 +250,6 @@
     <h1>🏠 Домашнее задание</h1>
     <div class="subtitle">по теме «Умножение, деление, степень, подобные»</div>
 
-    <!-- Информация об ученике (подставляется из URL) -->
     <div class="info-line">
         <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
         <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
@@ -374,9 +373,7 @@
     </div>
 </div>
 
-<!-- Подключаем общий config.js -->
 <script src="/config.js"></script>
-
 <script>
     // ============================================================
     //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ
@@ -412,7 +409,6 @@
     //  КОД (не трогайте, если не уверены)
     // ============================================================
 
-    // --- Получаем параметры из URL ---
     const params = getUrlParams();
     const student = params.student;
     const date = params.date;
@@ -424,7 +420,6 @@
     document.getElementById('lessonDate').textContent = date;
     document.getElementById('lessonTopic').textContent = topic;
 
-    // --- Функции нормализации ---
     function normalize(str) {
         return str.trim().replace(/\s+/g, ' ');
     }
@@ -450,12 +445,17 @@
         return s;
     }
 
-    function normalizeMixed(str) {
-        let s = str.trim().replace(/\s+/g, ' ');
-        return s;
+    function isAnswerCorrect(id, userVal) {
+        const right = answers[id];
+        if (right.includes('/')) {
+            return normalizeFraction(userVal) === normalizeFraction(right);
+        }
+        if (!isNaN(parseFloat(right)) && isFinite(right)) {
+            return normalizeNumber(userVal) === normalizeNumber(right);
+        }
+        return normalize(userVal) === normalize(right);
     }
 
-    // --- Проверка заданий ---
     function checkLesson() {
         let total = 0;
         let correct = 0;
@@ -468,23 +468,7 @@
             total++;
             let userVal = inputEl.value;
             userAnswers[id] = userVal;
-            let ok = false;
-
-            if (right.includes('/')) {
-                let userNorm = normalizeFraction(userVal);
-                let rightNorm = normalizeFraction(right);
-                if (userNorm === rightNorm) ok = true;
-            }
-            else if (!isNaN(parseFloat(right)) && isFinite(right)) {
-                let userNum = normalizeNumber(userVal);
-                let rightNum = normalizeNumber(right);
-                if (userNum === rightNum) ok = true;
-            }
-            else {
-                let userClean = normalize(userVal);
-                let rightClean = normalize(right);
-                if (userClean === rightClean) ok = true;
-            }
+            let ok = isAnswerCorrect(id, userVal);
 
             if (ok) correct++;
             else {
@@ -515,14 +499,12 @@
         window.lastReport = report;
     }
 
-    // --- Открытие модалки отчёта ---
     document.getElementById('reportBtn').addEventListener('click', function() {
         document.getElementById('reportModal').classList.add('active');
         document.getElementById('reportComment').value = '';
         document.getElementById('modalStatus').textContent = '';
     });
 
-    // --- Закрытие модалки ---
     document.getElementById('cancelReportBtn').addEventListener('click', function() {
         document.getElementById('reportModal').classList.remove('active');
     });
@@ -530,7 +512,6 @@
         if (e.target === this) this.classList.remove('active');
     });
 
-    // --- Отправка отчёта (использует функцию createGitHubIssue из config.js) ---
     document.getElementById('sendReportBtn').addEventListener('click', async function() {
         const comment = document.getElementById('reportComment').value.trim();
         const statusDiv = document.getElementById('modalStatus');
@@ -544,12 +525,14 @@
         for (let [id, right] of Object.entries(answers)) {
             const input = document.getElementById(id);
             const userAnswer = input ? input.value.trim() : '(пусто)';
+            const isCorrect = isAnswerCorrect(id, userAnswer);
+            const statusIcon = isCorrect ? '✅' : '❌';
             const questionNum = id.replace('q', '').replace('_', '.');
-            answersText += `${questionNum}: ${userAnswer}\n`;
+            answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
         }
 
         const title = `Отчёт: ${student} — ${topic} (${date})`;
-        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Ответы ученика:**\n${answersText}\n\n**Комментарий:**\n${comment}`;
+        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
 
         const btn = this;
         btn.disabled = true;
@@ -573,7 +556,6 @@
         }
     });
 
-    // --- Очистка полей ---
     function resetFields() {
         for (let id of Object.keys(answers)) {
             let inp = document.getElementById(id);
