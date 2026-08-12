@@ -13,27 +13,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 16px;
+            padding: 16px 12px;
             color: #1a2a3a;
         }
         .container {
-            max-width: 760px;
+            max-width: 680px;
             width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
-            border-radius: 36px;
-            box-shadow: 0 20px 40px rgba(0, 20, 40, 0.08), 0 6px 16px rgba(0, 0, 0, 0.04);
-            padding: 24px 24px 28px;
+            border-radius: 28px;
+            box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+            padding: 18px 18px 22px;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #0b2a44;
-            padding-left: 16px;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             text-align: center;
-            border-left: none;
         }
 
         /* ---------- Вход по центру ---------- */
@@ -43,27 +41,27 @@
             align-items: center;
             justify-content: center;
             background: white;
-            padding: 20px 24px 24px;
-            border-radius: 32px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
+            padding: 16px 20px 20px;
+            border-radius: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
             border: 1px solid #e9eff6;
-            max-width: 380px;
+            max-width: 340px;
             margin-left: auto;
             margin-right: auto;
         }
         .login-area label {
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #1f4970;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .login-area input {
             width: 100%;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border: 2px solid #dce5ef;
-            border-radius: 30px;
-            font-size: 1rem;
+            border-radius: 24px;
+            font-size: 0.9rem;
             background: #f9fcff;
             outline: none;
             transition: 0.2s;
@@ -71,52 +69,52 @@
         }
         .login-area input:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.10);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
         }
         .login-area button {
             background: #1e4663;
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 1rem;
-            padding: 10px 30px;
-            border-radius: 30px;
+            font-size: 0.9rem;
+            padding: 8px 24px;
+            border-radius: 24px;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 10px;
+            margin-top: 8px;
             width: 100%;
         }
         .login-area button:hover { background: #0f3550; }
         .login-error {
             color: #dc2626;
-            font-size: 0.85rem;
-            margin-top: 6px;
+            font-size: 0.8rem;
+            margin-top: 4px;
         }
 
-        /* ---------- Календарь ---------- */
+        /* ---------- Календарь (ещё меньше) ---------- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 2px 0 6px;
+            margin: 0 0 4px;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 2px;
         }
         .calendar-header .month-year {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #0b2a44;
         }
         .calendar-header .nav-buttons {
             display: flex;
-            gap: 4px;
+            gap: 3px;
         }
         .calendar-header .nav-buttons button {
             background: white;
             border: 1px solid #dce5ef;
-            border-radius: 20px;
-            padding: 2px 10px;
-            font-size: 0.8rem;
+            border-radius: 16px;
+            padding: 1px 8px;
+            font-size: 0.65rem;
             font-weight: 600;
             cursor: pointer;
             color: #1f4970;
@@ -130,30 +128,30 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
+            gap: 1.5px;
             background: #f8fafc;
-            border-radius: 14px;
-            padding: 6px 4px;
+            border-radius: 10px;
+            padding: 4px 3px;
             border: 1px solid #e9eff6;
         }
         .calendar-grid .weekday {
             font-weight: 600;
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             text-align: center;
             color: #4a627a;
-            padding: 2px 0 1px;
+            padding: 1px 0 0;
             border-bottom: 1px solid #e2e8f0;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.1px;
         }
         .calendar-grid .day {
-            aspect-ratio: 1/0.8;
+            aspect-ratio: 1/0.7;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            font-size: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.5rem;
             font-weight: 500;
             background: white;
             cursor: default;
@@ -170,61 +168,61 @@
         }
         .calendar-grid .day.has-lesson:hover {
             background: #bfdbfe;
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(59,130,246,0.12);
+            transform: scale(1.04);
+            box-shadow: 0 2px 6px rgba(59,130,246,0.10);
         }
         .calendar-grid .day .dot {
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             border-radius: 50%;
             background: #3b82f6;
-            margin-top: 1px;
+            margin-top: 0;
         }
         .calendar-grid .day.today { border: 2px solid #1e4663; }
 
-        /* ---------- Список уроков ---------- */
+        /* ---------- Список уроков (компактный) ---------- */
         .lessons-list {
-            margin-top: 14px;
+            margin-top: 10px;
             background: white;
-            border-radius: 16px;
-            padding: 10px 12px 12px;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
             border: 1px solid #e9eff6;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .lessons-list h3 {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #0b2a44;
-            margin-bottom: 4px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 4px;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
         }
         .lessons-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
         }
         .lessons-table th {
             text-align: left;
-            padding: 3px 3px 2px 0;
+            padding: 2px 2px 1px 0;
             font-weight: 600;
             color: #4a627a;
             border-bottom: 1px solid #e2e8f0;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.1px;
         }
         .lessons-table td {
-            padding: 3px 3px 3px 0;
+            padding: 2px 2px 2px 0;
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
-            line-height: 1.2;
+            line-height: 1.1;
         }
         .lessons-table tr:last-child td { border-bottom: none; }
 
         .lessons-table .links-cell {
             display: flex;
-            gap: 4px;
+            gap: 3px;
             align-items: center;
             flex-wrap: nowrap;
         }
@@ -233,10 +231,10 @@
             align-items: center;
             background: #e6f0ff;
             color: #1e4a76;
-            padding: 1px 10px;
-            border-radius: 16px;
+            padding: 0 8px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             font-weight: 500;
             transition: 0.15s;
             white-space: nowrap;
@@ -248,8 +246,8 @@
         .no-lessons-msg {
             color: #6c86a3;
             font-style: italic;
-            padding: 8px 0;
-            font-size: 0.85rem;
+            padding: 6px 0;
+            font-size: 0.75rem;
         }
 
         /* ---------- Модалка ---------- */
@@ -265,28 +263,28 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 16px;
+            padding: 14px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
             background: white;
-            border-radius: 28px;
-            max-width: 340px;
+            border-radius: 24px;
+            max-width: 300px;
             width: 100%;
-            padding: 18px 20px 22px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            padding: 16px 18px 20px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
             animation: modalFade 0.2s ease-out;
             position: relative;
         }
         @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(12px) scale(0.97); }
+            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-card .close-btn {
             position: absolute;
-            top: 8px;
-            right: 12px;
-            font-size: 1.3rem;
+            top: 6px;
+            right: 10px;
+            font-size: 1.1rem;
             cursor: pointer;
             color: #7a94b0;
             background: none;
@@ -294,60 +292,52 @@
             line-height: 1;
         }
         .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
-        .modal-card .modal-date { font-size: 0.8rem; color: #4a627a; margin-bottom: 2px; }
-        .modal-card .modal-time { font-size: 1rem; font-weight: 700; color: #0b2a44; }
-        .modal-card .modal-topic { font-size: 0.9rem; font-weight: 600; margin: 4px 0 8px; color: #0f2f4a; }
+        .modal-card .modal-date { font-size: 0.7rem; color: #4a627a; margin-bottom: 2px; }
+        .modal-card .modal-time { font-size: 0.9rem; font-weight: 700; color: #0b2a44; }
+        .modal-card .modal-topic { font-size: 0.8rem; font-weight: 600; margin: 3px 0 6px; color: #0f2f4a; }
         .modal-card .modal-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
             margin-top: 2px;
         }
         .modal-card .modal-links a {
             background: #1e4663;
             color: white;
-            padding: 5px 14px;
-            border-radius: 24px;
+            padding: 4px 12px;
+            border-radius: 20px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             transition: 0.15s;
         }
         .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
         .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
         .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
 
-        /* ---------- Адаптив ---------- */
-        @media (max-width: 600px) {
-            .container { padding: 14px 12px 18px; border-radius: 24px; }
-            h1 { font-size: 1.3rem; margin-bottom: 12px; }
-            .login-area { padding: 16px 18px; max-width: 100%; }
-            .login-area input { font-size: 0.9rem; padding: 8px 14px; }
-            .login-area button { font-size: 0.9rem; padding: 8px 20px; }
-            .calendar-grid { gap: 2px; padding: 4px 3px; border-radius: 10px; }
-            .calendar-grid .day { font-size: 0.5rem; border-radius: 8px; aspect-ratio: 1/0.75; }
-            .calendar-grid .weekday { font-size: 0.4rem; padding: 1px 0; }
-            .calendar-header .month-year { font-size: 0.8rem; }
-            .calendar-header .nav-buttons button { padding: 1px 8px; font-size: 0.7rem; }
-            .lessons-list { padding: 8px 6px; margin-top: 10px; border-radius: 12px; }
-            .lessons-list h3 { font-size: 0.8rem; }
-            .lessons-table { font-size: 0.6rem; }
-            .lessons-table th, .lessons-table td { padding: 2px 2px; }
-            .lessons-table .links-cell a { font-size: 0.5rem; padding: 1px 6px; }
-            .modal-card { padding: 14px 16px; max-width: 280px; }
-            .modal-card .modal-time { font-size: 0.9rem; }
-            .modal-card .modal-topic { font-size: 0.8rem; }
-            .modal-card .modal-links a { font-size: 0.7rem; padding: 4px 12px; }
-        }
-        @media (max-width: 400px) {
-            .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; }
-            .calendar-grid .weekday { font-size: 0.35rem; }
-            .calendar-grid .day .dot { width: 3px; height: 3px; }
-            .container { padding: 10px 8px 14px; border-radius: 18px; }
-            h1 { font-size: 1.1rem; }
+        @media (max-width: 500px) {
+            .container { padding: 12px 10px 16px; border-radius: 20px; }
+            h1 { font-size: 1.1rem; margin-bottom: 10px; }
+            .login-area { padding: 12px 14px 16px; max-width: 100%; }
+            .login-area input { font-size: 0.8rem; padding: 6px 12px; }
+            .login-area button { font-size: 0.8rem; padding: 6px 16px; }
+            .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
+            .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
+            .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
+            .calendar-header .month-year { font-size: 0.65rem; }
+            .calendar-header .nav-buttons button { padding: 1px 6px; font-size: 0.55rem; }
+            .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; }
+            .lessons-list h3 { font-size: 0.7rem; }
+            .lessons-table { font-size: 0.55rem; }
+            .lessons-table th, .lessons-table td { padding: 1px 1px; }
+            .lessons-table .links-cell a { font-size: 0.4rem; padding: 0 6px; }
+            .modal-card { padding: 12px 14px 16px; max-width: 260px; }
+            .modal-card .modal-time { font-size: 0.8rem; }
+            .modal-card .modal-topic { font-size: 0.7rem; }
+            .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
         }
     </style>
 </head>
@@ -461,9 +451,7 @@
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
 
-        // Скрываем блок входа после успешного входа
         loginArea.style.display = 'none';
-
         mainContent.style.display = 'block';
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
@@ -492,7 +480,7 @@
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
-        const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+        const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
         monthYear.textContent = `${monthNames[month]} ${year}`;
         const lessonDates = new Set(lessonsData.map(item => item.date));
         const weekdays = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
@@ -561,11 +549,10 @@
         let html = `<table class="lessons-table"><thead><tr><th>Дата</th><th>День</th><th>Время</th><th>Тема</th><th>Ссылки</th></tr></thead><tbody>`;
         data.forEach(item => {
             const dateObj = item.date;
-            // Формат 06.08
             const day = String(dateObj.getDate()).padStart(2, '0');
-            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const displayDate = `${day}.${month}`;
-            const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'long' });
+            const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const displayDate = `${day}.${monthNum}`;
+            const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
             item.lessons.forEach((l, idx) => {
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
@@ -577,7 +564,7 @@
                 html += `<tr>
                     ${rowspan ? `<td rowspan="${rowspan}">${displayDate}</td><td rowspan="${rowspan}">${dayName}</td>` : ''}
                     <td>${l.start}–${l.end}</td>
-                    <td>${l.topic}</td>
+                    <td style="font-size:0.6rem;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.topic}</td>
                     <td class="links-cell">${links || '—'}</td>
                 </tr>`;
             });
