@@ -1,0 +1,26 @@
+[
+    { "date": "2026-04-10", "start": "11:30", "end": "12:30", "topic": "Отрицательные и положительные числа, модуль, сложение и вычитание.", "material": "students/valeriya/urok1.pdf", "homework": "https://unidraw.io/app/board/399732f89c2ffb58024c" },
+    { "date": "2026-04-13", "start": "11:30", "end": "12:30", "topic": "Отрицательные и положительные числа. Умножение и деление. Коэффициент. Подобные слагаемые.  ", "material": "students/valeriya/urok2.pdf", "homework": "" },
+    { "date": "2026-04-17", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok3.pdf", "homework": "" },
+    { "date": "2026-04-20", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok4.pdf", "homework": "" },
+    { "date": "2026-04-24", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok5.pdf", "homework": "" },
+    { "date": "2026-04-27", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok6.pdf", "homework": "" },
+
+    { "date": "2026-05-04", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok9.pdf", "homework": "students/valeriya/hw9.pdf" },
+    { "date": "2026-05-07", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok10.pdf", "homework": "students/valeriya/hw10.pdf" },
+    { "date": "2026-05-11", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok11.pdf", "homework": "students/valeriya/hw11.pdf" },
+    { "date": "2026-05-14", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok12.pdf", "homework": "students/valeriya/hw12.pdf" },
+    { "date": "2026-05-18", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok13.pdf", "homework": "students/valeriya/hw13.pdf" },
+    { "date": "2026-05-21", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok14.pdf", "homework": "students/valeriya/hw14.pdf" },
+    { "date": "2026-05-25", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok15.pdf", "homework": "students/valeriya/hw15.pdf" },
+    { "date": "2026-05-28", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok16.pdf", "homework": "students/valeriya/hw16.pdf" },
+
+    { "date": "2026-06-01", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok17.pdf", "homework": "students/valeriya/hw17.pdf" },
+    { "date": "2026-06-04", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok18.pdf", "homework": "students/valeriya/hw18.pdf" },
+    { "date": "2026-06-08", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok19.pdf", "homework": "students/valeriya/hw19.pdf" },
+    { "date": "2026-06-11", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok20.pdf", "homework": "students/valeriya/hw20.pdf" },
+    { "date": "2026-06-15", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok21.pdf", "homework": "students/valeriya/hw21.pdf" },
+    { "date": "2026-06-18", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok22.pdf", "homework": "students/valeriya/hw22.pdf" },
+    { "date": "2026-06-22", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok23.pdf", "homework": "students/valeriya/hw23.pdf" },
+    { "date": "2026-06-25", "start": "11:30", "end": "12:30", "topic": "", "material": "students/valeriya/urok24.pdf", "homework": "students/valeriya/hw24.pdf" }
+]
