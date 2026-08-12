@@ -30,7 +30,6 @@
             font-size: 1.6rem;
             font-weight: 700;
             color: #0b2a44;
-            border-left: 6px solid #3b82f6;
             padding-left: 16px;
             margin-bottom: 18px;
             text-align: center;
@@ -94,7 +93,7 @@
             margin-top: 6px;
         }
 
-        /* ---------- Календарь (в 2 раза меньше) ---------- */
+        /* ---------- Календарь ---------- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -223,7 +222,6 @@
         }
         .lessons-table tr:last-child td { border-bottom: none; }
 
-        /* Кнопки рядом всегда */
         .lessons-table .links-cell {
             display: flex;
             gap: 4px;
@@ -416,6 +414,7 @@
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
     const mainContent = document.getElementById('mainContent');
+    const loginArea = document.getElementById('loginArea');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
@@ -461,6 +460,10 @@
         currentStudentId = id;
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
+
+        // Скрываем блок входа после успешного входа
+        loginArea.style.display = 'none';
+
         mainContent.style.display = 'block';
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
@@ -558,7 +561,10 @@
         let html = `<table class="lessons-table"><thead><tr><th>Дата</th><th>День</th><th>Время</th><th>Тема</th><th>Ссылки</th></tr></thead><tbody>`;
         data.forEach(item => {
             const dateObj = item.date;
-            const displayDate = dateObj.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+            // Формат 06.08
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const displayDate = `${day}.${month}`;
             const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'long' });
             item.lessons.forEach((l, idx) => {
                 let links = '';
