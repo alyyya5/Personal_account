@@ -1,1 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Домашнее задание · Сложение и вычитание</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #eef2fa;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 30px 20px;
+            color: #1e2f3e;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px 35px 40px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #0f2b3d;
+            border-left: 8px solid #3b82f6;
+            padding-left: 20px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #4a627a;
+            margin-bottom: 30px;
+            padding-left: 28px;
+        }
+        .info-line {
+            color: #4a627a;
+            margin-bottom: 20px;
+            padding-left: 28px;
+            font-size: 1.05rem;
+        }
+        .info-line strong {
+            color: #1f4970;
+        }
+        .section {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #e2edf7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            color: #0c4e6e;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .question {
+            margin: 14px 0 14px 18px;
+            padding-left: 12px;
+            border-left: 3px solid #b9d0f0;
+        }
+        .question input {
+            font-size: 1rem;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1.5px solid #cbd5e1;
+            width: 160px;
+            margin-left: 12px;
+            background: #fefefe;
+            transition: 0.2s;
+        }
+        .question input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .question input.short {
+            width: 80px;
+        }
+        .question input.medium {
+            width: 200px;
+        }
+        .question input.long {
+            width: 300px;
+        }
+        .button-group {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 25px 0 20px;
+            justify-content: center;
+        }
+        button {
+            background: #1e4663;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .reset-btn {
+            background: #4b5563;
+        }
+        .result-area {
+            background: #f0f9ff;
+            border-radius: 28px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            border: 1px solid #bfdbfe;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c86a3;
+            margin-top: 25px;
+        }
 
+        /* --- Модалка для отчёта --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 36px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 {
+            font-size: 1.3rem;
+            color: #0b2a44;
+            margin-bottom: 10px;
+        }
+        .modal-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #dce5ef;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-card textarea:focus {
+            border-color: #3b82f6;
+        }
+        .modal-card .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .modal-card .modal-buttons .btn {
+            flex: 1;
+        }
+        #modalStatus {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4a627a;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 18px; }
+            .question { margin-left: 5px; }
+            input { width: 130px; }
+            .question input.long { width: 200px; }
+            .question input.medium { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏠 Домашнее задание</h1>
+    <div class="subtitle">Сложение и вычитание (целые числа, десятичные дроби, обыкновенные дроби)</div>
+
+    <!-- Информация об ученике (подставляется из URL) -->
+    <div class="info-line">
+        <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+        <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
+        <strong>Тема:</strong> <span id="lessonTopic"></span>
+    </div>
+
+    <!-- ========== 1. Сложение ========== -->
+    <div class="section">
+        <h2>1. Сложение</h2>
+        <div class="question">1) (–12) + (–8) = <input type="text" id="q1_1" class="short"></div>
+        <div class="question">2) (–5.6) + (–2.4) = <input type="text" id="q1_2" class="short"></div>
+        <div class="question">3) 34 + (–27) = <input type="text" id="q1_3" class="short"></div>
+        <div class="question">4) –15 + 22 = <input type="text" id="q1_4" class="short"></div>
+    </div>
+
+    <!-- ========== 2. Вычитание ========== -->
+    <div class="section">
+        <h2>2. Вычитание</h2>
+        <div class="question">1) 7 – (–9) = <input type="text" id="q2_1" class="short"></div>
+        <div class="question">2) –18 – 6 = <input type="text" id="q2_2" class="short"></div>
+        <div class="question">3) –4 – (–11) = <input type="text" id="q2_3" class="short"></div>
+        <div class="question">4) 5.3 – (–2.7) = <input type="text" id="q2_4" class="short"></div>
+    </div>
+
+    <!-- ========== 3. Алгебраическая сумма ========== -->
+    <div class="section">
+        <h2>3. Алгебраическая сумма (группировка)</h2>
+        <div class="question">1) –27 + 16 + (–14) + 25 = <input type="text" id="q3_1" class="short"></div>
+        <div class="question">2) 3.8 + (–5.2) + (–3.8) + 4.2 = <input type="text" id="q3_2" class="short"></div>
+    </div>
+
+    <!-- ========== 4. Длина отрезка ========== -->
+    <div class="section">
+        <h2>4. Длина отрезка на координатной прямой</h2>
+        <div class="question">1) A(–6) и B(2) → длина = <input type="text" id="q4_1" class="short"></div>
+        <div class="question">2) C(–4.5) и D(3.5) → длина = <input type="text" id="q4_2" class="short"></div>
+    </div>
+
+    <!-- ========== 5. Дроби ========== -->
+    <div class="section">
+        <h2>5. Дроби (сложение и вычитание)</h2>
+        <div class="question">1) –3/4 + (–1/8) = <input type="text" id="q5_1" class="short"></div>
+        <div class="question">2) 3/5 + (–7/10) = <input type="text" id="q5_2" class="short"></div>
+        <div class="question">3) –5/6 – (–2/3) = <input type="text" id="q5_3" class="short"></div>
+        <div class="question">4) 7/8 – (–1/4) = <input type="text" id="q5_4" class="short"></div>
+        <div class="question">5) 1/2 + (–3/4) + 5/6 + (–1/3) = <input type="text" id="q5_5" class="short"></div>
+    </div>
+
+    <!-- ========== 6. Температура ========== -->
+    <div class="section">
+        <h2>6. Температурный прогноз</h2>
+        <p style="margin-left: 18px; color: #4a627a;">В понедельник температура была –3°C. Во вторник повысилась на 2.5°C, в среду понизилась на 1.8°C, в четверг повысилась на 0.7°C.</p>
+        <div class="question">Температура в четверг: <input type="text" id="q6_1" class="short"></div>
+        <div class="question">На сколько градусов температура в четверг отличается от понедельника? <input type="text" id="q6_2" class="short"></div>
+    </div>
+
+    <!-- ========== 7. Истинно или ложно? ========== -->
+    <div class="section">
+        <h2>7. Истинно или ложно?</h2>
+        <p style="margin-left: 18px; color: #4a627a;">Напиши «И» или «Л».</p>
+        <div class="question">1) Сумма двух отрицательных чисел всегда меньше нуля. → <input type="text" id="q7_1" class="short"></div>
+        <div class="question">2) Разность двух чисел всегда меньше суммы этих чисел. → <input type="text" id="q7_2" class="short"></div>
+        <div class="question">3) Если к отрицательному числу прибавить положительное, то результат может быть отрицательным. → <input type="text" id="q7_3" class="short"></div>
+    </div>
+
+    <!-- ========== 8. Собери выражение ========== -->
+    <div class="section">
+        <h2>8. Собери выражение</h2>
+        <p style="margin-left: 18px; color: #4a627a;">Используя данные числа и знаки + и –, составь выражение, равное указанному результату.</p>
+        <div class="question">1) Числа 2, –5, 7. Результат –10. → <input type="text" id="q8_1" class="long"></div>
+        <div class="question">2) Числа –3, 8, –4. Результат 1. → <input type="text" id="q8_2" class="long"></div>
+    </div>
+
+    <!-- Кнопки -->
+    <div class="button-group">
+        <button id="checkBtn">✅ Проверить задания</button>
+        <button id="reportBtn">📤 Отправить отчёт</button>
+        <button id="resetBtn" class="reset-btn">🔄 Очистить поля</button>
+    </div>
+
+    <div id="resultArea" class="result-area">
+        📌 После выполнения нажмите «Проверить».<br>
+             Затем нажмите «Отправить отчёт».
+    </div>
+
+    <footer>✏️ Вводите ответы в поля. Дроби через / (например 3/4). Десятичные через точку.</footer>
+</div>
+
+<!-- Модалка для отчёта -->
+<div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+        <h3>📤 Отправить отчёт</h3>
+        <p style="color: #4a627a; margin-bottom: 12px; font-size: 0.95rem;">
+            Добавьте комментарий (Было сложно? Какие вопросы возникли?).
+        </p>
+        <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
+        <div class="modal-buttons">
+            <button class="btn" id="sendReportBtn" style="background: #1e4663; border: none; color: white; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">✅ Отправить</button>
+            <button class="btn" id="cancelReportBtn" style="background: #e9eff6; border: none; color: #1f4970; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">Отмена</button>
+        </div>
+        <div id="modalStatus"></div>
+    </div>
+</div>
+
+<!-- Подключаем общий config.js (настройки GitHub) -->
+<script src="/config.js"></script>
+
+<script>
+    // ============================================================
+    //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ (меняйте здесь, если нужно)
+    // ============================================================
+    const answers = {
+        q1_1: "-20",
+        q1_2: "-8",
+        q1_3: "7",
+        q1_4: "7",
+
+        q2_1: "16",
+        q2_2: "-24",
+        q2_3: "7",
+        q2_4: "8",
+
+        q3_1: "0",
+        q3_2: "-1",
+
+        q4_1: "8",
+        q4_2: "8",
+
+        q5_1: "-7/8",
+        q5_2: "-1/10",
+        q5_3: "-1/6",
+        q5_4: "9/8",
+        q5_5: "1/4",
+
+        q6_1: "-1.6",
+        q6_2: "1.4",
+
+        q7_1: "И",
+        q7_2: "Л",
+        q7_3: "И",
+
+        q8_1: "2-5-7",
+        q8_2: "-3+8-4"
+    };
+
+    // ============================================================
+    //  КОД (не трогайте, если не уверены)
+    // ============================================================
+
+    // --- Получаем параметры из URL ---
+    const params = getUrlParams();
+    const student = params.student;
+    const date = params.date;
+    const topic = params.topic || "Сложение и вычитание";
+
+    // Сохраняем имя в localStorage для удобства
+    localStorage.setItem('studentName', student);
+
+    // Подставляем данные ученика
+    document.getElementById('studentName').textContent = student;
+    document.getElementById('lessonDate').textContent = date;
+    document.getElementById('lessonTopic').textContent = topic;
+
+    // --- Функции нормализации ---
+    function normalize(str) {
+        return str.trim().replace(/\s+/g, ' ');
+    }
+
+    function normalizeNumber(str) {
+        let s = str.trim().replace(/\s/g, '');
+        if (s === "") return "";
+        if (!isNaN(parseFloat(s)) && isFinite(s)) return parseFloat(s).toString();
+        return s;
+    }
+
+    function normalizeFraction(str) {
+        let s = str.trim().replace(/\s/g, '');
+        if (s === "") return "";
+        if (s.includes('/')) {
+            let parts = s.split('/');
+            if (parts.length === 2) {
+                let a = parseInt(parts[0], 10);
+                let b = parseInt(parts[1], 10);
+                if (!isNaN(a) && !isNaN(b) && b !== 0) return a + "/" + b;
+            }
+        }
+        return s;
+    }
+
+    function normalizeExpression(str) {
+        let s = str.trim().replace(/\s/g, '');
+        s = s.replace(/\+/g, '+').replace(/\-/g, '-');
+        return s;
+    }
+
+    // --- Проверка заданий ---
+    function checkLesson() {
+        let total = 0;
+        let correct = 0;
+        let mistakes = [];
+        let userAnswers = {};
+
+        for (let [id, right] of Object.entries(answers)) {
+            let inputEl = document.getElementById(id);
+            if (!inputEl) continue;
+            total++;
+            let userVal = inputEl.value;
+            userAnswers[id] = userVal;
+            let ok = false;
+
+            // Для выражений (задание 8)
+            if (id.startsWith('q8_')) {
+                let userClean = normalizeExpression(userVal);
+                try {
+                    let expr = userClean.replace(/--/g, '+');
+                    let result = eval(expr);
+                    let expectedResult;
+                    if (id === 'q8_1') expectedResult = -10;
+                    else if (id === 'q8_2') expectedResult = 1;
+                    if (Math.abs(result - expectedResult) < 0.0001) ok = true;
+                } catch (e) {
+                    ok = false;
+                }
+            }
+            // Для дробей
+            else if (right.includes('/')) {
+                let userNorm = normalizeFraction(userVal);
+                let rightNorm = normalizeFraction(right);
+                if (userNorm === rightNorm) ok = true;
+            }
+            // Для чисел
+            else if (!isNaN(parseFloat(right)) && isFinite(right)) {
+                let userNum = normalizeNumber(userVal);
+                let rightNum = normalizeNumber(right);
+                if (userNum === rightNum) ok = true;
+            }
+            // Для И/Л
+            else if (right === "И" || right === "Л") {
+                let userClean = normalize(userVal);
+                let rightClean = normalize(right);
+                if (userClean === rightClean) ok = true;
+            }
+            // Остальное
+            else {
+                if (normalize(userVal) === normalize(right)) ok = true;
+            }
+
+            if (ok) correct++;
+            else {
+                let questionText = "";
+                let parent = inputEl.closest('.question');
+                if (parent) {
+                    let text = parent.innerText;
+                    let inputIndex = text.indexOf(inputEl.value);
+                    if (inputIndex !== -1) questionText = text.substring(0, inputIndex).trim();
+                    else questionText = text.trim();
+                } else {
+                    questionText = id;
+                }
+                mistakes.push(`❌ ${questionText} → ваш ответ: ${userVal || "(пусто)"}`);
+            }
+        }
+
+        let percent = total ? Math.round((correct / total) * 100) : 0;
+        let report = `📊 Результат: ${correct} из ${total} (${percent}%)\n\n`;
+        if (mistakes.length === 0) {
+            report += "🎉 Отлично! Все задания выполнены верно!";
+        } else {
+            report += "⚠️ Ошибки:\n" + mistakes.join("\n");
+        }
+
+        document.getElementById("resultArea").innerHTML = report.replace(/\n/g, "<br>");
+        window.userAnswers = userAnswers;
+        window.lastReport = report;
+    }
+
+    // --- Открытие модалки отчёта ---
+    document.getElementById('reportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.add('active');
+        document.getElementById('reportComment').value = '';
+        document.getElementById('modalStatus').textContent = '';
+    });
+
+    // --- Закрытие модалки ---
+    document.getElementById('cancelReportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.remove('active');
+    });
+    document.getElementById('reportModal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+
+    // --- Отправка отчёта (использует функцию createGitHubIssue из config.js) ---
+    document.getElementById('sendReportBtn').addEventListener('click', async function() {
+        const comment = document.getElementById('reportComment').value.trim();
+        const statusDiv = document.getElementById('modalStatus');
+        if (!comment) {
+            statusDiv.textContent = '⚠️ Напишите комментарий.';
+            statusDiv.style.color = '#dc2626';
+            return;
+        }
+
+        // Собираем ответы ученика
+        let answersText = '';
+        for (let [id, right] of Object.entries(answers)) {
+            const input = document.getElementById(id);
+            const userAnswer = input ? input.value.trim() : '(пусто)';
+            const questionNum = id.replace('q', '').replace('_', '.');
+            answersText += `${questionNum}: ${userAnswer}\n`;
+        }
+
+        const title = `Отчёт: ${student} — ${topic} (${date})`;
+        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Ответы ученика:**\n${answersText}\n\n**Комментарий:**\n${comment}`;
+
+        const btn = this;
+        btn.disabled = true;
+        btn.textContent = '⏳ Отправка...';
+        statusDiv.textContent = '';
+        statusDiv.style.color = '#4a627a';
+
+        try {
+            const issueUrl = await createGitHubIssue(title, body);
+            statusDiv.innerHTML = `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color: #3b82f6; text-decoration: underline;">Посмотреть Issue</a>`;
+            statusDiv.style.color = '#16a34a';
+            setTimeout(() => {
+                document.getElementById('reportModal').classList.remove('active');
+            }, 3000);
+        } catch (error) {
+            statusDiv.textContent = `❌ Ошибка: ${error.message}`;
+            statusDiv.style.color = '#dc2626';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '✅ Отправить';
+        }
+    });
+
+    // --- Очистка полей ---
+    function resetFields() {
+        for (let id of Object.keys(answers)) {
+            let inp = document.getElementById(id);
+            if (inp) inp.value = "";
+        }
+        document.getElementById("resultArea").innerHTML = "🧹 Поля очищены. Нажмите «Проверить».";
+        window.userAnswers = {};
+        window.lastReport = "";
+    }
+
+    // --- Обработчики кнопок ---
+    document.getElementById("checkBtn").addEventListener("click", checkLesson);
+    document.getElementById("resetBtn").addEventListener("click", resetFields);
+</script>
+</body>
+</html>
