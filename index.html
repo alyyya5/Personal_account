@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Расписание занятий</title>
+    <style>
+        /* ----- Глобальные сбросы и шрифты ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            color: #1a2a3a;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12), 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 32px 36px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0b2a44;
+            border-left: 10px solid #3b82f6;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        /* ----- Блок входа ----- */
+        .login-area {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 20px;
+            background: white;
+            padding: 18px 28px;
+            border-radius: 60px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            margin-bottom: 30px;
+            border: 1px solid #e9eff6;
+        }
+        .login-area label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1f4970;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .login-area input {
+            flex: 1;
+            min-width: 160px;
+            padding: 12px 20px;
+            border: 2px solid #dce5ef;
+            border-radius: 40px;
+            font-size: 1rem;
+            background: #f9fcff;
+            transition: 0.25s;
+            outline: none;
+        }
+        .login-area input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .login-area button {
+            background: #1e4663;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 12px 32px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .login-area button:hover {
+            background: #0f3550;
+            transform: scale(1.02);
+        }
+        .login-area button:active {
+            transform: scale(0.97);
+        }
+        .login-error {
+            color: #dc2626;
+            font-weight: 500;
+            margin-left: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* ----- Календарь ----- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .calendar-header .month-year {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b2a44;
+        }
+        .calendar-header .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .calendar-header .nav-buttons button {
+            background: white;
+            border: 1px solid #dce5ef;
+            border-radius: 40px;
+            padding: 8px 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1f4970;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .calendar-header .nav-buttons button:hover {
+            background: #f0f7ff;
+            border-color: #3b82f6;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 16px 14px;
+            border: 1px solid #e9eff6;
+        }
+        .calendar-grid .weekday {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #4a627a;
+            padding: 8px 0;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 6px;
+        }
+        .calendar-grid .day {
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            background: white;
+            cursor: default;
+            transition: 0.15s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .calendar-grid .day.other-month {
+            color: #b0c4d8;
+            background: transparent;
+            box-shadow: none;
+        }
+        .calendar-grid .day.has-lesson {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .calendar-grid .day.has-lesson:hover {
+            background: #bfdbfe;
+            transform: scale(1.04);
+            box-shadow: 0 8px 16px rgba(59,130,246,0.15);
+        }
+        .calendar-grid .day .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin-top: 2px;
+        }
+        .calendar-grid .day.today {
+            border: 2px solid #1e4663;
+        }
+
+        /* ----- Список уроков под календарём ----- */
+        .lessons-list {
+            margin-top: 28px;
+            background: white;
+            border-radius: 28px;
+            padding: 18px 24px 24px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .lessons-list h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 14px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        .lessons-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .lessons-table th {
+            text-align: left;
+            padding: 10px 8px 6px 0;
+            font-weight: 600;
+            color: #4a627a;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .lessons-table td {
+            padding: 10px 8px 10px 0;
+            border-bottom: 1px solid #f0f4fa;
+            vertical-align: middle;
+        }
+        .lessons-table tr:last-child td {
+            border-bottom: none;
+        }
+        .lessons-table .links-cell a {
+            display: inline-block;
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 2px 14px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            transition: 0.15s;
+        }
+        .lessons-table .links-cell a:hover {
+            background: #bfdbfe;
+        }
+        .no-lessons-msg {
+            color: #6c86a3;
+            font-style: italic;
+            padding: 16px 0;
+        }
+
+        /* ----- Модальное окно ----- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 45, 0.4);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 40px;
+            max-width: 440px;
+            width: 100%;
+            padding: 28px 32px 32px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+            animation: modalFade 0.25s ease-out;
+            position: relative;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(20px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #7a94b0;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .modal-card .close-btn:hover {
+            color: #1e2f3e;
+            transform: rotate(90deg);
+        }
+        .modal-card .modal-date {
+            font-size: 1.1rem;
+            color: #4a627a;
+            margin-bottom: 4px;
+        }
+        .modal-card .modal-time {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b2a44;
+        }
+        .modal-card .modal-topic {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 10px 0 16px;
+            color: #0f2f4a;
+        }
+        .modal-card .modal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .modal-card .modal-links a {
+            background: #1e4663;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1 1 auto;
+            justify-content: center;
+        }
+        .modal-card .modal-links a:hover {
+            background: #0f3550;
+            transform: scale(1.02);
+        }
+        .modal-card .modal-links a.secondary {
+            background: #e6f0ff;
+            color: #1e4a76;
+        }
+        .modal-card .modal-links a.secondary:hover {
+            background: #bfdbfe;
+        }
+
+        /* ----- Адаптив ----- */
+        @media (max-width: 700px) {
+            .container { padding: 20px 16px; }
+            h1 { font-size: 1.8rem; padding-left: 16px; }
+            .login-area { flex-direction: column; align-items: stretch; padding: 18px 20px; border-radius: 32px; }
+            .login-area input { width: 100%; }
+            .login-area button { width: 100%; justify-content: center; }
+            .calendar-grid { gap: 4px; padding: 10px 8px; }
+            .calendar-grid .day { font-size: 0.85rem; border-radius: 20px; }
+            .calendar-header .month-year { font-size: 1.4rem; }
+            .lessons-table { font-size: 0.85rem; }
+            .lessons-table th, .lessons-table td { padding: 6px 4px; }
+            .modal-card { padding: 24px 20px; }
+            .modal-card .modal-time { font-size: 1.3rem; }
+        }
+        @media (max-width: 450px) {
+            .calendar-grid .day { font-size: 0.75rem; }
+            .calendar-grid .weekday { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📅 Расписание занятий</h1>
+
+    <!-- Блок входа -->
+    <div class="login-area" id="loginArea">
+        <label for="nameInput">👤 Ваше имя</label>
+        <input type="text" id="nameInput" placeholder="Например, Валерия" />
+        <button id="loginBtn">Войти</button>
+        <span class="login-error" id="loginError"></span>
+    </div>
+
+    <!-- Календарь и расписание (скрыто до входа) -->
+    <div id="mainContent" style="display: none;">
+        <div class="calendar-header">
+            <span class="month-year" id="monthYear"></span>
+            <div class="nav-buttons">
+                <button id="prevMonth">◀</button>
+                <button id="nextMonth">▶</button>
+            </div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <!-- Список уроков на месяц -->
+        <div class="lessons-list" id="lessonsList">
+            <h3>📋 Все уроки на месяц</h3>
+            <div id="lessonsTableContainer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+        <button class="close-btn" id="modalClose">&times;</button>
+        <div class="modal-date" id="modalDate"></div>
+        <div class="modal-time" id="modalTime"></div>
+        <div class="modal-topic" id="modalTopic"></div>
+        <div class="modal-links" id="modalLinks"></div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    //  ⚙️  НАСТРОЙКА СООТВЕТСТВИЯ ИМЁН И ID (меняйте здесь)
+    // ============================================================
+    const nameMap = {
+        'валерия': 'valeriya',
+        'лера': 'valeriya',
+        'амина': 'amina',
+        'алексей': 'aleksey'
+    };
+
+    // ============================================================
+    //  КОД (не трогайте, если не уверены)
+    // ============================================================
+
+    let currentStudentId = null;
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let lessonsData = []; // сюда будем загружать JSON
+
+    // DOM элементы
+    const loginArea = document.getElementById('loginArea');
+    const nameInput = document.getElementById('nameInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const mainContent = document.getElementById('mainContent');
+    const monthYear = document.getElementById('monthYear');
+    const calendarGrid = document.getElementById('calendarGrid');
+    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalDate = document.getElementById('modalDate');
+    const modalTime = document.getElementById('modalTime');
+    const modalTopic = document.getElementById('modalTopic');
+    const modalLinks = document.getElementById('modalLinks');
+
+    // --- Загрузка JSON ---
+    async function loadLessons(studentId) {
+        try {
+            const response = await fetch(`config/${studentId}.json`);
+            if (!response.ok) throw new Error('Файл не найден');
+            lessonsData = await response.json();
+            return true;
+        } catch (error) {
+            console.error('Ошибка загрузки:', error);
+            lessonsData = [];
+            return false;
+        }
+    }
+
+    // --- Функция входа ---
+    async function handleLogin() {
+        let rawName = nameInput.value.trim();
+        if (!rawName) {
+            loginError.textContent = 'Введите имя';
+            return;
+        }
+        const normalized = rawName.toLowerCase();
+        const studentId = nameMap[normalized];
+        if (!studentId) {
+            loginError.textContent = 'Ученик не найден. Проверьте имя.';
+            return;
+        }
+        loginError.textContent = '';
+        currentStudentId = studentId;
+
+        // Загружаем расписание
+        const ok = await loadLessons(studentId);
+        if (!ok) {
+            loginError.textContent = 'Не удалось загрузить расписание. Обратитесь к преподавателю.';
+            return;
+        }
+
+        // Показываем основной блок
+        mainContent.style.display = 'block';
+        renderCalendar(currentYear, currentMonth);
+        renderLessonsList(currentYear, currentMonth);
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
+
+    // --- Получение уроков для конкретной даты ---
+    function getLessonsForDate(dateStr) {
+        return lessonsData.filter(item => item.date === dateStr);
+    }
+
+    // --- Получение уроков на месяц ---
+    function getLessonsForMonth(year, month) {
+        const result = [];
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateObj = new Date(year, month, day);
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+            const dayLessons = lessonsData.filter(item => item.date === dateStr);
+            if (dayLessons.length > 0) {
+                result.push({ date: dateObj, lessons: dayLessons });
+            }
+        }
+        return result;
+    }
+
+    // --- Рендер календаря ---
+    function renderCalendar(year, month) {
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
+
+        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        monthYear.textContent = `${monthNames[month]} ${year}`;
+
+        // Создаём Set дат с уроками
+        const lessonDates = new Set(lessonsData.map(item => item.date));
+
+        let html = '';
+        const weekdays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+        for (let wd of weekdays) {
+            html += `<div class="weekday">${wd}</div>`;
+        }
+
+        for (let i = 0; i < firstDay; i++) {
+            html += `<div class="day other-month"></div>`;
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(year, month, d);
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const hasLesson = lessonDates.has(dateStr);
+            let classes = 'day';
+            if (hasLesson) classes += ' has-lesson';
+            if (d === todayDate && month === todayMonth && year === todayYear) classes += ' today';
+
+            let dataAttr = hasLesson ? `data-date="${dateStr}"` : '';
+            html += `<div class="${classes}" ${dataAttr}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
+        }
+
+        calendarGrid.innerHTML = html;
+
+        document.querySelectorAll('.day.has-lesson').forEach(el => {
+            el.addEventListener('click', function() {
+                const dateStr = this.dataset.date;
+                const lessons = getLessonsForDate(dateStr);
+                if (lessons.length > 0) showModal(dateStr, lessons);
+            });
+        });
+    }
+
+    // --- Показать модалку ---
+    function showModal(dateStr, lessons) {
+        const parts = dateStr.split('-').map(Number);
+        const year = parts[0], month = parts[1]-1, day = parts[2];
+        const dateObj = new Date(year, month, day);
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', options);
+
+        if (lessons.length === 1) {
+            const l = lessons[0];
+            modalTime.textContent = `${l.start} – ${l.end}`;
+            modalTopic.textContent = l.topic;
+            let linksHtml = '';
+            if (l.material) linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+            if (l.homework) linksHtml += `<a href="${l.homework}" target="_blank">📝 Домашка</a>`;
+            modalLinks.innerHTML = linksHtml || '<span style="color:#6c86a3;">Нет ссылок</span>';
+        } else {
+            // Если несколько уроков в один день (редко)
+            let timeText = '', topicText = '', linksHtml = '';
+            lessons.forEach((l, idx) => {
+                timeText += `${l.start}–${l.end}` + (idx < lessons.length-1 ? ', ' : '');
+                topicText += l.topic + (idx < lessons.length-1 ? ', ' : '');
+                if (l.material) linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал ${idx+1}</a>`;
+                if (l.homework) linksHtml += `<a href="${l.homework}" target="_blank">📝 Домашка ${idx+1}</a>`;
+            });
+            modalTime.textContent = timeText;
+            modalTopic.textContent = topicText;
+            modalLinks.innerHTML = linksHtml || '<span style="color:#6c86a3;">Нет ссылок</span>';
+        }
+        modalOverlay.classList.add('active');
+    }
+
+    modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+
+    // --- Рендер списка уроков на месяц ---
+    function renderLessonsList(year, month) {
+        const monthLessons = getLessonsForMonth(year, month);
+        if (monthLessons.length === 0) {
+            lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
+            return;
+        }
+
+        let html = `
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>День</th>
+                        <th>Время</th>
+                        <th>Тема</th>
+                        <th>Ссылки</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        monthLessons.forEach(item => {
+            const dateObj = item.date;
+            const displayDate = dateObj.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+            const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'long' });
+            const lessons = item.lessons;
+            lessons.forEach((l, idx) => {
+                const linksHtml = (l.material ? `<a href="${l.material}" target="_blank">📖</a>` : '') +
+                                  (l.homework ? `<a href="${l.homework}" target="_blank">📝</a>` : '');
+                const rowspan = (idx === 0) ? lessons.length : 0;
+                html += `
+                    <tr>
+                        ${rowspan > 0 ? `<td rowspan="${rowspan}">${displayDate}</td><td rowspan="${rowspan}">${dayName}</td>` : ''}
+                        <td>${l.start}–${l.end}</td>
+                        <td>${l.topic}</td>
+                        <td class="links-cell">${linksHtml || '—'}</td>
+                    </tr>
+                `;
+            });
+        });
+
+        html += `</tbody></table>`;
+        lessonsTableContainer.innerHTML = html;
+    }
+
+    // --- Навигация по месяцам ---
+    function changeMonth(delta) {
+        currentMonth += delta;
+        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        renderCalendar(currentYear, currentMonth);
+        renderLessonsList(currentYear, currentMonth);
+    }
+
+    prevMonthBtn.addEventListener('click', () => changeMonth(-1));
+    nextMonthBtn.addEventListener('click', () => changeMonth(1));
+
+    // --- Автоматическая загрузка, если передан параметр student в URL ---
+    window.addEventListener('DOMContentLoaded', async () => {
+        const params = new URLSearchParams(window.location.search);
+        const studentParam = params.get('student');
+        if (studentParam) {
+            const id = nameMap[studentParam.toLowerCase()];
+            if (id) {
+                nameInput.value = studentParam; // для красоты
+                await handleLogin();
+            }
+        }
+    });
+</script>
+</body>
+</html>
