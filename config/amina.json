@@ -1,16 +1,16 @@
 [
-    { "date": "2026-08-06", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Модуль. Сложение и вычитание.", "material": "students/amina/les1.html", "homework": "./homework/amina/hw1.html" },
-    { "date": "2026-08-10", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Умножение и деление. Коэффициент. Подобные слагаемые.", "material": "students/amina/les2.html", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-08-17", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok3.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-08-24", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok4.pdf", "homework": "./homework/amina/hw2.html" },
+    { "date": "2026-08-06", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Модуль. Сложение и вычитание.", "material": "students/amina/les1.html", "homework": "homework/amina/hw1.html" },
+    { "date": "2026-08-10", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Умножение и деление. Коэффициент. Подобные слагаемые.", "material": "students/amina/les2.html", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-08-17", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok3.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-08-24", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok4.pdf", "homework": "homework/amina/hw2.html" },
 
-    { "date": "2026-05-04", "start": "10:00", "end": "11:00", "topic": ")", "material": "students/amina/urok5.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-05-11", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok6.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-05-18", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok7.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-05-25", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok8.pdf", "homework": "./homework/amina/hw2.html" },
+    { "date": "2026-05-04", "start": "10:00", "end": "11:00", "topic": ")", "material": "students/amina/urok5.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-05-11", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok6.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-05-18", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok7.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-05-25", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok8.pdf", "homework": "homework/amina/hw2.html" },
 
-    { "date": "2026-06-01", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok9.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-06-08", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok10.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-06-15", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok11.pdf", "homework": "./homework/amina/hw2.html" },
-    { "date": "2026-06-22", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok12.pdf", "homework": "./homework/amina/hw2.html" }
+    { "date": "2026-06-01", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok9.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-06-08", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok10.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-06-15", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok11.pdf", "homework": "homework/amina/hw2.html" },
+    { "date": "2026-06-22", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/urok12.pdf", "homework": "homework/amina/hw2.html" }
 ]
