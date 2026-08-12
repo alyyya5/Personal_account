@@ -212,7 +212,6 @@
     <h1>🏠 Домашнее задание</h1>
     <div class="subtitle">Сложение и вычитание (целые числа, десятичные дроби, обыкновенные дроби)</div>
 
-    <!-- Информация об ученике (подставляется из URL) -->
     <div class="info-line">
         <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
         <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
@@ -295,7 +294,7 @@
 
     <div id="resultArea" class="result-area">
         📌 После выполнения нажмите «Проверить».<br>
-             Затем нажмите «Отправить отчёт».
+        Затем нажмите «Отправить отчёт».
     </div>
 
     <footer>✏️ Вводите ответы в поля. Дроби через / (например 3/4). Десятичные через точку.</footer>
@@ -306,9 +305,9 @@
     <div class="modal-card">
         <h3>📤 Отправить отчёт</h3>
         <p style="color: #4a627a; margin-bottom: 12px; font-size: 0.95rem;">
-            Добавьте комментарий (Было сложно? Какие вопросы возникли?).
+            Было сложно? Какие вопросы возникли?
         </p>
-        <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
+        <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно..."></textarea>
         <div class="modal-buttons">
             <button class="btn" id="sendReportBtn" style="background: #1e4663; border: none; color: white; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">✅ Отправить</button>
             <button class="btn" id="cancelReportBtn" style="background: #e9eff6; border: none; color: #1f4970; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">Отмена</button>
@@ -317,43 +316,34 @@
     </div>
 </div>
 
-<!-- Подключаем общий config.js (настройки GitHub) -->
 <script src="/config.js"></script>
-
 <script>
     // ============================================================
-    //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ (меняйте здесь, если нужно)
+    //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ
     // ============================================================
     const answers = {
         q1_1: "-20",
         q1_2: "-8",
         q1_3: "7",
         q1_4: "7",
-
         q2_1: "16",
         q2_2: "-24",
         q2_3: "7",
         q2_4: "8",
-
         q3_1: "0",
         q3_2: "-1",
-
         q4_1: "8",
         q4_2: "8",
-
         q5_1: "-7/8",
         q5_2: "-1/10",
         q5_3: "-1/6",
         q5_4: "9/8",
         q5_5: "1/4",
-
         q6_1: "-1.6",
         q6_2: "1.4",
-
         q7_1: "И",
         q7_2: "Л",
         q7_3: "И",
-
         q8_1: "2-5-7",
         q8_2: "-3+8-4"
     };
@@ -362,21 +352,17 @@
     //  КОД (не трогайте, если не уверены)
     // ============================================================
 
-    // --- Получаем параметры из URL ---
     const params = getUrlParams();
     const student = params.student;
     const date = params.date;
     const topic = params.topic || "Сложение и вычитание";
 
-    // Сохраняем имя в localStorage для удобства
     localStorage.setItem('studentName', student);
 
-    // Подставляем данные ученика
     document.getElementById('studentName').textContent = student;
     document.getElementById('lessonDate').textContent = date;
     document.getElementById('lessonTopic').textContent = topic;
 
-    // --- Функции нормализации ---
     function normalize(str) {
         return str.trim().replace(/\s+/g, ' ');
     }
@@ -408,7 +394,33 @@
         return s;
     }
 
-    // --- Проверка заданий ---
+    function isAnswerCorrect(id, userVal) {
+        const right = answers[id];
+        if (id.startsWith('q8_')) {
+            let userClean = normalizeExpression(userVal);
+            try {
+                let expr = userClean.replace(/--/g, '+');
+                let result = eval(expr);
+                let expectedResult;
+                if (id === 'q8_1') expectedResult = -10;
+                else if (id === 'q8_2') expectedResult = 1;
+                return Math.abs(result - expectedResult) < 0.0001;
+            } catch (e) {
+                return false;
+            }
+        }
+        if (right.includes('/')) {
+            return normalizeFraction(userVal) === normalizeFraction(right);
+        }
+        if (!isNaN(parseFloat(right)) && isFinite(right)) {
+            return normalizeNumber(userVal) === normalizeNumber(right);
+        }
+        if (right === "И" || right === "Л") {
+            return normalize(userVal) === normalize(right);
+        }
+        return normalize(userVal) === normalize(right);
+    }
+
     function checkLesson() {
         let total = 0;
         let correct = 0;
@@ -421,44 +433,7 @@
             total++;
             let userVal = inputEl.value;
             userAnswers[id] = userVal;
-            let ok = false;
-
-            // Для выражений (задание 8)
-            if (id.startsWith('q8_')) {
-                let userClean = normalizeExpression(userVal);
-                try {
-                    let expr = userClean.replace(/--/g, '+');
-                    let result = eval(expr);
-                    let expectedResult;
-                    if (id === 'q8_1') expectedResult = -10;
-                    else if (id === 'q8_2') expectedResult = 1;
-                    if (Math.abs(result - expectedResult) < 0.0001) ok = true;
-                } catch (e) {
-                    ok = false;
-                }
-            }
-            // Для дробей
-            else if (right.includes('/')) {
-                let userNorm = normalizeFraction(userVal);
-                let rightNorm = normalizeFraction(right);
-                if (userNorm === rightNorm) ok = true;
-            }
-            // Для чисел
-            else if (!isNaN(parseFloat(right)) && isFinite(right)) {
-                let userNum = normalizeNumber(userVal);
-                let rightNum = normalizeNumber(right);
-                if (userNum === rightNum) ok = true;
-            }
-            // Для И/Л
-            else if (right === "И" || right === "Л") {
-                let userClean = normalize(userVal);
-                let rightClean = normalize(right);
-                if (userClean === rightClean) ok = true;
-            }
-            // Остальное
-            else {
-                if (normalize(userVal) === normalize(right)) ok = true;
-            }
+            let ok = isAnswerCorrect(id, userVal);
 
             if (ok) correct++;
             else {
@@ -489,14 +464,12 @@
         window.lastReport = report;
     }
 
-    // --- Открытие модалки отчёта ---
     document.getElementById('reportBtn').addEventListener('click', function() {
         document.getElementById('reportModal').classList.add('active');
         document.getElementById('reportComment').value = '';
         document.getElementById('modalStatus').textContent = '';
     });
 
-    // --- Закрытие модалки ---
     document.getElementById('cancelReportBtn').addEventListener('click', function() {
         document.getElementById('reportModal').classList.remove('active');
     });
@@ -504,7 +477,6 @@
         if (e.target === this) this.classList.remove('active');
     });
 
-    // --- Отправка отчёта (использует функцию createGitHubIssue из config.js) ---
     document.getElementById('sendReportBtn').addEventListener('click', async function() {
         const comment = document.getElementById('reportComment').value.trim();
         const statusDiv = document.getElementById('modalStatus');
@@ -514,17 +486,19 @@
             return;
         }
 
-        // Собираем ответы ученика
+        // Собираем ответы ученика с проверкой и правильными ответами
         let answersText = '';
         for (let [id, right] of Object.entries(answers)) {
             const input = document.getElementById(id);
             const userAnswer = input ? input.value.trim() : '(пусто)';
+            const isCorrect = isAnswerCorrect(id, userAnswer);
+            const statusIcon = isCorrect ? '✅' : '❌';
             const questionNum = id.replace('q', '').replace('_', '.');
-            answersText += `${questionNum}: ${userAnswer}\n`;
+            answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
         }
 
         const title = `Отчёт: ${student} — ${topic} (${date})`;
-        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Ответы ученика:**\n${answersText}\n\n**Комментарий:**\n${comment}`;
+        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
 
         const btn = this;
         btn.disabled = true;
@@ -548,7 +522,6 @@
         }
     });
 
-    // --- Очистка полей ---
     function resetFields() {
         for (let id of Object.keys(answers)) {
             let inp = document.getElementById(id);
@@ -559,7 +532,6 @@
         window.lastReport = "";
     }
 
-    // --- Обработчики кнопок ---
     document.getElementById("checkBtn").addEventListener("click", checkLesson);
     document.getElementById("resetBtn").addEventListener("click", resetFields);
 </script>
