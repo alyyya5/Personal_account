@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Теория | Положительные и отрицательные числа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f2f5f9;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 25px;
+            color: #1e2f3e;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 45px 50px 55px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-left: 5px solid #3b6a8c;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a6f84;
+            padding-left: 25px;
+            margin-bottom: 35px;
+        }
+        .section {
+            margin-bottom: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #eef2f7;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .section h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: #1a4b6e;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 14px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .section p {
+            font-size: 1.1rem;
+            color: #2a3f52;
+            margin-bottom: 8px;
+        }
+        .section ul {
+            margin-left: 28px;
+            margin-bottom: 12px;
+        }
+        .section ul li {
+            font-size: 1.1rem;
+            color: #2a3f52;
+            margin-bottom: 4px;
+        }
+        .highlight {
+            font-weight: 700;
+            color: #1a3a5a;
+        }
+        .definition {
+            background: #f6f9fc;
+            border-left: 4px solid #3b6a8c;
+            padding: 12px 20px;
+            border-radius: 16px;
+            margin: 14px 0;
+            font-size: 1.1rem;
+        }
+        .rule {
+            background: #f6f9fc;
+            padding: 10px 18px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #1a2a3a;
+        }
+        .example {
+            background: #fafbfd;
+            border: 1px solid #e6ecf2;
+            border-radius: 16px;
+            padding: 10px 18px;
+            margin: 10px 0;
+            font-size: 1.05rem;
+            color: #2a3f52;
+        }
+        .example .label {
+            font-weight: 700;
+            color: #5a6f84;
+            margin-right: 8px;
+        }
+        .note {
+            color: #5a6f84;
+            font-size: 1rem;
+            margin-top: 6px;
+        }
+        .img-wrap {
+            background: #f6f9fc;
+            border-radius: 18px;
+            padding: 18px 15px 12px;
+            margin: 12px 0 6px;
+            text-align: center;
+        }
+        .img-wrap svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .img-caption {
+            font-size: 0.85rem;
+            color: #5a6f84;
+            margin-top: 4px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.8rem; }
+            .section h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Положительные и отрицательные числа</h1>
+    <div class="subtitle">Модуль · Сложение и вычитание</div>
+
+    <!-- 1. Координатная прямая -->
+    <div class="section">
+        <h2>1. Координатная прямая</h2>
+        <p>Прямая, на которой выбраны <span class="highlight">начало отсчёта (0)</span>, <span class="highlight">положительное направление</span> и <span class="highlight">единичный отрезок</span>, называется координатной прямой.</p>
+
+        <div class="img-wrap">
+            <svg viewBox="0 0 700 100" xmlns="http://www.w3.org/2000/svg">
+                <line x1="30" y1="50" x2="670" y2="50" stroke="#1a4b6e" stroke-width="2.5"/>
+                <polygon points="670,45 690,50 670,55" fill="#1a4b6e"/>
+                <g font-family="Segoe UI, sans-serif" font-size="18" fill="#1a2a3a" text-anchor="middle">
+                    <line x1="110" y1="45" x2="110" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="110" y="80">–5</text>
+                    <line x1="190" y1="45" x2="190" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="190" y="80">–3</text>
+                    <line x1="270" y1="45" x2="270" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="270" y="80">–1</text>
+                    <line x1="350" y1="45" x2="350" y2="55" stroke="#1a4b6e" stroke-width="3"/>
+                    <text x="350" y="80" font-weight="700" fill="#1a4b6e">0</text>
+                    <line x1="430" y1="45" x2="430" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="430" y="80">1</text>
+                    <line x1="510" y1="45" x2="510" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="510" y="80">3</text>
+                    <line x1="590" y1="45" x2="590" y2="55" stroke="#1a4b6e" stroke-width="2"/>
+                    <text x="590" y="80">5</text>
+                    <text x="670" y="25" font-size="16" fill="#1a4b6e" font-weight="700">→</text>
+                </g>
+            </svg>
+            <div class="img-caption">На координатной прямой числа слева от нуля — отрицательные, справа — положительные.</div>
+        </div>
+
+        <ul>
+            <li><span class="highlight">Справа</span> от нуля — положительные числа.</li>
+            <li><span class="highlight">Слева</span> от нуля — отрицательные числа.</li>
+        </ul>
+        <div class="definition">
+            <strong>Примеры:</strong> 5, 7, 0.3 — положительные; –2, –0.7, –3/4 — отрицательные.
+        </div>
+    </div>
+
+    <!-- 2. Противоположные числа -->
+    <div class="section">
+        <h2>2. Противоположные числа</h2>
+        <p>Числа, которые <span class="highlight">отличаются только знаком</span>, называются противоположными.</p>
+        <div class="example"><span class="label">Пример:</span> 7 и –7; –2.5 и 2.5</div>
+        <ul>
+            <li>Ноль противоположен сам себе.</li>
+            <li>На координатной прямой противоположные числа расположены <span class="highlight">симметрично</span> относительно нуля.</li>
+        </ul>
+        <div class="rule">Если число <strong>a</strong>, то противоположное ему — <strong>–a</strong>.</div>
+    </div>
+
+    <!-- 3. Модуль числа -->
+    <div class="section">
+        <h2>3. Модуль числа</h2>
+        <p><span class="highlight">Модуль</span> — это расстояние от начала отсчёта до точки с данной координатой.</p>
+        <div class="rule">Обозначение: <strong>|n|</strong></div>
+        <ul>
+            <li>Модуль <span class="highlight">всегда неотрицателен</span>: |n| ≥ 0.</li>
+            <li>Для положительных чисел и нуля: <span class="highlight">|n| = n</span>.</li>
+            <li>Для отрицательных чисел: <span class="highlight">|n| = –n</span> (например, |–7| = 7).</li>
+        </ul>
+        <div class="definition">
+            <strong>Свойство:</strong> модули противоположных чисел равны: <span class="highlight">|–a| = |a|</span>.
+        </div>
+        <div class="example"><span class="label">Примеры:</span> |–7| = 7, |3.5| = 3.5, |0| = 0</div>
+    </div>
+
+    <!-- 4. Сравнение чисел -->
+    <div class="section">
+        <h2>4. Сравнение чисел</h2>
+        <ul>
+            <li><span class="highlight">Любое положительное</span> число больше любого отрицательного.</li>
+            <li><span class="highlight">Ноль</span> больше отрицательного, но меньше положительного.</li>
+            <li>Из двух <span class="highlight">отрицательных</span> чисел больше то, у которого <span class="highlight">модуль меньше</span>.</li>
+        </ul>
+        <div class="example"><span class="label">Пример:</span> –5 < –3 (так как |–5|=5, |–3|=3, 5>3 → –5<–3)</div>
+        <div class="note">На координатной прямой <span class="highlight">большее</span> число всегда находится <span class="highlight">правее</span>.</div>
+    </div>
+
+    <!-- 5. Сложение и вычитание -->
+    <div class="section">
+        <h2>5. Сложение и вычитание</h2>
+
+        <p><strong>Сложение двух отрицательных</strong></p>
+        <div class="rule">сложить модули, поставить знак <strong>«–»</strong></div>
+        <div class="example"><span class="label">Пример:</span> –3 + (–5) = –8</div>
+
+        <p><strong>Сложение чисел с разными знаками</strong></p>
+        <div class="rule">из большего модуля вычесть меньший, поставить знак числа с <strong>большим модулем</strong></div>
+        <div class="example"><span class="label">Примеры:</span> –7 + 4 = –3; 8 + (–5) = 3</div>
+
+        <p><strong>Вычитание</strong></p>
+        <div class="rule"><strong>a – b = a + (–b)</strong></div>
+        <div class="example"><span class="label">Примеры:</span> 8 – (–3) = 11; –5 – (–7) = 2</div>
+
+        <p><strong>Свойства сложения</strong></p>
+        <ul>
+            <li>Переместительное: <span class="highlight">a + b = b + a</span></li>
+            <li>Сочетательное: <span class="highlight">(a + b) + c = a + (b + c)</span></li>
+            <li>Сумма противоположных чисел: <span class="highlight">a + (–a) = 0</span></li>
+        </ul>
+    </div>
+
+    <!-- 6. Длина отрезка -->
+    <div class="section">
+        <h2>6. Длина отрезка</h2>
+        <div class="rule"><strong>Длина = |x₂ – x₁|</strong></div>
+        <div class="example"><span class="label">Пример:</span> между точками M(–5) и N(3): |3 – (–5)| = 8</div>
+        <div class="note">Длина отрезка всегда <span class="highlight">положительное</span> число.</div>
+    </div>
+</div>
+</body>
+</html>
