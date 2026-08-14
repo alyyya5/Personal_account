@@ -17,7 +17,7 @@
             color: #1a2a3a;
         }
         .container {
-            max-width: 680px;
+            max-width: 780px;
             width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -33,8 +33,14 @@
             margin-bottom: 14px;
             text-align: center;
         }
+        .subtitle {
+            text-align: center;
+            color: #4a627a;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
 
-        /* ---------- Вход по центру ---------- */
+        /* ---------- Вход ---------- */
         .login-area {
             display: flex;
             flex-direction: column;
@@ -54,7 +60,9 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: #1f4970;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            width: 100%;
+            text-align: left;
         }
         .login-area input {
             width: 100%;
@@ -66,10 +74,17 @@
             outline: none;
             transition: 0.2s;
             text-align: center;
+            margin-bottom: 6px;
         }
         .login-area input:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+        }
+        .login-area .password-field {
+            display: none;
+        }
+        .login-area .password-field.show {
+            display: block;
         }
         .login-area button {
             background: #1e4663;
@@ -81,7 +96,7 @@
             border-radius: 24px;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 8px;
+            margin-top: 4px;
             width: 100%;
         }
         .login-area button:hover { background: #0f3550; }
@@ -89,9 +104,15 @@
             color: #dc2626;
             font-size: 0.8rem;
             margin-top: 4px;
+            min-height: 1.2em;
+        }
+        .login-hint {
+            color: #6c86a3;
+            font-size: 0.7rem;
+            margin-top: 2px;
         }
 
-        /* ---------- Календарь (ещё меньше) ---------- */
+        /* ---------- Календарь ---------- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -180,7 +201,7 @@
         }
         .calendar-grid .day.today { border: 2px solid #1e4663; }
 
-        /* ---------- Список уроков (компактный) ---------- */
+        /* ---------- Список уроков ---------- */
         .lessons-list {
             margin-top: 10px;
             background: white;
@@ -201,10 +222,11 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.65rem;
+            table-layout: fixed;
         }
         .lessons-table th {
             text-align: left;
-            padding: 2px 2px 1px 0;
+            padding: 2px 4px 1px 0;
             font-weight: 600;
             color: #4a627a;
             border-bottom: 1px solid #e2e8f0;
@@ -213,18 +235,40 @@
             letter-spacing: 0.1px;
         }
         .lessons-table td {
-            padding: 2px 2px 2px 0;
+            padding: 2px 4px 2px 0;
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
-            line-height: 1.1;
+            line-height: 1.2;
         }
         .lessons-table tr:last-child td { border-bottom: none; }
+
+        .lessons-table .col-date { width: 36px; }
+        .lessons-table .col-day { width: 40px; }
+        .lessons-table .col-student { width: 48px; }
+        .lessons-table .col-time { width: 58px; }
+        .lessons-table .col-topic { width: auto; }
+        .lessons-table .col-links { width: 60px; text-align: right; }
+        .lessons-table .col-done { width: 70px; text-align: center; }
+
+        .lessons-table .topic-cell {
+            font-size: 0.6rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-height: 2.4em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
 
         .lessons-table .links-cell {
             display: flex;
             gap: 3px;
             align-items: center;
-            flex-wrap: nowrap;
+            justify-content: flex-end;
+            flex-wrap: wrap;
         }
         .lessons-table .links-cell a {
             display: inline-flex;
@@ -243,6 +287,32 @@
         .lessons-table .links-cell a:hover {
             background: #bfdbfe;
         }
+
+        .check-cell {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .check-cell label {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.5rem;
+            color: #4a627a;
+            cursor: pointer;
+        }
+        .check-cell input[type="checkbox"] {
+            width: 12px;
+            height: 12px;
+            cursor: pointer;
+            accent-color: #3b82f6;
+        }
+        .check-cell .checked-label {
+            color: #16a34a;
+        }
+
         .no-lessons-msg {
             color: #6c86a3;
             font-style: italic;
@@ -318,7 +388,7 @@
         .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
         .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
 
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             .container { padding: 12px 10px 16px; border-radius: 20px; }
             h1 { font-size: 1.1rem; margin-bottom: 10px; }
             .login-area { padding: 12px 14px 16px; max-width: 100%; }
@@ -332,8 +402,16 @@
             .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; }
             .lessons-list h3 { font-size: 0.7rem; }
             .lessons-table { font-size: 0.55rem; }
-            .lessons-table th, .lessons-table td { padding: 1px 1px; }
+            .lessons-table th, .lessons-table td { padding: 1px 2px; }
             .lessons-table .links-cell a { font-size: 0.4rem; padding: 0 6px; }
+            .lessons-table .col-date { width: 30px; }
+            .lessons-table .col-day { width: 34px; }
+            .lessons-table .col-student { width: 40px; }
+            .lessons-table .col-time { width: 48px; }
+            .lessons-table .col-links { width: 50px; }
+            .lessons-table .col-done { width: 58px; }
+            .check-cell label { font-size: 0.4rem; }
+            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
             .modal-card { padding: 12px 14px 16px; max-width: 260px; }
             .modal-card .modal-time { font-size: 0.8rem; }
             .modal-card .modal-topic { font-size: 0.7rem; }
@@ -345,16 +423,22 @@
 <div class="container">
     <h1>📅 Расписание занятий</h1>
 
-    <!-- Вход по центру -->
+    <!-- Вход -->
     <div class="login-area" id="loginArea">
         <label for="nameInput">👤 Ваше имя</label>
         <input type="text" id="nameInput" placeholder="" />
+        
+        <label for="passwordInput" id="passwordLabel" style="display:none;">🔑 Пароль</label>
+        <input type="password" id="passwordInput" class="password-field" placeholder="Введите пароль" />
+        
         <button id="loginBtn">Войти</button>
-        <span class="login-error" id="loginError"></span>
+        <div class="login-error" id="loginError"></div>
+        <div class="login-hint" id="loginHint"></div>
     </div>
 
     <!-- Основной контент -->
     <div id="mainContent" style="display: none;">
+        <div class="subtitle" id="greeting"></div>
         <div class="calendar-header">
             <span class="month-year" id="monthYear"></span>
             <div class="nav-buttons">
@@ -365,7 +449,7 @@
         <div class="calendar-grid" id="calendarGrid"></div>
 
         <div class="lessons-list" id="lessonsList">
-            <h3>📋 Все уроки на месяц</h3>
+            <h3 id="listTitle">📋 Все уроки на месяц</h3>
             <div id="lessonsTableContainer"></div>
         </div>
     </div>
@@ -384,30 +468,45 @@
 
 <script>
     // ============================================================
+    //  🔐  НАСТРОЙКА ПАРОЛЯ ДЛЯ АЛИНЫ (МЕНЯЙТЕ ЗДЕСЬ!)
+    // ============================================================
+    const TEACHER_PASSWORD = '12345';  // ← СЮДА ВПИШИТЕ СВОЙ ПАРОЛЬ
+
+    // ============================================================
     //  НАСТРОЙКА СООТВЕТСТВИЯ ИМЁН И ID
     // ============================================================
     const nameMap = {
         'валерия': 'valeriya',
         'лера': 'valeriya',
         'амина': 'amina',
-        'алексей': 'aleksey'
+        'алексей': 'aleksey',
+        'алина': 'alina'
     };
+
+    // Список учеников (для Алины)
+    const studentList = ['valeriya', 'amina', 'aleksey'];
 
     let currentStudentId = null;
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
+    let isTeacher = false;
 
     // DOM
     const nameInput = document.getElementById('nameInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordLabel = document.getElementById('passwordLabel');
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
+    const loginHint = document.getElementById('loginHint');
     const mainContent = document.getElementById('mainContent');
     const loginArea = document.getElementById('loginArea');
+    const greeting = document.getElementById('greeting');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const listTitle = document.getElementById('listTitle');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
     const modalOverlay = document.getElementById('modalOverlay');
@@ -417,49 +516,132 @@
     const modalTopic = document.getElementById('modalTopic');
     const modalLinks = document.getElementById('modalLinks');
 
-    function buildHomeworkLink(basePath, studentId, lesson) {
-        if (!basePath) return '';
-        const params = new URLSearchParams({
-            student: studentId,
-            date: lesson.date,
-            topic: lesson.topic || '',
-            start: lesson.start || '',
-            end: lesson.end || ''
-        });
-        return basePath + '?' + params.toString();
+    // ---------- Показ/скрытие поля пароля ----------
+    nameInput.addEventListener('input', function() {
+        const raw = this.value.trim();
+        const isAlina = raw.toLowerCase() === 'алина';
+        passwordLabel.style.display = isAlina ? 'block' : 'none';
+        passwordInput.classList.toggle('show', isAlina);
+        if (!isAlina) {
+            passwordInput.value = '';
+            loginError.textContent = '';
+            loginHint.textContent = isAlina ? '' : '';
+        } else {
+            loginHint.textContent = '🔑 Введите пароль для входа как преподаватель';
+        }
+    });
+
+    // ---------- Ключ для localStorage ----------
+    function getCheckKey(studentId, dateStr) {
+        return `checked_${studentId}_${dateStr}`;
     }
 
+    function loadChecks(studentId) {
+        const data = {};
+        const prefix = `checked_${studentId}_`;
+        for (let key in localStorage) {
+            if (key.startsWith(prefix)) {
+                const dateStr = key.replace(prefix, '');
+                data[dateStr] = localStorage.getItem(key) === 'true';
+            }
+        }
+        return data;
+    }
+
+    function saveCheck(studentId, dateStr, value) {
+        localStorage.setItem(getCheckKey(studentId, dateStr), value);
+    }
+
+    // ---------- Загрузка данных ----------
     async function loadLessons(studentId) {
-        try {
-            const response = await fetch(`config/${studentId}.json`);
-            if (!response.ok) throw new Error('Файл не найден');
-            lessonsData = await response.json();
+        if (studentId === 'alina') {
+            isTeacher = true;
+            let allLessons = [];
+            for (let s of studentList) {
+                try {
+                    const response = await fetch(`config/${s}.json`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        data.forEach(item => {
+                            allLessons.push({
+                                ...item,
+                                student: s,
+                                studentName: getStudentName(s)
+                            });
+                        });
+                    }
+                } catch (e) {
+                    console.warn(`Не удалось загрузить ${s}`);
+                }
+            }
+            lessonsData = allLessons;
             return true;
-        } catch {
-            lessonsData = [];
-            return false;
+        } else {
+            isTeacher = false;
+            try {
+                const response = await fetch(`config/${studentId}.json`);
+                if (!response.ok) throw new Error('Файл не найден');
+                const data = await response.json();
+                lessonsData = data.map(item => ({ ...item, student: studentId }));
+                return true;
+            } catch {
+                lessonsData = [];
+                return false;
+            }
         }
     }
 
+    function getStudentName(id) {
+        const names = {
+            'valeriya': 'Валерия',
+            'amina': 'Амина',
+            'aleksey': 'Алексей',
+            'alina': 'Алина'
+        };
+        return names[id] || id;
+    }
+
+    // ---------- Вход ----------
     async function handleLogin() {
-        const raw = nameInput.value.trim();
-        if (!raw) { loginError.textContent = 'Введите имя'; return; }
-        const id = nameMap[raw.toLowerCase()];
+        const rawName = nameInput.value.trim();
+        if (!rawName) { loginError.textContent = 'Введите имя'; return; }
+        
+        const id = nameMap[rawName.toLowerCase()];
         if (!id) { loginError.textContent = 'Ученик не найден'; return; }
+
+        // Проверка пароля для Алины
+        if (id === 'alina') {
+            const password = passwordInput.value.trim();
+            if (password !== TEACHER_PASSWORD) {
+                loginError.textContent = '❌ Неверный пароль';
+                return;
+            }
+        }
+
         loginError.textContent = '';
         currentStudentId = id;
+
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
 
         loginArea.style.display = 'none';
         mainContent.style.display = 'block';
+
+        if (isTeacher) {
+            greeting.textContent = '👩‍🏫 Здравствуйте, Алина! Все занятия учеников:';
+        } else {
+            greeting.textContent = `👋 Здравствуй, ${getStudentName(id)}!`;
+        }
+
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
 
     loginBtn.addEventListener('click', handleLogin);
     nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
+    // ---------- Календарь ----------
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
     }
@@ -471,7 +653,9 @@
             const dateObj = new Date(year, month, d);
             const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const dayLessons = lessonsData.filter(item => item.date === dateStr);
-            if (dayLessons.length) result.push({ date: dateObj, lessons: dayLessons });
+            if (dayLessons.length) {
+                result.push({ date: dateObj, lessons: dayLessons });
+            }
         }
         return result;
     }
@@ -510,23 +694,25 @@
         modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
         if (lessons.length === 1) {
             const l = lessons[0];
+            const studentLabel = isTeacher ? ` (${l.studentName || getStudentName(l.student)})` : '';
             modalTime.textContent = `${l.start}–${l.end}`;
-            modalTopic.textContent = l.topic;
+            modalTopic.textContent = l.topic + studentLabel;
             let html = '';
             if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
             if (l.homework) {
-                const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
+                const hwLink = buildHomeworkLink(l.homework, l.student || currentStudentId, l);
                 html += `<a href="${hwLink}" target="_blank">📝 Домашка</a>`;
             }
             modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
         } else {
             let time = '', topic = '', links = '';
             lessons.forEach((l, i) => {
+                const studentLabel = isTeacher ? ` (${l.studentName || getStudentName(l.student)})` : '';
                 time += `${l.start}–${l.end}` + (i < lessons.length-1 ? ', ' : '');
-                topic += l.topic + (i < lessons.length-1 ? ', ' : '');
+                topic += l.topic + studentLabel + (i < lessons.length-1 ? ', ' : '');
                 if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
                 if (l.homework) {
-                    const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
+                    const hwLink = buildHomeworkLink(l.homework, l.student || currentStudentId, l);
                     links += `<a href="${hwLink}" target="_blank">📝 ${i+1}</a>`;
                 }
             });
@@ -540,37 +726,102 @@
     modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
+    function buildHomeworkLink(basePath, studentId, lesson) {
+        if (!basePath) return '';
+        const params = new URLSearchParams({
+            student: studentId,
+            date: lesson.date,
+            topic: lesson.topic || '',
+            start: lesson.start || '',
+            end: lesson.end || ''
+        });
+        return basePath + '?' + params.toString();
+    }
+
+    // ---------- Список уроков ----------
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
         if (!data.length) {
             lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
             return;
         }
-        let html = `<table class="lessons-table"><thead><tr><th>Дата</th><th>День</th><th>Время</th><th>Тема</th><th>Ссылки</th></tr></thead><tbody>`;
+
+        let html = `
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th class="col-date">Дата</th>
+                        <th class="col-day">День</th>
+                        ${isTeacher ? '<th class="col-student">Уч-к</th>' : ''}
+                        <th class="col-time">Время</th>
+                        <th class="col-topic">Тема</th>
+                        <th class="col-links">Ссылки</th>
+                        ${isTeacher ? '<th class="col-done">✅</th>' : ''}
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
         data.forEach(item => {
             const dateObj = item.date;
             const day = String(dateObj.getDate()).padStart(2, '0');
             const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
             const displayDate = `${day}.${monthNum}`;
             const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
+
             item.lessons.forEach((l, idx) => {
+                const studentId = l.student || currentStudentId;
+                const rowspan = idx === 0 ? item.lessons.length : 0;
+
+                // Чекбоксы для Алины
+                let checkHtml = '';
+                if (isTeacher) {
+                    const isChecked = localStorage.getItem(getCheckKey(studentId, l.date)) === 'true';
+                    checkHtml = `
+                        <td class="col-done">
+                            <div class="check-cell">
+                                <label>
+                                    <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" ${isChecked ? 'checked' : ''} />
+                                    ДЗ
+                                </label>
+                            </div>
+                        </td>
+                    `;
+                }
+
+                const studentName = isTeacher ? `<td class="col-student" style="font-size:0.6rem;">${getStudentName(studentId)}</td>` : '';
+
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
                 if (l.homework) {
-                    const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
+                    const hwLink = buildHomeworkLink(l.homework, studentId, l);
                     links += `<a href="${hwLink}" target="_blank">📝</a>`;
                 }
-                const rowspan = idx === 0 ? item.lessons.length : 0;
+
                 html += `<tr>
-                    ${rowspan ? `<td rowspan="${rowspan}">${displayDate}</td><td rowspan="${rowspan}">${dayName}</td>` : ''}
-                    <td>${l.start}–${l.end}</td>
-                    <td style="font-size:0.6rem;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.topic}</td>
-                    <td class="links-cell">${links || '—'}</td>
+                    ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
+                    ${studentName}
+                    <td class="col-time">${l.start}–${l.end}</td>
+                    <td class="col-topic topic-cell">${l.topic}</td>
+                    <td class="col-links links-cell">${links || '—'}</td>
+                    ${checkHtml}
                 </tr>`;
             });
         });
+
         html += '</tbody></table>';
         lessonsTableContainer.innerHTML = html;
+
+        // Обработчики для чекбоксов (только для Алины)
+        if (isTeacher) {
+            document.querySelectorAll('.check-done').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const student = this.dataset.student;
+                    const date = this.dataset.date;
+                    saveCheck(student, date, this.checked);
+                });
+            });
+        }
     }
 
     function changeMonth(delta) {
@@ -591,6 +842,12 @@
             const id = nameMap[s.toLowerCase()];
             if (id) {
                 nameInput.value = s;
+                // Если это Алина — показываем поле пароля
+                if (id === 'alina') {
+                    passwordLabel.style.display = 'block';
+                    passwordInput.classList.add('show');
+                    loginHint.textContent = '🔑 Введите пароль для входа как преподаватель';
+                }
                 await handleLogin();
             }
         }
