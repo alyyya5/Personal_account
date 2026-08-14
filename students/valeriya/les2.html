@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Теория | Умножение, деление, степень, подобные слагаемые</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f2f5f9;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 25px;
+            color: #1e2f3e;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 45px 50px 55px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-left: 5px solid #3b6a8c;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a6f84;
+            padding-left: 25px;
+            margin-bottom: 35px;
+        }
+        .section {
+            margin-bottom: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #eef2f7;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .section h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: #1a4b6e;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 14px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .section p {
+            font-size: 1.1rem;
+            color: #2a3f52;
+            margin-bottom: 8px;
+        }
+        .section ul {
+            margin-left: 28px;
+            margin-bottom: 12px;
+        }
+        .section ul li {
+            font-size: 1.1rem;
+            color: #2a3f52;
+            margin-bottom: 4px;
+        }
+        .highlight {
+            font-weight: 700;
+            color: #1a3a5a;
+        }
+        .definition {
+            background: #f6f9fc;
+            border-left: 4px solid #3b6a8c;
+            padding: 12px 20px;
+            border-radius: 16px;
+            margin: 14px 0;
+            font-size: 1.1rem;
+        }
+        .rule {
+            background: #f6f9fc;
+            padding: 10px 18px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #1a2a3a;
+        }
+        .example {
+            background: #fafbfd;
+            border: 1px solid #e6ecf2;
+            border-radius: 16px;
+            padding: 10px 18px;
+            margin: 10px 0;
+            font-size: 1.05rem;
+            color: #2a3f52;
+        }
+        .example .label {
+            font-weight: 700;
+            color: #5a6f84;
+            margin-right: 8px;
+        }
+        .note {
+            color: #5a6f84;
+            font-size: 1rem;
+            margin-top: 6px;
+        }
+        .img-wrap {
+            background: #f6f9fc;
+            border-radius: 18px;
+            padding: 18px 15px 12px;
+            margin: 12px 0 6px;
+            text-align: center;
+        }
+        .img-wrap svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .img-caption {
+            font-size: 0.85rem;
+            color: #5a6f84;
+            margin-top: 4px;
+        }
+        .formula-block {
+            background: #f0f4fa;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.15rem;
+            color: #1a2a3a;
+            text-align: center;
+        }
+        .highlight-block {
+            background: #eaf3e8;
+            border-left: 4px solid #2d7d46;
+            padding: 12px 20px;
+            border-radius: 16px;
+            margin: 14px 0;
+            font-size: 1.1rem;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.8rem; }
+            .section h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Умножение, деление, степень</h1>
+    <div class="subtitle">Правила знаков · Свойства · Коэффициент · Подобные слагаемые</div>
+
+    <!-- 1. Умножение. Правило знаков -->
+    <div class="section">
+        <h2>1. Умножение. Правило знаков</h2>
+        <p>Знак произведения зависит от количества отрицательных множителей:</p>
+        <ul>
+            <li><span class="highlight">Чётное</span> количество отрицательных чисел → <span class="highlight">«+»</span></li>
+            <li><span class="highlight">Нечётное</span> количество отрицательных чисел → <span class="highlight">«–»</span></li>
+        </ul>
+        <div class="example"><span class="label">Примеры:</span> (–2) · (–3) = 6; (–2) · 3 = –6; (–2) · (–3) · (–1) = –6</div>
+        <div class="rule"><strong>a · b</strong> — модули перемножаются, знак по правилу.</div>
+    </div>
+
+    <!-- 2. Деление. Правило знаков -->
+    <div class="section">
+        <h2>2. Деление. Правило знаков</h2>
+        <p>Правило знаков для деления <span class="highlight">такое же</span>, как и для умножения:</p>
+        <div class="example"><span class="label">Примеры:</span> (–8) : (–2) = 4; 12 : (–3) = –4</div>
+        <div class="definition">
+            <strong>Важно:</strong> делить на 0 нельзя!
+        </div>
+    </div>
+
+    <!-- 3. Свойства умножения -->
+    <div class="section">
+        <h2>3. Свойства умножения</h2>
+        <ul>
+            <li>Переместительное: <span class="highlight">a · b = b · a</span></li>
+            <li>Сочетательное: <span class="highlight">(a · b) · c = a · (b · c)</span></li>
+            <li>Распределительное: <span class="highlight">a · (b + c) = a · b + a · c</span></li>
+            <li>Умножение на 0: <span class="highlight">a · 0 = 0</span></li>
+            <li>Умножение на 1: <span class="highlight">a · 1 = a</span></li>
+            <li>Умножение на –1: <span class="highlight">a · (–1) = –a</span></li>
+        </ul>
+    </div>
+
+    <!-- 4. Свойства деления -->
+    <div class="section">
+        <h2>4. Свойства деления</h2>
+        <ul>
+            <li>Деление на 1: <span class="highlight">a : 1 = a</span></li>
+            <li>Деление на –1: <span class="highlight">a : (–1) = –a</span></li>
+            <li>Деление числа на само себя: <span class="highlight">a : a = 1</span> (при a ≠ 0)</li>
+        </ul>
+        <div class="example"><span class="label">Примеры:</span> 15 : (–1) = –15; –7 : (–7) = 1</div>
+    </div>
+
+    <!-- 5. Связь умножения и деления -->
+    <div class="section">
+        <h2>5. Связь умножения и деления</h2>
+        <div class="rule">Если <strong>a · b = c</strong>, то <strong>c : b = a</strong> и <strong>c : a = b</strong> (при b, a ≠ 0).</div>
+        <div class="example"><span class="label">Пример:</span> 6 · (–5) = –30, значит –30 : (–5) = 6 и –30 : 6 = –5</div>
+        <div class="note">Эти правила помогают проверять вычисления.</div>
+    </div>
+
+    <!-- 6. СТЕПЕНЬ (НОВЫЙ РАЗДЕЛ) -->
+    <div class="section">
+        <h2>6. Степень с отрицательным основанием</h2>
+        
+        <p><span class="highlight">Степень</span> — это произведение нескольких одинаковых множителей.</p>
+        <div class="rule"><strong>aⁿ</strong> = a · a · ... · a (n раз)</div>
+
+        <p><strong>Важно!</strong> Знак результата зависит от <span class="highlight">чётности показателя</span>:</p>
+        <ul>
+            <li><span class="highlight">Чётный</span> показатель → результат <span class="highlight">положительный</span>.</li>
+            <li><span class="highlight">Нечётный</span> показатель → результат <span class="highlight">отрицательный</span>.</li>
+        </ul>
+
+        <div class="definition">
+            <strong>Запомните:</strong> отрицательное число в чётной степени даёт <span class="highlight">положительное</span> число, а в нечётной — <span class="highlight">отрицательное</span>.
+        </div>
+
+        <p><strong>Со скобками</strong></p>
+        <div class="formula-block">(–3)² = (–3) · (–3) = 9</div>
+        <div class="formula-block">(–2)³ = (–2) · (–2) · (–2) = –8</div>
+        <div class="formula-block">(–5)⁴ = (–5) · (–5) · (–5) · (–5) = 625</div>
+        <div class="note">Скобки означают, что в степень возводится всё число вместе со знаком «–».</div>
+
+        <p><strong>Без скобок</strong></p>
+        <div class="formula-block">–3² = –(3 · 3) = –9</div>
+        <div class="formula-block">–2³ = –(2 · 2 · 2) = –8</div>
+        <div class="formula-block">–5⁴ = –(5 · 5 · 5 · 5) = –625</div>
+        <div class="definition">
+            <strong>Ключевое отличие:</strong> <span class="highlight">(–a)ⁿ</span> ≠ <span class="highlight">–aⁿ</span> (при чётном n). <br>
+            Скобки меняют знак результата!
+        </div>
+
+        <p><strong>Сравнение:</strong></p>
+        <div class="example">
+            <span class="label">Пример:</span> (–3)² = 9, а –3² = –9 → <span class="highlight">9 ≠ –9</span>
+        </div>
+        <div class="example">
+            <span class="label">Пример:</span> (–2)³ = –8, а –2³ = –8 → <span class="highlight">–8 = –8</span> (при нечётном показателе совпадают)
+        </div>
+
+        <div class="note">
+            <strong>Вывод:</strong> Всегда обращайте внимание на скобки! <br>
+            <span class="highlight">(–a)ⁿ</span> — знак зависит от чётности n. <br>
+            <span class="highlight">–aⁿ</span> — сначала возводим a в степень, затем ставим «–».
+        </div>
+    </div>
+
+    <!-- 7. КОЭФФИЦИЕНТ (НОВЫЙ РАЗДЕЛ) -->
+    <div class="section">
+        <h2>7. Коэффициент</h2>
+        
+        <p><span class="highlight">Коэффициент</span> — это числовой множитель в произведении, где есть буквы (переменные).</p>
+        
+        <div class="definition">
+            <strong>Примеры:</strong> <br>
+            в выражении <span class="highlight">5x</span> коэффициент равен <span class="highlight">5</span>; <br>
+            в выражении <span class="highlight">–3y</span> коэффициент равен <span class="highlight">–3</span>; <br>
+            в выражении <span class="highlight">ab</span> коэффициент равен <span class="highlight">1</span> (так как 1 · a · b); <br>
+            в выражении <span class="highlight">–xy</span> коэффициент равен <span class="highlight">–1</span>.
+        </div>
+
+        <p><strong>Правила нахождения коэффициента:</strong></p>
+        <ul>
+            <li>Если перед буквой нет числа, коэффициент = <span class="highlight">1</span> (например, <strong>a</strong> = <strong>1 · a</strong>).</li>
+            <li>Если перед буквой стоит знак «–», коэффициент = <span class="highlight">–1</span> (например, <strong>–a</strong> = <strong>–1 · a</strong>).</li>
+            <li>Если в выражении несколько чисел и букв, перемножаем все числа — это и есть коэффициент.</li>
+        </ul>
+
+        <div class="example">
+            <span class="label">Примеры:</span> <br>
+            7ab → коэффициент <span class="highlight">7</span> <br>
+            –2,5xy → коэффициент <span class="highlight">–2,5</span> <br>
+            1,5 · 2 · a · b = 3ab → коэффициент <span class="highlight">3</span>
+        </div>
+    </div>
+
+    <!-- 8. ПОДОБНЫЕ СЛАГАЕМЫЕ (НОВЫЙ РАЗДЕЛ) -->
+    <div class="section">
+        <h2>8. Подобные слагаемые</h2>
+        
+        <p><span class="highlight">Подобные слагаемые</span> — это слагаемые, у которых <span class="highlight">одинаковая буквенная часть</span>.</p>
+
+        <div class="definition">
+            <strong>Примеры подобных:</strong> <br>
+            5x и –3x (буквенная часть <span class="highlight">x</span>) <br>
+            2ab и –7ab (буквенная часть <span class="highlight">ab</span>) <br>
+            4 и –9 (числа без букв — тоже подобные)
+        </div>
+
+        <div class="definition">
+            <strong>Примеры НЕ подобных:</strong> <br>
+            5x и 5y (разные буквы) <br>
+            2ab и 2a (разная буквенная часть) <br>
+            3x и 3x² (разные степени)
+        </div>
+
+        <div class="highlight-block">
+            <strong>Важно:</strong> у подобных слагаемых буквенная часть должна быть <span class="highlight">точно одинаковой</span>!
+        </div>
+    </div>
+
+    <!-- 9. ПРИВЕДЕНИЕ ПОДОБНЫХ СЛАГАЕМЫХ (НОВЫЙ РАЗДЕЛ) -->
+    <div class="section">
+        <h2>9. Приведение подобных слагаемых</h2>
+        
+        <p><span class="highlight">Привести подобные слагаемые</span> — значит сложить их коэффициенты, а буквенную часть оставить без изменений.</p>
+
+        <div class="rule">
+            <strong>Алгоритм:</strong> <br>
+            1. Найти подобные слагаемые. <br>
+            2. Сложить их коэффициенты. <br>
+            3. Буквенную часть переписать.
+        </div>
+
+        <div class="example">
+            <span class="label">Пример 1:</span> <br>
+            5x + 3x = (5 + 3)x = <span class="highlight">8x</span>
+        </div>
+
+        <div class="example">
+            <span class="label">Пример 2:</span> <br>
+            7y – 2y = (7 – 2)y = <span class="highlight">5y</span>
+        </div>
+
+        <div class="example">
+            <span class="label">Пример 3 (сложный):</span> <br>
+            3a + 5b – 2a + b = (3a – 2a) + (5b + b) = <span class="highlight">1a + 6b = a + 6b</span>
+        </div>
+
+        <div class="example">
+            <span class="label">Пример 4 (с отрицательными):</span> <br>
+            –4x + 2x – 3x = (–4 + 2 – 3)x = <span class="highlight">–5x</span>
+        </div>
+
+        <div class="example">
+            <span class="label">Пример 5 (с числами):</span> <br>
+            8 + 3x – 5 + 2x = (8 – 5) + (3x + 2x) = <span class="highlight">3 + 5x</span>
+        </div>
+
+        <div class="highlight-block">
+            <strong>Запомните:</strong> при приведении подобных <span class="highlight">складываются только коэффициенты</span>, буквенная часть <span class="highlight">не меняется</span>!
+        </div>
+
+        <div class="note">
+            <strong>Совет:</strong> удобно подчёркивать подобные слагаемые одинаковыми линиями, чтобы не ошибиться.
+        </div>
+    </div>
+</div>
+</body>
+</html>
