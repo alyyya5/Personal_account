@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Для преподавателя</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            min-height: 100vh;
+            padding: 20px 16px;
+            color: #1a2a3a;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06);
+            padding: 24px 24px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b2a44;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #4a627a;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .login-area {
+            max-width: 360px;
+            margin: 0 auto 16px;
+            background: white;
+            padding: 18px 22px 22px;
+            border-radius: 28px;
+            border: 1px solid #e9eff6;
+        }
+        .login-area label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1f4970;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .login-area input {
+            width: 100%;
+            padding: 8px 14px;
+            border: 2px solid #dce5ef;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            background: #f9fcff;
+            outline: none;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .login-area input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+        }
+        .login-area button {
+            background: #1e4663;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 24px;
+            border-radius: 24px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-area button:hover {
+            background: #0f3550;
+        }
+        .login-error {
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            min-height: 1.2em;
+        }
+        .login-hint {
+            color: #6c86a3;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .logout-btn {
+            background: #e9eff6;
+            border: none;
+            color: #1f4970;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.15s;
+            float: right;
+            margin-top: -30px;
+        }
+        .logout-btn:hover {
+            background: #dce5ef;
+        }
+
+        /* ----- Список с прокруткой ----- */
+        .lessons-list {
+            margin-top: 12px;
+            background: white;
+            border-radius: 14px;
+            padding: 10px 12px 12px;
+            border: 1px solid #e9eff6;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+        .lessons-list h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 4px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+
+        .lessons-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            table-layout: fixed;
+        }
+        .lessons-table th {
+            text-align: left;
+            padding: 4px 4px 3px 0;
+            font-weight: 600;
+            color: #4a627a;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .lessons-table td {
+            padding: 4px 4px 4px 0;
+            border-bottom: 1px solid #f0f4fa;
+            vertical-align: middle;
+            line-height: 1.3;
+        }
+        .lessons-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-date { width: 48px; }
+        .col-day { width: 42px; }
+        .col-student { width: 54px; }
+        .col-time { width: 72px; }
+        .col-topic { width: auto; }
+        .col-links { width: 74px; text-align: right; white-space: nowrap; }
+        .col-done { width: 100px; text-align: center; white-space: nowrap; }
+
+        .topic-cell {
+            font-size: 0.7rem;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-height: 2.6em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .links-cell {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: nowrap;
+        }
+        .links-cell a {
+            display: inline-flex;
+            align-items: center;
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 0 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.6rem;
+            font-weight: 500;
+            transition: 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .links-cell a:hover {
+            background: #bfdbfe;
+        }
+
+        .check-cell {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        .check-cell label {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.6rem;
+            color: #1f4970;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .check-cell input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            accent-color: #3b82f6;
+            flex-shrink: 0;
+        }
+
+        .no-lessons-msg {
+            color: #6c86a3;
+            font-style: italic;
+            padding: 8px 0;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 14px 12px 18px; }
+            .col-date { width: 38px; }
+            .col-day { width: 34px; }
+            .col-student { width: 44px; }
+            .col-time { width: 56px; }
+            .col-links { width: 58px; }
+            .col-done { width: 80px; }
+            .lessons-table { font-size: 0.65rem; }
+            .topic-cell { font-size: 0.6rem; }
+            .check-cell label { font-size: 0.5rem; }
+            .check-cell input[type="checkbox"] { width: 12px; height: 12px; }
+            .links-cell a { font-size: 0.5rem; padding: 0 6px; }
+            .lessons-list { max-height: 400px; }
+        }
+        @media (max-width: 450px) {
+            .col-date { width: 32px; }
+            .col-day { width: 30px; }
+            .col-student { width: 36px; }
+            .col-time { width: 48px; }
+            .col-links { width: 48px; }
+            .col-done { width: 68px; }
+            .check-cell label { font-size: 0.45rem; }
+            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
+            .lessons-list { max-height: 340px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>👩‍🏫 Преподаватель</h1>
+    <div class="subtitle">Все занятия всех учеников</div>
+
+    <div class="login-area" id="loginArea">
+        <label for="nameInput">👤 Имя</label>
+        <input type="text" id="nameInput" placeholder="Алина" />
+        <label for="passwordInput">🔑 Пароль</label>
+        <input type="password" id="passwordInput" placeholder="Введите пароль" />
+        <button id="loginBtn">Войти</button>
+        <div class="login-error" id="loginError"></div>
+        <div class="login-hint" id="loginHint"></div>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+        <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
+        <div class="lessons-list" id="lessonsList">
+            <h3>📋 Все уроки на месяц</h3>
+            <div id="lessonsTableContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    //  🔐  ПАРОЛЬ ДЛЯ АЛИНЫ
+    // ============================================================
+    const TEACHER_PASSWORD = '12345';
+
+    const studentList = ['valeriya', 'amina', 'aleksey'];
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+    let lessonsData = [];
+
+    const nameInput = document.getElementById('nameInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const loginHint = document.getElementById('loginHint');
+    const mainContent = document.getElementById('mainContent');
+    const loginArea = document.getElementById('loginArea');
+    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function getStudentName(id) {
+        const names = { 'valeriya': 'Валерия', 'amina': 'Амина', 'aleksey': 'Алексей' };
+        return names[id] || id;
+    }
+
+    function getCheckKey(studentId, dateStr, type) {
+        return `checked_${studentId}_${dateStr}_${type}`;
+    }
+
+    function saveCheck(studentId, dateStr, type, value) {
+        localStorage.setItem(getCheckKey(studentId, dateStr, type), value);
+    }
+
+    function loadCheck(studentId, dateStr, type) {
+        return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
+    }
+
+    async function loadAllLessons() {
+        let all = [];
+        for (let s of studentList) {
+            try {
+                const response = await fetch(`config/${s}.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    data.forEach(item => {
+                        all.push({ ...item, student: s, studentName: getStudentName(s) });
+                    });
+                }
+            } catch (e) {
+                console.warn('Не удалось загрузить', s);
+            }
+        }
+        lessonsData = all;
+    }
+
+    function getLessonsForMonth(year, month) {
+        const result = [];
+        const days = new Date(year, month + 1, 0).getDate();
+        for (let d = 1; d <= days; d++) {
+            const dateObj = new Date(year, month, d);
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const dayLessons = lessonsData.filter(item => item.date === dateStr);
+            if (dayLessons.length) {
+                result.push({ date: dateObj, lessons: dayLessons });
+            }
+        }
+        return result;
+    }
+
+    function renderLessonsList(year, month) {
+        const data = getLessonsForMonth(year, month);
+        if (!data.length) {
+            lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
+            return;
+        }
+
+        let html = `
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th class="col-date">Дата</th>
+                        <th class="col-day">День</th>
+                        <th class="col-student">Уч-к</th>
+                        <th class="col-time">Время</th>
+                        <th class="col-topic">Тема</th>
+                        <th class="col-links">Ссылки</th>
+                        <th class="col-done">Готово</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(item => {
+            const dateObj = item.date;
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const displayDate = `${day}.${monthNum}`;
+            const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
+
+            item.lessons.forEach((l, idx) => {
+                const studentId = l.student;
+                const rowspan = idx === 0 ? item.lessons.length : 0;
+
+                const hwChecked = loadCheck(studentId, l.date, 'homework');
+                const matChecked = loadCheck(studentId, l.date, 'material');
+
+                const checkHtml = `
+                    <td class="col-done">
+                        <div class="check-cell">
+                            <label>
+                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="homework" ${hwChecked ? 'checked' : ''} />
+                                ДЗ
+                            </label>
+                            <label>
+                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="material" ${matChecked ? 'checked' : ''} />
+                                📚
+                            </label>
+                        </div>
+                    </td>
+                `;
+
+                let links = '';
+                if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
+                if (l.homework) {
+                    const params = new URLSearchParams({
+                        student: studentId,
+                        date: l.date,
+                        topic: l.topic || '',
+                        start: l.start || '',
+                        end: l.end || ''
+                    });
+                    links += `<a href="${l.homework}?${params.toString()}" target="_blank">📝</a>`;
+                }
+
+                html += `<tr>
+                    ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
+                    <td class="col-student">${getStudentName(studentId)}</td>
+                    <td class="col-time">${l.start}–${l.end}</td>
+                    <td class="col-topic topic-cell">${l.topic || '—'}</td>
+                    <td class="col-links links-cell">${links || '—'}</td>
+                    ${checkHtml}
+                </tr>`;
+            });
+        });
+
+        html += '</tbody></table>';
+        lessonsTableContainer.innerHTML = html;
+
+        document.querySelectorAll('.check-done').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const student = this.dataset.student;
+                const date = this.dataset.date;
+                const type = this.dataset.type;
+                saveCheck(student, date, type, this.checked);
+            });
+        });
+    }
+
+    async function handleLogin() {
+        const name = nameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (name.toLowerCase() !== 'алина') {
+            loginError.textContent = '❌ Только для Алины';
+            return;
+        }
+        if (password !== TEACHER_PASSWORD) {
+            loginError.textContent = '❌ Неверный пароль';
+            return;
+        }
+
+        loginError.textContent = '';
+        await loadAllLessons();
+        loginArea.style.display = 'none';
+        mainContent.style.display = 'block';
+        renderLessonsList(currentYear, currentMonth);
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+    logoutBtn.addEventListener('click', () => {
+        localStorage.clear();
+        location.reload();
+    });
+
+    // Проверка: если уже есть сессия — показываем сразу
+    window.addEventListener('DOMContentLoaded', async () => {
+        // Если нет сохранённой сессии — ничего не делаем
+        // Можно добавить авто-вход по кукам, но для простоты оставим ручной вход
+    });
+</script>
+</body>
+</html>
