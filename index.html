@@ -3,105 +3,141 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Личный кабинет</title>
+    <title>Для преподавателя</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px 12px;
+            padding: 20px 16px;
             color: #1a2a3a;
         }
         .container {
-            max-width: 680px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 28px;
-            box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
-            padding: 18px 18px 22px;
+            box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06);
+            padding: 24px 24px 28px;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #0b2a44;
-            margin-bottom: 14px;
+            margin-bottom: 4px;
             text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #4a627a;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
         }
 
         .login-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            max-width: 360px;
+            margin: 0 auto 16px;
             background: white;
-            padding: 16px 20px 20px;
+            padding: 18px 22px 22px;
             border-radius: 28px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            margin-bottom: 16px;
             border: 1px solid #e9eff6;
-            max-width: 340px;
-            margin-left: auto;
-            margin-right: auto;
         }
         .login-area label {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #1f4970;
-            margin-bottom: 6px;
+            display: block;
+            margin-bottom: 4px;
         }
         .login-area input {
             width: 100%;
             padding: 8px 14px;
             border: 2px solid #dce5ef;
             border-radius: 24px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             background: #f9fcff;
             outline: none;
-            transition: 0.2s;
             text-align: center;
+            margin-bottom: 6px;
         }
         .login-area input:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
         }
         .login-area button {
             background: #1e4663;
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             padding: 8px 24px;
             border-radius: 24px;
             cursor: pointer;
-            transition: 0.2s;
-            margin-top: 8px;
             width: 100%;
         }
-        .login-area button:hover { background: #0f3550; }
-        .login-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; }
+        .login-area button:hover {
+            background: #0f3550;
+        }
+        .login-error {
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            min-height: 1.2em;
+        }
+        .login-hint {
+            color: #6c86a3;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
 
+        .logout-btn {
+            background: #e9eff6;
+            border: none;
+            color: #1f4970;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.15s;
+            float: right;
+            margin-top: -30px;
+        }
+        .logout-btn:hover {
+            background: #dce5ef;
+        }
+
+        /* ----- Календарь (большой) ----- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 0 0 4px;
+            margin: 0 0 8px;
             flex-wrap: wrap;
-            gap: 2px;
+            gap: 6px;
         }
-        .calendar-header .month-year { font-size: 0.8rem; font-weight: 700; color: #0b2a44; }
-        .calendar-header .nav-buttons { display: flex; gap: 3px; }
+        .calendar-header .month-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b2a44;
+        }
+        .calendar-header .nav-buttons {
+            display: flex;
+            gap: 6px;
+        }
         .calendar-header .nav-buttons button {
             background: white;
             border: 1px solid #dce5ef;
-            border-radius: 16px;
-            padding: 1px 8px;
-            font-size: 0.65rem;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             color: #1f4970;
@@ -115,38 +151,43 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 1.5px;
+            gap: 4px;
             background: #f8fafc;
-            border-radius: 10px;
-            padding: 4px 3px;
+            border-radius: 14px;
+            padding: 10px 8px;
             border: 1px solid #e9eff6;
+            margin-bottom: 16px;
         }
         .calendar-grid .weekday {
             font-weight: 600;
-            font-size: 0.45rem;
+            font-size: 0.65rem;
             text-align: center;
             color: #4a627a;
-            padding: 1px 0 0;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 4px 0 2px;
+            border-bottom: 1.5px solid #e2e8f0;
             text-transform: uppercase;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.3px;
         }
         .calendar-grid .day {
-            aspect-ratio: 1/0.7;
+            aspect-ratio: 1/0.85;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            font-size: 0.5rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
             font-weight: 500;
             background: white;
             cursor: default;
             border: 1px solid transparent;
             position: relative;
-            transition: 0.1s;
+            transition: 0.15s;
         }
-        .calendar-grid .day.other-month { color: #b8c8da; background: transparent; box-shadow: none; }
+        .calendar-grid .day.other-month {
+            color: #b8c8da;
+            background: transparent;
+            box-shadow: none;
+        }
         .calendar-grid .day.has-lesson {
             background: #dbeafe;
             border-color: #3b82f6;
@@ -156,63 +197,76 @@
         .calendar-grid .day.has-lesson:hover {
             background: #bfdbfe;
             transform: scale(1.04);
-            box-shadow: 0 2px 6px rgba(59,130,246,0.10);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
         }
-        .calendar-grid .day .dot { width: 3px; height: 3px; border-radius: 50%; background: #3b82f6; margin-top: 0; }
-        .calendar-grid .day.today { border: 2px solid #1e4663; }
+        .calendar-grid .day .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin-top: 2px;
+        }
+        .calendar-grid .day.today {
+            border: 2px solid #1e4663;
+        }
 
+        /* ----- Список с прокруткой ----- */
         .lessons-list {
-            margin-top: 10px;
+            margin-top: 8px;
             background: white;
             border-radius: 14px;
-            padding: 8px 10px 10px;
+            padding: 10px 12px 12px;
             border: 1px solid #e9eff6;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            max-height: 450px; /* Добавил прокрутку, если список станет слишком длинным */
+            max-height: 500px; /* Немного увеличил высоту окна прокрутки */
             overflow-y: auto;
         }
         .lessons-list h3 {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #0b2a44;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             border-bottom: 1.5px solid #e2e8f0;
-            padding-bottom: 3px;
+            padding-bottom: 4px;
         }
+
         .lessons-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             table-layout: fixed;
         }
         .lessons-table th {
             text-align: left;
-            padding: 2px 4px 1px 0;
+            padding: 4px 4px 3px 0;
             font-weight: 600;
             color: #4a627a;
             border-bottom: 1px solid #e2e8f0;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.3px;
         }
         .lessons-table td {
-            padding: 6px 4px; /* Увеличил вертикальный отступ */
+            padding: 8px 4px; /* Увеличил вертикальный отступ для красоты */
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
-            line-height: 1.3;
+            line-height: 1.4;
         }
-        .lessons-table tr:last-child td { border-bottom: none; }
+        .lessons-table tr:last-child td {
+            border-bottom: none;
+        }
 
-        .lessons-table .col-date { width: 40px; }
-        .lessons-table .col-day { width: 40px; }
-        .lessons-table .col-time { width: 64px; }
-        .lessons-table .col-topic { width: auto; }
-        .lessons-table .col-links { width: 64px; text-align: center; }
+        .col-date { width: 48px; }
+        .col-day { width: 42px; }
+        .col-student { width: 54px; }
+        .col-time { width: 76px; }
+        .col-topic { width: auto; }
+        .col-links { width: 70px; text-align: center; }
+        .col-done { width: 90px; text-align: center; }
 
         /* ИСПРАВЛЕНИЕ: Убрано обрезание текста. Теперь тема видна полностью */
-        .lessons-table .topic-cell {
-            font-size: 0.65rem;
-            line-height: 1.3;
+        .topic-cell {
+            font-size: 0.75rem;
+            line-height: 1.4;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
@@ -228,130 +282,102 @@
             flex-wrap: nowrap;
         }
 
-        .lessons-table .links-cell a {
+        .links-cell a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: #e6f0ff;
             color: #1e4a76;
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             transition: 0.15s;
             flex-shrink: 0;
         }
-        .lessons-table .links-cell a:hover { background: #bfdbfe; }
+        .links-cell a:hover {
+            background: #bfdbfe;
+        }
 
-        .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 6px 0; font-size: 0.75rem; }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10,25,45,0.30);
-            backdrop-filter: blur(4px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 14px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-card {
-            background: white;
-            border-radius: 24px;
-            max-width: 300px;
-            width: 100%;
-            padding: 16px 18px 20px;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
-            animation: modalFade 0.2s ease-out;
-            position: relative;
-        }
-        @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .modal-card .close-btn {
-            position: absolute;
-            top: 6px;
-            right: 10px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            color: #7a94b0;
-            background: none;
-            border: none;
-            line-height: 1;
-        }
-        .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
-        .modal-card .modal-date { font-size: 0.7rem; color: #4a627a; margin-bottom: 2px; }
-        .modal-card .modal-time { font-size: 0.9rem; font-weight: 700; color: #0b2a44; }
-        .modal-card .modal-topic { font-size: 0.8rem; font-weight: 600; margin: 3px 0 6px; color: #0f2f4a; }
-        .modal-card .modal-links {
+        .check-cell label {
             display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 2px;
-        }
-        .modal-card .modal-links a {
-            background: #1e4663;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.7rem;
-            display: inline-flex;
             align-items: center;
-            gap: 3px;
-            transition: 0.15s;
+            gap: 4px;
+            font-size: 0.65rem;
+            color: #1f4970;
+            cursor: pointer;
+            white-space: nowrap;
         }
-        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
-        .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
-        .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
+        .check-cell input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            accent-color: #3b82f6;
+            flex-shrink: 0;
+        }
 
-        @media (max-width: 500px) {
-            .container { padding: 12px 10px 16px; border-radius: 20px; }
-            h1 { font-size: 1.1rem; margin-bottom: 10px; }
-            .login-area { padding: 12px 14px 16px; max-width: 100%; }
-            .login-area input { font-size: 0.8rem; padding: 6px 12px; }
-            .login-area button { font-size: 0.8rem; padding: 6px 16px; }
-            .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
-            .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
-            .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
-            .calendar-header .month-year { font-size: 0.65rem; }
-            .calendar-header .nav-buttons button { padding: 1px 6px; font-size: 0.55rem; }
-            .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; max-height: 350px;}
-            .lessons-list h3 { font-size: 0.7rem; }
-            .lessons-table { font-size: 0.55rem; }
-            .lessons-table th, .lessons-table td { padding: 4px 2px; }
-            .lessons-table .links-cell a { width: 20px; height: 20px; font-size: 0.6rem; }
-            .lessons-table .col-date { width: 34px; }
-            .lessons-table .col-day { width: 34px; }
-            .lessons-table .col-time { width: 54px; }
-            .lessons-table .col-links { width: 54px; }
-            .modal-card { padding: 12px 14px 16px; max-width: 260px; }
-            .modal-card .modal-time { font-size: 0.8rem; }
-            .modal-card .modal-topic { font-size: 0.7rem; }
-            .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
+        .no-lessons-msg {
+            color: #6c86a3;
+            font-style: italic;
+            padding: 8px 0;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 14px 12px 18px; }
+            .col-date { width: 38px; }
+            .col-day { width: 34px; }
+            .col-student { width: 44px; }
+            .col-time { width: 60px; }
+            .col-links { width: 60px; }
+            .col-done { width: 80px; }
+            .lessons-table { font-size: 0.65rem; }
+            .topic-cell { font-size: 0.65rem; }
+            .check-cell label { font-size: 0.55rem; }
+            .check-cell input[type="checkbox"] { width: 12px; height: 12px; }
+            .links-cell a { width: 22px; height: 22px; font-size: 0.7rem; }
+            .lessons-list { max-height: 400px; }
+            .calendar-grid { gap: 3px; padding: 8px 6px; }
+            .calendar-grid .day { font-size: 0.7rem; border-radius: 12px; aspect-ratio: 1/0.8; }
+            .calendar-grid .weekday { font-size: 0.55rem; }
+            .calendar-header .month-year { font-size: 1rem; }
+            .calendar-header .nav-buttons button { padding: 3px 10px; font-size: 0.75rem; }
+        }
+        @media (max-width: 450px) {
+            .col-date { width: 32px; }
+            .col-day { width: 28px; }
+            .col-student { width: 38px; }
+            .col-time { width: 52px; }
+            .col-links { width: 50px; }
+            .col-done { width: 70px; }
+            .check-cell label { font-size: 0.5rem; }
+            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
+            .lessons-list { max-height: 350px; }
+            .calendar-grid .day { font-size: 0.6rem; border-radius: 10px; }
+            .calendar-grid .weekday { font-size: 0.5rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📅 Расписание занятий</h1>
+    <h1>👩‍ Преподаватель</h1>
+    <div class="subtitle">Все занятия всех учеников</div>
 
     <div class="login-area" id="loginArea">
-        <label for="nameInput">👤 Ваше имя</label>
-        <input type="text" id="nameInput" placeholder="" />
+        <label for="nameInput">👤 Имя</label>
+        <input type="text" id="nameInput" placeholder="Алина" />
+        <label for="passwordInput">🔑 Пароль</label>
+        <input type="password" id="passwordInput" placeholder="Введите пароль" />
         <button id="loginBtn">Войти</button>
-        <span class="login-error" id="loginError"></span>
+        <div class="login-error" id="loginError"></div>
+        <div class="login-hint" id="loginHint"></div>
     </div>
 
     <div id="mainContent" style="display: none;">
+        <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
+
+        <!-- Большой календарь -->
         <div class="calendar-header">
             <span class="month-year" id="monthYear"></span>
             <div class="nav-buttons">
@@ -361,6 +387,7 @@
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
 
+        <!-- Список с галочками -->
         <div class="lessons-list" id="lessonsList">
             <h3>📋 Все уроки на месяц</h3>
             <div id="lessonsTableContainer"></div>
@@ -368,98 +395,66 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-card">
-        <button class="close-btn" id="modalClose">&times;</button>
-        <div class="modal-date" id="modalDate"></div>
-        <div class="modal-time" id="modalTime"></div>
-        <div class="modal-topic" id="modalTopic"></div>
-        <div class="modal-links" id="modalLinks"></div>
-    </div>
-</div>
-
 <script>
-    const nameMap = {
-        'валерия': 'valeriya',
-        'лера': 'valeriya',
-        'амина': 'amina',
-        'алексей': 'aleksey',
-        'алина': 'alina'
-    };
+    // ============================================================
+    //  🔐  ПАРОЛЬ ДЛЯ АЛИНЫ
+    // ============================================================
+    const TEACHER_PASSWORD = '12345';
 
-    let currentStudentId = null;
+    const studentList = ['valeriya', 'amina', 'aleksey'];
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
 
     const nameInput = document.getElementById('nameInput');
+    const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
+    const loginHint = document.getElementById('loginHint');
     const mainContent = document.getElementById('mainContent');
     const loginArea = document.getElementById('loginArea');
+    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const logoutBtn = document.getElementById('logoutBtn');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
-    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalClose = document.getElementById('modalClose');
-    const modalDate = document.getElementById('modalDate');
-    const modalTime = document.getElementById('modalTime');
-    const modalTopic = document.getElementById('modalTopic');
-    const modalLinks = document.getElementById('modalLinks');
 
-    function buildHomeworkLink(basePath, studentId, lesson) {
-        if (!basePath) return '';
-        const params = new URLSearchParams({
-            student: studentId,
-            date: lesson.date,
-            topic: lesson.topic || '',
-            start: lesson.start || '',
-            end: lesson.end || ''
-        });
-        const separator = basePath.includes('?') ? '&' : '?';
-        return basePath + separator + params.toString();
+    function getStudentName(id) {
+        const names = { 'valeriya': 'Валерия', 'amina': 'Амина', 'aleksey': 'Алексей' };
+        return names[id] || id;
     }
 
-    async function loadLessons(studentId) {
-        try {
-            const response = await fetch(`config/${studentId}.json`);
-            if (!response.ok) throw new Error('Файл не найден');
-            lessonsData = await response.json();
-            return true;
-        } catch {
-            lessonsData = [];
-            return false;
+    function getCheckKey(studentId, dateStr, type) {
+        return `checked_${studentId}_${dateStr}_${type}`;
+    }
+
+    function saveCheck(studentId, dateStr, type, value) {
+        localStorage.setItem(getCheckKey(studentId, dateStr, type), value);
+    }
+
+    function loadCheck(studentId, dateStr, type) {
+        return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
+    }
+
+    async function loadAllLessons() {
+        let all = [];
+        for (let s of studentList) {
+            try {
+                const response = await fetch(`config/${s}.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    data.forEach(item => {
+                        all.push({ ...item, student: s, studentName: getStudentName(s) });
+                    });
+                }
+            } catch (e) {
+                console.warn('Не удалось загрузить', s);
+            }
         }
+        lessonsData = all;
     }
-
-    async function handleLogin() {
-        const raw = nameInput.value.trim();
-        if (!raw) { loginError.textContent = 'Введите имя'; return; }
-        const id = nameMap[raw.toLowerCase()];
-        if (!id) { loginError.textContent = 'Ученик не найден'; return; }
-
-        if (id === 'alina') {
-            window.location.href = 'teacher.html';
-            return;
-        }
-
-        loginError.textContent = '';
-        currentStudentId = id;
-        const ok = await loadLessons(id);
-        if (!ok) { loginError.textContent = 'Нет расписания'; return; }
-
-        // Скрываем форму входа
-        loginArea.style.display = 'none';
-        mainContent.style.display = 'block';
-        renderCalendar(currentYear, currentMonth);
-        renderLessonsList(currentYear, currentMonth);
-    }
-
-    loginBtn.addEventListener('click', handleLogin);
-    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
@@ -472,7 +467,9 @@
             const dateObj = new Date(year, month, d);
             const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const dayLessons = lessonsData.filter(item => item.date === dateStr);
-            if (dayLessons.length) result.push({ date: dateObj, lessons: dayLessons });
+            if (dayLessons.length) {
+                result.push({ date: dateObj, lessons: dayLessons });
+            }
         }
         return result;
     }
@@ -497,49 +494,7 @@
             html += `<div class="${cls}" ${attr}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
         }
         calendarGrid.innerHTML = html;
-        document.querySelectorAll('.day.has-lesson').forEach(el => {
-            el.addEventListener('click', function() {
-                const lessons = getLessonsForDate(this.dataset.date);
-                if (lessons.length) showModal(this.dataset.date, lessons);
-            });
-        });
     }
-
-    function showModal(dateStr, lessons) {
-        const [y, m, d] = dateStr.split('-').map(Number);
-        const dateObj = new Date(y, m-1, d);
-        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        if (lessons.length === 1) {
-            const l = lessons[0];
-            modalTime.textContent = `${l.start}–${l.end}`;
-            modalTopic.textContent = l.topic;
-            let html = '';
-            if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
-            if (l.homework) {
-                const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                html += `<a href="${hwLink}" target="_blank">📝 Домашка</a>`;
-            }
-            modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
-        } else {
-            let time = '', topic = '', links = '';
-            lessons.forEach((l, i) => {
-                time += `${l.start}–${l.end}` + (i < lessons.length-1 ? ', ' : '');
-                topic += l.topic + (i < lessons.length-1 ? ', ' : '');
-                if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
-                if (l.homework) {
-                    const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank">📝 ${i+1}</a>`;
-                }
-            });
-            modalTime.textContent = time;
-            modalTopic.textContent = topic;
-            modalLinks.innerHTML = links || '<span style="color:#6c86a3;">Нет ссылок</span>';
-        }
-        modalOverlay.classList.add('active');
-    }
-
-    modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
-    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
@@ -547,47 +502,95 @@
             lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
             return;
         }
+
         let html = `
             <table class="lessons-table">
                 <thead>
                     <tr>
                         <th class="col-date">Дата</th>
                         <th class="col-day">День</th>
+                        <th class="col-student">Уч-к</th>
                         <th class="col-time">Время</th>
                         <th class="col-topic">Тема</th>
                         <th class="col-links">Ссылки</th>
+                        <th class="col-done">Готово</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
+
         data.forEach(item => {
             const dateObj = item.date;
             const day = String(dateObj.getDate()).padStart(2, '0');
             const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
             const displayDate = `${day}.${monthNum}`;
             const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
+
             item.lessons.forEach((l, idx) => {
+                const studentId = l.student;
+                const rowspan = idx === 0 ? item.lessons.length : 0;
+
+                // === ГАЛОЧКИ ===
+                const hwChecked = loadCheck(studentId, l.date, 'homework');
+                const matChecked = loadCheck(studentId, l.date, 'material');
+
+                const checkHtml = `
+                    <td class="col-done">
+                        <div class="inner-flex check-cell">
+                            <label>
+                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="homework" ${hwChecked ? 'checked' : ''} />
+                                ДЗ
+                            </label>
+                            <label>
+                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="material" ${matChecked ? 'checked' : ''} />
+                                📚
+                            </label>
+                        </div>
+                    </td>
+                `;
+
+                // === ССЫЛКИ ===
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank" title="Материал">📖</a>`;
                 if (l.homework) {
-                    const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank" title="Домашка">📝</a>`;
+                    const params = new URLSearchParams({
+                        student: studentId,
+                        date: l.date,
+                        topic: l.topic || '',
+                        start: l.start || '',
+                        end: l.end || ''
+                    });
+                    const separator = l.homework.includes('?') ? '&' : '?';
+                    links += `<a href="${l.homework}${separator}${params.toString()}" target="_blank" title="Домашка">📝</a>`;
                 }
-                const rowspan = idx === 0 ? item.lessons.length : 0;
+
                 html += `<tr>
                     ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
+                    <td class="col-student">${getStudentName(studentId)}</td>
                     <td class="col-time">${l.start}–${l.end}</td>
-                    <td class="col-topic topic-cell">${l.topic}</td>
+                    <td class="col-topic topic-cell">${l.topic || '—'}</td>
                     <td class="col-links links-cell">
                         <div class="inner-flex">
                             ${links || '—'}
                         </div>
                     </td>
+                    ${checkHtml}
                 </tr>`;
             });
         });
+
         html += '</tbody></table>';
         lessonsTableContainer.innerHTML = html;
+
+        // Обработчики для галочек
+        document.querySelectorAll('.check-done').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const student = this.dataset.student;
+                const date = this.dataset.date;
+                const type = this.dataset.type;
+                saveCheck(student, date, type, this.checked);
+            });
+        });
     }
 
     function changeMonth(delta) {
@@ -601,16 +604,34 @@
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
     nextMonthBtn.addEventListener('click', () => changeMonth(1));
 
-    window.addEventListener('DOMContentLoaded', async () => {
-        const p = new URLSearchParams(window.location.search);
-        const s = p.get('student');
-        if (s) {
-            const id = nameMap[s.toLowerCase()];
-            if (id) {
-                nameInput.value = s;
-                await handleLogin();
-            }
+    async function handleLogin() {
+        const name = nameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (name.toLowerCase() !== 'алина') {
+            loginError.textContent = '❌ Только для Алины';
+            return;
         }
+        if (password !== TEACHER_PASSWORD) {
+            loginError.textContent = '❌ Неверный пароль';
+            return;
+        }
+
+        loginError.textContent = '';
+        await loadAllLessons();
+        loginArea.style.display = 'none';
+        mainContent.style.display = 'block';
+        renderCalendar(currentYear, currentMonth);
+        renderLessonsList(currentYear, currentMonth);
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+    logoutBtn.addEventListener('click', () => {
+        localStorage.clear();
+        location.reload();
     });
 </script>
 </body>
