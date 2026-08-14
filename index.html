@@ -53,7 +53,9 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: #1f4970;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            width: 100%;
+            text-align: left;
         }
         .login-area input {
             width: 100%;
@@ -65,6 +67,7 @@
             outline: none;
             transition: 0.2s;
             text-align: center;
+            margin-bottom: 6px;
         }
         .login-area input:focus {
             border-color: #3b82f6;
@@ -80,11 +83,11 @@
             border-radius: 24px;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 8px;
+            margin-top: 4px;
             width: 100%;
         }
         .login-area button:hover { background: #0f3550; }
-        .login-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; }
+        .login-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; min-height: 1.2em; }
 
         .calendar-header {
             display: flex;
@@ -168,7 +171,7 @@
             padding: 8px 10px 10px;
             border: 1px solid #e9eff6;
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            max-height: 450px; /* Добавил прокрутку, если список станет слишком длинным */
+            max-height: 450px;
             overflow-y: auto;
         }
         .lessons-list h3 {
@@ -196,7 +199,7 @@
             letter-spacing: 0.1px;
         }
         .lessons-table td {
-            padding: 6px 4px; /* Увеличил вертикальный отступ */
+            padding: 6px 4px;
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
             line-height: 1.3;
@@ -209,7 +212,6 @@
         .lessons-table .col-topic { width: auto; }
         .lessons-table .col-links { width: 64px; text-align: center; }
 
-        /* ИСПРАВЛЕНИЕ: Убрано обрезание текста. Теперь тема видна полностью */
         .lessons-table .topic-cell {
             font-size: 0.65rem;
             line-height: 1.3;
@@ -219,7 +221,6 @@
             color: #1a2a3a;
         }
 
-        /* Flex внутри div, а не в td */
         .inner-flex {
             display: flex;
             gap: 4px;
@@ -313,6 +314,23 @@
         .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
         .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
 
+        /* ---------- Прогресс ---------- */
+        .progress-section {
+            margin-top: 14px;
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+        }
+        .progress-section h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
         @media (max-width: 500px) {
             .container { padding: 12px 10px 16px; border-radius: 20px; }
             h1 { font-size: 1.1rem; margin-bottom: 10px; }
@@ -337,6 +355,7 @@
             .modal-card .modal-time { font-size: 0.8rem; }
             .modal-card .modal-topic { font-size: 0.7rem; }
             .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
+            .progress-section { padding: 10px 10px 12px; }
         }
     </style>
 </head>
@@ -347,6 +366,8 @@
     <div class="login-area" id="loginArea">
         <label for="nameInput">👤 Ваше имя</label>
         <input type="text" id="nameInput" placeholder="" />
+        <label for="passwordInput">🔑 Пароль</label>
+        <input type="password" id="passwordInput" placeholder="Введите пароль" />
         <button id="loginBtn">Войти</button>
         <span class="login-error" id="loginError"></span>
     </div>
@@ -365,6 +386,12 @@
             <h3>📋 Все уроки на месяц</h3>
             <div id="lessonsTableContainer"></div>
         </div>
+
+        <!-- Прогресс -->
+        <div class="progress-section" id="progressSection" style="display: none;">
+            <h3>📊 Мой прогресс</h3>
+            <div id="progressContainer"></div>
+        </div>
     </div>
 </div>
 
@@ -379,6 +406,19 @@
 </div>
 
 <script>
+    // ============================================================
+    //  🔐  ПАРОЛИ УЧЕНИКОВ (МЕНЯЙТЕ ЗДЕСЬ!)
+    // ============================================================
+    const passwords = {
+        'valeriya': '1234',    // Пароль Валерии
+        'amina': '5678',       // Пароль Амины
+        'aleksey': '9012',     // Пароль Алексея
+        'alina': 'teacher'     // Пароль Алины (преподаватель)
+    };
+
+    // ============================================================
+    //  ОСТАЛЬНЫЕ НАСТРОЙКИ
+    // ============================================================
     const nameMap = {
         'валерия': 'valeriya',
         'лера': 'valeriya',
@@ -394,6 +434,7 @@
     let lessonsData = [];
 
     const nameInput = document.getElementById('nameInput');
+    const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
     const mainContent = document.getElementById('mainContent');
@@ -409,6 +450,8 @@
     const modalTime = document.getElementById('modalTime');
     const modalTopic = document.getElementById('modalTopic');
     const modalLinks = document.getElementById('modalLinks');
+    const progressSection = document.getElementById('progressSection');
+    const progressContainer = document.getElementById('progressContainer');
 
     function buildHomeworkLink(basePath, studentId, lesson) {
         if (!basePath) return '';
@@ -419,8 +462,7 @@
             start: lesson.start || '',
             end: lesson.end || ''
         });
-        const separator = basePath.includes('?') ? '&' : '?';
-        return basePath + separator + params.toString();
+        return basePath + '?' + params.toString();
     }
 
     async function loadLessons(studentId) {
@@ -435,11 +477,99 @@
         }
     }
 
+    // ============================================================
+    //  📊  ПРОГРЕСС
+    // ============================================================
+    async function renderProgress(studentId) {
+        try {
+            const response = await fetch(`config/progress.json?t=${Date.now()}`);
+            if (!response.ok) throw new Error('Нет данных');
+            const allData = await response.json();
+            const data = allData[studentId];
+            if (!data) {
+                progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Данные о прогрессе пока не добавлены.</p>';
+                progressSection.style.display = 'block';
+                return;
+            }
+
+            const topicsPercent = Math.round((data.topics.completed / data.topics.total) * 100);
+            const homeworkPercent = Math.round((data.homework.completed / data.homework.total) * 100);
+            const tests = data.tests || [];
+            const avgScore = tests.length ? Math.round(tests.reduce((sum, t) => sum + t.score, 0) / tests.length) : 0;
+
+            let html = `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Темы</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${data.topics.completed}/${data.topics.total}</div>
+                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
+                            <div style="width:${topicsPercent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
+                        </div>
+                        <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${topicsPercent}%</div>
+                    </div>
+                    <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Домашки</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${data.homework.completed}/${data.homework.total}</div>
+                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
+                            <div style="width:${homeworkPercent}%; height:6px; background:#16a34a; border-radius:4px;"></div>
+                        </div>
+                        <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${homeworkPercent}%</div>
+                    </div>
+                </div>
+            `;
+
+            if (tests.length) {
+                html += `
+                    <div style="margin-top:8px;">
+                        <div style="font-size:0.7rem; font-weight:600; color:#0b2a44;">Пробники</div>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
+                            ${tests.map(t => `
+                                <div style="background:#f8fafc; border-radius:10px; padding:4px 10px; font-size:0.65rem; border:1px solid #e2e8f0;">
+                                    ${t.name}: <strong>${t.score}/${t.max}</strong>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div style="font-size:0.7rem; color:#4a627a; margin-top:4px;">
+                            Средний балл: <strong>${avgScore}</strong>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (data.notes) {
+                html += `
+                    <div style="margin-top:6px; font-size:0.7rem; color:#4a627a; background:#f8fafc; border-radius:10px; padding:6px 10px; border:1px solid #e2e8f0;">
+                        📌 ${data.notes}
+                    </div>
+                `;
+            }
+
+            progressContainer.innerHTML = html;
+            progressSection.style.display = 'block';
+        } catch {
+            progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Данные о прогрессе пока не добавлены.</p>';
+            progressSection.style.display = 'block';
+        }
+    }
+
+    // ============================================================
+    //  ВХОД С ПАРОЛЕМ
+    // ============================================================
     async function handleLogin() {
         const raw = nameInput.value.trim();
+        const password = passwordInput.value.trim();
+
         if (!raw) { loginError.textContent = 'Введите имя'; return; }
+        if (!password) { loginError.textContent = 'Введите пароль'; return; }
+
         const id = nameMap[raw.toLowerCase()];
         if (!id) { loginError.textContent = 'Ученик не найден'; return; }
+
+        // Проверка пароля
+        if (passwords[id] !== password) {
+            loginError.textContent = '❌ Неверный пароль';
+            return;
+        }
 
         if (id === 'alina') {
             window.location.href = 'teacher.html';
@@ -451,16 +581,20 @@
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
 
-        // Скрываем форму входа
         loginArea.style.display = 'none';
         mainContent.style.display = 'block';
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
+        renderProgress(id);
     }
 
     loginBtn.addEventListener('click', handleLogin);
     nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
+    // ============================================================
+    //  КАЛЕНДАРЬ И СПИСОК
+    // ============================================================
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
     }
@@ -608,10 +742,12 @@
             const id = nameMap[s.toLowerCase()];
             if (id) {
                 nameInput.value = s;
-                await handleLogin();
+                // Автоматически заполняем пароль для быстрого тестирования (можно убрать)
+                // passwordInput.value = passwords[id] || '';
+                // await handleLogin();
             }
         }
     });
 </script>
 </body>
-</html>
+</html
