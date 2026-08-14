@@ -2,381 +2,456 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Таблица умножения: Поймай ответ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Таблица умножения</title>
     <style>
         :root {
-            --bg-color: #f0f4f8;
-            --game-bg: #ffffff;
-            --text-color: #2d3748;
-            --accent: #667eea;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --primary: #5a67d8;
+            --primary-light: #ebf4ff;
             --success: #48bb78;
             --error: #f56565;
-            --falling-item-bg: #ebf8ff;
-            --falling-item-border: #bee3f8;
+            --text: #2d3748;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh; /* Fallback */
+            height: 100dvh; /* Dynamic viewport height для мобильных */
+            width: 100vw;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
         }
 
-        .container {
+        .app {
             width: 100%;
             max-width: 500px;
-            height: 90vh;
-            background: var(--game-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            height: 100%;
+            background: var(--card);
             position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        /* Экраны */
+        /* --- Экраны --- */
         .screen {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
             text-align: center;
-            background: var(--game-bg);
-            z-index: 10;
-            transition: opacity 0.3s;
+            background: var(--card);
+            z-index: 20;
+            transition: opacity 0.3s ease;
         }
+        .screen.hidden { opacity: 0; pointer-events: none; z-index: -1; }
 
-        .hidden { opacity: 0; pointer-events: none; z-index: -1; }
+        h1 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary); }
+        p { margin-bottom: 2rem; line-height: 1.6; color: #4a5568; }
 
-        h1 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent); }
-        p { margin-bottom: 1.5rem; line-height: 1.6; color: #4a5568; }
-        
         button {
-            background: var(--accent);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 1rem 2rem;
+            padding: 1rem 2.5rem;
             font-size: 1.1rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
+            min-height: 50px;
+            transition: transform 0.1s;
         }
-        button:hover { background: #5a67d8; transform: translateY(-2px); }
-        button:active { transform: translateY(0); }
+        button:active { transform: scale(0.98); }
 
-        /* Игровое поле */
-        #game-area {
+        /* --- Игровой интерфейс --- */
+        .game-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #718096;
+            z-index: 5;
+        }
+
+        .progress-container {
+            height: 6px;
+            background: #edf2f7;
+            width: 100%;
+            z-index: 5;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Зона падения - критически важно для видимости */
+        .fall-zone {
             flex: 1;
             position: relative;
             overflow: hidden;
-            background: radial-gradient(circle at bottom, #ebf8ff 0%, #fff 70%);
+            background: radial-gradient(circle at center, #fff 0%, #f7fafc 100%);
+            /* Границы зоны, чтобы пример не улетал в input */
+            border-bottom: 1px solid #edf2f7;
         }
 
         .falling-item {
             position: absolute;
             left: 50%;
-            transform: translateX(-50%);
-            background: var(--falling-item-bg);
-            border: 2px solid var(--falling-item-border);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
+            top: 0; /* Начинаем сверху */
+            transform: translate(-50%, -100px); /* Центрируем и сдвигаем вверх за экран */
+            background: var(--primary-light);
+            border: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-size: 2.5rem; /* Очень крупно */
+            font-weight: 800;
+            color: var(--primary);
             white-space: nowrap;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            will-change: transform;
+            z-index: 10;
         }
 
-        .input-zone {
-            padding: 1.5rem;
+        /* --- Ввод --- */
+        .input-area {
+            padding: 1rem;
             background: white;
-            border-top: 1px solid #e2e8f0;
             display: flex;
             gap: 0.5rem;
-            z-index: 5;
+            z-index: 15;
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
         }
 
         input[type="number"] {
             flex: 1;
-            padding: 1rem;
-            font-size: 1.3rem;
+            padding: 0.8rem;
+            font-size: 1.5rem;
             border: 2px solid #cbd5e0;
             border-radius: 12px;
             outline: none;
             text-align: center;
-            transition: border-color 0.2s;
             -moz-appearance: textfield;
         }
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input:focus { border-color: var(--accent); }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; }
+        input:focus { border-color: var(--primary); }
 
-        .progress-bar {
-            height: 6px;
-            background: #edf2f7;
-            width: 100%;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.3s ease;
+        .btn-submit {
+            padding: 0 1.5rem;
+            font-weight: bold;
         }
 
-        /* Анимации обратной связи */
-        @keyframes flashGreen { 0% { background: var(--success); } 100% { background: var(--game-bg); } }
-        @keyframes flashRed { 0% { background: var(--error); } 100% { background: var(--game-bg); } }
-        .flash-success { animation: flashGreen 0.3s ease; }
-        .flash-error { animation: flashRed 0.3s ease; }
+        /* --- Эффекты --- */
+        @keyframes flashOk { 0% { background-color: var(--success); } 100% { background-color: var(--card); } }
+        @keyframes flashErr { 0% { background-color: var(--error); } 100% { background-color: var(--card); } }
+        .flash-ok { animation: flashOk 0.3s ease; }
+        .flash-err { animation: flashErr 0.3s ease; }
 
-        /* Результаты */
+        /* --- Результаты --- */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             width: 100%;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
-        .stat-card {
+        .stat-box {
             background: #f7fafc;
             padding: 1rem;
             border-radius: 12px;
         }
-        .stat-value { font-size: 2rem; font-weight: bold; color: var(--accent); }
+        .stat-num { font-size: 2rem; font-weight: bold; color: var(--primary); }
         .stat-label { font-size: 0.9rem; color: #718096; }
-
+        
         .mistakes-list {
             width: 100%;
             text-align: left;
             margin-bottom: 1.5rem;
             max-height: 150px;
             overflow-y: auto;
-            font-size: 0.95rem;
-            color: #e53e3e;
+            color: var(--error);
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="app-container">
-    <!-- Стартовый экран -->
-    <div id="start-screen" class="screen">
-        <h1>🌟 Поймай ответ</h1>
-        <p>Примеры будут плавно падать сверху.<br>Введи ответ и нажми Enter.<br>20 примеров в комфортном темпе.</p>
-        <button onclick="game.start()">Начать игру</button>
+<div class="app" id="app">
+    <!-- Старт -->
+    <div id="screen-start" class="screen">
+        <h1>🌟 Таблица умножения</h1>
+        <p>Примеры падают сверху.<br>Успей ввести ответ!<br>20 примеров.</p>
+        <button onclick="Game.start()">Начать игру</button>
     </div>
 
-    <!-- Игровой экран -->
-    <div id="game-screen" class="screen hidden" style="background: transparent; pointer-events: none;">
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-        <div id="game-area"></div>
-        <div class="input-zone" style="pointer-events: auto;">
-            <input type="number" id="answer-input" placeholder="?" autocomplete="off" inputmode="numeric">
+    <!-- Игра -->
+    <div id="screen-game" class="screen hidden" style="background: transparent; padding: 0;">
+        <div class="game-header">
+            <span id="ui-counter">0 / 20</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="ui-progress"></div>
+        </div>
+        
+        <div class="fall-zone" id="fall-zone">
+            <!-- Сюда падают примеры -->
+        </div>
+
+        <div class="input-area">
+            <input type="number" id="ui-input" placeholder="?" inputmode="numeric" autocomplete="off">
+            <button class="btn-submit" onclick="Game.submit()">OK</button>
         </div>
     </div>
 
-    <!-- Экран результатов -->
-    <div id="result-screen" class="screen hidden">
+    <!-- Финиш -->
+    <div id="screen-end" class="screen hidden">
         <h1>Результат ✨</h1>
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="score-correct">0</div>
+            <div class="stat-box">
+                <div class="stat-num" id="res-correct">0</div>
                 <div class="stat-label">Верно</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="score-missed">0</div>
+            <div class="stat-box">
+                <div class="stat-num" id="res-missed">0</div>
                 <div class="stat-label">Пропущено</div>
             </div>
         </div>
-        <div id="mistakes-container" class="mistakes-list"></div>
-        <button onclick="game.restart()">Играть снова</button>
+        <div id="res-mistakes" class="mistakes-list"></div>
+        <button onclick="Game.start()">Играть снова</button>
     </div>
 </div>
 
 <script>
-class MathGame {
-    constructor() {
-        this.totalRounds = 20;
-        this.fallDuration = 6000; // мс на падение одного примера (комфортная скорость)
-        this.spawnDelay = 2500;   // мс между появлением примеров
-        
-        this.questions = [];
-        this.currentRound = 0;
-        this.correct = 0;
-        this.missed = 0;
-        this.mistakes = [];
-        this.activeItem = null;
-        this.animationFrame = null;
-        this.spawnTimeout = null;
-        this.isRunning = false;
+const Game = (() => {
+    // Настройки
+    const TOTAL_ROUNDS = 20;
+    const FALL_DURATION = 6000; // мс (6 секунд на падение - комфортно)
+    const SPAWN_DELAY = 1500;   // мс пауза между примерами
 
-        // DOM
-        this.container = document.getElementById('app-container');
-        this.gameArea = document.getElementById('game-area');
-        this.input = document.getElementById('answer-input');
-        this.progressFill = document.getElementById('progress');
-        
-        this.input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') this.checkAnswer();
-        });
-    }
+    // Состояние
+    let questions = [];
+    let currentIdx = 0;
+    let scoreCorrect = 0;
+    let scoreMissed = 0;
+    let mistakes = [];
+    let activeItem = null; // { el, question, startTime }
+    let animFrameId = null;
+    let spawnTimerId = null;
+    let isPlaying = false;
 
-    generateQuestions() {
+    // DOM Elements
+    const els = {
+        app: document.getElementById('app'),
+        screens: {
+            start: document.getElementById('screen-start'),
+            game: document.getElementById('screen-game'),
+            end: document.getElementById('screen-end')
+        },
+        fallZone: document.getElementById('fall-zone'),
+        input: document.getElementById('ui-input'),
+        progress: document.getElementById('ui-progress'),
+        counter: document.getElementById('ui-counter'),
+        resCorrect: document.getElementById('res-correct'),
+        resMissed: document.getElementById('res-missed'),
+        resMistakes: document.getElementById('res-mistakes')
+    };
+
+    // Генерация вопросов
+    function generateQuestions() {
         const q = [];
-        for (let i = 0; i < this.totalRounds; i++) {
-            const a = Math.floor(Math.random() * 9) + 2; // 2-10
+        for (let i = 0; i < TOTAL_ROUNDS; i++) {
+            const a = Math.floor(Math.random() * 9) + 2; // 2..10
             const b = Math.floor(Math.random() * 9) + 2;
-            q.push({ a, b, answer: a * b });
+            q.push({ a, b, ans: a * b });
         }
         return q;
     }
 
-    start() {
-        this.questions = this.generateQuestions();
-        this.currentRound = 0;
-        this.correct = 0;
-        this.missed = 0;
-        this.mistakes = [];
-        this.isRunning = true;
-
-        document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('result-screen').classList.add('hidden');
-        document.getElementById('game-screen').classList.remove('hidden');
-        
-        this.updateProgress();
-        this.spawnNext();
-        this.input.focus();
+    // Управление экранами
+    function showScreen(name) {
+        Object.values(els.screens).forEach(s => s.classList.add('hidden'));
+        els.screens[name].classList.remove('hidden');
     }
 
-    restart() {
-        this.start();
+    // Обновление прогресса
+    function updateUI() {
+        const pct = (currentIdx / TOTAL_ROUNDS) * 100;
+        els.progress.style.width = `${pct}%`;
+        els.counter.textContent = `${Math.min(currentIdx, TOTAL_ROUNDS)} / ${TOTAL_ROUNDS}`;
     }
 
-    spawnNext() {
-        if (!this.isRunning || this.currentRound >= this.totalRounds) {
-            // Ждём пока последний пример упадёт
-            if (!this.activeItem) this.endGame();
+    // Визуальная обратная связь
+    function flash(type) {
+        const cls = type === 'ok' ? 'flash-ok' : 'flash-err';
+        els.app.classList.remove('flash-ok', 'flash-err');
+        void els.app.offsetWidth; // trigger reflow
+        els.app.classList.add(cls);
+    }
+
+    // Очистка активного элемента
+    function clearActive() {
+        if (activeItem) {
+            if (activeItem.el && activeItem.el.parentNode) {
+                activeItem.el.parentNode.removeChild(activeItem.el);
+            }
+            cancelAnimationFrame(animFrameId);
+            activeItem = null;
+        }
+    }
+
+    // Логика падения
+    function spawnItem() {
+        if (!isPlaying) return;
+
+        // Если раунды закончились и нет активного элемента -> конец
+        if (currentIdx >= TOTAL_ROUNDS) {
+            if (!activeItem) endGame();
             return;
         }
 
-        const q = this.questions[this.currentRound];
+        const q = questions[currentIdx];
         const el = document.createElement('div');
         el.className = 'falling-item';
         el.textContent = `${q.a} × ${q.b}`;
-        el.style.top = '-60px';
-        this.gameArea.appendChild(el);
+        els.fallZone.appendChild(el);
 
-        this.activeItem = { el, question: q, startTime: performance.now() };
-        this.currentRound++;
-        this.updateProgress();
+        activeItem = {
+            el: el,
+            question: q,
+            startTime: performance.now()
+        };
 
+        currentIdx++;
+        updateUI();
+
+        // Анимация
         const animate = (now) => {
-            if (!this.isRunning || !this.activeItem || this.activeItem.el !== el) return;
+            if (!isPlaying || !activeItem || activeItem.el !== el) return;
+
+            const elapsed = now - activeItem.startTime;
+            const progress = Math.min(elapsed / FALL_DURATION, 1);
             
-            const elapsed = now - this.activeItem.startTime;
-            const progress = Math.min(elapsed / this.fallDuration, 1);
-            const areaHeight = this.gameArea.clientHeight;
-            const y = -60 + progress * (areaHeight + 60);
-            
-            el.style.top = `${y}px`;
+            // Получаем высоту зоны падения динамически
+            const zoneHeight = els.fallZone.clientHeight;
+            // Двигаем от -100px (за экраном) до zoneHeight (вниз)
+            const yPos = -100 + (progress * (zoneHeight + 100));
+
+            el.style.transform = `translate(-50%, ${yPos}px)`;
 
             if (progress >= 1) {
-                this.handleMiss(q);
-                this.clearActiveItem();
-                this.scheduleNext();
+                // Пропуск
+                handleMiss(q);
+                clearActive();
+                scheduleNext();
             } else {
-                this.animationFrame = requestAnimationFrame(animate);
+                animFrameId = requestAnimationFrame(animate);
             }
         };
-        this.animationFrame = requestAnimationFrame(animate);
+
+        animFrameId = requestAnimationFrame(animate);
     }
 
-    scheduleNext() {
-        if (this.currentRound >= this.totalRounds && !this.activeItem) {
-            setTimeout(() => this.endGame(), 500);
-        } else if (this.currentRound < this.totalRounds) {
-            this.spawnTimeout = setTimeout(() => this.spawnNext(), this.spawnDelay);
+    function scheduleNext() {
+        if (currentIdx >= TOTAL_ROUNDS && !activeItem) {
+            setTimeout(endGame, 500);
+        } else if (currentIdx < TOTAL_ROUNDS) {
+            spawnTimerId = setTimeout(spawnItem, SPAWN_DELAY);
         }
     }
 
-    checkAnswer() {
-        if (!this.activeItem || !this.isRunning) return;
+    function handleMiss(q) {
+        scoreMissed++;
+        mistakes.push(q);
+        flash('err');
+    }
 
-        const val = parseInt(this.input.value);
+    // Проверка ответа
+    function submitAnswer() {
+        if (!activeItem || !isPlaying) return;
+
+        const val = parseInt(els.input.value);
         if (isNaN(val)) return;
 
-        if (val === this.activeItem.question.answer) {
-            this.correct++;
-            this.flashFeedback('success');
+        if (val === activeItem.question.ans) {
+            scoreCorrect++;
+            flash('ok');
         } else {
-            this.missed++;
-            this.mistakes.push(this.activeItem.question);
-            this.flashFeedback('error');
+            scoreMissed++;
+            mistakes.push(activeItem.question);
+            flash('err');
         }
 
-        this.clearActiveItem();
-        this.input.value = '';
-        this.scheduleNext();
+        clearActive();
+        els.input.value = '';
+        els.input.focus();
+        scheduleNext();
     }
 
-    handleMiss(q) {
-        this.missed++;
-        this.mistakes.push(q);
-        this.flashFeedback('error');
-    }
+    // Конец игры
+    function endGame() {
+        isPlaying = false;
+        clearTimeout(spawnTimerId);
+        cancelAnimationFrame(animFrameId);
+        clearActive();
 
-    clearActiveItem() {
-        if (this.activeItem) {
-            this.activeItem.el.remove();
-            cancelAnimationFrame(this.animationFrame);
-            this.activeItem = null;
-        }
-    }
+        els.resCorrect.textContent = scoreCorrect;
+        els.resMissed.textContent = scoreMissed;
 
-    flashFeedback(type) {
-        const cls = type === 'success' ? 'flash-success' : 'flash-error';
-        this.container.classList.add(cls);
-        setTimeout(() => this.container.classList.remove(cls), 300);
-    }
-
-    updateProgress() {
-        const pct = (this.currentRound / this.totalRounds) * 100;
-        this.progressFill.style.width = `${pct}%`;
-    }
-
-    endGame() {
-        this.isRunning = false;
-        clearTimeout(this.spawnTimeout);
-        cancelAnimationFrame(this.animationFrame);
-        this.clearActiveItem();
-
-        document.getElementById('game-screen').classList.add('hidden');
-        document.getElementById('result-screen').classList.remove('hidden');
-
-        document.getElementById('score-correct').textContent = this.correct;
-        document.getElementById('score-missed').textContent = this.missed;
-
-        const mistakesContainer = document.getElementById('mistakes-container');
-        if (this.mistakes.length > 0) {
-            mistakesContainer.innerHTML = '<strong>Повторить:</strong><br>' + 
-                this.mistakes.map(m => `${m.a} × ${m.b} = ${m.answer}`).join('<br>');
+        if (mistakes.length > 0) {
+            els.resMistakes.innerHTML = '<strong>Ошибки:</strong><br>' + 
+                mistakes.map(m => `${m.a} × ${m.b} = ${m.ans}`).join('<br>');
         } else {
-            mistakesContainer.innerHTML = '<span style="color: var(--success)">🎉 Все верно! Отличная работа!</span>';
+            els.resMistakes.innerHTML = '<span style="color: var(--success)">🎉 Всё верно!</span>';
         }
-    }
-}
 
-const game = new MathGame();
+        showScreen('end');
+    }
+
+    // Старт
+    function startGame() {
+        questions = generateQuestions();
+        currentIdx = 0;
+        scoreCorrect = 0;
+        scoreMissed = 0;
+        mistakes = [];
+        isPlaying = true;
+
+        clearActive();
+        els.input.value = '';
+        updateUI();
+        showScreen('game');
+
+        // Небольшая задержка перед стартом, чтобы анимация экрана прошла
+        setTimeout(() => {
+            els.input.focus();
+            spawnItem();
+        }, 300);
+    }
+
+    // Слушатели
+    els.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitAnswer();
+    });
+
+    // Публичный API
+    return {
+        start: startGame,
+        submit: submitAnswer
+    };
+})();
 </script>
 </body>
 </html>
