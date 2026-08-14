@@ -1,97 +1,111 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расписание занятий</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 16px 12px;
+            align-items: flex-start;
+            padding: 20px 16px;
             color: #1a2a3a;
         }
+
         .container {
-            max-width: 780px;
+            max-width: 860px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(12px);
             border-radius: 28px;
             box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
             padding: 18px 18px 22px;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
+
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #0b2a44;
             margin-bottom: 14px;
             text-align: center;
         }
+
         .subtitle {
             text-align: center;
             color: #4a627a;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 12px;
         }
 
-        /* ---------- Вход ---------- */
+        /* ----- Вход ----- */
         .login-area {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background: white;
-            padding: 16px 20px 20px;
+            padding: 18px 22px 22px;
             border-radius: 28px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             margin-bottom: 16px;
             border: 1px solid #e9eff6;
-            max-width: 340px;
+            max-width: 360px;
             margin-left: auto;
             margin-right: auto;
         }
+
         .login-area label {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #1f4970;
             margin-bottom: 4px;
             width: 100%;
             text-align: left;
         }
+
         .login-area input {
             width: 100%;
             padding: 8px 14px;
             border: 2px solid #dce5ef;
             border-radius: 24px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             background: #f9fcff;
             outline: none;
             transition: 0.2s;
             text-align: center;
             margin-bottom: 6px;
         }
+
         .login-area input:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
         }
+
         .login-area .password-field {
             display: none;
         }
+
         .login-area .password-field.show {
             display: block;
         }
+
         .login-area button {
             background: #1e4663;
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             padding: 8px 24px;
             border-radius: 24px;
             cursor: pointer;
@@ -99,20 +113,25 @@
             margin-top: 4px;
             width: 100%;
         }
-        .login-area button:hover { background: #0f3550; }
+
+        .login-area button:hover {
+            background: #0f3550;
+        }
+
         .login-error {
             color: #dc2626;
             font-size: 0.8rem;
             margin-top: 4px;
             min-height: 1.2em;
         }
+
         .login-hint {
             color: #6c86a3;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             margin-top: 2px;
         }
 
-        /* ---------- Календарь ---------- */
+        /* ----- Календарь ----- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -121,26 +140,30 @@
             flex-wrap: wrap;
             gap: 2px;
         }
+
         .calendar-header .month-year {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #0b2a44;
         }
+
         .calendar-header .nav-buttons {
             display: flex;
-            gap: 3px;
+            gap: 4px;
         }
+
         .calendar-header .nav-buttons button {
             background: white;
             border: 1px solid #dce5ef;
             border-radius: 16px;
-            padding: 1px 8px;
-            font-size: 0.65rem;
+            padding: 2px 12px;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             color: #1f4970;
             transition: 0.15s;
         }
+
         .calendar-header .nav-buttons button:hover {
             background: #f0f7ff;
             border-color: #3b82f6;
@@ -149,22 +172,24 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 1.5px;
+            gap: 2px;
             background: #f8fafc;
             border-radius: 10px;
-            padding: 4px 3px;
+            padding: 4px 4px;
             border: 1px solid #e9eff6;
         }
+
         .calendar-grid .weekday {
             font-weight: 600;
-            font-size: 0.45rem;
+            font-size: 0.5rem;
             text-align: center;
             color: #4a627a;
-            padding: 1px 0 0;
+            padding: 2px 0 1px;
             border-bottom: 1px solid #e2e8f0;
             text-transform: uppercase;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.2px;
         }
+
         .calendar-grid .day {
             aspect-ratio: 1/0.7;
             display: flex;
@@ -172,7 +197,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             font-weight: 500;
             background: white;
             cursor: default;
@@ -180,83 +205,122 @@
             position: relative;
             transition: 0.1s;
         }
-        .calendar-grid .day.other-month { color: #b8c8da; background: transparent; box-shadow: none; }
+
+        .calendar-grid .day.other-month {
+            color: #b8c8da;
+            background: transparent;
+            box-shadow: none;
+        }
+
         .calendar-grid .day.has-lesson {
             background: #dbeafe;
             border-color: #3b82f6;
             cursor: pointer;
             font-weight: 600;
         }
+
         .calendar-grid .day.has-lesson:hover {
             background: #bfdbfe;
             transform: scale(1.04);
-            box-shadow: 0 2px 6px rgba(59,130,246,0.10);
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.10);
         }
+
         .calendar-grid .day .dot {
             width: 3px;
             height: 3px;
             border-radius: 50%;
             background: #3b82f6;
-            margin-top: 0;
+            margin-top: 1px;
         }
-        .calendar-grid .day.today { border: 2px solid #1e4663; }
 
-        /* ---------- Список уроков ---------- */
+        .calendar-grid .day.today {
+            border: 2px solid #1e4663;
+        }
+
+        /* ----- Список уроков (с прокруткой) ----- */
         .lessons-list {
-            margin-top: 10px;
+            margin-top: 14px;
             background: white;
             border-radius: 14px;
-            padding: 8px 10px 10px;
+            padding: 10px 12px 12px;
             border: 1px solid #e9eff6;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            max-height: 460px;
+            overflow-y: auto;
         }
+
         .lessons-list h3 {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #0b2a44;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             border-bottom: 1.5px solid #e2e8f0;
-            padding-bottom: 3px;
+            padding-bottom: 4px;
         }
+
         .lessons-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             table-layout: fixed;
         }
+
         .lessons-table th {
             text-align: left;
-            padding: 2px 4px 1px 0;
+            padding: 4px 4px 3px 0;
             font-weight: 600;
             color: #4a627a;
             border-bottom: 1px solid #e2e8f0;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.3px;
         }
+
         .lessons-table td {
-            padding: 2px 4px 2px 0;
+            padding: 4px 4px 4px 0;
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
-            line-height: 1.2;
+            line-height: 1.3;
         }
-        .lessons-table tr:last-child td { border-bottom: none; }
 
-        .lessons-table .col-date { width: 36px; }
-        .lessons-table .col-day { width: 40px; }
-        .lessons-table .col-student { width: 48px; }
-        .lessons-table .col-time { width: 58px; }
-        .lessons-table .col-topic { width: auto; }
-        .lessons-table .col-links { width: 60px; text-align: right; }
-        .lessons-table .col-done { width: 70px; text-align: center; }
+        .lessons-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Ширина колонок */
+        .lessons-table .col-date {
+            width: 44px;
+        }
+        .lessons-table .col-day {
+            width: 38px;
+        }
+        .lessons-table .col-student {
+            width: 48px;
+        }
+        .lessons-table .col-time {
+            width: 68px;
+        }
+        .lessons-table .col-topic {
+            width: auto;
+        }
+        .lessons-table .col-links {
+            width: 70px;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .lessons-table .col-done {
+            width: 94px;
+            text-align: center;
+            white-space: nowrap;
+        }
 
         .lessons-table .topic-cell {
-            font-size: 0.6rem;
-            line-height: 1.2;
+            font-size: 0.65rem;
+            line-height: 1.3;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
-            max-height: 2.4em;
+            max-height: 2.6em;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -265,69 +329,77 @@
 
         .lessons-table .links-cell {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             align-items: center;
             justify-content: flex-end;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
+
         .lessons-table .links-cell a {
             display: inline-flex;
             align-items: center;
             background: #e6f0ff;
             color: #1e4a76;
-            padding: 0 8px;
+            padding: 0 10px;
             border-radius: 12px;
             text-decoration: none;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             font-weight: 500;
             transition: 0.15s;
             white-space: nowrap;
             flex-shrink: 0;
         }
+
         .lessons-table .links-cell a:hover {
             background: #bfdbfe;
         }
 
+        /* Галочки: две штуки — ДЗ и Материал */
         .check-cell {
             display: flex;
-            gap: 4px;
+            gap: 8px;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
+
         .check-cell label {
             display: flex;
             align-items: center;
             gap: 2px;
-            font-size: 0.5rem;
-            color: #4a627a;
+            font-size: 0.6rem;
+            color: #1f4970;
             cursor: pointer;
+            white-space: nowrap;
         }
+
         .check-cell input[type="checkbox"] {
-            width: 12px;
-            height: 12px;
+            width: 13px;
+            height: 13px;
             cursor: pointer;
             accent-color: #3b82f6;
+            flex-shrink: 0;
         }
-        .check-cell .checked-label {
+
+        .check-cell .label-done {
             color: #16a34a;
         }
 
         .no-lessons-msg {
             color: #6c86a3;
             font-style: italic;
-            padding: 6px 0;
-            font-size: 0.75rem;
+            padding: 8px 0;
+            font-size: 0.8rem;
         }
 
-        /* ---------- Модалка ---------- */
+        /* ----- Модалка ----- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10,25,45,0.30);
+            background: rgba(10, 25, 45, 0.30);
             backdrop-filter: blur(4px);
             display: none;
             align-items: center;
@@ -335,87 +407,254 @@
             z-index: 1000;
             padding: 14px;
         }
-        .modal-overlay.active { display: flex; }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
         .modal-card {
             background: white;
             border-radius: 24px;
-            max-width: 300px;
+            max-width: 320px;
             width: 100%;
-            padding: 16px 18px 20px;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
+            padding: 18px 20px 22px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.10);
             animation: modalFade 0.2s ease-out;
             position: relative;
         }
+
         @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
+
         .modal-card .close-btn {
             position: absolute;
             top: 6px;
-            right: 10px;
-            font-size: 1.1rem;
+            right: 12px;
+            font-size: 1.3rem;
             cursor: pointer;
             color: #7a94b0;
             background: none;
             border: none;
             line-height: 1;
         }
-        .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
-        .modal-card .modal-date { font-size: 0.7rem; color: #4a627a; margin-bottom: 2px; }
-        .modal-card .modal-time { font-size: 0.9rem; font-weight: 700; color: #0b2a44; }
-        .modal-card .modal-topic { font-size: 0.8rem; font-weight: 600; margin: 3px 0 6px; color: #0f2f4a; }
+
+        .modal-card .close-btn:hover {
+            color: #1e2f3e;
+            transform: rotate(90deg);
+        }
+
+        .modal-card .modal-date {
+            font-size: 0.8rem;
+            color: #4a627a;
+            margin-bottom: 2px;
+        }
+
+        .modal-card .modal-time {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0b2a44;
+        }
+
+        .modal-card .modal-topic {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 4px 0 10px;
+            color: #0f2f4a;
+        }
+
         .modal-card .modal-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
             margin-top: 2px;
         }
+
         .modal-card .modal-links a {
             background: #1e4663;
             color: white;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             transition: 0.15s;
         }
-        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
-        .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
-        .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
 
-        @media (max-width: 600px) {
-            .container { padding: 12px 10px 16px; border-radius: 20px; }
-            h1 { font-size: 1.1rem; margin-bottom: 10px; }
-            .login-area { padding: 12px 14px 16px; max-width: 100%; }
-            .login-area input { font-size: 0.8rem; padding: 6px 12px; }
-            .login-area button { font-size: 0.8rem; padding: 6px 16px; }
-            .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
-            .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
-            .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
-            .calendar-header .month-year { font-size: 0.65rem; }
-            .calendar-header .nav-buttons button { padding: 1px 6px; font-size: 0.55rem; }
-            .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; }
-            .lessons-list h3 { font-size: 0.7rem; }
-            .lessons-table { font-size: 0.55rem; }
-            .lessons-table th, .lessons-table td { padding: 1px 2px; }
-            .lessons-table .links-cell a { font-size: 0.4rem; padding: 0 6px; }
-            .lessons-table .col-date { width: 30px; }
-            .lessons-table .col-day { width: 34px; }
-            .lessons-table .col-student { width: 40px; }
-            .lessons-table .col-time { width: 48px; }
-            .lessons-table .col-links { width: 50px; }
-            .lessons-table .col-done { width: 58px; }
-            .check-cell label { font-size: 0.4rem; }
-            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
-            .modal-card { padding: 12px 14px 16px; max-width: 260px; }
-            .modal-card .modal-time { font-size: 0.8rem; }
-            .modal-card .modal-topic { font-size: 0.7rem; }
-            .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
+        .modal-card .modal-links a:hover {
+            background: #0f3550;
+            transform: scale(1.02);
+        }
+
+        .modal-card .modal-links a.secondary {
+            background: #e6f0ff;
+            color: #1e4a76;
+        }
+
+        .modal-card .modal-links a.secondary:hover {
+            background: #bfdbfe;
+        }
+
+        /* ----- Адаптив ----- */
+        @media (max-width: 700px) {
+            .container {
+                padding: 12px 10px 16px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .login-area {
+                padding: 14px 16px 18px;
+                max-width: 100%;
+            }
+
+            .login-area input {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+
+            .login-area button {
+                font-size: 0.85rem;
+                padding: 6px 16px;
+            }
+
+            .calendar-grid {
+                gap: 1px;
+                padding: 3px 2px;
+                border-radius: 8px;
+            }
+
+            .calendar-grid .day {
+                font-size: 0.45rem;
+                border-radius: 6px;
+                aspect-ratio: 1/0.65;
+            }
+
+            .calendar-grid .weekday {
+                font-size: 0.4rem;
+                padding: 1px 0;
+            }
+
+            .calendar-header .month-year {
+                font-size: 0.7rem;
+            }
+
+            .calendar-header .nav-buttons button {
+                padding: 1px 8px;
+                font-size: 0.6rem;
+            }
+
+            .lessons-list {
+                padding: 8px 6px 10px;
+                margin-top: 10px;
+                border-radius: 10px;
+                max-height: 360px;
+            }
+
+            .lessons-list h3 {
+                font-size: 0.75rem;
+            }
+
+            .lessons-table {
+                font-size: 0.6rem;
+            }
+
+            .lessons-table th,
+            .lessons-table td {
+                padding: 2px 2px;
+            }
+
+            .lessons-table .col-date {
+                width: 34px;
+            }
+            .lessons-table .col-day {
+                width: 30px;
+            }
+            .lessons-table .col-student {
+                width: 38px;
+            }
+            .lessons-table .col-time {
+                width: 52px;
+            }
+            .lessons-table .col-links {
+                width: 56px;
+            }
+            .lessons-table .col-done {
+                width: 72px;
+            }
+
+            .lessons-table .links-cell a {
+                font-size: 0.5rem;
+                padding: 0 6px;
+            }
+
+            .check-cell {
+                gap: 4px;
+            }
+            .check-cell label {
+                font-size: 0.5rem;
+            }
+            .check-cell input[type="checkbox"] {
+                width: 11px;
+                height: 11px;
+            }
+
+            .modal-card {
+                padding: 14px 16px 18px;
+                max-width: 280px;
+            }
+            .modal-card .modal-time {
+                font-size: 0.85rem;
+            }
+            .modal-card .modal-topic {
+                font-size: 0.8rem;
+            }
+            .modal-card .modal-links a {
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .lessons-table .col-date {
+                width: 28px;
+            }
+            .lessons-table .col-day {
+                width: 26px;
+            }
+            .lessons-table .col-student {
+                width: 32px;
+            }
+            .lessons-table .col-time {
+                width: 44px;
+            }
+            .lessons-table .col-links {
+                width: 44px;
+            }
+            .lessons-table .col-done {
+                width: 60px;
+            }
+            .check-cell label {
+                font-size: 0.45rem;
+            }
+            .check-cell input[type="checkbox"] {
+                width: 9px;
+                height: 9px;
+            }
         }
     </style>
 </head>
@@ -426,11 +665,11 @@
     <!-- Вход -->
     <div class="login-area" id="loginArea">
         <label for="nameInput">👤 Ваше имя</label>
-        <input type="text" id="nameInput" placeholder="" />
-        
+        <input type="text" id="nameInput" placeholder="">
+
         <label for="passwordInput" id="passwordLabel" style="display:none;">🔑 Пароль</label>
-        <input type="password" id="passwordInput" class="password-field" placeholder="Введите пароль" />
-        
+        <input type="password" id="passwordInput" class="password-field" placeholder="Введите пароль">
+
         <button id="loginBtn">Войти</button>
         <div class="login-error" id="loginError"></div>
         <div class="login-hint" id="loginHint"></div>
@@ -468,12 +707,12 @@
 
 <script>
     // ============================================================
-    //  🔐  НАСТРОЙКА ПАРОЛЯ ДЛЯ АЛИНЫ (МЕНЯЙТЕ ЗДЕСЬ!)
+    //  🔐  ПАРОЛЬ ДЛЯ АЛИНЫ
     // ============================================================
-    const TEACHER_PASSWORD = '12345';  // ← СЮДА ВПИШИТЕ СВОЙ ПАРОЛЬ
+    const TEACHER_PASSWORD = '12345';
 
     // ============================================================
-    //  НАСТРОЙКА СООТВЕТСТВИЯ ИМЁН И ID
+    //  НАСТРОЙКА ИМЁН
     // ============================================================
     const nameMap = {
         'валерия': 'valeriya',
@@ -483,7 +722,6 @@
         'алина': 'alina'
     };
 
-    // Список учеников (для Алины)
     const studentList = ['valeriya', 'amina', 'aleksey'];
 
     let currentStudentId = null;
@@ -516,7 +754,7 @@
     const modalTopic = document.getElementById('modalTopic');
     const modalLinks = document.getElementById('modalLinks');
 
-    // ---------- Показ/скрытие поля пароля ----------
+    // ---------- Показываем поле пароля ----------
     nameInput.addEventListener('input', function() {
         const raw = this.value.trim();
         const isAlina = raw.toLowerCase() === 'алина';
@@ -525,31 +763,23 @@
         if (!isAlina) {
             passwordInput.value = '';
             loginError.textContent = '';
-            loginHint.textContent = isAlina ? '' : '';
+            loginHint.textContent = '';
         } else {
-            loginHint.textContent = '🔑 Введите пароль для входа как преподаватель';
+            loginHint.textContent = '🔑 Введите пароль';
         }
     });
 
-    // ---------- Ключ для localStorage ----------
-    function getCheckKey(studentId, dateStr) {
-        return `checked_${studentId}_${dateStr}`;
+    // ---------- localStorage ----------
+    function getCheckKey(studentId, dateStr, type) {
+        return `checked_${studentId}_${dateStr}_${type}`;
     }
 
-    function loadChecks(studentId) {
-        const data = {};
-        const prefix = `checked_${studentId}_`;
-        for (let key in localStorage) {
-            if (key.startsWith(prefix)) {
-                const dateStr = key.replace(prefix, '');
-                data[dateStr] = localStorage.getItem(key) === 'true';
-            }
-        }
-        return data;
+    function saveCheck(studentId, dateStr, type, value) {
+        localStorage.setItem(getCheckKey(studentId, dateStr, type), value);
     }
 
-    function saveCheck(studentId, dateStr, value) {
-        localStorage.setItem(getCheckKey(studentId, dateStr), value);
+    function loadCheck(studentId, dateStr, type) {
+        return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
     }
 
     // ---------- Загрузка данных ----------
@@ -571,7 +801,7 @@
                         });
                     }
                 } catch (e) {
-                    console.warn(`Не удалось загрузить ${s}`);
+                    console.warn('Не удалось загрузить', s);
                 }
             }
             lessonsData = allLessons;
@@ -604,12 +834,17 @@
     // ---------- Вход ----------
     async function handleLogin() {
         const rawName = nameInput.value.trim();
-        if (!rawName) { loginError.textContent = 'Введите имя'; return; }
-        
-        const id = nameMap[rawName.toLowerCase()];
-        if (!id) { loginError.textContent = 'Ученик не найден'; return; }
+        if (!rawName) {
+            loginError.textContent = 'Введите имя';
+            return;
+        }
 
-        // Проверка пароля для Алины
+        const id = nameMap[rawName.toLowerCase()];
+        if (!id) {
+            loginError.textContent = 'Ученик не найден';
+            return;
+        }
+
         if (id === 'alina') {
             const password = passwordInput.value.trim();
             if (password !== TEACHER_PASSWORD) {
@@ -622,7 +857,10 @@
         currentStudentId = id;
 
         const ok = await loadLessons(id);
-        if (!ok) { loginError.textContent = 'Нет расписания'; return; }
+        if (!ok) {
+            loginError.textContent = 'Нет расписания';
+            return;
+        }
 
         loginArea.style.display = 'none';
         mainContent.style.display = 'block';
@@ -630,7 +868,7 @@
         if (isTeacher) {
             greeting.textContent = '👩‍🏫 Здравствуйте, Алина! Все занятия учеников:';
         } else {
-            greeting.textContent = `👋 Здравствуй, ${getStudentName(id)}!`;
+            greeting.textContent = '👋 Здравствуй, ' + getStudentName(id) + '!';
         }
 
         renderCalendar(currentYear, currentMonth);
@@ -651,7 +889,7 @@
         const days = new Date(year, month + 1, 0).getDate();
         for (let d = 1; d <= days; d++) {
             const dateObj = new Date(year, month, d);
-            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
             const dayLessons = lessonsData.filter(item => item.date === dateStr);
             if (dayLessons.length) {
                 result.push({ date: dateObj, lessons: dayLessons });
@@ -664,14 +902,14 @@
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
-        const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+        const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
         monthYear.textContent = `${monthNames[month]} ${year}`;
         const lessonDates = new Set(lessonsData.map(item => item.date));
-        const weekdays = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        const weekdays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
         let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
         for (let i = 0; i < firstDay; i++) html += `<div class="day other-month"></div>`;
         for (let d = 1; d <= daysInMonth; d++) {
-            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
             const hasLesson = lessonDates.has(dateStr);
             let cls = 'day';
             if (hasLesson) cls += ' has-lesson';
@@ -690,8 +928,9 @@
 
     function showModal(dateStr, lessons) {
         const [y, m, d] = dateStr.split('-').map(Number);
-        const dateObj = new Date(y, m-1, d);
-        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        const dateObj = new Date(y, m - 1, d);
+        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long',
+            year: 'numeric' });
         if (lessons.length === 1) {
             const l = lessons[0];
             const studentLabel = isTeacher ? ` (${l.studentName || getStudentName(l.student)})` : '';
@@ -705,15 +944,17 @@
             }
             modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
         } else {
-            let time = '', topic = '', links = '';
+            let time = '',
+                topic = '',
+                links = '';
             lessons.forEach((l, i) => {
                 const studentLabel = isTeacher ? ` (${l.studentName || getStudentName(l.student)})` : '';
-                time += `${l.start}–${l.end}` + (i < lessons.length-1 ? ', ' : '');
-                topic += l.topic + studentLabel + (i < lessons.length-1 ? ', ' : '');
-                if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
+                time += `${l.start}–${l.end}` + (i < lessons.length - 1 ? ', ' : '');
+                topic += l.topic + studentLabel + (i < lessons.length - 1 ? ', ' : '');
+                if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i + 1}</a>`;
                 if (l.homework) {
                     const hwLink = buildHomeworkLink(l.homework, l.student || currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank">📝 ${i+1}</a>`;
+                    links += `<a href="${hwLink}" target="_blank">📝 ${i + 1}</a>`;
                 }
             });
             modalTime.textContent = time;
@@ -756,7 +997,7 @@
                         <th class="col-time">Время</th>
                         <th class="col-topic">Тема</th>
                         <th class="col-links">Ссылки</th>
-                        ${isTeacher ? '<th class="col-done">✅</th>' : ''}
+                        ${isTeacher ? '<th class="col-done">Готово</th>' : ''}
                     </tr>
                 </thead>
                 <tbody>
@@ -773,23 +1014,30 @@
                 const studentId = l.student || currentStudentId;
                 const rowspan = idx === 0 ? item.lessons.length : 0;
 
-                // Чекбоксы для Алины
+                // Две галочки для Алины: ДЗ и Материал
                 let checkHtml = '';
                 if (isTeacher) {
-                    const isChecked = localStorage.getItem(getCheckKey(studentId, l.date)) === 'true';
+                    const hwChecked = loadCheck(studentId, l.date, 'homework');
+                    const matChecked = loadCheck(studentId, l.date, 'material');
                     checkHtml = `
                         <td class="col-done">
                             <div class="check-cell">
                                 <label>
-                                    <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" ${isChecked ? 'checked' : ''} />
+                                    <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="homework" ${hwChecked ? 'checked' : ''} />
                                     ДЗ
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="material" ${matChecked ? 'checked' : ''} />
+                                    📚
                                 </label>
                             </div>
                         </td>
                     `;
                 }
 
-                const studentName = isTeacher ? `<td class="col-student" style="font-size:0.6rem;">${getStudentName(studentId)}</td>` : '';
+                const studentName = isTeacher ?
+                    `<td class="col-student" style="font-size:0.6rem;">${getStudentName(studentId)}</td>` :
+                    '';
 
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
@@ -802,7 +1050,7 @@
                     ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
                     ${studentName}
                     <td class="col-time">${l.start}–${l.end}</td>
-                    <td class="col-topic topic-cell">${l.topic}</td>
+                    <td class="col-topic topic-cell">${l.topic || '—'}</td>
                     <td class="col-links links-cell">${links || '—'}</td>
                     ${checkHtml}
                 </tr>`;
@@ -812,13 +1060,14 @@
         html += '</tbody></table>';
         lessonsTableContainer.innerHTML = html;
 
-        // Обработчики для чекбоксов (только для Алины)
+        // Обработчики для галочек
         if (isTeacher) {
             document.querySelectorAll('.check-done').forEach(cb => {
                 cb.addEventListener('change', function() {
                     const student = this.dataset.student;
                     const date = this.dataset.date;
-                    saveCheck(student, date, this.checked);
+                    const type = this.dataset.type;
+                    saveCheck(student, date, type, this.checked);
                 });
             });
         }
@@ -826,8 +1075,14 @@
 
     function changeMonth(delta) {
         currentMonth += delta;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
@@ -842,11 +1097,10 @@
             const id = nameMap[s.toLowerCase()];
             if (id) {
                 nameInput.value = s;
-                // Если это Алина — показываем поле пароля
                 if (id === 'alina') {
                     passwordLabel.style.display = 'block';
                     passwordInput.classList.add('show');
-                    loginHint.textContent = '🔑 Введите пароль для входа как преподаватель';
+                    loginHint.textContent = '🔑 Введите пароль';
                 }
                 await handleLogin();
             }
