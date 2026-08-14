@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Домашнее задание | Математика 6 класс</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #eef2fa;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 30px 20px;
+            color: #1e2f3e;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px 35px 40px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #0f2b3d;
+            border-left: 8px solid #3b82f6;
+            padding-left: 20px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #4a627a;
+            margin-bottom: 30px;
+            padding-left: 28px;
+        }
+        .info-line {
+            color: #4a627a;
+            margin-bottom: 20px;
+            padding-left: 28px;
+            font-size: 1.05rem;
+        }
+        .info-line strong {
+            color: #1f4970;
+        }
+        .theory {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 18px 24px;
+            margin-bottom: 30px;
+            border-left: 6px solid #3b82f6;
+        }
+        .theory h2 {
+            font-size: 1.6rem;
+            color: #1e4a76;
+            margin-bottom: 12px;
+        }
+        .theory .rule {
+            background: #e6f0ff;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 1.05rem;
+            margin: 10px 0;
+        }
+        .section {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #e2edf7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            color: #0c4e6e;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .section .subhead {
+            font-size: 0.95rem;
+            color: #4a627a;
+            margin-left: 18px;
+            margin-bottom: 16px;
+        }
+        .question {
+            margin: 14px 0 14px 18px;
+            padding-left: 12px;
+            border-left: 3px solid #b9d0f0;
+        }
+        .question input {
+            font-size: 1rem;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1.5px solid #cbd5e1;
+            width: 200px;
+            margin-left: 12px;
+            background: #fefefe;
+            transition: 0.2s;
+        }
+        .question input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .question input.short {
+            width: 80px;
+        }
+        .question input.medium {
+            width: 200px;
+        }
+        .question input.long {
+            width: 300px;
+        }
+        .button-group {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 25px 0 20px;
+            justify-content: center;
+        }
+        button {
+            background: #1e4663;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .reset-btn {
+            background: #4b5563;
+        }
+        .result-area {
+            background: #f0f9ff;
+            border-radius: 28px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            border: 1px solid #bfdbfe;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c86a3;
+            margin-top: 25px;
+        }
+        .format-hint {
+            color: #2563eb;
+            background: #e6f0ff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+
+        /* --- Модалка для отчёта --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 36px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 {
+            font-size: 1.3rem;
+            color: #0b2a44;
+            margin-bottom: 10px;
+        }
+        .modal-card p {
+            color: #4a627a;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .modal-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #dce5ef;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-card textarea:focus {
+            border-color: #3b82f6;
+        }
+        .modal-card .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .modal-card .modal-buttons .btn {
+            flex: 1;
+        }
+        #modalStatus {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4a627a;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 18px; }
+            .question { margin-left: 5px; }
+            input { width: 130px; }
+            .question input.long { width: 200px; }
+            .question input.medium { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏠 Домашнее задание</h1>
+    <div class="subtitle">по теме «Умножение, деление, степень, подобные»</div>
+
+    <div class="info-line">
+        <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+        <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
+        <strong>Тема:</strong> <span id="lessonTopic"></span>
+    </div>
+
+    <!-- Теория -->
+    <div class="theory">
+        <h2>📖 Напоминание</h2>
+        <div class="rule">• Умножение/деление: одинаковые знаки → «+», разные → «–».</div>
+        <div class="rule">• Степень: чётная → «+», нечётная → «–».</div>
+        <div class="rule">• Подобные слагаемые: складываем коэффициенты, буквы оставляем.</div>
+        <p style="margin-top: 10px;"><strong>Как записывать ответы:</strong><br>
+        Обыкновенные дроби — через / (например <span class="format-hint">3/4</span>).<br>
+        Смешанные числа — через пробел: <span class="format-hint">2 1/3</span> (это означает две целых и одна треть).<br>
+        Выражения с буквами — без пробелов: <span class="format-hint">2a-5b</span> или <span class="format-hint">-x+9y</span>.</p>
+    </div>
+
+    <!-- ======================== ЗАНЯТИЕ 3 ======================== -->
+
+    <!-- Задание 1. Умножение дробей -->
+    <div class="section">
+        <h2>Задание 1. Умножение дробей</h2>
+        <div class="subhead">Ответ запиши в виде несократимой дроби (например, 3/4) или смешанного числа (например, 2 1/3).</div>
+        <div class="question">1) (–3/4) · (2/5) = <input type="text" id="q1" class="medium"></div>
+        <div class="question">2) (–5/6) · (–3/10) = <input type="text" id="q2" class="medium"></div>
+        <div class="question">3) (7/8) · (–4/21) = <input type="text" id="q3" class="medium"></div>
+        <div class="question">4) (–2 1/3) · (3/7) = <input type="text" id="q4" class="medium"></div>
+    </div>
+
+    <!-- Задание 2. Деление дробей -->
+    <div class="section">
+        <h2>Задание 2. Деление дробей</h2>
+        <div class="subhead">Ответ — несократимая дробь или смешанное число.</div>
+        <div class="question">5) (–7/8) : (3/4) = <input type="text" id="q5" class="medium"></div>
+        <div class="question">6) (2/3) : (–5/6) = <input type="text" id="q6" class="medium"></div>
+        <div class="question">7) (–9/10) : (–3/5) = <input type="text" id="q7" class="medium"></div>
+        <div class="question">8) (–1 1/2) : (3/4) = <input type="text" id="q8" class="medium"></div>
+    </div>
+
+    <!-- Задание 3. Степень дробей -->
+    <div class="section">
+        <h2>Задание 3. Степень дробей</h2>
+        <div class="subhead">Ответ — несократимая дробь (знак учти!).</div>
+        <div class="question">9) (–1/2)² = <input type="text" id="q9" class="medium"></div>
+        <div class="question">10) (–2/3)³ = <input type="text" id="q10" class="medium"></div>
+        <div class="question">11) (–3/4)² = <input type="text" id="q11" class="medium"></div>
+        <div class="question">12) (–1/5)³ = <input type="text" id="q12" class="medium"></div>
+    </div>
+
+    <!-- Задание 4. Смешанные выражения с дробями -->
+    <div class="section">
+        <h2>Задание 4. Смешанные выражения с дробями</h2>
+        <div class="subhead">Соблюдай порядок действий: сначала степень, потом умножение/деление, потом сложение/вычитание.</div>
+        <div class="question">13) (–3/4)·8 – (1/2)² = <input type="text" id="q13" class="medium"></div>
+        <div class="question">14) (–2/3)² + (5/6)·(–3/10) = <input type="text" id="q14" class="medium"></div>
+    </div>
+
+    <!-- ======================== ЗАНЯТИЕ 4 ======================== -->
+
+    <!-- Задание 5. Приведение подобных (целые) -->
+    <div class="section">
+        <h2>Задание 5. Приведение подобных (целые коэффициенты)</h2>
+        <div class="subhead">Ответ — многочлен, например <span class="format-hint">2a-5b</span>.</div>
+        <div class="question">15) 5a – 3a + 2b – 7b = <input type="text" id="q15" class="medium"></div>
+        <div class="question">16) 2x + 5y – 3x + 7y – 4x = <input type="text" id="q16" class="medium"></div>
+        <div class="question">17) 4m – 2n + 6m – 3n – m = <input type="text" id="q17" class="medium"></div>
+        <div class="question">18) 3p – 5q + 2p – q – 4p = <input type="text" id="q18" class="medium"></div>
+    </div>
+
+    <!-- Задание 6. Приведение подобных (десятичные) -->
+    <div class="section">
+        <h2>Задание 6. Приведение подобных (десятичные коэффициенты)</h2>
+        <div class="subhead">Ответ — многочлен с десятичными коэффициентами.</div>
+        <div class="question">19) 0.5x + 0.7y – 0.2x – 0.3y + x = <input type="text" id="q19" class="medium"></div>
+        <div class="question">20) 6.2x – 3.8y + 2.4x – 5.6y – 1.2x + 4.2y = <input type="text" id="q20" class="medium"></div>
+    </div>
+
+    <!-- Задание 7. Приведение подобных (дроби) -->
+    <div class="section">
+        <h2>Задание 7. Приведение подобных (дробные коэффициенты)</h2>
+        <div class="subhead">Ответ — многочлен с дробями, например <span class="format-hint">13/6a-b</span>.</div>
+        <div class="question">21) 2/3 a – 1/4 b + 1/2 a – 3/4 b + a = <input type="text" id="q21" class="medium"></div>
+        <div class="question">22) 1/2 m – 2/3 n + 1/4 m + 5/6 n – m + n = <input type="text" id="q22" class="medium"></div>
+    </div>
+
+    <!-- Задание 8. Приведение подобных со скобками -->
+    <div class="section">
+        <h2>Задание 8. Приведение подобных со скобками</h2>
+        <div class="subhead">Раскрой скобки, затем приведи подобные.</div>
+        <div class="question">23) 2a – 3b + 4c – a + 2b – c – 5a + b = <input type="text" id="q23" class="medium"></div>
+        <div class="question">24) 4x – (2x – 3y) + 5y – (3x – y) = <input type="text" id="q24" class="medium"></div>
+    </div>
+
+    <!-- Кнопки -->
+    <div class="button-group">
+        <button id="checkBtn">✅ Проверить задания</button>
+        <button id="reportBtn">📤 Отправить отчёт</button>
+        <button id="resetBtn" class="reset-btn">🔄 Очистить поля</button>
+    </div>
+
+    <div id="resultArea" class="result-area">
+        📌 После выполнения нажмите «Проверить».<br>
+        Затем нажмите «Отправить отчёт».
+    </div>
+
+    <footer>✏️ Вводите ответы в поля. Дроби через /, смешанные через пробел (например 2 1/3).</footer>
+</div>
+
+<!-- Модалка для отчёта -->
+<div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+        <h3>📤 Отправить отчёт</h3>
+        <p>Было сложно? Какие вопросы возникли?</p>
+        <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно, или задайте вопрос..."></textarea>
+        <div class="modal-buttons">
+            <button class="btn" id="sendReportBtn" style="background: #1e4663; border: none; color: white; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">✅ Отправить</button>
+            <button class="btn" id="cancelReportBtn" style="background: #e9eff6; border: none; color: #1f4970; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">Отмена</button>
+        </div>
+        <div id="modalStatus"></div>
+    </div>
+</div>
+
+<script src="../../config.js"></script>
+<script>
+    // ============================================================
+    //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ
+    // ============================================================
+    const answers = {
+        q1: "-3/10",
+        q2: "1/4",
+        q3: "-1/6",
+        q4: "-1",
+        q5: "-7/6",
+        q6: "-4/5",
+        q7: "3/2",
+        q8: "-2",
+        q9: "1/4",
+        q10: "-8/27",
+        q11: "9/16",
+        q12: "-1/125",
+        q13: "-25/4",
+        q14: "7/36",
+        q15: "2a-5b",
+        q16: "-5x+12y",
+        q17: "9m-5n",
+        q18: "p-6q",
+        q19: "1.3x+0.4y",
+        q20: "7.4x-5.2y",
+        q21: "13/6a-b",
+        q22: "-1/4m+7/6n",
+        q23: "-4a+4c",
+        q24: "-x+9y"
+    };
+
+    // ============================================================
+    //  КОД (не трогайте, если не уверены)
+    // ============================================================
+
+    const params = getUrlParams();
+    const student = params.student;
+    const date = params.date;
+    const topic = params.topic || "Умножение, деление, степень, подобные";
+
+    localStorage.setItem('studentName', student);
+
+    document.getElementById('studentName').textContent = student;
+    document.getElementById('lessonDate').textContent = date;
+    document.getElementById('lessonTopic').textContent = topic;
+
+    function normalize(str) {
+        return str.trim().replace(/\s+/g, ' ');
+    }
+
+    function normalizeFraction(str) {
+        let s = str.trim().replace(/\s/g, '');
+        if (s === "") return "";
+        if (s.includes('/')) {
+            let parts = s.split('/');
+            if (parts.length === 2) {
+                let a = parseInt(parts[0], 10);
+                let b = parseInt(parts[1], 10);
+                if (!isNaN(a) && !isNaN(b) && b !== 0) return a + "/" + b;
+            }
+        }
+        return s;
+    }
+
+    function normalizeNumber(str) {
+        let s = str.trim().replace(/\s/g, '');
+        if (s === "") return "";
+        if (!isNaN(parseFloat(s)) && isFinite(s)) return parseFloat(s).toString();
+        return s;
+    }
+
+    function isAnswerCorrect(id, userVal) {
+        const right = answers[id];
+        if (right.includes('/')) {
+            return normalizeFraction(userVal) === normalizeFraction(right);
+        }
+        if (!isNaN(parseFloat(right)) && isFinite(right)) {
+            return normalizeNumber(userVal) === normalizeNumber(right);
+        }
+        return normalize(userVal) === normalize(right);
+    }
+
+    function checkLesson() {
+        let total = 0;
+        let correct = 0;
+        let mistakes = [];
+        let userAnswers = {};
+
+        for (let [id, right] of Object.entries(answers)) {
+            let inputEl = document.getElementById(id);
+            if (!inputEl) continue;
+            total++;
+            let userVal = inputEl.value;
+            userAnswers[id] = userVal;
+            let ok = isAnswerCorrect(id, userVal);
+
+            if (ok) correct++;
+            else {
+                let questionText = "";
+                let parent = inputEl.closest('.question');
+                if (parent) {
+                    let text = parent.innerText;
+                    let inputIndex = text.indexOf(inputEl.value);
+                    if (inputIndex !== -1) questionText = text.substring(0, inputIndex).trim();
+                    else questionText = text.trim();
+                } else {
+                    questionText = id;
+                }
+                mistakes.push(`❌ ${questionText} → ваш ответ: ${userVal || "(пусто)"}`);
+            }
+        }
+
+        let percent = total ? Math.round((correct / total) * 100) : 0;
+        let report = `📊 Результат: ${correct} из ${total} (${percent}%)\n\n`;
+        if (mistakes.length === 0) {
+            report += "🎉 Отлично! Все задания выполнены верно!";
+        } else {
+            report += "⚠️ Ошибки:\n" + mistakes.join("\n");
+        }
+
+        document.getElementById("resultArea").innerHTML = report.replace(/\n/g, "<br>");
+        window.userAnswers = userAnswers;
+        window.lastReport = report;
+    }
+
+    document.getElementById('reportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.add('active');
+        document.getElementById('reportComment').value = '';
+        document.getElementById('modalStatus').textContent = '';
+    });
+
+    document.getElementById('cancelReportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.remove('active');
+    });
+    document.getElementById('reportModal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+
+    document.getElementById('sendReportBtn').addEventListener('click', async function() {
+        const comment = document.getElementById('reportComment').value.trim();
+        const statusDiv = document.getElementById('modalStatus');
+        if (!comment) {
+            statusDiv.textContent = '⚠️ Напишите комментарий.';
+            statusDiv.style.color = '#dc2626';
+            return;
+        }
+
+        let answersText = '';
+        for (let [id, right] of Object.entries(answers)) {
+            const input = document.getElementById(id);
+            const userAnswer = input ? input.value.trim() : '(пусто)';
+            const isCorrect = isAnswerCorrect(id, userAnswer);
+            const statusIcon = isCorrect ? '✅' : '❌';
+            const questionNum = id.replace('q', '').replace('_', '.');
+            answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
+        }
+
+        const title = `Отчёт: ${student} — ${topic} (${date})`;
+        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
+
+        const btn = this;
+        btn.disabled = true;
+        btn.textContent = '⏳ Отправка...';
+        statusDiv.textContent = '';
+        statusDiv.style.color = '#4a627a';
+
+        try {
+            const issueUrl = await createGitHubIssue(title, body);
+            statusDiv.innerHTML = `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color: #3b82f6; text-decoration: underline;">Посмотреть Issue</a>`;
+            statusDiv.style.color = '#16a34a';
+            setTimeout(() => {
+                document.getElementById('reportModal').classList.remove('active');
+            }, 3000);
+        } catch (error) {
+            statusDiv.textContent = `❌ Ошибка: ${error.message}`;
+            statusDiv.style.color = '#dc2626';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '✅ Отправить';
+        }
+    });
+
+    function resetFields() {
+        for (let id of Object.keys(answers)) {
+            let inp = document.getElementById(id);
+            if (inp) inp.value = "";
+        }
+        document.getElementById("resultArea").innerHTML = "🧹 Поля очищены. Нажмите «Проверить».";
+        window.userAnswers = {};
+        window.lastReport = "";
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", checkLesson);
+    document.getElementById("resetBtn").addEventListener("click", resetFields);
+</script>
+</body>
+</html>
