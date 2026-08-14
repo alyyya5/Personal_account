@@ -538,6 +538,7 @@
                 const studentId = l.student;
                 const rowspan = idx === 0 ? item.lessons.length : 0;
 
+                // === ГАЛОЧКИ (только здесь) ===
                 const hwChecked = loadCheck(studentId, l.date, 'homework');
                 const matChecked = loadCheck(studentId, l.date, 'material');
 
@@ -556,6 +557,7 @@
                     </td>
                 `;
 
+                // === ССЫЛКИ (только здесь) ===
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
                 if (l.homework) {
@@ -583,6 +585,7 @@
         html += '</tbody></table>';
         lessonsTableContainer.innerHTML = html;
 
+        // Обработчики для галочек
         document.querySelectorAll('.check-done').forEach(cb => {
             cb.addEventListener('change', function() {
                 const student = this.dataset.student;
