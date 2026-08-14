@@ -194,21 +194,21 @@
             letter-spacing: 0.1px;
         }
         .lessons-table td {
-            padding: 2px 4px 2px 0;
+            padding: 4px 4px;
             border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
             line-height: 1.2;
         }
         .lessons-table tr:last-child td { border-bottom: none; }
 
-        .lessons-table .col-date { width: 36px; }
+        .lessons-table .col-date { width: 40px; }
         .lessons-table .col-day { width: 40px; }
-        .lessons-table .col-time { width: 58px; }
+        .lessons-table .col-time { width: 64px; }
         .lessons-table .col-topic { width: auto; }
-        .lessons-table .col-links { width: 60px; text-align: right; }
+        .lessons-table .col-links { width: 64px; text-align: center; }
 
         .lessons-table .topic-cell {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             line-height: 1.2;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -220,25 +220,27 @@
             -webkit-box-orient: vertical;
         }
 
-        .lessons-table .links-cell {
+        /* ИСПРАВЛЕНИЕ: Flex теперь внутри div, а не в td */
+        .inner-flex {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
+            justify-content: center;
+            flex-wrap: nowrap;
         }
+
         .lessons-table .links-cell a {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             background: #e6f0ff;
             color: #1e4a76;
-            padding: 0 8px;
-            border-radius: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             text-decoration: none;
-            font-size: 0.5rem;
-            font-weight: 500;
+            font-size: 0.7rem;
             transition: 0.15s;
-            white-space: nowrap;
             flex-shrink: 0;
         }
         .lessons-table .links-cell a:hover { background: #bfdbfe; }
@@ -326,12 +328,12 @@
             .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; }
             .lessons-list h3 { font-size: 0.7rem; }
             .lessons-table { font-size: 0.55rem; }
-            .lessons-table th, .lessons-table td { padding: 1px 2px; }
-            .lessons-table .links-cell a { font-size: 0.4rem; padding: 0 6px; }
-            .lessons-table .col-date { width: 30px; }
+            .lessons-table th, .lessons-table td { padding: 2px 2px; }
+            .lessons-table .links-cell a { width: 20px; height: 20px; font-size: 0.6rem; }
+            .lessons-table .col-date { width: 34px; }
             .lessons-table .col-day { width: 34px; }
-            .lessons-table .col-time { width: 48px; }
-            .lessons-table .col-links { width: 50px; }
+            .lessons-table .col-time { width: 54px; }
+            .lessons-table .col-links { width: 54px; }
             .modal-card { padding: 12px 14px 16px; max-width: 260px; }
             .modal-card .modal-time { font-size: 0.8rem; }
             .modal-card .modal-topic { font-size: 0.7rem; }
@@ -418,7 +420,8 @@
             start: lesson.start || '',
             end: lesson.end || ''
         });
-        return basePath + '?' + params.toString();
+        const separator = basePath.includes('?') ? '&' : '?';
+        return basePath + separator + params.toString();
     }
 
     async function loadLessons(studentId) {
@@ -566,17 +569,21 @@
             const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
             item.lessons.forEach((l, idx) => {
                 let links = '';
-                if (l.material) links += `<a href="${l.material}" target="_blank">📖</a>`;
+                if (l.material) links += `<a href="${l.material}" target="_blank" title="Материал">📖</a>`;
                 if (l.homework) {
                     const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank">📝</a>`;
+                    links += `<a href="${hwLink}" target="_blank" title="Домашка">📝</a>`;
                 }
                 const rowspan = idx === 0 ? item.lessons.length : 0;
                 html += `<tr>
                     ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
                     <td class="col-time">${l.start}–${l.end}</td>
                     <td class="col-topic topic-cell">${l.topic}</td>
-                    <td class="col-links links-cell">${links || '—'}</td>
+                    <td class="col-links links-cell">
+                        <div class="inner-flex">
+                            ${links || '—'}
+                        </div>
+                    </td>
                 </tr>`;
             });
         });
