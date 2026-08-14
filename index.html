@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Расписание занятий</title>
+    <title>Личный кабинет</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -396,6 +396,7 @@
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
     const mainContent = document.getElementById('mainContent');
+    const loginArea = document.getElementById('loginArea');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
@@ -438,7 +439,6 @@
         const id = nameMap[raw.toLowerCase()];
         if (!id) { loginError.textContent = 'Ученик не найден'; return; }
 
-        // Если Алина — редирект на страницу преподавателя
         if (id === 'alina') {
             window.location.href = 'teacher.html';
             return;
@@ -448,6 +448,9 @@
         currentStudentId = id;
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
+
+        // Скрываем форму входа
+        loginArea.style.display = 'none';
         mainContent.style.display = 'block';
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
