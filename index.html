@@ -477,80 +477,74 @@
         }
     }
 
-    // ============================================================
-    //  📊  ПРОГРЕСС
-    // ============================================================
-    async function renderProgress(studentId) {
-        try {
-            const response = await fetch(`config/progress.json?t=${Date.now()}`);
-            if (!response.ok) throw new Error('Нет данных');
-            const allData = await response.json();
-            const data = allData[studentId];
-            if (!data) {
-                progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Данные о прогрессе пока не добавлены.</p>';
-                progressSection.style.display = 'block';
-                return;
-            }
+// ПРОГРЕСС
 
-            const topicsPercent = Math.round((data.topics.completed / data.topics.total) * 100);
-            const homeworkPercent = Math.round((data.homework.completed / data.homework.total) * 100);
-            const tests = data.tests || [];
-            const avgScore = tests.length ? Math.round(tests.reduce((sum, t) => sum + t.score, 0) / tests.length) : 0;
+    
+function renderProgress(studentId) {
+    const container = document.getElementById('progressContainer');
+    const section = document.getElementById('progressSection');
 
-            let html = `
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
-                        <div style="font-size:0.6rem; color:#4a627a;">Темы</div>
-                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${data.topics.completed}/${data.topics.total}</div>
-                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
-                            <div style="width:${topicsPercent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
-                        </div>
-                        <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${topicsPercent}%</div>
-                    </div>
-                    <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
-                        <div style="font-size:0.6rem; color:#4a627a;">Домашки</div>
-                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${data.homework.completed}/${data.homework.total}</div>
-                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
-                            <div style="width:${homeworkPercent}%; height:6px; background:#16a34a; border-radius:4px;"></div>
-                        </div>
-                        <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${homeworkPercent}%</div>
-                    </div>
-                </div>
-            `;
-
-            if (tests.length) {
-                html += `
-                    <div style="margin-top:8px;">
-                        <div style="font-size:0.7rem; font-weight:600; color:#0b2a44;">Пробники</div>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
-                            ${tests.map(t => `
-                                <div style="background:#f8fafc; border-radius:10px; padding:4px 10px; font-size:0.65rem; border:1px solid #e2e8f0;">
-                                    ${t.name}: <strong>${t.score}/${t.max}</strong>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div style="font-size:0.7rem; color:#4a627a; margin-top:4px;">
-                            Средний балл: <strong>${avgScore}</strong>
-                        </div>
-                    </div>
-                `;
-            }
-
-            if (data.notes) {
-                html += `
-                    <div style="margin-top:6px; font-size:0.7rem; color:#4a627a; background:#f8fafc; border-radius:10px; padding:6px 10px; border:1px solid #e2e8f0;">
-                        📌 ${data.notes}
-                    </div>
-                `;
-            }
-
-            progressContainer.innerHTML = html;
-            progressSection.style.display = 'block';
-        } catch {
-            progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Данные о прогрессе пока не добавлены.</p>';
-            progressSection.style.display = 'block';
-        }
+    if (!lessonsData || lessonsData.length === 0) {
+        container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
+        section.style.display = 'block';
+        return;
     }
+
+    const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
+    const currentYearStr = String(currentYear);
+    const monthLessons = lessonsData.filter(item => {
+        const dateParts = item.date.split('-');
+        return dateParts[0] === currentYearStr && dateParts[1] === currentMonthStr;
+    });
+
+    if (monthLessons.length === 0) {
+        container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">На этот месяц нет уроков.</p>';
+        section.style.display = 'block';
+        return;
+    }
+
+    const total = monthLessons.length;
+    const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
+    const percent = Math.round((completed / total) * 100);
+
+    const topicsList = monthLessons.map((item, index) => {
+        const dateParts = item.date.split('-');
+        const day = dateParts[2];
+        const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
+        const isCompleted = item.topic && item.topic.trim() !== '';
+        return `
+            <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
+                <span style="color:#4a627a;">${day}.${currentMonthStr}</span>
+                <span style="${isCompleted ? 'color:#16a34a;' : 'color:#dc2626;'}">
+                    ${isCompleted ? '✅' : '⏳'} ${isCompleted ? topic : 'Тема не указана'}
+                </span>
+            </div>
+        `;
+    }).join('');
+
+    let html = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                <div style="font-size:0.6rem; color:#4a627a;">Всего уроков</div>
+                <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${total}</div>
+            </div>
+            <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                <div style="font-size:0.6rem; color:#4a627a;">Пройдено тем</div>
+                <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${completed} / ${total}</div>
+                <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
+                    <div style="width:${percent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
+                </div>
+                <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${percent}%</div>
+            </div>
+        </div>
+        <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
+            ${topicsList}
+        </div>
+    `;
+
+    container.innerHTML = html;
+    section.style.display = 'block';
+}
 
     // ============================================================
     //  ВХОД С ПАРОЛЕМ
