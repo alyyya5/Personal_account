@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Теория | Решение уравнений</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f2f5f9;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 25px;
+            color: #1e2f3e;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 45px 50px 55px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-left: 5px solid #3b6a8c;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a6f84;
+            padding-left: 25px;
+            margin-bottom: 35px;
+        }
+        .section {
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eef2f7;
+        }
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: #1a4b6e;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a3a5a;
+            margin: 12px 0 6px 0;
+        }
+        .section p {
+            font-size: 1.05rem;
+            color: #2a3f52;
+            margin-bottom: 6px;
+        }
+        .section ul {
+            margin-left: 24px;
+            margin-bottom: 10px;
+        }
+        .section ul li {
+            font-size: 1.05rem;
+            color: #2a3f52;
+            margin-bottom: 2px;
+        }
+        .highlight {
+            font-weight: 700;
+            color: #1a3a5a;
+        }
+        .highlight-red {
+            font-weight: 700;
+            color: #c0392b;
+        }
+        .highlight-green {
+            font-weight: 700;
+            color: #27ae60;
+        }
+        .definition {
+            background: #f6f9fc;
+            border-left: 4px solid #3b6a8c;
+            padding: 10px 18px;
+            border-radius: 14px;
+            margin: 10px 0;
+            font-size: 1.05rem;
+        }
+        .warning-block {
+            background: #fef6e6;
+            border-left: 4px solid #e8a838;
+            padding: 10px 18px;
+            border-radius: 14px;
+            margin: 10px 0;
+            font-size: 1.05rem;
+        }
+        .rules-block {
+            background: #f0f4fa;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: #1a2a3a;
+            line-height: 2;
+        }
+        .rule-title {
+            display: block;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .rule-line {
+            display: block;
+        }
+        .rule-indent {
+            display: block;
+            padding-left: 20px;
+        }
+        .example-mini {
+            background: #fafbfd;
+            border: 1px solid #e6ecf2;
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin: 6px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #1a2a3a;
+            line-height: 1.8;
+        }
+        .example-mini .label {
+            font-weight: 700;
+            color: #5a6f84;
+            margin-right: 6px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.8rem; }
+            .section h2 { font-size: 1.1rem; }
+            .rules-block { font-size: 0.9rem; padding: 8px 14px; }
+            .example-mini { font-size: 0.85rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Решение уравнений</h1>
+    <div class="subtitle">Теория для подготовки</div>
+
+    <!-- 1. Уравнение -->
+    <div class="section">
+        <h2>1. Уравнение</h2>
+        <p><span class="highlight">Уравнение</span> — это равенство, содержащее неизвестное число, которое нужно найти.</p>
+        <p>Неизвестное обычно обозначают буквой <span class="highlight">x</span>.</p>
+        <div class="definition">
+            <strong>Пример:</strong> 2x + 3 = 7
+        </div>
+        <p><span class="highlight">Корень уравнения</span> — это значение неизвестного, при котором уравнение становится верным числовым равенством.</p>
+    </div>
+
+    <!-- 2. Свойства равенств -->
+    <div class="section">
+        <h2>2. Свойства равенств</h2>
+        <p>Равенство можно преобразовывать. Главное — делать это <span class="highlight">с обеими частями</span> одновременно.</p>
+
+        <div class="rules-block">
+            <span class="rule-title">Свойство 1. Прибавление и вычитание:</span>
+            <span class="rule-line">Если a = b, то a + c = b + c</span>
+            <span class="rule-line">Если a = b, то a – c = b – c</span>
+            <span class="rule-line"><span class="highlight">(можно прибавить или вычесть одно и то же число)</span></span>
+
+            <span class="rule-title" style="margin-top: 8px;">Свойство 2. Умножение и деление:</span>
+            <span class="rule-line">Если a = b, то a · c = b · c</span>
+            <span class="rule-line">Если a = b, то a : c = b : c  (c ≠ 0)</span>
+            <span class="rule-line"><span class="highlight">(можно умножить или разделить на одно и то же число)</span></span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2x + 3 = 7 <br>
+            Вычтем 3 из обеих частей: 2x + 3 – 3 = 7 – 3 → 2x = 4 <br>
+            Разделим обе части на 2: 2x : 2 = 4 : 2 → x = 2
+        </div>
+
+        <div class="warning-block">
+            <strong>Важно:</strong> если разделить или умножить на <span class="highlight-red">отрицательное</span> число, знак неравенства поменяется (это для неравенств, а в уравнениях знак «=» просто остаётся).
+        </div>
+    </div>
+
+    <!-- 3. Перенос слагаемых -->
+    <div class="section">
+        <h2>3. Перенос слагаемых</h2>
+        <p>Из свойства равенств (прибавление и вычитание) следует <span class="highlight">правило переноса</span>:</p>
+
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Любое слагаемое можно <span class="highlight-red">перенести</span> из одной части уравнения в другую,</span>
+            <span class="rule-line">поменяв его знак на <span class="highlight-red">противоположный</span>.</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2x + 3 = 7 <br>
+            Переносим 3 вправо с противоположным знаком: 2x = 7 – 3 → 2x = 4
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример с буквами:</span> 5x – 2 = 3x + 8 <br>
+            Переносим 3x влево: 5x – 3x – 2 = 8 → 2x – 2 = 8 <br>
+            Переносим –2 вправо: 2x = 8 + 2 → 2x = 10
+        </div>
+
+        <div class="warning-block">
+            <strong>Запомните:</strong> при переносе <span class="highlight-red">меняется только знак</span> самого слагаемого!
+        </div>
+    </div>
+
+    <!-- 4. Приведение подобных -->
+    <div class="section">
+        <h2>4. Приведение подобных</h2>
+        <p><span class="highlight">Подобные слагаемые</span> — это слагаемые с одинаковой буквенной частью.</p>
+
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы привести подобные, нужно <span class="highlight">сложить</span> их коэффициенты,</span>
+            <span class="rule-line">а буквенную часть <span class="highlight">оставить без изменений</span>.</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> 3x + 5x – 2 = 14 <br>
+            Приводим подобные: 8x – 2 = 14
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример с двух сторон:</span> 4x + 2x – 5 = 3x + 10 <br>
+            Слева: 6x – 5 = 3x + 10
+        </div>
+    </div>
+
+    <!-- 5. Раскрытие скобок -->
+    <div class="section">
+        <h2>5. Раскрытие скобок</h2>
+        <p>Если в уравнении есть скобки, их нужно <span class="highlight">раскрыть</span> перед переносом.</p>
+
+        <h3>5.1. Если перед скобками стоит «+»</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Если перед скобками стоит <span class="highlight-green">плюс</span>, то скобки просто убираем,</span>
+            <span class="rule-line">а знаки внутри <span class="highlight-green">оставляем без изменений</span>.</span>
+        </div>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 5 + (3x – 2) = 5 + 3x – 2
+        </div>
+
+        <h3>5.2. Если перед скобками стоит «–»</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Если перед скобками стоит <span class="highlight-red">минус</span>, то скобки убираем,</span>
+            <span class="rule-line">а знаки внутри <span class="highlight-red">меняем на противоположные</span>.</span>
+        </div>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 5 – (3x – 2) = 5 – 3x + 2
+        </div>
+
+        <h3>5.3. Число умножается на скобку</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы умножить число на скобку, нужно <span class="highlight">умножить</span> это число</span>
+            <span class="rule-line">на <span class="highlight">каждое слагаемое</span> внутри скобок.</span>
+        </div>
+
+        <div class="rules-block">
+            <span class="rule-line">a(b + c) = ab + ac</span>
+            <span class="rule-line">a(b – c) = ab – ac</span>
+            <span class="rule-line">–a(b + c) = –ab – ac</span>
+            <span class="rule-line">–a(b – c) = –ab + ac</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2(x + 3) = 2x + 6
+        </div>
+        <div class="example-mini">
+            <span class="label">Пример:</span> –3(x – 4) = –3x + 12
+        </div>
+
+        <h3>5.4. Скобка на скобку (для сильных)</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы умножить скобку на скобку, нужно <span class="highlight">каждое слагаемое</span></span>
+            <span class="rule-line">из первой скобки умножить на <span class="highlight">каждое слагаемое</span> из второй.</span>
+        </div>
+
+        <div class="rules-block">
+            <span class="rule-line">(a + b)(c + d) = ac + ad + bc + bd</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> (x + 2)(x + 3) = x·x + x·3 + 2·x + 2·3 = x² + 3x + 2x + 6 = x² + 5x + 6
+        </div>
+    </div>
+
+    <!-- 6. Алгоритм решения -->
+    <div class="section">
+        <h2>6. Алгоритм решения</h2>
+        <div class="rules-block">
+            <span class="rule-title">Порядок действий:</span>
+            <span class="rule-line">1. <span class="highlight">Раскрыть</span> все скобки.</span>
+            <span class="rule-line">2. <span class="highlight">Привести</span> подобные в каждой части.</span>
+            <span class="rule-line">3. <span class="highlight-red">Перенести</span> все слагаемые с x влево, числа — вправо.</span>
+            <span class="rule-line">4. <span class="highlight">Привести</span> подобные.</span>
+            <span class="rule-line">5. Найти x (разделить обе части на коэффициент при x).</span>
+            <span class="rule-line">6. Сделать <span class="highlight">проверку</span>.</span>
+        </div>
+
+        <div class="warning-block">
+            <strong>Главное правило:</strong> все действия выполняем <span class="highlight-red">с обеими частями</span> уравнения одновременно!
+        </div>
+    </div>
+</div>
+</body>
+</html>
