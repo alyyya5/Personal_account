@@ -26,42 +26,6 @@
         h1 { font-size: 1.6rem; font-weight: 700; color: #0b2a44; margin-bottom: 4px; text-align: center; }
         .subtitle { text-align: center; color: #4a627a; font-size: 0.9rem; margin-bottom: 16px; }
 
-        .login-area {
-            max-width: 360px;
-            margin: 0 auto 16px;
-            background: white;
-            padding: 18px 22px 22px;
-            border-radius: 28px;
-            border: 1px solid #e9eff6;
-        }
-        .login-area label { font-weight: 600; font-size: 0.95rem; color: #1f4970; display: block; margin-bottom: 4px; }
-        .login-area input {
-            width: 100%;
-            padding: 8px 14px;
-            border: 2px solid #dce5ef;
-            border-radius: 24px;
-            font-size: 0.95rem;
-            background: #f9fcff;
-            outline: none;
-            text-align: center;
-            margin-bottom: 6px;
-        }
-        .login-area input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08); }
-        .login-area button {
-            background: #1e4663;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 8px 24px;
-            border-radius: 24px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .login-area button:hover { background: #0f3550; }
-        .login-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; min-height: 1.2em; }
-        .login-hint { color: #6c86a3; font-size: 0.75rem; margin-top: 2px; }
-
         .logout-btn {
             background: #e9eff6;
             border: none;
@@ -234,6 +198,7 @@
 
         .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 8px 0; font-size: 0.8rem; }
 
+        /* Адаптив */
         @media (max-width: 700px) {
             .container { padding: 14px 12px 18px; }
             .col-date { width: 38px; }
@@ -274,16 +239,6 @@
     <h1>👩‍ Преподаватель</h1>
     <div class="subtitle">Все занятия всех учеников</div>
 
-    <div class="login-area" id="loginArea">
-        <label for="nameInput">👤 Имя</label>
-        <input type="text" id="nameInput" placeholder="Алина" />
-        <label for="passwordInput">🔑 Пароль</label>
-        <input type="password" id="passwordInput" placeholder="Введите пароль" />
-        <button id="loginBtn">Войти</button>
-        <div class="login-error" id="loginError"></div>
-        <div class="login-hint" id="loginHint"></div>
-    </div>
-
     <div id="mainContent" style="display: none;">
         <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
 
@@ -304,7 +259,21 @@
 </div>
 
 <script>
-    const TEACHER_PASSWORD = '12345';
+    // ============================================================
+    //  📥  ПОЛУЧАЕМ ДАННЫЕ ИЗ localStorage (от index.html)
+    // ============================================================
+    // Проверяем, есть ли сохранённая сессия
+    const sessionData = localStorage.getItem('teacherSession');
+    if (sessionData) {
+        try {
+            const data = JSON.parse(sessionData);
+            if (data && data.name === 'alina') {
+                // Автоматически входим
+                document.getElementById('mainContent').style.display = 'block';
+                initTeacherPage();
+            }
+        } catch (e) {}
+    }
 
     const studentList = ['valeriya', 'amina', 'aleksey'];
     let currentDate = new Date();
@@ -312,13 +281,7 @@
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
 
-    const nameInput = document.getElementById('nameInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const loginBtn = document.getElementById('loginBtn');
-    const loginError = document.getElementById('loginError');
-    const loginHint = document.getElementById('loginHint');
     const mainContent = document.getElementById('mainContent');
-    const loginArea = document.getElementById('loginArea');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
     const logoutBtn = document.getElementById('logoutBtn');
     const monthYear = document.getElementById('monthYear');
@@ -506,35 +469,33 @@
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
     nextMonthBtn.addEventListener('click', () => changeMonth(1));
 
-    async function handleLogin() {
-        const name = nameInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        if (name.toLowerCase() !== 'алина') {
-            loginError.textContent = '❌ Только для Алины';
-            return;
-        }
-        if (password !== TEACHER_PASSWORD) {
-            loginError.textContent = '❌ Неверный пароль';
-            return;
-        }
-
-        loginError.textContent = '';
+    // Инициализация страницы преподавателя
+    async function initTeacherPage() {
         await loadAllLessons();
-        loginArea.style.display = 'none';
-        mainContent.style.display = 'block';
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
 
-    loginBtn.addEventListener('click', handleLogin);
-    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-
+    // Выход
     logoutBtn.addEventListener('click', () => {
-        localStorage.clear();
-        location.reload();
+        localStorage.removeItem('teacherSession');
+        // Очищаем все данные сессии
+        for (let key in localStorage) {
+            if (key.startsWith('checked_')) {
+                localStorage.removeItem(key);
+            }
+        }
+        window.location.href = 'index.html';
     });
+
+    // Автоматический вход, если есть сессия
+    if (localStorage.getItem('teacherSession')) {
+        mainContent.style.display = 'block';
+        initTeacherPage();
+    } else {
+        // Если сессии нет — редирект на главную
+        window.location.href = 'index.html';
+    }
 </script>
 </body>
 </html>
