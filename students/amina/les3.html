@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Теория | Простейшие уравнения</title>
+    <title>Теория | Решение уравнений</title>
     <style>
         * {
             margin: 0;
@@ -40,8 +40,8 @@
             margin-bottom: 35px;
         }
         .section {
-            margin-bottom: 32px;
-            padding-bottom: 28px;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
             border-bottom: 1px solid #eef2f7;
         }
         .section:last-child {
@@ -50,461 +50,281 @@
             padding-bottom: 0;
         }
         .section h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             background: #1a4b6e;
             color: white;
-            padding: 8px 18px;
-            border-radius: 14px;
+            padding: 6px 16px;
+            border-radius: 12px;
             display: inline-block;
-            margin-bottom: 16px;
-        }
-        .section h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #1a3a5a;
-            margin: 16px 0 8px 0;
-        }
-        .section p {
-            font-size: 1.1rem;
-            color: #2a3f52;
-            margin-bottom: 8px;
-        }
-        .section ul {
-            margin-left: 28px;
             margin-bottom: 12px;
         }
-        .section ul li {
-            font-size: 1.1rem;
+        .section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a3a5a;
+            margin: 12px 0 6px 0;
+        }
+        .section p {
+            font-size: 1.05rem;
             color: #2a3f52;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        .section ul {
+            margin-left: 24px;
+            margin-bottom: 10px;
+        }
+        .section ul li {
+            font-size: 1.05rem;
+            color: #2a3f52;
+            margin-bottom: 2px;
         }
         .highlight {
             font-weight: 700;
             color: #1a3a5a;
         }
+        .highlight-red {
+            font-weight: 700;
+            color: #c0392b;
+        }
+        .highlight-green {
+            font-weight: 700;
+            color: #27ae60;
+        }
         .definition {
             background: #f6f9fc;
             border-left: 4px solid #3b6a8c;
-            padding: 12px 20px;
-            border-radius: 16px;
-            margin: 14px 0;
-            font-size: 1.1rem;
-        }
-        .example {
-            background: #fafbfd;
-            border: 1px solid #e6ecf2;
-            border-radius: 16px;
             padding: 10px 18px;
+            border-radius: 14px;
             margin: 10px 0;
             font-size: 1.05rem;
-            color: #2a3f52;
-        }
-        .example .label {
-            font-weight: 700;
-            color: #5a6f84;
-            margin-right: 8px;
-        }
-        .note {
-            color: #5a6f84;
-            font-size: 1rem;
-            margin-top: 6px;
-        }
-        .highlight-block {
-            background: #eaf3e8;
-            border-left: 4px solid #2d7d46;
-            padding: 12px 20px;
-            border-radius: 16px;
-            margin: 14px 0;
-            font-size: 1.1rem;
         }
         .warning-block {
             background: #fef6e6;
             border-left: 4px solid #e8a838;
-            padding: 12px 20px;
-            border-radius: 16px;
-            margin: 14px 0;
-            font-size: 1.1rem;
-        }
-        .solution {
-            background: #f0f4fa;
-            border-radius: 16px;
-            padding: 14px 20px;
-            margin: 10px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            color: #1a2a3a;
-            line-height: 1.9;
-        }
-        .solution-line {
-            display: block;
-            padding-left: 0;
-        }
-        .solution-indent {
-            display: block;
-            padding-left: 25px;
-        }
-        .check {
-            background: #e8f0f8;
-            border-radius: 16px;
             padding: 10px 18px;
-            margin: 6px 0 10px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            color: #1a4b6e;
-            line-height: 1.9;
-        }
-        .check-line {
-            display: block;
+            border-radius: 14px;
+            margin: 10px 0;
+            font-size: 1.05rem;
         }
         .rules-block {
             background: #f0f4fa;
-            border-radius: 16px;
-            padding: 14px 20px;
-            margin: 10px 0;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 8px 0;
             font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #1a2a3a;
             line-height: 2;
         }
         .rule-title {
             display: block;
             font-weight: 700;
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .rule-line {
             display: block;
-            padding-left: 0;
         }
         .rule-indent {
             display: block;
-            padding-left: 25px;
+            padding-left: 20px;
         }
-        .examples-list {
+        .example-mini {
             background: #fafbfd;
             border: 1px solid #e6ecf2;
-            border-radius: 16px;
-            padding: 10px 18px;
-            margin: 10px 0;
-            font-size: 1.05rem;
-            color: #2a3f52;
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin: 6px 0;
             font-family: 'Courier New', monospace;
-            line-height: 1.9;
+            font-size: 0.95rem;
+            color: #1a2a3a;
+            line-height: 1.8;
+        }
+        .example-mini .label {
+            font-weight: 700;
+            color: #5a6f84;
+            margin-right: 6px;
         }
         @media (max-width: 700px) {
             .container { padding: 25px 20px; }
             h1 { font-size: 1.8rem; }
-            .section h2 { font-size: 1.2rem; }
-            .solution { font-size: 0.95rem; padding: 10px 14px; }
-            .check { font-size: 0.9rem; padding: 8px 14px; }
-            .rules-block { font-size: 0.95rem; padding: 10px 14px; }
-            .examples-list { font-size: 0.95rem; padding: 8px 14px; }
+            .section h2 { font-size: 1.1rem; }
+            .rules-block { font-size: 0.9rem; padding: 8px 14px; }
+            .example-mini { font-size: 0.85rem; padding: 6px 12px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Простейшие уравнения</h1>
-    <div class="subtitle">Что такое уравнение · Корень уравнения · Как решать</div>
+    <h1>Решение уравнений</h1>
+    <div class="subtitle">Теория для подготовки</div>
 
-    <!-- 1. Что такое уравнение -->
+    <!-- 1. Уравнение -->
     <div class="section">
-        <h2>1. Что такое уравнение</h2>
-        
-        <p><span class="highlight">Уравнение</span> — это равенство, в котором есть неизвестное число.</p>
-        <p>Неизвестное число обозначают буквами <span class="highlight">x, y, z, a, b</span>.</p>
-
-        <div class="examples-list">Примеры уравнений:
-x + 5 = 12
-3y – 7 = 14
-2a + 3 = a – 1</div>
-    </div>
-
-    <!-- 2. Корень уравнения -->
-    <div class="section">
-        <h2>2. Корень уравнения</h2>
-        
-        <p><span class="highlight">Корень уравнения</span> — это число, которое надо подставить вместо буквы, чтобы получить верное равенство.</p>
-
-        <p><strong>Пример:</strong></p>
-        <div class="solution">
-            <span class="solution-line">Уравнение: x + 3 = 7</span>
-            <span class="solution-line">Проверяем x = 4:</span>
-            <span class="solution-line">4 + 3 = 7</span>
-            <span class="solution-line">7 = 7  (верно)</span>
-            <span class="solution-line">Значит, x = 4 — корень уравнения.</span>
+        <h2>1. Уравнение</h2>
+        <p><span class="highlight">Уравнение</span> — это равенство, содержащее неизвестное число, которое нужно найти.</p>
+        <p>Неизвестное обычно обозначают буквой <span class="highlight">x</span>.</p>
+        <div class="definition">
+            <strong>Пример:</strong> 2x + 3 = 7
         </div>
+        <p><span class="highlight">Корень уравнения</span> — это значение неизвестного, при котором уравнение становится верным числовым равенством.</p>
     </div>
 
-    <!-- 3. Как решать простейшие уравнения -->
+    <!-- 2. Свойства равенств -->
     <div class="section">
-        <h2>3. Как решать простейшие уравнения</h2>
-        
-        <p><span class="highlight">Решить уравнение</span> — значит найти все его корни.</p>
-        <p>Простейшие уравнения решаются по правилам:</p>
+        <h2>2. Свойства равенств</h2>
+        <p>Равенство можно преобразовывать. Главное — делать это <span class="highlight">с обеими частями</span> одновременно.</p>
 
         <div class="rules-block">
-            <span class="rule-title">Сложение:</span>
-            <span class="rule-line">x + a = b   (неизвестное слагаемое)</span>
-            <span class="rule-indent">x = b – a</span>
+            <span class="rule-title">Свойство 1. Прибавление и вычитание:</span>
+            <span class="rule-line">Если a = b, то a + c = b + c</span>
+            <span class="rule-line">Если a = b, то a – c = b – c</span>
+            <span class="rule-line"><span class="highlight">(можно прибавить или вычесть одно и то же число)</span></span>
 
-            <span class="rule-title">Вычитание:</span>
-            <span class="rule-line">x – a = b   (неизвестное уменьшаемое)</span>
-            <span class="rule-indent">x = b + a</span>
-
-            <span class="rule-title">Умножение:</span>
-            <span class="rule-line">x · a = b   (неизвестный множитель)</span>
-            <span class="rule-indent">x = b : a</span>
-
-            <span class="rule-title">Деление:</span>
-            <span class="rule-line">x : a = b   (неизвестное делимое)</span>
-            <span class="rule-indent">x = b · a</span>
-        </div>
-    </div>
-
-    <!-- 4. Примеры решения -->
-    <div class="section">
-        <h2>4. Примеры решения</h2>
-        
-        <p><strong>Пример 1 (сложение)</strong></p>
-        <div class="solution">
-            <span class="solution-line">x + 7 = 15</span>
-            <span class="solution-line">x = 15 – 7</span>
-            <span class="solution-line">x = 8</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">8 + 7 = 15</span>
-            <span class="check-line">15 = 15  (верно)</span>
+            <span class="rule-title" style="margin-top: 8px;">Свойство 2. Умножение и деление:</span>
+            <span class="rule-line">Если a = b, то a · c = b · c</span>
+            <span class="rule-line">Если a = b, то a : c = b : c  (c ≠ 0)</span>
+            <span class="rule-line"><span class="highlight">(можно умножить или разделить на одно и то же число)</span></span>
         </div>
 
-        <p><strong>Пример 2 (вычитание)</strong></p>
-        <div class="solution">
-            <span class="solution-line">x – 5 = 12</span>
-            <span class="solution-line">x = 12 + 5</span>
-            <span class="solution-line">x = 17</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">17 – 5 = 12</span>
-            <span class="check-line">12 = 12  (верно)</span>
-        </div>
-
-        <p><strong>Пример 3 (умножение)</strong></p>
-        <div class="solution">
-            <span class="solution-line">5x = 35</span>
-            <span class="solution-line">x = 35 : 5</span>
-            <span class="solution-line">x = 7</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">5 · 7 = 35</span>
-            <span class="check-line">35 = 35  (верно)</span>
-        </div>
-
-        <p><strong>Пример 4 (деление)</strong></p>
-        <div class="solution">
-            <span class="solution-line">x : 4 = 6</span>
-            <span class="solution-line">x = 6 · 4</span>
-            <span class="solution-line">x = 24</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">24 : 4 = 6</span>
-            <span class="check-line">6 = 6  (верно)</span>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2x + 3 = 7 <br>
+            Вычтем 3 из обеих частей: 2x + 3 – 3 = 7 – 3 → 2x = 4 <br>
+            Разделим обе части на 2: 2x : 2 = 4 : 2 → x = 2
         </div>
 
         <div class="warning-block">
-            <strong>Запомните:</strong> <span class="highlight">всегда делайте проверку</span>!
+            <strong>Важно:</strong> если разделить или умножить на <span class="highlight-red">отрицательное</span> число, знак неравенства поменяется (это для неравенств, а в уравнениях знак «=» просто остаётся).
         </div>
     </div>
 
-    <!-- 5. Уравнения с отрицательными числами -->
+    <!-- 3. Перенос слагаемых -->
     <div class="section">
-        <h2>5. Уравнения с отрицательными числами</h2>
-        
-        <p>Правила те же, но надо внимательно работать со знаками.</p>
+        <h2>3. Перенос слагаемых</h2>
+        <p>Из свойства равенств (прибавление и вычитание) следует <span class="highlight">правило переноса</span>:</p>
 
-        <p><strong>Пример 1</strong></p>
-        <div class="solution">
-            <span class="solution-line">x – (–3) = 7</span>
-            <span class="solution-line">x + 3 = 7      (минус на минус даёт плюс)</span>
-            <span class="solution-line">x = 7 – 3</span>
-            <span class="solution-line">x = 4</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">4 – (–3) = 4 + 3 = 7</span>
-            <span class="check-line">7 = 7  (верно)</span>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Любое слагаемое можно <span class="highlight-red">перенести</span> из одной части уравнения в другую,</span>
+            <span class="rule-line">поменяв его знак на <span class="highlight-red">противоположный</span>.</span>
         </div>
 
-        <p><strong>Пример 2</strong></p>
-        <div class="solution">
-            <span class="solution-line">–2x = 8</span>
-            <span class="solution-line">x = 8 : (–2)</span>
-            <span class="solution-line">x = –4</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">–2 · (–4) = 8</span>
-            <span class="check-line">8 = 8  (верно)</span>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2x + 3 = 7 <br>
+            Переносим 3 вправо с противоположным знаком: 2x = 7 – 3 → 2x = 4
         </div>
 
-        <p><strong>Пример 3</strong></p>
-        <div class="solution">
-            <span class="solution-line">x : (–3) = 5</span>
-            <span class="solution-line">x = 5 · (–3)</span>
-            <span class="solution-line">x = –15</span>
+        <div class="example-mini">
+            <span class="label">Пример с буквами:</span> 5x – 2 = 3x + 8 <br>
+            Переносим 3x влево: 5x – 3x – 2 = 8 → 2x – 2 = 8 <br>
+            Переносим –2 вправо: 2x = 8 + 2 → 2x = 10
         </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">–15 : (–3) = 5</span>
-            <span class="check-line">5 = 5  (верно)</span>
+
+        <div class="warning-block">
+            <strong>Запомните:</strong> при переносе <span class="highlight-red">меняется только знак</span> самого слагаемого!
         </div>
     </div>
 
-    <!-- 6. Уравнения с неизвестными в обеих частях -->
+    <!-- 4. Приведение подобных -->
     <div class="section">
-        <h2>6. Уравнения с неизвестными в обеих частях</h2>
-        
-        <p><span class="highlight">Алгоритм:</span></p>
-        <ul>
-            <li>Переносим все <span class="highlight">неизвестные</span> в левую часть.</li>
-            <li>Переносим все <span class="highlight">числа</span> в правую часть.</li>
-            <li><span class="highlight">При переносе</span> меняем знак на противоположный.</li>
-            <li>Приводим подобные.</li>
-            <li>Находим неизвестное.</li>
-        </ul>
+        <h2>4. Приведение подобных</h2>
+        <p><span class="highlight">Подобные слагаемые</span> — это слагаемые с одинаковой буквенной частью.</p>
 
-        <p><strong>Пример 1</strong></p>
-        <div class="solution">
-            <span class="solution-line">5x + 3 = 2x – 1</span>
-            <span class="solution-line">5x – 2x = –1 – 3</span>
-            <span class="solution-line">3x = –4</span>
-            <span class="solution-line">x = –4 : 3</span>
-            <span class="solution-line">x = –4/3</span>
-        </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">5·(–4/3) + 3 = 2·(–4/3) – 1</span>
-            <span class="check-line">–20/3 + 9/3 = –8/3 – 3/3</span>
-            <span class="check-line">–11/3 = –11/3  (верно)</span>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы привести подобные, нужно <span class="highlight">сложить</span> их коэффициенты,</span>
+            <span class="rule-line">а буквенную часть <span class="highlight">оставить без изменений</span>.</span>
         </div>
 
-        <p><strong>Пример 2</strong></p>
-        <div class="solution">
-            <span class="solution-line">7x – 4 = 3x + 8</span>
-            <span class="solution-line">7x – 3x = 8 + 4</span>
-            <span class="solution-line">4x = 12</span>
-            <span class="solution-line">x = 12 : 4</span>
-            <span class="solution-line">x = 3</span>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 3x + 5x – 2 = 14 <br>
+            Приводим подобные: 8x – 2 = 14
         </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">7·3 – 4 = 3·3 + 8</span>
-            <span class="check-line">21 – 4 = 9 + 8</span>
-            <span class="check-line">17 = 17  (верно)</span>
+
+        <div class="example-mini">
+            <span class="label">Пример с двух сторон:</span> 4x + 2x – 5 = 3x + 10 <br>
+            Слева: 6x – 5 = 3x + 10
         </div>
     </div>
 
-    <!-- 7. Уравнения с подобными слагаемыми -->
+    <!-- 5. Раскрытие скобок -->
     <div class="section">
-        <h2>7. Уравнения с подобными слагаемыми</h2>
-        
-        <p>Сначала <span class="highlight">приводим подобные</span> в каждой части, потом решаем.</p>
+        <h2>5. Раскрытие скобок</h2>
+        <p>Если в уравнении есть скобки, их нужно <span class="highlight">раскрыть</span> перед переносом.</p>
 
-        <p><strong>Пример 1</strong></p>
-        <div class="solution">
-            <span class="solution-line">3x + 5x – 2 = 14</span>
-            <span class="solution-line">8x – 2 = 14           (привели подобные)</span>
-            <span class="solution-line">8x = 14 + 2</span>
-            <span class="solution-line">8x = 16</span>
-            <span class="solution-line">x = 16 : 8</span>
-            <span class="solution-line">x = 2</span>
+        <h3>5.1. Если перед скобками стоит «+»</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Если перед скобками стоит <span class="highlight-green">плюс</span>, то скобки просто убираем,</span>
+            <span class="rule-line">а знаки внутри <span class="highlight-green">оставляем без изменений</span>.</span>
         </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">3·2 + 5·2 – 2 = 14</span>
-            <span class="check-line">6 + 10 – 2 = 14</span>
-            <span class="check-line">14 = 14  (верно)</span>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 5 + (3x – 2) = 5 + 3x – 2
         </div>
 
-        <p><strong>Пример 2</strong></p>
-        <div class="solution">
-            <span class="solution-line">4x + 2x – 5 = 3x + 10</span>
-            <span class="solution-line">6x – 5 = 3x + 10      (привели подобные слева)</span>
-            <span class="solution-line">6x – 3x = 10 + 5      (перенесли)</span>
-            <span class="solution-line">3x = 15</span>
-            <span class="solution-line">x = 15 : 3</span>
-            <span class="solution-line">x = 5</span>
+        <h3>5.2. Если перед скобками стоит «–»</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Если перед скобками стоит <span class="highlight-red">минус</span>, то скобки убираем,</span>
+            <span class="rule-line">а знаки внутри <span class="highlight-red">меняем на противоположные</span>.</span>
         </div>
-        <div class="check">
-            <span class="check-line">Проверка:</span>
-            <span class="check-line">4·5 + 2·5 – 5 = 3·5 + 10</span>
-            <span class="check-line">20 + 10 – 5 = 15 + 10</span>
-            <span class="check-line">25 = 25  (верно)</span>
+        <div class="example-mini">
+            <span class="label">Пример:</span> 5 – (3x – 2) = 5 – 3x + 2
+        </div>
+
+        <h3>5.3. Число умножается на скобку</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы умножить число на скобку, нужно <span class="highlight">умножить</span> это число</span>
+            <span class="rule-line">на <span class="highlight">каждое слагаемое</span> внутри скобок.</span>
+        </div>
+
+        <div class="rules-block">
+            <span class="rule-line">a(b + c) = ab + ac</span>
+            <span class="rule-line">a(b – c) = ab – ac</span>
+            <span class="rule-line">–a(b + c) = –ab – ac</span>
+            <span class="rule-line">–a(b – c) = –ab + ac</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> 2(x + 3) = 2x + 6
+        </div>
+        <div class="example-mini">
+            <span class="label">Пример:</span> –3(x – 4) = –3x + 12
+        </div>
+
+        <h3>5.4. Скобка на скобку (для сильных)</h3>
+        <div class="rules-block">
+            <span class="rule-title">Правило:</span>
+            <span class="rule-line">Чтобы умножить скобку на скобку, нужно <span class="highlight">каждое слагаемое</span></span>
+            <span class="rule-line">из первой скобки умножить на <span class="highlight">каждое слагаемое</span> из второй.</span>
+        </div>
+
+        <div class="rules-block">
+            <span class="rule-line">(a + b)(c + d) = ac + ad + bc + bd</span>
+        </div>
+
+        <div class="example-mini">
+            <span class="label">Пример:</span> (x + 2)(x + 3) = x·x + x·3 + 2·x + 2·3 = x² + 3x + 2x + 6 = x² + 5x + 6
         </div>
     </div>
 
-    <!-- 8. Текстовые задачи -->
+    <!-- 6. Алгоритм решения -->
     <div class="section">
-        <h2>8. Текстовые задачи</h2>
-        
-        <p>Многие задачи можно решить с помощью уравнений.</p>
-        <p><span class="highlight">Алгоритм:</span></p>
-        <ul>
-            <li>Обозначаем неизвестное через <span class="highlight">x</span>.</li>
-            <li>Составляем уравнение по условию.</li>
-            <li>Решаем уравнение.</li>
-            <li>Записываем ответ.</li>
-        </ul>
+        <h2>6. Алгоритм решения</h2>
+        <div class="rules-block">
+            <span class="rule-title">Порядок действий:</span>
+            <span class="rule-line">1. <span class="highlight">Раскрыть</span> все скобки.</span>
+            <span class="rule-line">2. <span class="highlight">Привести</span> подобные в каждой части.</span>
+            <span class="rule-line">3. <span class="highlight-red">Перенести</span> все слагаемые с x влево, числа — вправо.</span>
+            <span class="rule-line">4. <span class="highlight">Привести</span> подобные.</span>
+            <span class="rule-line">5. Найти x (разделить обе части на коэффициент при x).</span>
+            <span class="rule-line">6. Сделать <span class="highlight">проверку</span>.</span>
+        </div>
 
-        <p><strong>Задача 1</strong></p>
-        <div class="definition">
-            Задумали число, прибавили к нему 12 и получили 25. Какое число задумали?
+        <div class="warning-block">
+            <strong>Главное правило:</strong> все действия выполняем <span class="highlight-red">с обеими частями</span> уравнения одновременно!
         </div>
-        <div class="solution">
-            <span class="solution-line">Пусть x — задуманное число.</span>
-            <span class="solution-line">x + 12 = 25</span>
-            <span class="solution-line">x = 25 – 12</span>
-            <span class="solution-line">x = 13</span>
-        </div>
-        <div class="check">Ответ: 13</div>
-
-        <p><strong>Задача 2</strong></p>
-        <div class="definition">
-            В двух корзинах вместе 45 яблок. В первой корзине в 4 раза больше, чем во второй. Сколько яблок в каждой корзине?
-        </div>
-        <div class="solution">
-            <span class="solution-line">Пусть x — яблок во второй корзине.</span>
-            <span class="solution-line">Тогда 4x — яблок в первой корзине.</span>
-            <span class="solution-line">x + 4x = 45</span>
-            <span class="solution-line">5x = 45</span>
-            <span class="solution-line">x = 45 : 5</span>
-            <span class="solution-line">x = 9 (яблок во второй корзине)</span>
-            <span class="solution-line">4x = 4 · 9 = 36 (яблок в первой корзине)</span>
-        </div>
-        <div class="check">Ответ: 36 и 9 яблок</div>
-
-        <p><strong>Задача 3</strong></p>
-        <div class="definition">
-            У Пети было в 3 раза больше марок, чем у Васи. Когда Петя отдал Васе 5 марок, у них стало поровну. Сколько марок было у каждого?
-        </div>
-        <div class="solution">
-            <span class="solution-line">Пусть x — марок у Васи.</span>
-            <span class="solution-line">Тогда 3x — марок у Пети.</span>
-            <span class="solution-line">После того как Петя отдал 5 марок:</span>
-            <span class="solution-line">У Пети стало: 3x – 5</span>
-            <span class="solution-line">У Васи стало: x + 5</span>
-            <span class="solution-line">Так как стало поровну:</span>
-            <span class="solution-line">3x – 5 = x + 5</span>
-            <span class="solution-line">3x – x = 5 + 5</span>
-            <span class="solution-line">2x = 10</span>
-            <span class="solution-line">x = 10 : 2</span>
-            <span class="solution-line">x = 5 (марок у Васи)</span>
-            <span class="solution-line">3x = 3 · 5 = 15 (марок у Пети)</span>
-        </div>
-        <div class="check">Ответ: 15 и 5 марок</div>
     </div>
 </div>
 </body>
