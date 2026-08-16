@@ -164,6 +164,78 @@
             font-size: 0.9rem;
             margin-left: 8px;
         }
+
+        /* --- Модалка для отчёта --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 36px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 {
+            font-size: 1.3rem;
+            color: #0b2a44;
+            margin-bottom: 10px;
+        }
+        .modal-card p {
+            color: #4a627a;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .modal-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #dce5ef;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-card textarea:focus {
+            border-color: #3b82f6;
+        }
+        .modal-card .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .modal-card .modal-buttons .btn {
+            flex: 1;
+        }
+        #modalStatus {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4a627a;
+        }
+
         @media (max-width: 700px) {
             .container { padding: 18px; }
             .question { margin-left: 5px; }
@@ -275,6 +347,7 @@
     <!-- Кнопки -->
     <div class="button-group">
         <button id="checkBtn">✅ Проверить задания</button>
+        <button id="reportBtn">📤 Отправить отчёт</button>
         <button id="resetBtn" class="reset-btn">🔄 Очистить поля</button>
     </div>
 
@@ -286,6 +359,21 @@
     <footer>✏️ Вводите ответы в поля. Дроби через /, смешанные через пробел (например 2 1/3).</footer>
 </div>
 
+<!-- Модалка для отчёта -->
+<div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+        <h3>📤 Отправить отчёт</h3>
+        <p>Было сложно? Какие вопросы возникли?</p>
+        <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно, или задайте вопрос..."></textarea>
+        <div class="modal-buttons">
+            <button class="btn" id="sendReportBtn" style="background: #1e4663; border: none; color: white; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">✅ Отправить</button>
+            <button class="btn" id="cancelReportBtn" style="background: #e9eff6; border: none; color: #1f4970; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">Отмена</button>
+        </div>
+        <div id="modalStatus"></div>
+    </div>
+</div>
+
+<script src="../../config.js"></script>
 <script>
     // ============================================================
     //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ (только верные)
@@ -320,6 +408,15 @@
     // ============================================================
     //  КОД
     // ============================================================
+
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            student: params.get('student') || 'Имя не указано',
+            date: params.get('date') || new Date().toLocaleDateString('ru-RU'),
+            topic: params.get('topic') || 'Умножение, деление, степень, подобные'
+        };
+    }
 
     const params = getUrlParams();
     const student = params.student;
@@ -459,6 +556,64 @@
 
     document.getElementById("checkBtn").addEventListener("click", checkLesson);
     document.getElementById("resetBtn").addEventListener("click", resetFields);
+
+    // --- Отправка отчёта ---
+    document.getElementById('reportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.add('active');
+        document.getElementById('reportComment').value = '';
+        document.getElementById('modalStatus').textContent = '';
+    });
+
+    document.getElementById('cancelReportBtn').addEventListener('click', function() {
+        document.getElementById('reportModal').classList.remove('active');
+    });
+    document.getElementById('reportModal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+
+    document.getElementById('sendReportBtn').addEventListener('click', async function() {
+        const comment = document.getElementById('reportComment').value.trim();
+        const statusDiv = document.getElementById('modalStatus');
+        if (!comment) {
+            statusDiv.textContent = '⚠️ Напишите комментарий.';
+            statusDiv.style.color = '#dc2626';
+            return;
+        }
+
+        let answersText = '';
+        for (let [id, right] of Object.entries(answers)) {
+            const input = document.getElementById(id);
+            const userAnswer = input ? input.value.trim() : '(пусто)';
+            const isCorrect = isAnswerCorrect(id, userAnswer);
+            const statusIcon = isCorrect ? '✅' : '❌';
+            const questionNum = id.replace('q', '').replace('_', '.');
+            answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
+        }
+
+        const title = `Отчёт: ${student} — ${topic} (${date})`;
+        const body = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
+
+        const btn = this;
+        btn.disabled = true;
+        btn.textContent = '⏳ Отправка...';
+        statusDiv.textContent = '';
+        statusDiv.style.color = '#4a627a';
+
+        try {
+            const issueUrl = await createGitHubIssue(title, body);
+            statusDiv.innerHTML = `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color: #3b82f6; text-decoration: underline;">Посмотреть Issue</a>`;
+            statusDiv.style.color = '#16a34a';
+            setTimeout(() => {
+                document.getElementById('reportModal').classList.remove('active');
+            }, 3000);
+        } catch (error) {
+            statusDiv.textContent = `❌ Ошибка: ${error.message}`;
+            statusDiv.style.color = '#dc2626';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '✅ Отправить';
+        }
+    });
 </script>
 </body>
 </html>
