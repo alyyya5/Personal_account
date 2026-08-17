@@ -2,516 +2,1079 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Домашнее задание · Сложение и вычитание</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Таблица умножения — падающий тренажёр</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background: #eef2fa;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 30px 20px;
-            color: #1e2f3e;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(145deg, #0b0e1a 0%, #1a1f35 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 12px;
+            touch-action: manipulation;
+            user-select: none;
         }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 30px 35px 40px;
+
+        /* ===== GAME WRAPPER ===== */
+        .game-wrapper {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 20px 20px 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s;
         }
-        h1 {
-            font-size: 2.2rem;
-            color: #0f2b3d;
-            border-left: 8px solid #3b82f6;
-            padding-left: 20px;
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px 14px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #aab4e6;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-icon {
+            font-size: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #b9c2f0;
+        }
+
+        .stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-correct {
+            color: #5fdc8a;
+        }
+        .stat-wrong {
+            color: #f57b7b;
+        }
+
+        .stat-number {
+            font-size: 17px;
+            font-weight: 700;
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .question-counter {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #c8d0f5;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== GAME ARENA ===== */
+        .arena {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            margin: 14px 0 12px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(70, 90, 180, 0.15) 0%, transparent 70%);
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            touch-action: none;
+        }
+
+        /* ——— Falling Card ——— */
+        .card {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 88%;
+            max-width: 380px;
+            padding: 22px 18px 18px;
+            background: linear-gradient(145deg, rgba(38, 46, 85, 0.92), rgba(22, 28, 58, 0.96));
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: top 0.08s linear, opacity 0.3s, transform 0.3s, background 0.3s, border-color 0.3s;
+            top: 6%;
+            opacity: 1;
+            pointer-events: none;
+            will-change: top;
+            backdrop-filter: blur(4px);
+        }
+
+        .card.hidden {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.92);
+            pointer-events: none;
+        }
+
+        .card .problem {
+            font-size: 38px;
+            font-weight: 700;
+            color: #f0f4ff;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .card .problem .equals {
+            color: #8d9be0;
+            margin: 0 4px;
+        }
+
+        .card .problem .question-mark {
+            color: #ffd966;
+            font-weight: 700;
+        }
+
+        /* ——— Timer bar ——— */
+        .timer-wrap {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timer-track {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-fill {
+            height: 100%;
+            width: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #f57b7b, #f7b773, #5fdc8a);
+            transition: width 0.08s linear;
+            box-shadow: 0 0 12px rgba(95, 220, 138, 0.25);
+        }
+
+        .timer-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #b9c6f0;
+            min-width: 44px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.3px;
+        }
+
+        /* ——— Feedback overlay on card ——— */
+        .card .feedback {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            padding: 20px;
+        }
+
+        .card .feedback.show {
+            opacity: 1;
+        }
+
+        .feedback .icon {
+            font-size: 48px;
             margin-bottom: 4px;
         }
-        .subtitle {
-            font-size: 1.1rem;
-            color: #4a627a;
-            margin-bottom: 30px;
-            padding-left: 28px;
+
+        .feedback .result-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
         }
-        .info-line {
-            color: #4a627a;
-            margin-bottom: 20px;
-            padding-left: 28px;
-            font-size: 1.05rem;
+
+        .feedback .result-text .correct-answer {
+            color: #ffd966;
+            font-weight: 800;
         }
-        .info-line strong { color: #1f4970; }
-        .section {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 18px 24px;
-            margin-bottom: 28px;
-            border: 1px solid #e2edf7;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+
+        .feedback.correct .icon {
+            color: #5fdc8a;
         }
-        .section h2 {
-            font-size: 1.5rem;
-            color: #0c4e6e;
-            margin-bottom: 16px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 6px;
+        .feedback.correct .result-text {
+            color: #5fdc8a;
         }
-        .question {
-            margin: 14px 0 14px 18px;
-            padding-left: 12px;
-            border-left: 3px solid #b9d0f0;
+        .feedback.wrong .icon {
+            color: #f57b7b;
         }
-        .question input {
-            font-size: 1rem;
-            padding: 8px 14px;
-            border-radius: 30px;
-            border: 1.5px solid #cbd5e1;
-            width: 160px;
-            margin-left: 12px;
-            background: #fefefe;
-            transition: 0.2s;
+        .feedback.wrong .result-text {
+            color: #f57b7b;
         }
-        .question input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        .feedback.timeout .icon {
+            color: #f7b773;
         }
-        .question input.short { width: 80px; }
-        .question input.medium { width: 200px; }
-        .question input.long { width: 300px; }
-        .button-group {
+        .feedback.timeout .result-text {
+            color: #f7b773;
+        }
+
+        /* ===== INPUT AREA ===== */
+        .input-area {
             display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin: 25px 0 20px;
-            justify-content: center;
-        }
-        button {
-            background: #1e4663;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 12px 28px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-        button:active { transform: scale(0.97); }
-        .reset-btn { background: #4b5563; }
-        .result-area {
-            background: #f0f9ff;
-            border-radius: 28px;
-            padding: 20px;
-            margin-top: 20px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            border: 1px solid #bfdbfe;
-        }
-        footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #6c86a3;
-            margin-top: 25px;
-        }
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10,25,45,0.35);
-            backdrop-filter: blur(6px);
-            display: none;
+            gap: 10px;
             align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
+            padding: 8px 4px 0;
+            margin-top: 2px;
         }
-        .modal-overlay.active { display: flex; }
-        .modal-card {
-            background: white;
-            border-radius: 36px;
-            max-width: 500px;
-            width: 100%;
-            padding: 28px 30px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.12);
-            animation: modalFade 0.25s ease-out;
-        }
-        @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .modal-card h3 {
-            font-size: 1.3rem;
-            color: #0b2a44;
-            margin-bottom: 10px;
-        }
-        .modal-card textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #dce5ef;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            resize: vertical;
+
+        .input-area input {
+            flex: 1;
+            padding: 14px 18px;
+            font-size: 22px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid rgba(255, 255, 255, 0.10);
+            border-radius: 18px;
+            color: #f0f4ff;
             outline: none;
-            transition: 0.2s;
+            transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+            font-family: inherit;
+            min-width: 0;
+            letter-spacing: 0.5px;
         }
-        .modal-card textarea:focus { border-color: #3b82f6; }
-        .modal-card .modal-buttons {
+
+        .input-area input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 400;
+            font-size: 18px;
+            letter-spacing: 0.2px;
+        }
+
+        .input-area input:focus {
+            border-color: rgba(130, 160, 255, 0.5);
+            background: rgba(255, 255, 255, 0.10);
+            box-shadow: 0 0 0 4px rgba(130, 160, 255, 0.08);
+        }
+
+        .input-area input:disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .input-area input.correct-input {
+            border-color: #5fdc8a;
+            background: rgba(95, 220, 138, 0.10);
+        }
+
+        .input-area input.wrong-input {
+            border-color: #f57b7b;
+            background: rgba(245, 123, 123, 0.10);
+        }
+
+        .input-area button {
+            padding: 14px 24px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(145deg, #5b7cfa, #4a65d0);
+            border: none;
+            border-radius: 18px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 6px 24px rgba(74, 101, 208, 0.35);
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+            touch-action: manipulation;
+        }
+
+        .input-area button:active {
+            transform: scale(0.94);
+        }
+
+        .input-area button:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .input-area button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #6d8aff, #5670e0);
+            box-shadow: 0 8px 30px rgba(74, 101, 208, 0.45);
+        }
+
+        /* ===== RESULTS SCREEN ===== */
+        .results {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px 10px;
+            text-align: center;
+        }
+
+        .results.visible {
             display: flex;
-            gap: 12px;
-            margin-top: 16px;
-            flex-wrap: wrap;
+            animation: fadeUp 0.5s ease;
         }
-        .modal-card .modal-buttons .btn { flex: 1; }
-        #modalStatus {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #4a627a;
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        @media (max-width: 700px) {
-            .container { padding: 18px; }
-            .question { margin-left: 5px; }
-            input { width: 130px; }
-            .question input.long { width: 200px; }
-            .question input.medium { width: 150px; }
+
+        .results .big-icon {
+            font-size: 64px;
+            margin-bottom: 6px;
+        }
+
+        .results .title-final {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f0f4ff;
+            margin-bottom: 4px;
+        }
+
+        .results .sub-final {
+            font-size: 16px;
+            color: #aab4e6;
+            margin-bottom: 16px;
+        }
+
+        .results .score-grid {
+            display: flex;
+            gap: 40px;
+            margin: 8px 0 18px;
+        }
+
+        .results .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .results .score-item .num {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .results .score-item .label {
+            font-size: 14px;
+            color: #8893c9;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .results .score-item .num.green {
+            color: #5fdc8a;
+        }
+        .results .score-item .num.red {
+            color: #f57b7b;
+        }
+
+        .results .btn-restart {
+            padding: 16px 44px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(145deg, #5fdc8a, #3cb86a);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(60, 184, 106, 0.35);
+            transition: transform 0.1s, box-shadow 0.2s;
+            touch-action: manipulation;
+            margin-top: 4px;
+        }
+
+        .results .btn-restart:active {
+            transform: scale(0.95);
+        }
+
+        .results .btn-restart:hover {
+            box-shadow: 0 10px 40px rgba(60, 184, 106, 0.45);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 500px) {
+            .game-wrapper {
+                padding: 14px 14px 12px;
+                border-radius: 28px;
+            }
+
+            .title {
+                font-size: 15px;
+            }
+            .title-icon {
+                font-size: 17px;
+            }
+            .stats {
+                font-size: 12px;
+                gap: 10px;
+            }
+            .stat-number {
+                font-size: 15px;
+                min-width: 18px;
+            }
+            .question-counter {
+                font-size: 12px;
+                padding: 3px 10px;
+            }
+
+            .arena {
+                height: 300px;
+                margin: 10px 0 8px;
+                border-radius: 20px;
+            }
+
+            .card {
+                width: 92%;
+                padding: 16px 14px 14px;
+                border-radius: 18px;
+            }
+            .card .problem {
+                font-size: 30px;
+            }
+            .timer-wrap {
+                margin-top: 10px;
+                gap: 8px;
+            }
+            .timer-label {
+                font-size: 14px;
+                min-width: 38px;
+            }
+
+            .input-area {
+                gap: 8px;
+                padding: 4px 2px 0;
+            }
+            .input-area input {
+                padding: 12px 14px;
+                font-size: 19px;
+                border-radius: 14px;
+            }
+            .input-area input::placeholder {
+                font-size: 15px;
+            }
+            .input-area button {
+                padding: 12px 18px;
+                font-size: 17px;
+                border-radius: 14px;
+            }
+
+            .results .big-icon {
+                font-size: 48px;
+            }
+            .results .title-final {
+                font-size: 22px;
+            }
+            .results .score-grid {
+                gap: 28px;
+            }
+            .results .score-item .num {
+                font-size: 32px;
+            }
+            .results .btn-restart {
+                padding: 14px 34px;
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .arena {
+                height: 250px;
+            }
+            .card .problem {
+                font-size: 26px;
+            }
+            .card {
+                padding: 12px 10px 10px;
+            }
+            .input-area input {
+                font-size: 17px;
+                padding: 10px 12px;
+            }
+            .input-area button {
+                font-size: 15px;
+                padding: 10px 14px;
+            }
+            .stats {
+                font-size: 11px;
+                gap: 6px;
+            }
+            .question-counter {
+                font-size: 11px;
+                padding: 2px 8px;
+            }
+            .title {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .arena {
+                height: 420px;
+            }
+            .card .problem {
+                font-size: 44px;
+            }
+            .input-area input {
+                font-size: 26px;
+            }
+        }
+
+        /* ===== UTILITY ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        /* subtle pulse for the card when waiting */
+        @keyframes pulse-glow {
+            0%,
+            100% {
+                border-color: rgba(255, 255, 255, 0.08);
+            }
+            50% {
+                border-color: rgba(130, 160, 255, 0.20);
+            }
+        }
+
+        .card.waiting {
+            animation: pulse-glow 1.8s ease-in-out infinite;
+        }
+
+        /* correct / wrong flash on input */
+        .shake {
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-6px);
+            }
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        /* scrollbar hide */
+        ::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🏠 Домашнее задание</h1>
-    <div class="subtitle">Сложение и вычитание (целые числа, десятичные дроби, обыкновенные дроби)</div>
+    <div class="game-wrapper" role="main">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="title">
+                <span class="title-icon">⬇️</span>
+                <span>Таблица</span>
+            </div>
+            <div class="stats">
+                <span class="stat-correct">✅ <span class="stat-number" id="correctCount">0</span></span>
+                <span class="stat-wrong">❌ <span class="stat-number" id="wrongCount">0</span></span>
+                <span class="question-counter" id="questionCounter">1 / 20</span>
+            </div>
+        </header>
 
-    <div class="info-line">
-        <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
-        <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
-        <strong>Время:</strong> <span id="lessonTime"></span> &nbsp;|&nbsp;
-        <strong>Тема:</strong> <span id="lessonTopic"></span>
-    </div>
-
-    <!-- ========== 1. Сложение ========== -->
-    <div class="section">
-        <h2>1. Сложение</h2>
-        <div class="question">1) (–12) + (–8) = <input type="text" id="q1_1" class="short" /></div>
-        <div class="question">2) (–5.6) + (–2.4) = <input type="text" id="q1_2" class="short" /></div>
-        <div class="question">3) 34 + (–27) = <input type="text" id="q1_3" class="short" /></div>
-        <div class="question">4) –15 + 22 = <input type="text" id="q1_4" class="short" /></div>
-    </div>
-
-    <!-- ========== 2. Вычитание ========== -->
-    <div class="section">
-        <h2>2. Вычитание</h2>
-        <div class="question">1) 7 – (–9) = <input type="text" id="q2_1" class="short" /></div>
-        <div class="question">2) –18 – 6 = <input type="text" id="q2_2" class="short" /></div>
-        <div class="question">3) –4 – (–11) = <input type="text" id="q2_3" class="short" /></div>
-        <div class="question">4) 5.3 – (–2.7) = <input type="text" id="q2_4" class="short" /></div>
-    </div>
-
-    <!-- ========== 3. Алгебраическая сумма ========== -->
-    <div class="section">
-        <h2>3. Алгебраическая сумма (группировка)</h2>
-        <div class="question">1) –27 + 16 + (–14) + 25 = <input type="text" id="q3_1" class="short" /></div>
-        <div class="question">2) 3.8 + (–5.2) + (–3.8) + 4.2 = <input type="text" id="q3_2" class="short" /></div>
-    </div>
-
-    <!-- ========== 4. Длина отрезка ========== -->
-    <div class="section">
-        <h2>4. Длина отрезка на координатной прямой</h2>
-        <div class="question">1) A(–6) и B(2) → длина = <input type="text" id="q4_1" class="short" /></div>
-        <div class="question">2) C(–4.5) и D(3.5) → длина = <input type="text" id="q4_2" class="short" /></div>
-    </div>
-
-    <!-- ========== 5. Дроби ========== -->
-    <div class="section">
-        <h2>5. Дроби (сложение и вычитание)</h2>
-        <div class="question">1) –3/4 + (–1/8) = <input type="text" id="q5_1" class="short" /></div>
-        <div class="question">2) 3/5 + (–7/10) = <input type="text" id="q5_2" class="short" /></div>
-        <div class="question">3) –5/6 – (–2/3) = <input type="text" id="q5_3" class="short" /></div>
-        <div class="question">4) 7/8 – (–1/4) = <input type="text" id="q5_4" class="short" /></div>
-        <div class="question">5) 1/2 + (–3/4) + 5/6 + (–1/3) = <input type="text" id="q5_5" class="short" /></div>
-    </div>
-
-    <!-- ========== 6. Температура ========== -->
-    <div class="section">
-        <h2>6. Температурный прогноз</h2>
-        <p style="margin-left: 18px; color: #4a627a;">В понедельник температура была –3°C. Во вторник повысилась на 2.5°C, в среду понизилась на 1.8°C, в четверг повысилась на 0.7°C.</p>
-        <div class="question">Температура в четверг: <input type="text" id="q6_1" class="short" /></div>
-        <div class="question">На сколько градусов температура в четверг отличается от понедельника? <input type="text" id="q6_2" class="short" /></div>
-    </div>
-
-    <!-- ========== 7. Истинно или ложно? ========== -->
-    <div class="section">
-        <h2>7. Истинно или ложно?</h2>
-        <p style="margin-left: 18px; color: #4a627a;">Напиши «И» или «Л».</p>
-        <div class="question">1) Сумма двух отрицательных чисел всегда меньше нуля. → <input type="text" id="q7_1" class="short" /></div>
-        <div class="question">2) Разность двух чисел всегда меньше суммы этих чисел. → <input type="text" id="q7_2" class="short" /></div>
-        <div class="question">3) Если к отрицательному числу прибавить положительное, то результат может быть отрицательным. → <input type="text" id="q7_3" class="short" /></div>
-    </div>
-
-    <!-- ========== 8. Собери выражение ========== -->
-    <div class="section">
-        <h2>8. Собери выражение</h2>
-        <p style="margin-left: 18px; color: #4a627a;">Используя данные числа и знаки + и –, составь выражение, равное указанному результату.</p>
-        <div class="question">1) Числа 2, –5, 7. Результат –10. → <input type="text" id="q8_1" class="long" /></div>
-        <div class="question">2) Числа –3, 8, –4. Результат 1. → <input type="text" id="q8_2" class="long" /></div>
-    </div>
-
-    <!-- Кнопки -->
-    <div class="button-group">
-        <button id="checkBtn">✅ Проверить задания</button>
-        <button id="reportBtn">📤 Отправить отчёт</button>
-        <button id="resetBtn" class="reset-btn">🔄 Очистить поля</button>
-    </div>
-
-    <div id="resultArea" class="result-area">
-        📌 После выполнения нажмите «Проверить».<br />
-        Затем нажмите «Отправить отчёт».
-    </div>
-
-    <footer>✏️ Вводите ответы в поля. Дроби через / (например 3/4). Десятичные через точку.</footer>
-</div>
-
-<!-- Модалка для отчёта -->
-<div class="modal-overlay" id="reportModal">
-    <div class="modal-card">
-        <h3>📤 Отправить отчёт</h3>
-        <p style="color: #4a627a; margin-bottom: 12px; font-size: 0.95rem;">
-            Было сложно? Какие вопросы возникли?
-        </p>
-        <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно..."></textarea>
-        <div class="modal-buttons">
-            <button class="btn" id="sendReportBtn" style="background: #1e4663; border: none; color: white; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">✅ Отправить</button>
-            <button class="btn" id="cancelReportBtn" style="background: #e9eff6; border: none; color: #1f4970; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 40px; cursor: pointer;">Отмена</button>
+        <!-- ARENA -->
+        <div class="arena" id="arena">
+            <!-- Falling card -->
+            <div class="card waiting" id="card">
+                <div class="problem" id="problemText">
+                    3 <span class="equals">×</span> 4 <span class="equals">=</span> <span class="question-mark">?</span>
+                </div>
+                <div class="timer-wrap">
+                    <div class="timer-track">
+                        <div class="timer-fill" id="timerFill" style="width:100%;"></div>
+                    </div>
+                    <span class="timer-label" id="timerLabel">5.0s</span>
+                </div>
+                <!-- Feedback overlay -->
+                <div class="feedback" id="feedback">
+                    <span class="icon" id="feedbackIcon">✅</span>
+                    <span class="result-text" id="feedbackText">Верно!</span>
+                </div>
+            </div>
         </div>
-        <div id="modalStatus"></div>
+
+        <!-- INPUT -->
+        <div class="input-area">
+            <input
+            type="number"
+            id="answerInput"
+            placeholder="Введите ответ"
+            inputmode="numeric"
+            autocomplete="off"
+            enterkeyhint="go"
+            />
+            <button id="submitBtn">↵</button>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="results" id="results">
+            <div class="big-icon" id="resultIcon">🏆</div>
+            <div class="title-final" id="resultTitle">Отлично!</div>
+            <div class="sub-final" id="resultSub">Вы завершили раунд</div>
+            <div class="score-grid">
+                <div class="score-item">
+                    <span class="num green" id="finalCorrect">0</span>
+                    <span class="label">✅ Верно</span>
+                </div>
+                <div class="score-item">
+                    <span class="num red" id="finalWrong">0</span>
+                    <span class="label">❌ Неверно</span>
+                </div>
+            </div>
+            <button class="btn-restart" id="restartBtn">🔄 Ещё раз</button>
+        </div>
     </div>
-</div>
 
-<!-- ============================================================
-     ПОДКЛЮЧАЕМ config.js (ОБЯЗАТЕЛЬНО!)
-     config.js лежит в корне репозитория, поэтому путь ../../config.js
-     ============================================================ -->
-<script src="../../config.js"></script>
+    <script>
+        // ============================================================
+        //  GAME — Multiplication Fall
+        // ============================================================
 
-<script>
-    // ============================================================
-    //  ⚙️  ПРАВИЛЬНЫЕ ОТВЕТЫ (меняйте для каждого урока)
-    // ============================================================
-    const answers = {
-        q1_1: "-20", q1_2: "-8", q1_3: "7", q1_4: "7",
-        q2_1: "16", q2_2: "-24", q2_3: "7", q2_4: "8",
-        q3_1: "0", q3_2: "-1",
-        q4_1: "8", q4_2: "8",
-        q5_1: "-7/8", q5_2: "-1/10", q5_3: "-1/6", q5_4: "9/8", q5_5: "1/4",
-        q6_1: "-1.6", q6_2: "1.4",
-        q7_1: "И", q7_2: "Л", q7_3: "И",
-        q8_1: "2-5-7", q8_2: "-3+8-4"
-    };
+        (function() {
+            'use strict';
 
-    // ============================================================
-    //  КОД (не трогайте, если не уверены)
-    // ============================================================
+            // ---- DOM refs ----
+            const card = document.getElementById('card');
+            const problemText = document.getElementById('problemText');
+            const timerFill = document.getElementById('timerFill');
+            const timerLabel = document.getElementById('timerLabel');
+            const feedback = document.getElementById('feedback');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackText = document.getElementById('feedbackText');
+            const answerInput = document.getElementById('answerInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const correctCountEl = document.getElementById('correctCount');
+            const wrongCountEl = document.getElementById('wrongCount');
+            const questionCounter = document.getElementById('questionCounter');
+            const results = document.getElementById('results');
+            const finalCorrect = document.getElementById('finalCorrect');
+            const finalWrong = document.getElementById('finalWrong');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultSub = document.getElementById('resultSub');
+            const restartBtn = document.getElementById('restartBtn');
+            const arena = document.getElementById('arena');
 
-    // --- Получаем параметры из URL ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const studentId = urlParams.get('student') || localStorage.getItem('studentId') || 'неизвестный';
-    const date = urlParams.get('date') || 'дата не указана';
-    const topic = urlParams.get('topic') || 'тема не указана';
-    const start = urlParams.get('start') || '';
-    const end = urlParams.get('end') || '';
+            // ---- Game state ----
+            const TOTAL_QUESTIONS = 20;
+            const TIME_LIMIT = 5; // seconds
 
-    // Сохраняем в localStorage для удобства
-    localStorage.setItem('studentId', studentId);
+            let problems = [];
+            let currentIndex = 0;
+            let correctCount = 0;
+            let wrongCount = 0;
+            let isAnswered = false;
+            let isGameOver = false;
+            let timerId = null;
+            let animationId = null;
+            let startTime = 0;
+            let elapsedTime = 0;
+            let isAnimating = false;
 
-    // --- Преобразуем ID в красивое имя ---
-    const nameMap = {
-        'valeriya': 'Валерия',
-        'amina': 'Амина',
-        'aleksey': 'Алексей'
-    };
-    const studentName = nameMap[studentId] || studentId;
-
-    // --- Подставляем данные в страницу ---
-    document.getElementById('studentName').textContent = studentName;
-    document.getElementById('lessonDate').textContent = date;
-    document.getElementById('lessonTime').textContent = (start && end) ? `${start}–${end}` : '';
-    document.getElementById('lessonTopic').textContent = topic;
-
-    // --- Функции нормализации ---
-    function normalize(str) {
-        return str.trim().replace(/\s+/g, ' ');
-    }
-
-    function normalizeNumber(str) {
-        let s = str.trim().replace(/\s/g, '');
-        if (s === "") return "";
-        if (!isNaN(parseFloat(s)) && isFinite(s)) return parseFloat(s).toString();
-        return s;
-    }
-
-    function normalizeFraction(str) {
-        let s = str.trim().replace(/\s/g, '');
-        if (s === "") return "";
-        if (s.includes('/')) {
-            let parts = s.split('/');
-            if (parts.length === 2) {
-                let a = parseInt(parts[0], 10);
-                let b = parseInt(parts[1], 10);
-                if (!isNaN(a) && !isNaN(b) && b !== 0) return a + "/" + b;
-            }
-        }
-        return s;
-    }
-
-    function normalizeExpression(str) {
-        let s = str.trim().replace(/\s/g, '');
-        s = s.replace(/\+/g, '+').replace(/\-/g, '-');
-        return s;
-    }
-
-    function isAnswerCorrect(id, userVal) {
-        const right = answers[id];
-        if (id.startsWith('q8_')) {
-            let userClean = normalizeExpression(userVal);
-            try {
-                let expr = userClean.replace(/--/g, '+');
-                let result = eval(expr);
-                let expectedResult;
-                if (id === 'q8_1') expectedResult = -10;
-                else if (id === 'q8_2') expectedResult = 1;
-                return Math.abs(result - expectedResult) < 0.0001;
-            } catch (e) {
-                return false;
-            }
-        }
-        if (right.includes('/')) {
-            return normalizeFraction(userVal) === normalizeFraction(right);
-        }
-        if (!isNaN(parseFloat(right)) && isFinite(right)) {
-            return normalizeNumber(userVal) === normalizeNumber(right);
-        }
-        if (right === "И" || right === "Л") {
-            return normalize(userVal) === normalize(right);
-        }
-        return normalize(userVal) === normalize(right);
-    }
-
-    // --- Проверка заданий ---
-    function checkLesson() {
-        let total = 0, correct = 0, mistakes = [], userAnswers = {};
-        for (let [id, right] of Object.entries(answers)) {
-            let inputEl = document.getElementById(id);
-            if (!inputEl) continue;
-            total++;
-            let userVal = inputEl.value;
-            userAnswers[id] = userVal;
-            let ok = isAnswerCorrect(id, userVal);
-            if (ok) correct++;
-            else {
-                let questionText = "";
-                let parent = inputEl.closest('.question');
-                if (parent) {
-                    let text = parent.innerText;
-                    let inputIndex = text.indexOf(inputEl.value);
-                    if (inputIndex !== -1) questionText = text.substring(0, inputIndex).trim();
-                    else questionText = text.trim();
-                } else {
-                    questionText = id;
+            // ---- Generate problems ----
+            function generateProblems(count) {
+                const result = [];
+                for (let i = 0; i < count; i++) {
+                    let num1, num2;
+                    // avoid too many trivial ones: 1×, 2×, 10×, 11×, 12× are common
+                    // but still include them occasionally
+                    const type = Math.random();
+                    if (type < 0.35) {
+                        // 1–9
+                        num1 = randInt(2, 9);
+                        num2 = randInt(2, 9);
+                    } else if (type < 0.65) {
+                        num1 = randInt(2, 12);
+                        num2 = randInt(2, 12);
+                    } else {
+                        // include 1, 10, 11, 12 more often
+                        const pool = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+                        num1 = pool[Math.floor(Math.random() * pool.length)];
+                        num2 = pool[Math.floor(Math.random() * pool.length)];
+                    }
+                    // ensure num1 >= num2 for consistency? no, keep both orders
+                    result.push({ num1, num2, answer: num1 * num2 });
                 }
-                mistakes.push(`❌ ${questionText} → ваш ответ: ${userVal || "(пусто)"}`);
+                return result;
             }
-        }
-        let percent = total ? Math.round((correct / total) * 100) : 0;
-        let report = `📊 Результат: ${correct} из ${total} (${percent}%)\n\n`;
-        if (mistakes.length === 0) {
-            report += "🎉 Отлично! Все задания выполнены верно!";
-        } else {
-            report += "⚠️ Ошибки:\n" + mistakes.join("\n");
-        }
-        document.getElementById("resultArea").innerHTML = report.replace(/\n/g, "<br>");
-        window.userAnswers = userAnswers;
-        window.lastReport = report;
-    }
 
-    document.getElementById('checkBtn').addEventListener('click', checkLesson);
+            function randInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
 
-    // --- Модалка отчёта ---
-    document.getElementById('reportBtn').addEventListener('click', function() {
-        document.getElementById('reportModal').classList.add('active');
-        document.getElementById('reportComment').value = '';
-        document.getElementById('modalStatus').textContent = '';
-    });
+            // ---- Shuffle ----
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
 
-    document.getElementById('cancelReportBtn').addEventListener('click', function() {
-        document.getElementById('reportModal').classList.remove('active');
-    });
-    document.getElementById('reportModal').addEventListener('click', function(e) {
-        if (e.target === this) this.classList.remove('active');
-    });
+            // ---- UI updates ----
+            function updateStats() {
+                correctCountEl.textContent = correctCount;
+                wrongCountEl.textContent = wrongCount;
+                questionCounter.textContent = `${currentIndex + 1} / ${TOTAL_QUESTIONS}`;
+            }
 
-    // --- Отправка отчёта ---
-    document.getElementById('sendReportBtn').addEventListener('click', async function() {
-        const comment = document.getElementById('reportComment').value.trim();
-        const statusDiv = document.getElementById('modalStatus');
-        if (!comment) {
-            statusDiv.textContent = '⚠️ Напишите комментарий.';
-            statusDiv.style.color = '#dc2626';
-            return;
-        }
+            function showProblem(index) {
+                if (index >= TOTAL_QUESTIONS) {
+                    endGame();
+                    return;
+                }
 
-        // Собираем ответы ученика с проверкой
-        let answersText = '';
-        for (let [id, right] of Object.entries(answers)) {
-            const input = document.getElementById(id);
-            const userAnswer = input ? input.value.trim() : '(пусто)';
-            const isCorrect = isAnswerCorrect(id, userAnswer);
-            const statusIcon = isCorrect ? '✅' : '❌';
-            const questionNum = id.replace('q', '').replace('_', '.');
-            answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
-        }
+                const p = problems[index];
+                problemText.innerHTML =
+                    `${p.num1} <span class="equals">×</span> ${p.num2} <span class="equals">=</span> <span class="question-mark">?</span>`;
 
-        const title = `Отчёт: ${studentName} — ${topic} (${date})`;
-        const body = `**Ученик:** ${studentName}\n**Дата:** ${date}\n**Время:** ${start}–${end}\n**Тема:** ${topic}\n\n**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
+                // Reset card position
+                card.style.top = '6%';
+                card.classList.remove('hidden');
+                card.classList.add('waiting');
+                card.style.opacity = '1';
+                card.style.transform = 'translateX(-50%) scale(1)';
 
-        const btn = this;
-        btn.disabled = true;
-        btn.textContent = '⏳ Отправка...';
-        statusDiv.textContent = '';
-        statusDiv.style.color = '#4a627a';
+                // Reset feedback
+                feedback.classList.remove('show', 'correct', 'wrong', 'timeout');
+                feedback.style.opacity = '0';
 
-        try {
-            const issueUrl = await createGitHubIssue(title, body);
-            statusDiv.innerHTML = `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color: #3b82f6; text-decoration: underline;">Посмотреть Issue</a>`;
-            statusDiv.style.color = '#16a34a';
-            setTimeout(() => {
-                document.getElementById('reportModal').classList.remove('active');
-            }, 3000);
-        } catch (error) {
-            statusDiv.textContent = `❌ Ошибка: ${error.message}`;
-            statusDiv.style.color = '#dc2626';
-        } finally {
-            btn.disabled = false;
-            btn.textContent = '✅ Отправить';
-        }
-    });
+                // Reset input
+                answerInput.value = '';
+                answerInput.disabled = false;
+                answerInput.focus();
+                answerInput.classList.remove('correct-input', 'wrong-input', 'shake');
+                submitBtn.disabled = false;
 
-    // --- Очистка полей ---
-    function resetFields() {
-        for (let id of Object.keys(answers)) {
-            let inp = document.getElementById(id);
-            if (inp) inp.value = "";
-        }
-        document.getElementById("resultArea").innerHTML = "🧹 Поля очищены. Нажмите «Проверить».";
-        window.userAnswers = {};
-        window.lastReport = "";
-    }
+                isAnswered = false;
 
-    document.getElementById("resetBtn").addEventListener("click", resetFields);
-</script>
+                // Reset timer
+                elapsedTime = 0;
+                startTime = performance.now();
+                timerFill.style.width = '100%';
+                timerLabel.textContent = `${TIME_LIMIT.toFixed(1)}s`;
+
+                updateStats();
+
+                // Start animation
+                if (animationId) cancelAnimationFrame(animationId);
+                if (timerId) clearInterval(timerId);
+                isAnimating = true;
+                animateCard();
+
+                // Timer tick
+                timerId = setInterval(() => {
+                    const now = performance.now();
+                    const delta = (now - startTime) / 1000;
+                    const remaining = Math.max(0, TIME_LIMIT - delta);
+                    const progress = Math.min(delta / TIME_LIMIT, 1);
+
+                    // Update timer display
+                    timerFill.style.width = `${(1 - progress) * 100}%`;
+                    timerLabel.textContent = `${remaining.toFixed(1)}s`;
+
+                    if (progress >= 1) {
+                        // Time's up!
+                        clearInterval(timerId);
+                        timerId = null;
+                        if (!isAnswered && !isGameOver) {
+                            handleTimeout();
+                        }
+                    }
+                }, 50);
+            }
+
+            // ---- Card falling animation ----
+            function animateCard() {
+                if (!isAnimating) return;
+
+                const now = performance.now();
+                const delta = (now - startTime) / 1000;
+                const progress = Math.min(delta / TIME_LIMIT, 1);
+
+                // Move from 6% to 78% (leaves some space at bottom)
+                const topPct = 6 + progress * 72;
+                card.style.top = `${topPct}%`;
+
+                if (progress < 1 && !isAnswered && !isGameOver) {
+                    animationId = requestAnimationFrame(animateCard);
+                } else {
+                    isAnimating = false;
+                }
+            }
+
+            // ---- Handle answer ----
+            function handleAnswer() {
+                if (isAnswered || isGameOver) return;
+                const raw = answerInput.value.trim();
+                if (raw === '') return;
+
+                const userAnswer = Number(raw);
+                if (isNaN(userAnswer)) return;
+
+                const p = problems[currentIndex];
+                const correct = p.answer;
+
+                // Stop timer & animation
+                stopTimers();
+                isAnswered = true;
+                answerInput.disabled = true;
+                submitBtn.disabled = true;
+
+                const isCorrect = (userAnswer === correct);
+
+                if (isCorrect) {
+                    correctCount++;
+                    showFeedback(true, correct);
+                    answerInput.classList.add('correct-input');
+                } else {
+                    wrongCount++;
+                    showFeedback(false, correct);
+                    answerInput.classList.add('wrong-input', 'shake');
+                }
+
+                updateStats();
+
+                // Move to next after delay
+                setTimeout(() => {
+                    if (isGameOver) return;
+                    card.classList.add('hidden');
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex < TOTAL_QUESTIONS) {
+                            showProblem(currentIndex);
+                        } else {
+                            endGame();
+                        }
+                    }, 250);
+                }, isCorrect ? 600 : 1000);
+            }
+
+            // ---- Handle timeout ----
+            function handleTimeout() {
+                if (isAnswered || isGameOver) return;
+                isAnswered = true;
+                answerInput.disabled = true;
+                submitBtn.disabled = true;
+                stopTimers();
+
+                const p = problems[currentIndex];
+                wrongCount++;
+                showFeedbackTimeout(p.answer);
+                updateStats();
+
+                setTimeout(() => {
+                    if (isGameOver) return;
+                    card.classList.add('hidden');
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex < TOTAL_QUESTIONS) {
+                            showProblem(currentIndex);
+                        } else {
+                            endGame();
+                        }
+                    }, 250);
+                }, 1000);
+            }
+
+            // ---- Feedback display ----
+            function showFeedback(isCorrect, correctAnswer) {
+                feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+                feedbackIcon.textContent = isCorrect ? '✅' : '❌';
+                feedbackText.innerHTML = isCorrect ?
+                    'Верно!' :
+                    `Неверно! Правильно: <span class="correct-answer">${correctAnswer}</span>`;
+                feedback.style.opacity = '1';
+                card.classList.remove('waiting');
+            }
+
+            function showFeedbackTimeout(correctAnswer) {
+                feedback.className = 'feedback show timeout';
+                feedbackIcon.textContent = '⏰';
+                feedbackText.innerHTML =
+                    `Время вышло! Ответ: <span class="correct-answer">${correctAnswer}</span>`;
+                feedback.style.opacity = '1';
+                card.classList.remove('waiting');
+            }
+
+            // ---- Stop timers ----
+            function stopTimers() {
+                if (timerId) {
+                    clearInterval(timerId);
+                    timerId = null;
+                }
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+                isAnimating = false;
+            }
+
+            // ---- End game ----
+            function endGame() {
+                if (isGameOver) return;
+                isGameOver = true;
+                stopTimers();
+                card.classList.add('hidden');
+                answerInput.disabled = true;
+                submitBtn.disabled = true;
+
+                // Show results
+                finalCorrect.textContent = correctCount;
+                finalWrong.textContent = wrongCount;
+
+                const total = correctCount + wrongCount;
+                const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+                if (pct >= 90) {
+                    resultIcon.textContent = '🏆';
+                    resultTitle.textContent = 'Великолепно!';
+                    resultSub.textContent = `Вы справились на ${pct}% — настоящий мастер!`;
+                } else if (pct >= 70) {
+                    resultIcon.textContent = '🌟';
+                    resultTitle.textContent = 'Отлично!';
+                    resultSub.textContent = `Правильных ответов ${pct}% — продолжайте в том же духе!`;
+                } else if (pct >= 50) {
+                    resultIcon.textContent = '📚';
+                    resultTitle.textContent = 'Неплохо!';
+                    resultSub.textContent = `Правильных ответов ${pct}% — стоит ещё потренироваться.`;
+                } else {
+                    resultIcon.textContent = '💪';
+                    resultTitle.textContent = 'Тренируйтесь дальше!';
+                    resultSub.textContent = `Правильных ответов ${pct}% — таблица умножения ждёт вас!`;
+                }
+
+                results.classList.add('visible');
+                document.querySelector('.header').style.opacity = '0.4';
+                document.querySelector('.input-area').style.opacity = '0.2';
+            }
+
+            // ---- Restart ----
+            function restartGame() {
+                stopTimers();
+                isGameOver = false;
+                isAnswered = false;
+                currentIndex = 0;
+                correctCount = 0;
+                wrongCount = 0;
+                isAnimating = false;
+
+                results.classList.remove('visible');
+                document.querySelector('.header').style.opacity = '1';
+                document.querySelector('.input-area').style.opacity = '1';
+
+                // Generate new problems
+                problems = generateProblems(TOTAL_QUESTIONS);
+                // shuffle to make them different each time
+                problems = shuffleArray(problems);
+
+                updateStats();
+                answerInput.disabled = false;
+                submitBtn.disabled = false;
+                answerInput.value = '';
+                answerInput.classList.remove('correct-input', 'wrong-input', 'shake');
+
+                card.classList.remove('hidden');
+                card.style.top = '6%';
+                card.style.opacity = '1';
+                card.style.transform = 'translateX(-50%) scale(1)';
+                card.classList.add('waiting');
+                feedback.classList.remove('show', 'correct', 'wrong', 'timeout');
+                feedback.style.opacity = '0';
+
+                showProblem(0);
+            }
+
+            // ---- Event listeners ----
+            submitBtn.addEventListener('click', handleAnswer);
+
+            answerInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAnswer();
+                }
+            });
+
+            // Prevent zoom on double-tap for mobile
+            answerInput.addEventListener('touchend', (e) => {
+                // just focus
+            });
+
+            restartBtn.addEventListener('click', restartGame);
+
+            // ---- Init ----
+            function init() {
+                problems = generateProblems(TOTAL_QUESTIONS);
+                problems = shuffleArray(problems);
+                updateStats();
+                showProblem(0);
+            }
+
+            init();
+
+            // ---- Handle visibility change (pause when tab hidden) ----
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // pause timers? we keep running, but user might come back
+                    // we could pause but it's fine for this game
+                }
+            });
+
+        })();
+    </script>
 
 </body>
 </html>
