@@ -1,7 +1,7 @@
 [
     { "date": "2026-08-06", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Модуль. Сложение и вычитание.", "material": "students/amina/les1.html", "homework": "homework/amina/hw1.html" },
     { "date": "2026-08-10", "start": "10:00", "end": "11:00", "topic": "Отрицательные и положительные числа. Умножение и деление. Коэффициент. Подобные слагаемые.", "material": "students/amina/les2.html", "homework": "homework/amina/hw2.html" },
-    { "date": "2026-08-17", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/les3.html", "homework": "homework/amina/hw3.html" },
+    { "date": "2026-08-17", "start": "10:00", "end": "11:00", "topic": "Линейные уравнения. Раскрытие скобочек.", "material": "students/amina/les3.html", "homework": "homework/amina/hw3.html" },
     { "date": "2026-08-24", "start": "10:00", "end": "11:00", "topic": "", "material": "students/amina/les4.html", "homework": "homework/amina/hw4.html" },
 
     { "date": "2026-05-04", "start": "00:00", "end": "00:00", "topic": ")", "material": "students/amina/les5.html", "homework": "homework/amina/hw5.html" },
