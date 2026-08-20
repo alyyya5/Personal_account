@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ДЗ: Смешанные уравнения (Средний уровень)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        h1 {
+            font-size: 26px;
+            color: #1a3a5e;
+            margin-bottom: 5px;
+            border-left: 5px solid #3b82f6;
+            padding-left: 15px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        /* Стили для заданий */
+        .task-block {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        .task-block:hover {
+            border-color: #cbd5e1;
+        }
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .task-num {
+            font-weight: bold;
+            color: #3b82f6;
+            min-width: 25px;
+        }
+        .task-text {
+            font-size: 18px;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            color: #0f172a;
+        }
+
+        /* Поле для решения (клетка) */
+        .solution-area {
+            width: 100%;
+            min-height: 120px;
+            background-image: 
+                linear-gradient(#eef2f6 1px, transparent 1px),
+                linear-gradient(90deg, #eef2f6 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .solution-area textarea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            resize: none;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            outline: none;
+            line-height: 20px;
+            color: #334155;
+        }
+
+        /* Строка ответа */
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        .answer-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .task-input {
+            padding: 6px 10px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 6px;
+            width: 120px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: #1e293b;
+            outline: none;
+            transition: 0.2s;
+        }
+        .task-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .task-input.correct {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+            color: #15803d;
+        }
+        .task-input.wrong {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+
+        /* Кнопки */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        .btn-check { background: #3b82f6; color: white; }
+        .btn-check:hover { background: #2563eb; }
+        
+        .btn-reset { background: #e2e8f0; color: #475569; }
+        .btn-reset:hover { background: #cbd5e1; }
+
+        .btn-show { background: #dbeafe; color: #1e40af; }
+        .btn-show:hover { background: #bfdbfe; }
+
+        /* Результат */
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            display: none;
+        }
+        .result-box.show { display: block; }
+        .score-text { font-size: 18px; font-weight: bold; color: #0f172a; }
+        
+        .answers-list {
+            margin-top: 20px;
+            display: none;
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .answers-list.show { display: block; }
+        .ans-item { margin-bottom: 4px; border-bottom: 1px solid #f1f5f9; padding-bottom: 2px;}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Домашнее задание</h1>
+    <div class="subtitle">Тема: Линейные уравнения, скобки, простые дроби и модуль.</div>
+
+    <!-- ЗАДАНИЯ -->
+    
+    <!-- Блок 1: Скобки -->
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">1.</span><span class="task-text">3(x - 2) = 12</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q1">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">2.</span><span class="task-text">5x + 2(x - 3) = 8</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q2">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">3.</span><span class="task-text">-(x + 4) = -9</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q3">
+        </div>
+    </div>
+
+    <!-- Блок 2: X в обеих частях -->
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">4.</span><span class="task-text">7x - 3 = 4x + 9</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q4">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">5.</span><span class="task-text">10 - 2x = 4x - 8</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q5">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">6.</span><span class="task-text">3(x - 1) = x + 5</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q6">
+        </div>
+    </div>
+
+    <!-- Блок 3: Модуль -->
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">7.</span><span class="task-text">|x| = 15</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q7">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">8.</span><span class="task-text">|x - 5| = 3</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q8">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">9.</span><span class="task-text">|2x| = 10</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q9">
+        </div>
+    </div>
+
+    <!-- Блок 4: Дроби -->
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">10.</span><span class="task-text">x / 4 = 5</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q10">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">11.</span><span class="task-text">x / 3 + 2 = 6</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q11">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">12.</span><span class="task-text">2x / 5 = 4</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q12">
+        </div>
+    </div>
+
+    <!-- Блок 5: Чуть сложнее -->
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">13.</span><span class="task-text">4(x + 2) - 5 = 11</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q13">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">14.</span><span class="task-text">8x - 3(x - 2) = 21</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q14">
+        </div>
+    </div>
+
+    <div class="task-block">
+        <div class="task-header"><span class="task-num">15.</span><span class="task-text">|x + 1| = 6</span></div>
+        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
+        <div class="answer-row">
+            <span class="answer-label">Ответ:</span>
+            <input type="text" class="task-input" id="q15">
+        </div>
+    </div>
+
+
+    <!-- УПРАВЛЕНИЕ -->
+    <div class="controls">
+        <button class="btn-check" onclick="checkAnswers()">✅ Проверить</button>
+        <button class="btn-show" onclick="toggleAnswers()">👀 Показать ответы</button>
+        <button class="btn-reset" onclick="resetAll()">🔄 Сбросить</button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+        <div class="score-text" id="scoreText"></div>
+    </div>
+
+    <div class="answers-list" id="answersList">
+        <strong>Ключи к заданиям:</strong><br><br>
+        <div id="answersContent"></div>
+    </div>
+
+</div>
+
+<script>
+    // Правильные ответы
+    const correctAnswers = {
+        q1: "6",
+        q2: "2",
+        q3: "5",
+        q4: "4",
+        q5: "3",
+        q6: "4",
+        q7: "15; -15", // принимаем разные форматы
+        q8: "8; 2",
+        q9: "5; -5",
+        q10: "20",
+        q11: "12",
+        q12: "10",
+        q13: "2",
+        q14: "3",
+        q15: "5; -7"
+    };
+
+    function normalize(str) {
+        return str.trim().toLowerCase().replace(/\s+/g, '');
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        let total = 15;
+        
+        for (let i = 1; i <= total; i++) {
+            let id = 'q' + i;
+            let input = document.getElementById(id);
+            let userVal = normalize(input.value);
+            let rightVal = correctAnswers[id];
+            
+            // Проверка для ответов с несколькими вариантами (через точку с запятой или запятую)
+            let isCorrect = false;
+            
+            if (rightVal.includes(';')) {
+                // Разбиваем правильный ответ на массив чисел
+                let rightParts = rightVal.split(';').map(s => s.trim());
+                // Разбиваем ответ пользователя
+                let userParts = userVal.split(/[,;]/).map(s => s.trim());
+                
+                // Проверяем, совпадают ли множества чисел (порядок не важен)
+                if (userParts.length === rightParts.length) {
+                    let allMatch = true;
+                    // Сортируем оба массива для сравнения
+                    let sortedRight = [...rightParts].sort();
+                    let sortedUser = [...userParts].sort();
+                    
+                    for(let j=0; j<sortedRight.length; j++) {
+                        if(sortedRight[j] !== sortedUser[j]) allMatch = false;
+                    }
+                    if(allMatch) isCorrect = true;
+                }
+            } else {
+                // Обычное сравнение
+                if (userVal === normalize(rightVal)) isCorrect = true;
+            }
+
+            input.classList.remove('correct', 'wrong');
+            if (userVal !== "") {
+                if (isCorrect) {
+                    input.classList.add('correct');
+                    score++;
+                } else {
+                    input.classList.add('wrong');
+                }
+            }
+        }
+
+        let resultBox = document.getElementById('resultBox');
+        let scoreText = document.getElementById('scoreText');
+        resultBox.classList.add('show');
+        scoreText.innerHTML = `Ваш результат: <span style="color:${score===total?'green':'#3b82f6'}">${score}</span> из ${total}`;
+    }
+
+    function resetAll() {
+        let inputs = document.querySelectorAll('.task-input');
+        inputs.forEach(inp => {
+            inp.value = '';
+            inp.classList.remove('correct', 'wrong');
+        });
+        document.getElementById('resultBox').classList.remove('show');
+        document.getElementById('answersList').classList.remove('show');
+    }
+
+    function toggleAnswers() {
+        let list = document.getElementById('answersList');
+        let content = document.getElementById('answersContent');
+        
+        if (list.classList.contains('show')) {
+            list.classList.remove('show');
+        } else {
+            let html = "";
+            for (let [key, val] of Object.entries(correctAnswers)) {
+                let num = key.replace('q', '');
+                html += `<div class="ans-item"><b>№${num}:</b> ${val}</div>`;
+            }
+            content.innerHTML = html;
+            list.classList.add('show');
+        }
+    }
+</script>
+
+</body>
+</html>
