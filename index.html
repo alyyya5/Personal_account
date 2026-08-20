@@ -477,74 +477,74 @@
         }
     }
 
-// ПРОГРЕСС
+    // ============================================================
+    //  📊  ПРОГРЕСС
+    // ============================================================
+    function renderProgress(studentId) {
+        const container = document.getElementById('progressContainer');
+        const section = document.getElementById('progressSection');
 
-    
-function renderProgress(studentId) {
-    const container = document.getElementById('progressContainer');
-    const section = document.getElementById('progressSection');
+        if (!lessonsData || lessonsData.length === 0) {
+            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
+            section.style.display = 'block';
+            return;
+        }
 
-    if (!lessonsData || lessonsData.length === 0) {
-        container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
-        section.style.display = 'block';
-        return;
-    }
+        const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
+        const currentYearStr = String(currentYear);
+        const monthLessons = lessonsData.filter(item => {
+            const dateParts = item.date.split('-');
+            return dateParts[0] === currentYearStr && dateParts[1] === currentMonthStr;
+        });
 
-    const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
-    const currentYearStr = String(currentYear);
-    const monthLessons = lessonsData.filter(item => {
-        const dateParts = item.date.split('-');
-        return dateParts[0] === currentYearStr && dateParts[1] === currentMonthStr;
-    });
+        if (monthLessons.length === 0) {
+            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">На этот месяц нет уроков.</p>';
+            section.style.display = 'block';
+            return;
+        }
 
-    if (monthLessons.length === 0) {
-        container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">На этот месяц нет уроков.</p>';
-        section.style.display = 'block';
-        return;
-    }
+        const total = monthLessons.length;
+        const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
+        const percent = Math.round((completed / total) * 100);
 
-    const total = monthLessons.length;
-    const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
-    const percent = Math.round((completed / total) * 100);
+        const topicsList = monthLessons.map((item, index) => {
+            const dateParts = item.date.split('-');
+            const day = dateParts[2];
+            const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
+            const isCompleted = item.topic && item.topic.trim() !== '';
+            return `
+                <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
+                    <span style="color:#4a627a;">${day}.${currentMonthStr}</span>
+                    <span style="${isCompleted ? 'color:#16a34a;' : 'color:#dc2626;'}">
+                        ${isCompleted ? '✅' : '⏳'} ${isCompleted ? topic : 'Тема не указана'}
+                    </span>
+                </div>
+            `;
+        }).join('');
 
-    const topicsList = monthLessons.map((item, index) => {
-        const dateParts = item.date.split('-');
-        const day = dateParts[2];
-        const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
-        const isCompleted = item.topic && item.topic.trim() !== '';
-        return `
-            <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
-                <span style="color:#4a627a;">${day}.${currentMonthStr}</span>
-                <span style="${isCompleted ? 'color:#16a34a;' : 'color:#dc2626;'}">
-                    ${isCompleted ? '✅' : '⏳'} ${isCompleted ? topic : 'Тема не указана'}
-                </span>
+        let html = `
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                    <div style="font-size:0.6rem; color:#4a627a;">Всего уроков</div>
+                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${total}</div>
+                </div>
+                <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                    <div style="font-size:0.6rem; color:#4a627a;">Пройдено тем</div>
+                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${completed} / ${total}</div>
+                    <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
+                        <div style="width:${percent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
+                    </div>
+                    <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${percent}%</div>
+                </div>
+            </div>
+            <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
+                ${topicsList}
             </div>
         `;
-    }).join('');
 
-    let html = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-            <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
-                <div style="font-size:0.6rem; color:#4a627a;">Всего уроков</div>
-                <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${total}</div>
-            </div>
-            <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
-                <div style="font-size:0.6rem; color:#4a627a;">Пройдено тем</div>
-                <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${completed} / ${total}</div>
-                <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
-                    <div style="width:${percent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
-                </div>
-                <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${percent}%</div>
-            </div>
-        </div>
-        <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
-            ${topicsList}
-        </div>
-    `;
-
-    container.innerHTML = html;
-    section.style.display = 'block';
-}
+        container.innerHTML = html;
+        section.style.display = 'block';
+    }
 
     // ============================================================
     //  ВХОД С ПАРОЛЕМ
@@ -565,7 +565,12 @@ function renderProgress(studentId) {
             return;
         }
 
+        // ============================================================
+        //  🔑  ЕСЛИ АЛИНА — СОЗДАЁМ СЕССИЮ И ПЕРЕНАПРАВЛЯЕМ
+        // ============================================================
         if (id === 'alina') {
+            // Сохраняем сессию преподавателя
+            localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() }));
             window.location.href = 'teacher.html';
             return;
         }
@@ -744,4 +749,4 @@ function renderProgress(studentId) {
     });
 </script>
 </body>
-</html
+</html>
