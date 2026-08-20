@@ -3,459 +3,802 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ДЗ: Смешанные уравнения (Средний уровень)</title>
+    <title>Домашнее задание | Смешанные уравнения</title>
+
+    <!-- MathJax для красивых дробей и формул -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
     <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --border-light: #d0ddea;
+            --correct-bg: #eafaf1;
+            --correct-border: #1a8a5a;
+            --wrong-bg: #fdf0ee;
+            --wrong-border: #c0392b;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: #f0f4f8;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            padding: 20px;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 16px;
             display: flex;
             justify-content: center;
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            padding: 30px;
-        }
-        h1 {
-            font-size: 26px;
-            color: #1a3a5e;
-            margin-bottom: 5px;
-            border-left: 5px solid #3b82f6;
-            padding-left: 15px;
-        }
-        .subtitle {
-            color: #64748b;
-            margin-bottom: 25px;
-            padding-left: 20px;
-            font-size: 14px;
-        }
-        
-        /* Стили для заданий */
-        .task-block {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            transition: transform 0.2s;
-        }
-        .task-block:hover {
-            border-color: #cbd5e1;
-        }
-        .task-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .task-num {
-            font-weight: bold;
-            color: #3b82f6;
-            min-width: 25px;
-        }
-        .task-text {
-            font-size: 18px;
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            color: #0f172a;
+            min-height: 100vh;
         }
 
-        /* Поле для решения (клетка) */
-        .solution-area {
+        .container {
+            max-width: 1100px;
             width: 100%;
-            min-height: 120px;
-            background-image: 
-                linear-gradient(#eef2f6 1px, transparent 1px),
-                linear-gradient(90deg, #eef2f6 1px, transparent 1px);
-            background-size: 20px 20px;
-            border: 1px solid #e2e8f0;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .info-line {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #f8faff;
             border-radius: 8px;
-            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags { display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+        .tag {
+            font-size: 12px; font-weight: 600; padding: 4px 14px;
+            border-radius: 40px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .tag-ege   { background: #dce5f2; color: #1d3a66; }
+        .tag-time  { background: #f1f5f9; color: #475569; }
+        .tag-level { background: #fee2d6; color: var(--accent-red); }
+
+        /* ===== Прогресс ===== */
+        .progress-wrap {
+            background: #f4f8fd;
+            border: 1px solid #e2ebf5;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 32px;
+        }
+        .progress-top {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px; background: #e3ecf5; border-radius: 20px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
+            border-radius: 20px; transition: width 0.5s ease, background 0.5s ease;
+        }
+        .progress-fill.good { background: linear-gradient(90deg, #1a8a5a, #34c98a); }
+        .progress-fill.bad  { background: linear-gradient(90deg, #c0392b, #e67e5a); }
+
+        .section { margin-bottom: 38px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue); color: white;
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px; flex-shrink: 0;
+        }
+        .section-title { font-size: 20px; font-weight: 700; }
+        .section-desc { font-size: 14px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 18px;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 18px 20px 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s, background 0.3s;
+            display: flex; flex-direction: column;
             position: relative;
         }
-        .solution-area textarea {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            resize: none;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            outline: none;
-            line-height: 20px;
-            color: #334155;
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .task-card.is-correct { border-color: var(--correct-border); background: var(--correct-bg); }
+        .task-card.is-wrong   { border-color: var(--wrong-border);   background: var(--wrong-bg); }
+
+        .task-label {
+            font-size: 11px; font-weight: 700; color: var(--accent-blue);
+            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;
+        }
+        .task-label.orange { color: #d48a3a; }
+        .task-label.purple { color: #7c3aed; }
+        .task-label.green  { color: var(--accent-green); }
+
+        .task-condition {
+            font-size: 20px; margin-bottom: 14px; padding: 4px 0;
+            color: var(--text-main); flex: 1; min-height: 44px;
+            display: flex; align-items: center;
         }
 
-        /* Строка ответа */
         .answer-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f8fafc;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border-top: 1px dashed #cbd5e1;
-        }
-        .answer-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #475569;
-        }
-        .task-input {
-            padding: 6px 10px;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 6px;
-            width: 120px;
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-            color: #1e293b;
-            outline: none;
-            transition: 0.2s;
-        }
-        .task-input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        .task-input.correct {
-            border-color: #22c55e;
-            background-color: #f0fdf4;
-            color: #15803d;
-        }
-        .task-input.wrong {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-            color: #b91c1c;
+            display: flex; align-items: center; gap: 10px;
+            margin-top: 6px; padding-top: 10px;
+            border-top: 1px solid #eef2f7;
+            font-size: 14px; font-weight: 600; color: var(--text-secondary);
         }
 
-        /* Кнопки */
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        .answer-input {
+            flex: 1; border: none;
+            border-bottom: 2px solid var(--border-light);
+            outline: none; font-size: 16px; font-weight: 600;
+            padding: 4px 6px; background: transparent;
+            color: var(--text-main);
+            transition: border-color 0.2s, background 0.2s;
+            min-width: 60px; font-family: inherit;
         }
-        button {
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s;
-        }
-        .btn-check { background: #3b82f6; color: white; }
-        .btn-check:hover { background: #2563eb; }
-        
-        .btn-reset { background: #e2e8f0; color: #475569; }
-        .btn-reset:hover { background: #cbd5e1; }
+        .answer-input:focus { border-bottom-color: var(--accent-blue); }
+        .answer-input.correct { border-bottom-color: var(--correct-border); background: #dff5e9; border-radius: 4px 4px 0 0; }
+        .answer-input.wrong   { border-bottom-color: var(--wrong-border);   background: #fbe3df; border-radius: 4px 4px 0 0; }
 
-        .btn-show { background: #dbeafe; color: #1e40af; }
-        .btn-show:hover { background: #bfdbfe; }
-
-        /* Результат */
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            display: none;
+        .status-badge {
+            font-size: 12px; font-weight: 700; padding: 3px 10px;
+            border-radius: 30px; white-space: nowrap; display: none;
         }
-        .result-box.show { display: block; }
-        .score-text { font-size: 18px; font-weight: bold; color: #0f172a; }
-        
-        .answers-list {
-            margin-top: 20px;
-            display: none;
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .answers-list.show { display: block; }
-        .ans-item { margin-bottom: 4px; border-bottom: 1px solid #f1f5f9; padding-bottom: 2px;}
+        .status-badge.show { display: inline-block; animation: pop 0.25s ease-out; }
+        .status-badge.ok  { background: #d5f2e3; color: var(--correct-border); }
+        .status-badge.err { background: #fadbd6; color: var(--wrong-border); }
+        @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+        .action-bar { display: flex; flex-wrap: wrap; gap: 14px; margin: 20px 0 24px; justify-content: center; }
+
+        .btn {
+            padding: 10px 32px; border: none; border-radius: 40px;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+            transition: 0.2s; background: var(--accent-blue); color: white;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29,111,156,0.3); }
+        .btn:active { transform: scale(0.97); }
+        .btn-success { background: var(--accent-green); }
+        .btn-success:hover { box-shadow: 0 4px 12px rgba(26,138,90,0.3); }
+        .btn-danger { background: var(--accent-red); }
+        .btn-danger:hover { box-shadow: 0 4px 12px rgba(192,57,43,0.3); }
+        .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
+        .btn-outline:hover { background: #f0f4fa; border-color: #a0b4cc; box-shadow: none; }
+
+        .result-area {
+            background: #f0f9ff; border-radius: 20px; padding: 20px 24px;
+            margin-top: 20px; font-size: 0.95rem;
+            border: 1px solid #bfdbfe; min-height: 80px;
+        }
+        .result-area .big-score { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+        .result-area ul { margin: 10px 0 0 20px; }
+        .result-area li { margin-bottom: 4px; }
+
+        /* Модалка */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; border-radius: 28px;
+            max-width: 500px; width: 100%; padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card p { color: #4a627a; margin-bottom: 12px; font-size: 0.95rem; }
+        .modal-card textarea {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid #dce5ef; border-radius: 18px;
+            font-size: 0.95rem; font-family: inherit;
+            resize: vertical; outline: none; transition: 0.2s;
+        }
+        .modal-card textarea:focus { border-color: #3b82f6; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .modal-buttons .btn { flex: 1; }
+        #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; }
+
+        .footer-note {
+            margin-top: 30px; padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px; color: var(--text-secondary);
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; border-radius: 18px; }
+            .task-grid { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .section-desc { margin-left: 0; }
+            h1 { font-size: 22px; }
+            .task-condition { font-size: 18px; }
+            .action-bar .btn { flex: 1; min-width: 120px; text-align: center; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📝 Домашнее задание</h1>
-    <div class="subtitle">Тема: Линейные уравнения, скобки, простые дроби и модуль.</div>
+    <div class="container">
 
-    <!-- ЗАДАНИЯ -->
-    
-    <!-- Блок 1: Скобки -->
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">1.</span><span class="task-text">3(x - 2) = 12</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q1">
+        <header>
+            <h1>🏠 Домашнее задание</h1>
+            <div class="subtitle">по теме «Смешанные уравнения» · Средний уровень</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
+                <strong>Тема:</strong> <span id="lessonTopic"></span>
+            </div>
+            <div class="tags">
+                <span class="tag tag-ege">15 заданий</span>
+                <span class="tag tag-time">⏱ 30–45 минут</span>
+                <span class="tag tag-level">Средний уровень</span>
+            </div>
+        </header>
+
+        <!-- Прогресс -->
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span>📈 Прогресс выполнения</span>
+                <span id="progressText">Заполнено: 0 / 15</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <!-- БЛОК 1: Скобки -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Уравнения со скобками</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label">Скобки</div>
+                    <div class="task-condition">\(3(x - 2) = 12\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q1" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q1"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Скобки</div>
+                    <div class="task-condition">\(5x + 2(x - 3) = 8\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q2" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q2"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Скобки</div>
+                    <div class="task-condition">\(-(x + 4) = -9\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q3" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q3"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Скобки</div>
+                    <div class="task-condition">\(4(x + 2) - 5 = 11\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q13" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q13"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- БЛОК 2: X в обеих частях -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <div class="section-title">Переменная в обеих частях</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label orange">X в обеих</div>
+                    <div class="task-condition">\(7x - 3 = 4x + 9\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q4" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q4"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">X в обеих</div>
+                    <div class="task-condition">\(10 - 2x = 4x - 8\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q5" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q5"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">X в обеих</div>
+                    <div class="task-condition">\(3(x - 1) = x + 5\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q6" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q6"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">X в обеих</div>
+                    <div class="task-condition">\(8x - 3(x - 2) = 21\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q14" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q14"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- БЛОК 3: Модуль -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">3</div>
+                <div class="section-title">Уравнения с модулем</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label purple">Модуль</div>
+                    <div class="task-condition">\(|x| = 15\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q7" placeholder="два корня через ;" autocomplete="off">
+                        <span class="status-badge" id="badge-q7"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Модуль</div>
+                    <div class="task-condition">\(|x - 5| = 3\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q8" placeholder="два корня через ;" autocomplete="off">
+                        <span class="status-badge" id="badge-q8"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Модуль</div>
+                    <div class="task-condition">\(|2x| = 10\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q9" placeholder="два корня через ;" autocomplete="off">
+                        <span class="status-badge" id="badge-q9"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Модуль</div>
+                    <div class="task-condition">\(|x + 1| = 6\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q15" placeholder="два корня через ;" autocomplete="off">
+                        <span class="status-badge" id="badge-q15"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- БЛОК 4: Дроби -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">4</div>
+                <div class="section-title">Уравнения с дробями</div>
+                <div class="section-desc">3 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label green">Дроби</div>
+                    <div class="task-condition">\(\dfrac{x}{4} = 5\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q10" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q10"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Дроби</div>
+                    <div class="task-condition">\(\dfrac{x}{3} + 2 = 6\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q11" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q11"></span>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Дроби</div>
+                    <div class="task-condition">\(\dfrac{2x}{5} = 4\)</div>
+                    <div class="answer-row">
+                        <span>Ответ:</span>
+                        <input class="answer-input" type="text" id="q12" placeholder="x =" autocomplete="off">
+                        <span class="status-badge" id="badge-q12"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- КНОПКИ -->
+        <div class="action-bar">
+            <button class="btn" id="checkBtn">✅ Проверить задания</button>
+            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+        </div>
+
+        <!-- РЕЗУЛЬТАТ -->
+        <div id="resultArea" class="result-area">
+            📌 После выполнения нажмите «Проверить задания», затем «Отправить отчёт».
+        </div>
+
+        <div class="footer-note">
+            <span>📌 Смешанные уравнения · 15 заданий</span>
+            <span class="tag tag-ege">Средний уровень</span>
+        </div>
+
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправить отчёт</h3>
+            <p>Было сложно? Какие вопросы возникли?</p>
+            <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно, или задайте вопрос..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
+                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
         </div>
     </div>
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">2.</span><span class="task-text">5x + 2(x - 3) = 8</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q2">
-        </div>
-    </div>
+    <script src="../../config.js"></script>
+    <script>
+        (function() {
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">3.</span><span class="task-text">-(x + 4) = -9</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q3">
-        </div>
-    </div>
+            // ============================================================
+            //  ПРАВИЛЬНЫЕ ОТВЕТЫ (те же номера!)
+            // ============================================================
+            const answers = {
+                q1: "6",
+                q2: "2",
+                q3: "5",
+                q4: "4",
+                q5: "3",
+                q6: "4",
+                q7: "15; -15",
+                q8: "8; 2",
+                q9: "5; -5",
+                q10: "20",
+                q11: "12",
+                q12: "10",
+                q13: "2",
+                q14: "3",
+                q15: "5; -7"
+            };
 
-    <!-- Блок 2: X в обеих частях -->
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">4.</span><span class="task-text">7x - 3 = 4x + 9</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q4">
-        </div>
-    </div>
+            const answerInputs = document.querySelectorAll('.answer-input');
+            const checkBtn   = document.getElementById('checkBtn');
+            const resetBtn   = document.getElementById('resetBtn');
+            const reportBtn  = document.getElementById('reportBtn');
+            const resultArea = document.getElementById('resultArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">5.</span><span class="task-text">10 - 2x = 4x - 8</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q5">
-        </div>
-    </div>
+            const reportModal     = document.getElementById('reportModal');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const sendReportBtn   = document.getElementById('sendReportBtn');
+            const reportComment   = document.getElementById('reportComment');
+            const modalStatus     = document.getElementById('modalStatus');
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">6.</span><span class="task-text">3(x - 1) = x + 5</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q6">
-        </div>
-    </div>
+            // Информация об ученике
+            const params  = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date    = params.get('date') || new Date().toLocaleDateString('ru-RU');
+            const topic   = params.get('topic') || 'Смешанные уравнения';
 
-    <!-- Блок 3: Модуль -->
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">7.</span><span class="task-text">|x| = 15</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q7">
-        </div>
-    </div>
+            document.getElementById('studentName').textContent  = student;
+            document.getElementById('lessonDate').textContent   = date;
+            document.getElementById('lessonTopic').textContent  = topic;
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">8.</span><span class="task-text">|x - 5| = 3</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q8">
-        </div>
-    </div>
+            // ============================================================
+            //  НОРМАЛИЗАЦИЯ И ЧЕСТНАЯ ПРОВЕРКА
+            // ============================================================
+            function normalize(str) {
+                return str.trim().replace(/\s/g, '').toLowerCase();
+            }
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">9.</span><span class="task-text">|2x| = 10</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q9">
-        </div>
-    </div>
+            // Приводим ответ к числу: "20", "20/4", "-3.5", "7/2" -> число или null
+            function toNumber(str) {
+                let s = str.trim().replace(/\s/g, '').replace(',', '.');
+                if (s === '') return null;
+                if (s.includes('/')) {
+                    let parts = s.split('/');
+                    if (parts.length !== 2) return null;
+                    let a = parseFloat(parts[0]);
+                    let b = parseFloat(parts[1]);
+                    if (isNaN(a) || isNaN(b) || b === 0) return null;
+                    return a / b;
+                }
+                let n = parseFloat(s);
+                return isNaN(n) ? null : n;
+            }
 
-    <!-- Блок 4: Дроби -->
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">10.</span><span class="task-text">x / 4 = 5</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q10">
-        </div>
-    </div>
+            const EPS = 1e-9;
+            function numsEqual(a, b) {
+                return a !== null && b !== null && Math.abs(a - b) < EPS;
+            }
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">11.</span><span class="task-text">x / 3 + 2 = 6</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q11">
-        </div>
-    </div>
+            function parseMultipleAnswers(str) {
+                let s = str.trim().replace(/\s+/g, ' ');
+                if (s === "") return [];
+                return s.split(/[,;]\s*/).map(p => p.trim()).filter(p => p !== "");
+            }
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">12.</span><span class="task-text">2x / 5 = 4</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q12">
-        </div>
-    </div>
+            // Один ответ верен, если совпадает как число (дробь 20/4 == 20)
+            function singleAnswerCorrect(userVal, rightVal) {
+                let u = toNumber(userVal);
+                let r = toNumber(rightVal);
+                if (u !== null && r !== null) return numsEqual(u, r);
+                return normalize(userVal) === normalize(rightVal);
+            }
 
-    <!-- Блок 5: Чуть сложнее -->
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">13.</span><span class="task-text">4(x + 2) - 5 = 11</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q13">
-        </div>
-    </div>
+            // Несколько корней: порядок не важен, принимаем ; и ,
+            function multiAnswerCorrect(userVal, rightVal) {
+                let userParts  = parseMultipleAnswers(userVal);
+                let rightParts = parseMultipleAnswers(rightVal);
+                if (userParts.length !== rightParts.length) return false;
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">14.</span><span class="task-text">8x - 3(x - 2) = 21</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q14">
-        </div>
-    </div>
+                let uNums = userParts.map(toNumber);
+                let rNums = rightParts.map(toNumber);
 
-    <div class="task-block">
-        <div class="task-header"><span class="task-num">15.</span><span class="task-text">|x + 1| = 6</span></div>
-        <div class="solution-area"><textarea placeholder="Решение..."></textarea></div>
-        <div class="answer-row">
-            <span class="answer-label">Ответ:</span>
-            <input type="text" class="task-input" id="q15">
-        </div>
-    </div>
+                if (uNums.every(v => v !== null) && rNums.every(v => v !== null)) {
+                    uNums.sort((a, b) => a - b);
+                    rNums.sort((a, b) => a - b);
+                    return uNums.every((v, i) => numsEqual(v, rNums[i]));
+                }
+                // запасной вариант — сравнение строк
+                let uStr = userParts.map(normalize).sort();
+                let rStr = rightParts.map(normalize).sort();
+                return uStr.every((v, i) => v === rStr[i]);
+            }
 
+            function isAnswerCorrect(id, userVal) {
+                const right = answers[id];
+                if (!right) return false;
+                if (right.includes(';') || right.includes(',')) {
+                    return multiAnswerCorrect(userVal, right);
+                }
+                return singleAnswerCorrect(userVal, right);
+            }
 
-    <!-- УПРАВЛЕНИЕ -->
-    <div class="controls">
-        <button class="btn-check" onclick="checkAnswers()">✅ Проверить</button>
-        <button class="btn-show" onclick="toggleAnswers()">👀 Показать ответы</button>
-        <button class="btn-reset" onclick="resetAll()">🔄 Сбросить</button>
-    </div>
+            // ============================================================
+            //  ПРОГРЕСС
+            // ============================================================
+            function updateProgress() {
+                let filled = 0;
+                answerInputs.forEach(i => { if (i.value.trim() !== '') filled++; });
+                const total = answerInputs.length;
+                const pct = Math.round((filled / total) * 100);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = `Заполнено: ${filled} / ${total}`;
+            }
 
-    <div class="result-box" id="resultBox">
-        <div class="score-text" id="scoreText"></div>
-    </div>
+            // ============================================================
+            //  ПРОВЕРКА
+            // ============================================================
+            function checkAll() {
+                let correct = 0, total = answerInputs.length;
+                let mistakes = [];
+                let userAnswers = {};
 
-    <div class="answers-list" id="answersList">
-        <strong>Ключи к заданиям:</strong><br><br>
-        <div id="answersContent"></div>
-    </div>
+                answerInputs.forEach(input => {
+                    const id = input.id;
+                    const userVal = input.value.trim();
+                    const card  = input.closest('.task-card');
+                    const badge = document.getElementById('badge-' + id);
 
-</div>
+                    userAnswers[id] = userVal;
 
-<script>
-    // Правильные ответы
-    const correctAnswers = {
-        q1: "6",
-        q2: "2",
-        q3: "5",
-        q4: "4",
-        q5: "3",
-        q6: "4",
-        q7: "15; -15", // принимаем разные форматы
-        q8: "8; 2",
-        q9: "5; -5",
-        q10: "20",
-        q11: "12",
-        q12: "10",
-        q13: "2",
-        q14: "3",
-        q15: "5; -7"
-    };
+                    input.classList.remove('correct', 'wrong');
+                    card.classList.remove('is-correct', 'is-wrong');
+                    badge.classList.remove('show', 'ok', 'err');
 
-    function normalize(str) {
-        return str.trim().toLowerCase().replace(/\s+/g, '');
-    }
-
-    function checkAnswers() {
-        let score = 0;
-        let total = 15;
-        
-        for (let i = 1; i <= total; i++) {
-            let id = 'q' + i;
-            let input = document.getElementById(id);
-            let userVal = normalize(input.value);
-            let rightVal = correctAnswers[id];
-            
-            // Проверка для ответов с несколькими вариантами (через точку с запятой или запятую)
-            let isCorrect = false;
-            
-            if (rightVal.includes(';')) {
-                // Разбиваем правильный ответ на массив чисел
-                let rightParts = rightVal.split(';').map(s => s.trim());
-                // Разбиваем ответ пользователя
-                let userParts = userVal.split(/[,;]/).map(s => s.trim());
-                
-                // Проверяем, совпадают ли множества чисел (порядок не важен)
-                if (userParts.length === rightParts.length) {
-                    let allMatch = true;
-                    // Сортируем оба массива для сравнения
-                    let sortedRight = [...rightParts].sort();
-                    let sortedUser = [...userParts].sort();
-                    
-                    for(let j=0; j<sortedRight.length; j++) {
-                        if(sortedRight[j] !== sortedUser[j]) allMatch = false;
+                    if (userVal === '') {
+                        badge.textContent = '⚪ пусто';
+                        badge.classList.add('show', 'err');
+                        mistakes.push(`⚪ Задание ${id}: нет ответа`);
+                        return;
                     }
-                    if(allMatch) isCorrect = true;
-                }
-            } else {
-                // Обычное сравнение
-                if (userVal === normalize(rightVal)) isCorrect = true;
-            }
 
-            input.classList.remove('correct', 'wrong');
-            if (userVal !== "") {
-                if (isCorrect) {
-                    input.classList.add('correct');
-                    score++;
+                    if (isAnswerCorrect(id, userVal)) {
+                        input.classList.add('correct');
+                        card.classList.add('is-correct');
+                        badge.textContent = '✅ верно';
+                        badge.classList.add('show', 'ok');
+                        correct++;
+                    } else {
+                        input.classList.add('wrong');
+                        card.classList.add('is-wrong');
+                        badge.textContent = '❌ неверно';
+                        badge.classList.add('show', 'err');
+                        const cond = card.querySelector('.task-condition')?.textContent?.trim() || id;
+                        mistakes.push(`❌ ${cond} → ваш ответ: ${userVal}`);
+                    }
+                });
+
+                const percent = Math.round((correct / total) * 100);
+
+                progressFill.classList.remove('good', 'bad');
+                if (percent >= 70) progressFill.classList.add('good');
+                else if (percent < 40) progressFill.classList.add('bad');
+                progressFill.style.width = percent + '%';
+                progressText.textContent = `Результат: ${correct} / ${total} (${percent}%)`;
+
+                let html = `<div class="big-score">📊 Результат: ${correct} из ${total} (${percent}%)</div>`;
+                if (mistakes.length === 0) {
+                    html += '🎉 Отлично! Все задания выполнены верно!';
                 } else {
-                    input.classList.add('wrong');
+                    html += '<div>⚠️ Что нужно исправить:</div><ul>' +
+                            mistakes.map(m => `<li>${m}</li>`).join('') + '</ul>';
                 }
+                resultArea.innerHTML = html;
+
+                window.userAnswers = userAnswers;
+                window.lastReport  = `Результат: ${correct} из ${total} (${percent}%)`;
             }
-        }
 
-        let resultBox = document.getElementById('resultBox');
-        let scoreText = document.getElementById('scoreText');
-        resultBox.classList.add('show');
-        scoreText.innerHTML = `Ваш результат: <span style="color:${score===total?'green':'#3b82f6'}">${score}</span> из ${total}`;
-    }
-
-    function resetAll() {
-        let inputs = document.querySelectorAll('.task-input');
-        inputs.forEach(inp => {
-            inp.value = '';
-            inp.classList.remove('correct', 'wrong');
-        });
-        document.getElementById('resultBox').classList.remove('show');
-        document.getElementById('answersList').classList.remove('show');
-    }
-
-    function toggleAnswers() {
-        let list = document.getElementById('answersList');
-        let content = document.getElementById('answersContent');
-        
-        if (list.classList.contains('show')) {
-            list.classList.remove('show');
-        } else {
-            let html = "";
-            for (let [key, val] of Object.entries(correctAnswers)) {
-                let num = key.replace('q', '');
-                html += `<div class="ans-item"><b>№${num}:</b> ${val}</div>`;
+            // ============================================================
+            //  СБРОС
+            // ============================================================
+            function resetAll() {
+                answerInputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('correct', 'wrong');
+                    const card  = input.closest('.task-card');
+                    const badge = document.getElementById('badge-' + input.id);
+                    if (card)  card.classList.remove('is-correct', 'is-wrong');
+                    if (badge) badge.classList.remove('show', 'ok', 'err');
+                });
+                resultArea.innerHTML = '🧹 Поля очищены. Нажмите «Проверить задания».';
+                progressFill.style.width = '0%';
+                progressFill.classList.remove('good', 'bad');
+                progressText.textContent = `Заполнено: 0 / ${answerInputs.length}`;
+                window.userAnswers = {};
+                window.lastReport = '';
             }
-            content.innerHTML = html;
-            list.classList.add('show');
-        }
-    }
-</script>
+
+            // ============================================================
+            //  МОДАЛКА
+            // ============================================================
+            reportBtn.addEventListener('click', function() {
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            });
+
+            // ============================================================
+            //  ОТПРАВКА ОТЧЁТА
+            // ============================================================
+            sendReportBtn.addEventListener('click', async function() {
+                const comment = reportComment.value.trim();
+                if (!comment) {
+                    modalStatus.textContent = '⚠️ Напишите комментарий.';
+                    modalStatus.style.color = '#dc2626';
+                    return;
+                }
+
+                let answersText = '';
+                for (let [id, right] of Object.entries(answers)) {
+                    const input = document.getElementById(id);
+                    const userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
+                    const isCorrect = input && input.classList.contains('correct');
+                    answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
+                }
+
+                const title = `Отчёт: ${student} — ${topic} (${date})`;
+                const body =
+                    `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n` +
+                    `**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n` +
+                    `**Комментарий:**\n${comment}`;
+
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳ Отправка...';
+                modalStatus.textContent = '';
+                modalStatus.style.color = '#4a627a';
+
+                try {
+                    if (typeof createGitHubIssue === 'function') {
+                        const issueUrl = await createGitHubIssue(title, body);
+                        modalStatus.innerHTML =
+                            `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Посмотреть Issue</a>`;
+                        modalStatus.style.color = '#16a34a';
+                    } else {
+                        console.log('📤 Отправка отчёта:', title, body);
+                        modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим)';
+                        modalStatus.style.color = '#16a34a';
+                    }
+                    setTimeout(() => reportModal.classList.remove('active'), 3000);
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
+                    modalStatus.style.color = '#dc2626';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = '✅ Отправить';
+                }
+            });
+
+            // ============================================================
+            //  СОБЫТИЯ
+            // ============================================================
+            checkBtn.addEventListener('click', checkAll);
+            resetBtn.addEventListener('click', resetAll);
+
+            answerInputs.forEach(input => input.addEventListener('input', updateProgress));
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.classList.contains('answer-input')) {
+                    checkAll();
+                }
+            });
+
+            updateProgress();
+
+        })();
+    </script>
 
 </body>
 </html>
