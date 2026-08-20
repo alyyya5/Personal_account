@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Уравнения с модулями и дробями. Смешанные. </title>
+
+    <!-- MathJax для красивых формул -->
+    <script>
+        window.MathJax = {
+            tex: { 
+                inlineMath: [['\\(', '\\)']], 
+                displayMath: [['\\[', '\\]']],
+                packages: ['base', 'ams', 'noerrors', 'noundefined']
+            },
+            options: { 
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'tex2jax_ignore'
+            }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f5fc;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --accent-red: #c0392b;
+            --border-light: #d0ddea;
+            --highlight-bg: #f8fbff;
+            --example-bg: #fff9f0;
+            --note-bg: #e8f4fc;
+            --warning-bg: #fef3e2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #f0f5fc 0%, #e8f0f9 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1d6f9c 0%, #2ea3d8 100%);
+            border-radius: 24px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(29, 111, 156, 0.2);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .toc h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--accent-blue);
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .toc a {
+            display: block;
+            padding: 10px 16px;
+            background: var(--highlight-bg);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: all 0.2s;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .toc a:hover {
+            background: #e8f4fc;
+            transform: translateX(4px);
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--border-light);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.blue { background: #e3f2fd; }
+        .section-icon.orange { background: #fff3e0; }
+        .section-icon.purple { background: #f3e5f5; }
+        .section-icon.green { background: #e8f5e9; }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .theory-block {
+            background: var(--highlight-bg);
+            border-left: 5px solid var(--accent-blue);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .theory-block h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--accent-blue);
+        }
+
+        .theory-block p {
+            margin-bottom: 12px;
+        }
+
+        .example {
+            background: var(--example-bg);
+            border: 2px solid #ffe0b2;
+            border-radius: 14px;
+            padding: 22px;
+            margin: 20px 0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            color: var(--accent-orange);
+            font-size: 16px;
+        }
+
+        .example-content {
+            margin-left: 36px;
+        }
+
+        .step {
+            margin-bottom: 14px;
+            padding-left: 20px;
+            border-left: 3px solid #ffd54f;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .note {
+            background: var(--note-bg);
+            border-left: 5px solid #2196f3;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-size: 15px;
+        }
+
+        .note strong {
+            color: #1976d2;
+        }
+
+        .warning {
+            background: var(--warning-bg);
+            border-left: 5px solid #ff9800;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-size: 15px;
+        }
+
+        .warning strong {
+            color: #f57c00;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: var(--highlight-bg);
+            border-radius: 12px;
+            padding: 18px;
+            border: 2px solid var(--border-light);
+        }
+
+        .card h4 {
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag-blue { background: #e3f2fd; color: #1976d2; }
+        .tag-green { background: #e8f5e9; color: #388e3c; }
+        .tag-orange { background: #fff3e0; color: #f57c00; }
+        .tag-purple { background: #f3e5f5; color: #7b1fa2; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px 16px; }
+            header { padding: 24px 20px; }
+            h1 { font-size: 24px; }
+            .section { padding: 24px 20px; }
+            .section-title { font-size: 20px; }
+            .two-col { grid-template-columns: 1fr; }
+            .example-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📚 Смешанные уравнения</h1>
+            <div class="subtitle">Полный теоретический справочник с примерами</div>
+        </header>
+
+        <!-- Оглавление -->
+        <nav class="toc">
+            <h2>📑 Содержание</h2>
+            <ul>
+                <li><a href="#brackets">1. Уравнения со скобками</a></li>
+                <li><a href="#both-sides">2. X в обеих частях</a></li>
+                <li><a href="#modulus">3. Уравнения с модулем</a></li>
+                <li><a href="#fractions">4. Уравнения с дробями</a></li>
+            </ul>
+        </nav>
+
+        <!-- Раздел 1: Скобки -->
+        <section class="section" id="brackets">
+            <div class="section-header">
+                <div class="section-icon blue">🔹</div>
+                <div>
+                    <div class="section-title">Уравнения со скобками</div>
+                    <div class="section-desc">Раскрытие скобок и приведение подобных</div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h3>📖 Основное правило</h3>
+                <p>Чтобы раскрыть скобки, нужно <strong>умножить число перед скобками на каждое слагаемое внутри скобок</strong>:</p>
+                <div class="formula-box">
+                    \[ a(b + c) = ab + ac \]<br>
+                    \[ a(b - c) = ab - ac \]<br>
+                    \[ -(b + c) = -b - c \]
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>💡 Важно:</strong> Если перед скобками стоит минус, все знаки внутри скобок меняются на противоположные!
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 1: Простое уравнение</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ 3(x - 2) = 12 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Раскрываем скобки</div>
+                        \[ 3x - 6 = 12 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Переносим число вправо</div>
+                        \[ 3x = 12 + 6 \]
+                        \[ 3x = 18 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 3: Делим на коэффициент</div>
+                        \[ x = 6 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">✅ Ответ:</div>
+                        \[ x = 6 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span></span>
+                    <span>Пример 2: Две скобки</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ 5x + 2(x - 3) = 8 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Раскрываем скобки</div>
+                        \[ 5x + 2x - 6 = 8 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Приводим подобные</div>
+                        \[ 7x - 6 = 8 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 3: Переносим -6</div>
+                        \[ 7x = 8 + 6 \]
+                        \[ 7x = 14 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 4: Делим</div>
+                        \[ x = 2 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Частая ошибка:</strong> Не забывайте умножать на ВСЕ слагаемые в скобках! 
+                <br><br>
+                Неправильно: \(2(x + 3) = 2x + 3\) ❌<br>
+                Правильно: \(2(x + 3) = 2x + 6\) ✅
+            </div>
+        </section>
+
+        <!-- Раздел 2: X в обеих частях -->
+        <section class="section" id="both-sides">
+            <div class="section-header">
+                <div class="section-icon orange">🔸</div>
+                <div>
+                    <div class="section-title">Переменная в обеих частях</div>
+                    <div class="section-desc">Перенос слагаемых с x в одну сторону</div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h3>📖 Алгоритм решения</h3>
+                <p>Когда <strong>x</strong> есть и слева, и справа:</p>
+                <ol style="margin-left: 20px; margin-bottom: 12px;">
+                    <li>Перенесите все слагаемые с <strong>x</strong> в левую часть</li>
+                    <li>Перенесите все числа в правую часть</li>
+                    <li>При переносе <strong>меняйте знак на противоположный</strong>!</li>
+                    <li>Приведите подобные слагаемые</li>
+                    <li>Разделите на коэффициент при <strong>x</strong></li>
+                </ol>
+            </div>
+
+            <div class="formula-box">
+                <strong>Правило переноса:</strong><br><br>
+                \[ 7x - 3 = 4x + 9 \]<br><br>
+                ↓ переносим 4x влево (меняем знак!)<br><br>
+                \[ 7x \textcolor{red}{- 4x} - 3 = 9 \]<br><br>
+                ↓ переносим -3 вправо (меняем знак!)<br><br>
+                \[ 7x - 4x = 9 \textcolor{red}{+ 3} \]
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 3: X в обеих частях</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ 7x - 3 = 4x + 9 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Переносим 4x влево</div>
+                        \[ 7x - 4x - 3 = 9 \]
+                        \[ 3x - 3 = 9 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Переносим -3 вправо</div>
+                        \[ 3x = 9 + 3 \]
+                        \[ 3x = 12 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 3: Делим</div>
+                        \[ x = 4 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 4: Со скобками и x в обеих частях</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ 8x - 3(x - 2) = 21 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Раскрываем скобки</div>
+                        \[ 8x - 3x + 6 = 21 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Приводим подобные</div>
+                        \[ 5x + 6 = 21 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 3: Переносим 6</div>
+                        \[ 5x = 21 - 6 \]
+                        \[ 5x = 15 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 4: Делим</div>
+                        \[ x = 3 \]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел 3: Модуль -->
+        <section class="section" id="modulus">
+            <div class="section-header">
+                <div class="section-icon purple">🔷</div>
+                <div>
+                    <div class="section-title">Уравнения с модулем</div>
+                    <div class="section-desc">Геометрический смысл и два случая</div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h3>📖 Что такое модуль?</h3>
+                <p><strong>Модуль числа</strong> — это расстояние от этого числа до нуля на числовой прямой. Модуль всегда неотрицателен!</p>
+                <div class="formula-box">
+                    \[ |x| = \begin{cases} x, & \text{если } x \geq 0 \\ -x, & \text{если } x < 0 \end{cases} \]
+                </div>
+                <p><strong>Геометрический смысл:</strong> \(|x - a|\) — это расстояние между точками x и a на числовой прямой.</p>
+            </div>
+
+            <div class="note">
+                <strong>💡 Ключевое правило:</strong> Уравнение \(|A| = B\) (где B ≥ 0) имеет два решения:
+                <div class="formula-box" style="margin-top: 12px;">
+                    \[ A = B \quad \text{или} \quad A = -B \]
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="card">
+                    <h4>📌 Случай 1: |x| = a</h4>
+                    <p>Если \(a > 0\), то два корня:</p>
+                    <div class="formula-box" style="font-size: 16px;">
+                        \[ x = a \quad \text{или} \quad x = -a \]
+                    </div>
+                    <p><strong>Пример:</strong> \(|x| = 5\) → \(x = 5\) или \(x = -5\)</p>
+                </div>
+                <div class="card">
+                    <h4>📌 Случай 2: |x - a| = b</h4>
+                    <p>Расстояние от x до a равно b:</p>
+                    <div class="formula-box" style="font-size: 16px;">
+                        \[ x - a = b \quad \text{или} \quad x - a = -b \]
+                    </div>
+                    <p><strong>Пример:</strong> \(|x - 5| = 3\) → \(x = 8\) или \(x = 2\)</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 5: Простой модуль</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ |x| = 15 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Решение:</div>
+                        Модуль равен 15, значит число может быть:<br>
+                        \[ x = 15 \quad \text{или} \quad x = -15 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">✅ Ответ:</div>
+                        \[ x = 15; \quad x = -15 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 6: Модуль разности</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ |x - 5| = 3 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Записываем два случая</div>
+                        \[ x - 5 = 3 \quad \text{или} \quad x - 5 = -3 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Решаем первое уравнение</div>
+                        \[ x = 3 + 5 = 8 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 3: Решаем второе уравнение</div>
+                        \[ x = -3 + 5 = 2 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">✅ Ответ:</div>
+                        \[ x = 8; \quad x = 2 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">📊 Проверка:</div>
+                        \(|8 - 5| = |3| = 3\) ✅<br>
+                        \(|2 - 5| = |-3| = 3\) ✅
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 7: Модуль с коэффициентом</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ |2x| = 10 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Два случая</div>
+                        \[ 2x = 10 \quad \text{или} \quad 2x = -10 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Решаем</div>
+                        \[ x = 5 \quad \text{или} \quad x = -5 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно:</strong> Уравнение \(|x| = -5\) не имеет решений, так как модуль не может быть отрицательным!
+            </div>
+        </section>
+
+        <!-- Раздел 4: Дроби -->
+        <section class="section" id="fractions">
+            <div class="section-header">
+                <div class="section-icon green">🔺</div>
+                <div>
+                    <div class="section-title">Уравнения с дробями</div>
+                    <div class="section-desc">Избавление от знаменателя</div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h3> Основной метод</h3>
+                <p>Чтобы избавиться от дроби, нужно <strong>умножить обе части уравнения на знаменатель</strong>:</p>
+                <div class="formula-box">
+                    \[ \frac{x}{a} = b \quad \Rightarrow \quad x = a \cdot b \]
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>💡 Совет:</strong> Если в уравнении несколько дробей с разными знаменателями, умножьте на <strong>НОК</strong> (наименьшее общее кратное) всех знаменателей.
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 8: Простая дробь</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ \frac{x}{4} = 5 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Умножаем на 4</div>
+                        \[ x = 5 \cdot 4 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Вычисляем</div>
+                        \[ x = 20 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title"> Проверка:</div>
+                        \[ \frac{20}{4} = 5 \] ✅
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 9: Дробь с слагаемым</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ \frac{x}{3} + 2 = 6 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Переносим 2</div>
+                        \[ \frac{x}{3} = 6 - 2 \]
+                        \[ \frac{x}{3} = 4 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Умножаем на 3</div>
+                        \[ x = 4 \cdot 3 \]
+                        \[ x = 12 \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="example">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Пример 10: Дробь с коэффициентом</span>
+                </div>
+                <div class="example-content">
+                    <div class="step">
+                        <div class="step-title">Дано:</div>
+                        \[ \frac{2x}{5} = 4 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 1: Умножаем на 5</div>
+                        \[ 2x = 4 \cdot 5 \]
+                        \[ 2x = 20 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Шаг 2: Делим на 2</div>
+                        \[ x = 10 \]
+                    </div>
+                    <div class="step">
+                        <div class="step-title">📊 Проверка:</div>
+                        \[ \frac{2 \cdot 10}{5} = \frac{20}{5} = 4 \] ✅
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="card">
+                    <h4>🎯 Общий алгоритм</h4>
+                    <ol style="margin-left: 18px;">
+                        <li>Найдите знаменатель дроби</li>
+                        <li>Умножьте обе части на него</li>
+                        <li>Упростите уравнение</li>
+                        <li>Решите полученное уравнение</li>
+                        <li>Проверьте ответ</li>
+                    </ol>
+                </div>
+                <div class="card">
+                    <h4>⚡ Быстрый способ</h4>
+                    <p>Дробь \(\frac{x}{a} = b\) решается мгновенно:</p>
+                    <div class="formula-box" style="font-size: 16px;">
+                        \[ x = a \cdot b \]
+                    </div>
+                    <p>Просто «перенесите» знаменатель вниз!</p>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Важно:</strong> После умножения на знаменатель не забудьте умножить <strong>ВСЕ</strong> слагаемые!<br><br>
+                Неправильно: \(\frac{x}{2} + 3 = 5\) → \(x + 3 = 10\) <br>
+                Правильно: \(\frac{x}{2} + 3 = 5\) → \(x + 6 = 10\) ✅
+            </div>
+        </section>
+
+        <!-- Итоговая таблица -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon blue">📋</div>
+                <div>
+                    <div class="section-title">Шпаргалка: типы уравнений</div>
+                    <div class="section-desc">Краткая сводка всех случаев</div>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="card">
+                    <span class="tag tag-blue">Тип 1</span>
+                    <h4>Скобки</h4>
+                    <p><strong>Пример:</strong> \(3(x-2)=12\)</p>
+                    <p><strong>Действие:</strong> Раскрыть скобки</p>
+                    <p><strong>Ответ:</strong> \(x=6\)</p>
+                </div>
+                <div class="card">
+                    <span class="tag tag-orange">Тип 2</span>
+                    <h4>X в обеих частях</h4>
+                    <p><strong>Пример:</strong> \(7x-3=4x+9\)</p>
+                    <p><strong>Действие:</strong> Перенести x влево</p>
+                    <p><strong>Ответ:</strong> \(x=4\)</p>
+                </div>
+                <div class="card">
+                    <span class="tag tag-purple">Тип 3</span>
+                    <h4>Модуль</h4>
+                    <p><strong>Пример:</strong> \(|x-5|=3\)</p>
+                    <p><strong>Действие:</strong> Два случая</p>
+                    <p><strong>Ответ:</strong> \(x=8; x=2\)</p>
+                </div>
+                <div class="card">
+                    <span class="tag tag-green">Тип 4</span>
+                    <h4>Дроби</h4>
+                    <p><strong>Пример:</strong> \(\frac{x}{4}=5\)</p>
+                    <p><strong>Действие:</strong> Умножить на 4</p>
+                    <p><strong>Ответ:</strong> \(x=20\)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кнопка назад -->
+        <div style="text-align: center;">
+            <a href="#" class="back-link" onclick="window.history.back(); return false;">
+                ← Вернуться к домашней работе
+            </a>
+        </div>
+
+        <footer>
+            <p>📚 Теория по теме «Смешанные уравнения»</p>
+            <p>Успехов в изучении! 🚀</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
