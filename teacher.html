@@ -197,41 +197,43 @@
 
         .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 8px 0; font-size: 0.8rem; }
 
-        /* ----- Модалка ----- */
+        /* ----- Модалка (увеличенная) ----- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10,25,45,0.30);
-            backdrop-filter: blur(4px);
+            background: rgba(10,25,45,0.35);
+            backdrop-filter: blur(6px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 14px;
+            padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
             background: white;
-            border-radius: 24px;
-            max-width: 340px;
+            border-radius: 28px;
+            max-width: 520px;
             width: 100%;
-            padding: 16px 18px 20px;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px 28px 28px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
             animation: modalFade 0.2s ease-out;
             position: relative;
         }
         @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
+            0% { opacity: 0; transform: translateY(16px) scale(0.97); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-card .close-btn {
             position: absolute;
-            top: 6px;
-            right: 10px;
-            font-size: 1.3rem;
+            top: 10px;
+            right: 14px;
+            font-size: 1.6rem;
             cursor: pointer;
             color: #7a94b0;
             background: none;
@@ -239,31 +241,60 @@
             line-height: 1;
         }
         .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
-        .modal-card .modal-date { font-size: 0.8rem; color: #4a627a; margin-bottom: 2px; }
-        .modal-card .modal-time { font-size: 1rem; font-weight: 700; color: #0b2a44; }
-        .modal-card .modal-topic { font-size: 0.9rem; font-weight: 600; margin: 4px 0 8px; color: #0f2f4a; }
-        .modal-card .modal-links {
+        .modal-card .modal-date {
+            font-size: 1rem;
+            color: #4a627a;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        /* Карточка отдельного ученика внутри модалки */
+        .modal-student-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        .modal-student-card:last-child { margin-bottom: 0; }
+        .modal-student-card .student-name {
+            font-weight: 700;
+            color: #0b2a44;
+            font-size: 1rem;
+        }
+        .modal-student-card .student-time {
+            font-weight: 600;
+            color: #1f4970;
+            font-size: 0.9rem;
+        }
+        .modal-student-card .student-topic {
+            font-size: 0.9rem;
+            color: #1a2a3a;
+            margin: 4px 0 8px;
+        }
+        .modal-student-card .student-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 2px;
+            gap: 8px;
+            margin-top: 4px;
         }
-        .modal-card .modal-links a {
+        .modal-student-card .student-links a {
             background: #1e4663;
             color: white;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 20px;
             text-decoration: none;
-            font-weight: 500;
             font-size: 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
+            font-weight: 500;
             transition: 0.15s;
         }
-        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
-        .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
-        .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
+        .modal-student-card .student-links a:hover { background: #0f3550; transform: scale(1.02); }
+        .modal-student-card .student-links a.secondary {
+            background: #e6f0ff;
+            color: #1e4a76;
+        }
+        .modal-student-card .student-links a.secondary:hover { background: #bfdbfe; }
 
         @media (max-width: 700px) {
             .container { padding: 14px 12px 18px; }
@@ -284,7 +315,8 @@
             .calendar-grid .weekday { font-size: 0.55rem; }
             .calendar-header .month-year { font-size: 1rem; }
             .calendar-header .nav-buttons button { padding: 3px 10px; font-size: 0.75rem; }
-            .modal-card { max-width: 280px; padding: 14px 16px; }
+            .modal-card { max-width: 400px; padding: 18px 16px; }
+            .modal-student-card { padding: 12px 14px; }
         }
         @media (max-width: 450px) {
             .col-date { width: 32px; }
@@ -298,7 +330,11 @@
             .lessons-list { max-height: 350px; }
             .calendar-grid .day { font-size: 0.6rem; border-radius: 10px; }
             .calendar-grid .weekday { font-size: 0.5rem; }
-            .modal-card { max-width: 260px; padding: 12px 14px; }
+            .modal-card { max-width: 320px; padding: 14px 12px; }
+            .modal-student-card { padding: 10px 12px; }
+            .modal-student-card .student-name { font-size: 0.9rem; }
+            .modal-student-card .student-time { font-size: 0.8rem; }
+            .modal-student-card .student-topic { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -326,14 +362,12 @@
     </div>
 </div>
 
-<!-- Модалка -->
+<!-- Модалка (увеличенная, с карточками учеников) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card">
         <button class="close-btn" id="modalClose">&times;</button>
         <div class="modal-date" id="modalDate"></div>
-        <div class="modal-time" id="modalTime"></div>
-        <div class="modal-topic" id="modalTopic"></div>
-        <div class="modal-links" id="modalLinks"></div>
+        <div id="modalStudentsContainer"></div>
     </div>
 </div>
 
@@ -368,9 +402,7 @@
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
     const modalDate = document.getElementById('modalDate');
-    const modalTime = document.getElementById('modalTime');
-    const modalTopic = document.getElementById('modalTopic');
-    const modalLinks = document.getElementById('modalLinks');
+    const modalStudentsContainer = document.getElementById('modalStudentsContainer');
 
     function getStudentName(id) {
         const names = { 'valeriya': 'Валерия', 'amina': 'Амина', 'aleksey': 'Алексей' };
@@ -446,9 +478,7 @@
         }
         calendarGrid.innerHTML = html;
 
-        // ============================================================
-        //  🔥  ДОБАВЛЯЕМ ОБРАБОТЧИК КЛИКОВ НА ДНИ С УРОКАМИ
-        // ============================================================
+        // Обработчики кликов на дни с уроками
         document.querySelectorAll('.day.has-lesson').forEach(el => {
             el.addEventListener('click', function() {
                 const dateStr = this.dataset.date;
@@ -459,20 +489,20 @@
     }
 
     // ============================================================
-    //  🖥  МОДАЛКА ДЛЯ ПРЕПОДАВАТЕЛЯ
+    //  🖥  МОДАЛКА С РАЗДЕЛЬНЫМИ КАРТОЧКАМИ ДЛЯ КАЖДОГО УЧЕНИКА
     // ============================================================
     function showModal(dateStr, lessons) {
         const [y, m, d] = dateStr.split('-').map(Number);
         const dateObj = new Date(y, m-1, d);
         modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
-        if (lessons.length === 1) {
-            const l = lessons[0];
-            const studentLabel = ` (${getStudentName(l.student)})`;
-            modalTime.textContent = `${l.start}–${l.end}`;
-            modalTopic.textContent = l.topic + studentLabel;
-            let html = '';
-            if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+        let studentsHtml = '';
+        lessons.forEach((l, index) => {
+            // Собираем ссылки
+            let linksHtml = '';
+            if (l.material) {
+                linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+            }
             if (l.homework) {
                 const params = new URLSearchParams({
                     student: l.student,
@@ -482,32 +512,22 @@
                     end: l.end || ''
                 });
                 const separator = l.homework.includes('?') ? '&' : '?';
-                html += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 Домашка</a>`;
+                linksHtml += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 Домашка</a>`;
             }
-            modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
-        } else {
-            let time = '', topic = '', links = '';
-            lessons.forEach((l, i) => {
-                const studentLabel = ` (${getStudentName(l.student)})`;
-                time += `${l.start}–${l.end}` + (i < lessons.length-1 ? ', ' : '');
-                topic += l.topic + studentLabel + (i < lessons.length-1 ? ', ' : '');
-                if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
-                if (l.homework) {
-                    const params = new URLSearchParams({
-                        student: l.student,
-                        date: l.date,
-                        topic: l.topic || '',
-                        start: l.start || '',
-                        end: l.end || ''
-                    });
-                    const separator = l.homework.includes('?') ? '&' : '?';
-                    links += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 ${i+1}</a>`;
-                }
-            });
-            modalTime.textContent = time;
-            modalTopic.textContent = topic;
-            modalLinks.innerHTML = links || '<span style="color:#6c86a3;">Нет ссылок</span>';
-        }
+
+            studentsHtml += `
+                <div class="modal-student-card">
+                    <div class="student-name">👤 ${getStudentName(l.student)}</div>
+                    <div class="student-time">⏰ ${l.start}–${l.end}</div>
+                    <div class="student-topic">📖 ${l.topic || 'Тема не указана'}</div>
+                    <div class="student-links">
+                        ${linksHtml || '<span style="color:#6c86a3;font-size:0.75rem;">Нет ссылок</span>'}
+                    </div>
+                </div>
+            `;
+        });
+
+        modalStudentsContainer.innerHTML = studentsHtml;
         modalOverlay.classList.add('active');
     }
 
