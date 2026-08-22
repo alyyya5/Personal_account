@@ -145,7 +145,6 @@
         .col-links { width: 70px; text-align: center; }
         .col-done { width: 90px; text-align: center; }
 
-        /* ТЕМА: без обрезки — текст виден полностью, строка растягивается */
         .topic-cell {
             font-size: 0.75rem;
             line-height: 1.4;
@@ -198,7 +197,74 @@
 
         .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 8px 0; font-size: 0.8rem; }
 
-        /* Адаптив */
+        /* ----- Модалка ----- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.30);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 14px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white;
+            border-radius: 24px;
+            max-width: 340px;
+            width: 100%;
+            padding: 16px 18px 20px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
+            animation: modalFade 0.2s ease-out;
+            position: relative;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card .close-btn {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #7a94b0;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
+        .modal-card .modal-date { font-size: 0.8rem; color: #4a627a; margin-bottom: 2px; }
+        .modal-card .modal-time { font-size: 1rem; font-weight: 700; color: #0b2a44; }
+        .modal-card .modal-topic { font-size: 0.9rem; font-weight: 600; margin: 4px 0 8px; color: #0f2f4a; }
+        .modal-card .modal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 2px;
+        }
+        .modal-card .modal-links a {
+            background: #1e4663;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            transition: 0.15s;
+        }
+        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
+        .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
+        .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
+
         @media (max-width: 700px) {
             .container { padding: 14px 12px 18px; }
             .col-date { width: 38px; }
@@ -218,6 +284,7 @@
             .calendar-grid .weekday { font-size: 0.55rem; }
             .calendar-header .month-year { font-size: 1rem; }
             .calendar-header .nav-buttons button { padding: 3px 10px; font-size: 0.75rem; }
+            .modal-card { max-width: 280px; padding: 14px 16px; }
         }
         @media (max-width: 450px) {
             .col-date { width: 32px; }
@@ -231,6 +298,7 @@
             .lessons-list { max-height: 350px; }
             .calendar-grid .day { font-size: 0.6rem; border-radius: 10px; }
             .calendar-grid .weekday { font-size: 0.5rem; }
+            .modal-card { max-width: 260px; padding: 12px 14px; }
         }
     </style>
 </head>
@@ -258,17 +326,26 @@
     </div>
 </div>
 
+<!-- Модалка -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+        <button class="close-btn" id="modalClose">&times;</button>
+        <div class="modal-date" id="modalDate"></div>
+        <div class="modal-time" id="modalTime"></div>
+        <div class="modal-topic" id="modalTopic"></div>
+        <div class="modal-links" id="modalLinks"></div>
+    </div>
+</div>
+
 <script>
     // ============================================================
     //  📥  ПОЛУЧАЕМ ДАННЫЕ ИЗ localStorage (от index.html)
     // ============================================================
-    // Проверяем, есть ли сохранённая сессия
     const sessionData = localStorage.getItem('teacherSession');
     if (sessionData) {
         try {
             const data = JSON.parse(sessionData);
             if (data && data.name === 'alina') {
-                // Автоматически входим
                 document.getElementById('mainContent').style.display = 'block';
                 initTeacherPage();
             }
@@ -288,6 +365,12 @@
     const calendarGrid = document.getElementById('calendarGrid');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalDate = document.getElementById('modalDate');
+    const modalTime = document.getElementById('modalTime');
+    const modalTopic = document.getElementById('modalTopic');
+    const modalLinks = document.getElementById('modalLinks');
 
     function getStudentName(id) {
         const names = { 'valeriya': 'Валерия', 'amina': 'Амина', 'aleksey': 'Алексей' };
@@ -362,7 +445,74 @@
             html += `<div class="${cls}" ${attr}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
         }
         calendarGrid.innerHTML = html;
+
+        // ============================================================
+        //  🔥  ДОБАВЛЯЕМ ОБРАБОТЧИК КЛИКОВ НА ДНИ С УРОКАМИ
+        // ============================================================
+        document.querySelectorAll('.day.has-lesson').forEach(el => {
+            el.addEventListener('click', function() {
+                const dateStr = this.dataset.date;
+                const lessons = getLessonsForDate(dateStr);
+                if (lessons.length) showModal(dateStr, lessons);
+            });
+        });
     }
+
+    // ============================================================
+    //  🖥  МОДАЛКА ДЛЯ ПРЕПОДАВАТЕЛЯ
+    // ============================================================
+    function showModal(dateStr, lessons) {
+        const [y, m, d] = dateStr.split('-').map(Number);
+        const dateObj = new Date(y, m-1, d);
+        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+        if (lessons.length === 1) {
+            const l = lessons[0];
+            const studentLabel = ` (${getStudentName(l.student)})`;
+            modalTime.textContent = `${l.start}–${l.end}`;
+            modalTopic.textContent = l.topic + studentLabel;
+            let html = '';
+            if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+            if (l.homework) {
+                const params = new URLSearchParams({
+                    student: l.student,
+                    date: l.date,
+                    topic: l.topic || '',
+                    start: l.start || '',
+                    end: l.end || ''
+                });
+                const separator = l.homework.includes('?') ? '&' : '?';
+                html += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 Домашка</a>`;
+            }
+            modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
+        } else {
+            let time = '', topic = '', links = '';
+            lessons.forEach((l, i) => {
+                const studentLabel = ` (${getStudentName(l.student)})`;
+                time += `${l.start}–${l.end}` + (i < lessons.length-1 ? ', ' : '');
+                topic += l.topic + studentLabel + (i < lessons.length-1 ? ', ' : '');
+                if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
+                if (l.homework) {
+                    const params = new URLSearchParams({
+                        student: l.student,
+                        date: l.date,
+                        topic: l.topic || '',
+                        start: l.start || '',
+                        end: l.end || ''
+                    });
+                    const separator = l.homework.includes('?') ? '&' : '?';
+                    links += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 ${i+1}</a>`;
+                }
+            });
+            modalTime.textContent = time;
+            modalTopic.textContent = topic;
+            modalLinks.innerHTML = links || '<span style="color:#6c86a3;">Нет ссылок</span>';
+        }
+        modalOverlay.classList.add('active');
+    }
+
+    modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
@@ -469,17 +619,14 @@
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
     nextMonthBtn.addEventListener('click', () => changeMonth(1));
 
-    // Инициализация страницы преподавателя
     async function initTeacherPage() {
         await loadAllLessons();
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
 
-    // Выход
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('teacherSession');
-        // Очищаем все данные сессии
         for (let key in localStorage) {
             if (key.startsWith('checked_')) {
                 localStorage.removeItem(key);
@@ -488,12 +635,10 @@
         window.location.href = 'index.html';
     });
 
-    // Автоматический вход, если есть сессия
     if (localStorage.getItem('teacherSession')) {
         mainContent.style.display = 'block';
         initTeacherPage();
     } else {
-        // Если сессии нет — редирект на главную
         window.location.href = 'index.html';
     }
 </script>
