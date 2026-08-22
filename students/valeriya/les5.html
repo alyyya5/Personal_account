@@ -29,7 +29,6 @@
             --accent-orange: #d48a3a;
             --accent-purple: #7c3aed;
             --accent-red: #c0392b;
-            --accent-pink: #e91e63;
             --border-light: #d0ddea;
             --highlight-bg: #f8fbff;
         }
@@ -182,133 +181,73 @@
 
         .type-table tr:last-child td { border-bottom: none; }
 
-        /* ШПАРГАЛКА - КРАСОЧНАЯ */
-        .cheatsheet-container {
+        /* КОМПАКТНАЯ КРАСОЧНАЯ ШПАРГАЛКА */
+        .cheatsheet {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 24px;
-            padding: 32px;
-            margin-top: 32px;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 28px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
             color: white;
         }
 
         .cheatsheet-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 800;
-            margin-bottom: 28px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
-        .cheat-category {
-            background: rgba(255,255,255,0.95);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            color: var(--text-main);
-        }
-
-        .cheat-category-header {
-            display: flex;
-            align-items: center;
+        .cheat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
             margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e2e8f0;
         }
 
-        .cheat-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .cheat-icon.blue { background: #e3f2fd; }
-        .cheat-icon.orange { background: #fff3e0; }
-        .cheat-icon.purple { background: #f3e5f5; }
-        .cheat-icon.green { background: #e8f5e9; }
-
-        .cheat-category-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .cheat-formulas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-        }
-
-        .cheat-formula-card {
-            background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
-            border: 2px solid #dbeafe;
+        .cheat-card {
+            background: rgba(255,255,255,0.95);
             border-radius: 12px;
-            padding: 14px;
+            padding: 12px;
             text-align: center;
+            color: var(--text-main);
             transition: transform 0.2s;
         }
 
-        .cheat-formula-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .cheat-card:hover { transform: translateY(-2px); }
 
-        .cheat-formula-label {
-            font-size: 12px;
+        .cheat-card .label {
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .cheat-formula-value {
-            font-size: 16px;
+        .cheat-card .value {
+            font-size: 15px;
             font-weight: 700;
             color: var(--accent-blue);
         }
 
-        .cheat-highlight {
+        .cheat-tip {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
             border-radius: 12px;
-            padding: 16px;
-            margin-top: 20px;
+            padding: 14px;
             text-align: center;
+            margin-top: 14px;
         }
 
-        .cheat-highlight-title {
-            font-size: 14px;
+        .cheat-tip-title {
+            font-size: 13px;
             font-weight: 700;
-            margin-bottom: 8px;
-            opacity: 0.95;
-        }
-
-        .cheat-highlight-formula {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        .color-tag {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-right: 6px;
             margin-bottom: 6px;
         }
 
-        .tag-blue { background: #e3f2fd; color: #1976d2; }
-        .tag-orange { background: #fff3e0; color: #f57c00; }
-        .tag-purple { background: #f3e5f5; color: #7b1fa2; }
-        .tag-green { background: #e8f5e9; color: #388e3c; }
-        .tag-red { background: #ffebee; color: #c0392b; }
+        .cheat-tip-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
 
         footer {
             text-align: center;
@@ -320,8 +259,7 @@
         @media (max-width: 700px) {
             .container { padding: 20px 16px; }
             .section { padding: 24px 20px; }
-            .cheatsheet-container { padding: 24px 20px; }
-            .cheat-formulas { grid-template-columns: 1fr; }
+            .cheat-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -360,13 +298,13 @@
                             <line x1="50" y1="130" x2="190" y2="130" stroke="#1d6f9c" stroke-width="2"/>
                             <line x1="120" y1="130" x2="120" y2="200" stroke="#1d6f9c" stroke-width="2"/>
                             <text x="120" y="90" text-anchor="middle" font-size="32" font-weight="bold" fill="#1d6f9c">S</text>
-                            <text x="85" y="175" text-anchor="middle" font-size="28" font-weight="bold" fill="#1d6f9c">V</text>
-                            <text x="155" y="175" text-anchor="middle" font-size="28" font-weight="bold" fill="#1d6f9c">t</text>
+                            <text x="85" y="175" text-anchor="middle" font-size="28" font-weight="bold" fill="#d48a3a">V</text>
+                            <text x="155" y="175" text-anchor="middle" font-size="28" font-weight="bold" fill="#1a8a5a">t</text>
                         </svg>
                     </div>
                 </div>
-                <div class="formula" style="font-size: 15px;">
-                    \(S = V \cdot t\), \quad \(V = S : t\), \quad \(t = S : V\)
+                <div class="formula">
+                    $$S = V \cdot t, \quad V = S : t, \quad t = S : V$$
                 </div>
             </div>
 
@@ -374,7 +312,7 @@
                 <div class="example-title">📝 Пример</div>
                 <div class="example-content">
                     Поезд шёл 4 часа со скоростью 65 км/ч.<br>
-                    \(S = 65 \cdot 4 = 260\) км
+                    $$S = 65 \cdot 4 = 260 \text{ км}$$
                 </div>
             </div>
         </section>
@@ -402,8 +340,8 @@
                 <div class="example-title">📝 Пример</div>
                 <div class="example-content">
                     Расстояние 450 км, скорости 70 и 80 км/ч.<br>
-                    \(V_{\text{сбл}} = 70 + 80 = 150\) км/ч<br>
-                    \(t = 450 : 150 = 3\) ч
+                    $$V_{\text{сбл}} = 70 + 80 = 150 \text{ км/ч}$$
+                    $$t = 450 : 150 = 3 \text{ ч}$$
                 </div>
             </div>
         </section>
@@ -428,11 +366,11 @@
             </div>
 
             <div class="example">
-                <div class="example-title"> Пример</div>
+                <div class="example-title">📝 Пример</div>
                 <div class="example-content">
                     Скорости 4 и 5 км/ч, время 3 ч.<br>
-                    \(V_{\text{уд}} = 4 + 5 = 9\) км/ч<br>
-                    \(S = 9 \cdot 3 = 27\) км
+                    $$V_{\text{уд}} = 4 + 5 = 9 \text{ км/ч}$$
+                    $$S = 9 \cdot 3 = 27 \text{ км}$$
                 </div>
             </div>
         </section>
@@ -460,7 +398,7 @@
                 <div class="example-title">📝 Пример</div>
                 <div class="example-content">
                     Велосипедист 15 км/ч, мотоциклист 45 км/ч.<br>
-                    \(V_{\text{сбл}} = 45 - 15 = 30\) км/ч
+                    $$V_{\text{сбл}} = 45 - 15 = 30 \text{ км/ч}$$
                 </div>
             </div>
         </section>
@@ -481,19 +419,19 @@
                     </tr>
                     <tr>
                         <td>По течению</td>
-                        <td>\(V_{\text{по}} = V_{\text{соб}} + V_{\text{теч}}\)</td>
+                        <td>$$V_{\text{по}} = V_{\text{соб}} + V_{\text{теч}}$$</td>
                     </tr>
                     <tr>
                         <td>Против течения</td>
-                        <td>\(V_{\text{пр}} = V_{\text{соб}} - V_{\text{теч}}\)</td>
+                        <td>$$V_{\text{пр}} = V_{\text{соб}} - V_{\text{теч}}$$</td>
                     </tr>
                     <tr>
                         <td>Собственная скорость</td>
-                        <td>\(V_{\text{соб}} = \dfrac{V_{\text{по}} + V_{\text{пр}}}{2}\)</td>
+                        <td>$$V_{\text{соб}} = \frac{V_{\text{по}} + V_{\text{пр}}}{2}$$</td>
                     </tr>
                     <tr>
                         <td>Скорость течения</td>
-                        <td>\(V_{\text{теч}} = \dfrac{V_{\text{по}} - V_{\text{пр}}}{2}\)</td>
+                        <td>$$V_{\text{теч}} = \frac{V_{\text{по}} - V_{\text{пр}}}{2}$$</td>
                     </tr>
                 </table>
             </div>
@@ -501,86 +439,61 @@
             <div class="example">
                 <div class="example-title">📝 Пример</div>
                 <div class="example-content">
-                    \(V_{\text{соб}} = 15\) км/ч, \(V_{\text{теч}} = 3\) км/ч<br>
-                    По течению: \(15 + 3 = 18\) км/ч<br>
-                    Против течения: \(15 - 3 = 12\) км/ч
+                    $$V_{\text{соб}} = 15 \text{ км/ч}, \quad V_{\text{теч}} = 3 \text{ км/ч}$$
+                    По течению: $$15 + 3 = 18 \text{ км/ч}$$
+                    Против течения: $$15 - 3 = 12 \text{ км/ч}$$
                 </div>
             </div>
         </section>
 
-        <!-- КРАСОЧНАЯ ШПАРГАЛКА -->
-        <div class="cheatsheet-container">
-            <div class="cheatsheet-title"> ШПАРГАЛКА</div>
+        <!-- КОМПАКТНАЯ ШПАРГАЛКА -->
+        <div class="cheatsheet">
+            <div class="cheatsheet-title">📋 ШПАРГАЛКА</div>
 
-            <!-- Базовые формулы -->
-            <div class="cheat-category">
-                <div class="cheat-category-header">
-                    <div class="cheat-icon blue">🔹</div>
-                    <div class="cheat-category-title">Базовые формулы</div>
+            <div class="cheat-row">
+                <div class="cheat-card">
+                    <div class="label">Расстояние</div>
+                    <div class="value">$$S = V \cdot t$$</div>
                 </div>
-                <div class="cheat-formulas">
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Расстояние</div>
-                        <div class="cheat-formula-value">$$S = V \cdot t$$</div>
-                    </div>
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Скорость</div>
-                        <div class="cheat-formula-value">$$V = S : t$$</div>
-                    </div>
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Время</div>
-                        <div class="cheat-formula-value">$$t = S : V$$</div>
-                    </div>
+                <div class="cheat-card">
+                    <div class="label">Скорость</div>
+                    <div class="value">$$V = S : t$$</div>
+                </div>
+                <div class="cheat-card">
+                    <div class="label">Время</div>
+                    <div class="value">$$t = S : V$$</div>
                 </div>
             </div>
 
-            <!-- Два объекта -->
-            <div class="cheat-category">
-                <div class="cheat-category-header">
-                    <div class="cheat-icon orange"></div>
-                    <div class="cheat-category-title">Два объекта</div>
+            <div class="cheat-row">
+                <div class="cheat-card">
+                    <div class="label">Навстречу</div>
+                    <div class="value">$$V_1 + V_2$$</div>
                 </div>
-                <div class="cheat-formulas">
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Навстречу</div>
-                        <div class="cheat-formula-value">$$V_{\text{сбл}} = V_1 + V_2$$</div>
-                    </div>
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Противоположно</div>
-                        <div class="cheat-formula-value">$$V_{\text{уд}} = V_1 + V_2$$</div>
-                    </div>
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Вдогонку</div>
-                        <div class="cheat-formula-value">$$V_{\text{сбл}} = V_1 - V_2$$</div>
-                    </div>
+                <div class="cheat-card">
+                    <div class="label">Противоположно</div>
+                    <div class="value">$$V_1 + V_2$$</div>
+                </div>
+                <div class="cheat-card">
+                    <div class="label">Вдогонку</div>
+                    <div class="value">$$V_1 - V_2$$</div>
                 </div>
             </div>
 
-            <!-- По реке -->
-            <div class="cheat-category">
-                <div class="cheat-category-header">
-                    <div class="cheat-icon green">🔺</div>
-                    <div class="cheat-category-title">Движение по реке</div>
+            <div class="cheat-row">
+                <div class="cheat-card">
+                    <div class="label">По течению</div>
+                    <div class="value">$$V_{\text{соб}} + V_{\text{теч}}$$</div>
                 </div>
-                <div class="cheat-formulas">
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">По течению</div>
-                        <div class="cheat-formula-value">$$V_{\text{соб}} + V_{\text{теч}}$$</div>
-                    </div>
-                    <div class="cheat-formula-card">
-                        <div class="cheat-formula-label">Против течения</div>
-                        <div class="cheat-formula-value">$$V_{\text{соб}} - V_{\text{теч}}$$</div>
-                    </div>
+                <div class="cheat-card">
+                    <div class="label">Против течения</div>
+                    <div class="value">$$V_{\text{соб}} - V_{\text{теч}}$$</div>
                 </div>
             </div>
 
-            <!-- Главный совет -->
-            <div class="cheat-highlight">
-                <div class="cheat-highlight-title">💡 ЗАПОМНИ!</div>
-                <div class="cheat-highlight-formula">
-                    Встреча и противоположно — СКЛАДЫВАЕМ<br>
-                    Вдогонку — ВЫЧИТАЕМ
-                </div>
+            <div class="cheat-tip">
+                <div class="cheat-tip-title">💡 ЗАПОМНИ!</div>
+                <div class="cheat-tip-text">Встреча и противоположно — СКЛАДЫВАЕМ<br>Вдогонку — ВЫЧИТАЕМ</div>
             </div>
         </div>
 
