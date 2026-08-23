@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Теория | Квадратные уравнения, степени и корни</title>
+
+    <!-- MathJax для красивых формул -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [
+                    ['\\(', '\\)']
+                ],
+                displayMath: [
+                    ['\\[', '\\]']
+                ],
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-orange: #d48a3a;
+            --accent-green: #1a8a5a;
+            --accent-purple: #7c3aed;
+            --accent-red: #a8431a;
+            --border-light: #d0ddea;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-color);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 25px;
+            color: #1e2f3e;
+            line-height: 1.7;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 860px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 45px 50px 55px;
+        }
+
+        /* HEADER */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-left: 5px solid #3b6a8c;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a6f84;
+            padding-left: 25px;
+            margin-bottom: 35px;
+        }
+
+        /* SECTIONS */
+        .section {
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: #1a4b6e;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a3a5a;
+            margin: 14px 0 6px 0;
+        }
+
+        .section p {
+            font-size: 1.05rem;
+            color: #2a3f52;
+            margin-bottom: 6px;
+        }
+
+        .section ul {
+            margin-left: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section ul li {
+            font-size: 1.05rem;
+            color: #2a3f52;
+            margin-bottom: 2px;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #1a3a5a;
+        }
+
+        .highlight-red {
+            font-weight: 700;
+            color: #c0392b;
+        }
+
+        .highlight-green {
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        /* CARDS */
+        .theory-card {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .theory-card.warning {
+            border-left-color: var(--accent-red);
+            background: #fef8f0;
+        }
+
+        .theory-card.power {
+            border-left-color: var(--accent-purple);
+            background: #faf5ff;
+        }
+
+        .theory-card.root {
+            border-left-color: var(--accent-green);
+            background: #f0fdf4;
+        }
+
+        .theory-card h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .theory-card p {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #1a2b41;
+        }
+
+        .theory-card ul,
+        .theory-card ol {
+            padding-left: 22px;
+            margin: 6px 0;
+            font-size: 15px;
+            color: #1a2b41;
+            line-height: 1.7;
+        }
+
+        .theory-card li {
+            margin-bottom: 2px;
+        }
+
+        .formula {
+            background: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px dashed var(--border-light);
+            overflow-x: auto;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .example-box {
+            background: #ffffff;
+            border-left: 3px solid var(--accent-blue);
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-size: 15px;
+        }
+
+        .example-box strong {
+            color: var(--accent-blue);
+        }
+
+        .tip {
+            background: #fee2d6;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 8px;
+            border-left: 3px solid var(--accent-red);
+            font-weight: 500;
+        }
+
+        .tip-green {
+            background: #e6f7ec;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 8px;
+            border-left: 3px solid var(--accent-green);
+            font-weight: 500;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.1rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .theory-card {
+                padding: 14px 16px;
+            }
+            .formula {
+                font-size: 15px;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Квадратные уравнения, степени и корни</h1>
+        <div class="subtitle">Теория для подготовки · Задания 1, 5, 6 ЕГЭ Профиль</div>
+
+        <!-- 1. Формулы сокращённого умножения -->
+        <div class="section">
+            <h2>1. Формулы сокращённого умножения</h2>
+
+            <div class="theory-card">
+                <h3>📖 Три кита алгебры</h3>
+                <p>Без этих формул невозможно решить ни одно сложное уравнение.</p>
+
+                <div class="formula">
+                    \[ (a \pm b)^2 = a^2 \pm 2ab + b^2 \]
+                    \[ a^2 - b^2 = (a-b)(a+b) \]
+                    \[ (a \pm b)^3 = a^3 \pm 3a^2b + 3ab^2 \pm b^3 \]
+                </div>
+
+                <div class="tip">⚠️ Частая ошибка: \((a+b)^2 \neq a^2 + b^2\). Не забывай удвоенное произведение \(2ab\)!</div>
+            </div>
+        </div>
+
+        <!-- 2. Квадратные уравнения -->
+        <div class="section">
+            <h2>2. Квадратные уравнения</h2>
+
+            <div class="theory-card warning">
+                <h3>📖 Определение</h3>
+                <p><strong>Квадратное уравнение</strong> — уравнение вида \(ax^2 + bx + c = 0\), где \(a \neq 0\).</p>
+
+                <h3 style="margin-top: 14px;">Способы решения</h3>
+
+                <p><strong>1. Дискриминант</strong></p>
+                <div class="formula">
+                    \[ D = b^2 - 4ac \]
+                    \[ x_{1,2} = \frac{-b \pm \sqrt{D}}{2a} \]
+                </div>
+                <ul>
+                    <li>Если \(D > 0\) — два корня.</li>
+                    <li>Если \(D = 0\) — один корень (два совпадающих).</li>
+                    <li>Если \(D < 0\) — корней нет.</li>
+                </ul>
+
+                <p><strong>2. Теорема Виета</strong> (для приведённого \(x^2 + px + q = 0\))</p>
+                <div class="formula">
+                    \[ x_1 + x_2 = -p \]
+                    \[ x_1 \cdot x_2 = q \]
+                </div>
+
+                <p><strong>3. Неполные квадратные</strong></p>
+                <ul>
+                    <li>\(ax^2 + bx = 0\) → \(x(ax + b) = 0\)</li>
+                    <li>\(ax^2 + c = 0\) → \(x^2 = -c/a\)</li>
+                </ul>
+
+                <p><strong>4. Особый случай</strong></p>
+                <div class="example-box">
+                    Если \(a + b + c = 0\), то корни: \(x_1 = 1\), \(x_2 = c/a\).<br>
+                    Если \(a - b + c = 0\), то корни: \(x_1 = -1\), \(x_2 = -c/a\).
+                </div>
+
+                <h3 style="margin-top: 14px;">Биквадратные уравнения</h3>
+                <div class="example-box">
+                    Уравнение вида \(ax^4 + bx^2 + c = 0\).<br>
+                    <strong>Замена:</strong> \(t = x^2\), тогда \(at^2 + bt + c = 0\).<br>
+                    Найти \(t\), затем \(x = \pm \sqrt{t}\) (при \(t \geq 0\)).
+                </div>
+
+                <div class="tip">⚠️ <strong>Важно:</strong> при замене \(t = x^2\) должно выполняться \(t \geq 0\)!</div>
+            </div>
+        </div>
+
+        <!-- 3. Свойства степеней -->
+        <div class="section">
+            <h2>3. Свойства степеней</h2>
+
+            <div class="theory-card power">
+                <h3>📖 Золотые правила</h3>
+                <p>Цель показательного уравнения — привести обе части к <strong>одному основанию</strong>.</p>
+
+                <div class="formula">
+                    \[ a^n \cdot a^m = a^{n+m} \]
+                    \[ \frac{a^n}{a^m} = a^{n-m} \]
+                    \[ (a^n)^m = a^{n \cdot m} \]
+                    \[ a^{-n} = \frac{1}{a^n} \]
+                    \[ a^{\frac{1}{n}} = \sqrt[n]{a} \]
+                    \[ a^0 = 1 \quad (a \neq 0) \]
+                    \[ a^1 = a \]
+                </div>
+
+                <div class="example-box">
+                    <strong>Пример:</strong> \(2^x \cdot 4 = 32\)<br>
+                    Приводим к основанию 2: \(2^x \cdot 2^2 = 2^5\)<br>
+                    \(2^{x+2} = 2^5\) → \(x+2=5\) → \(x=3\)
+                </div>
+
+                <div class="tip">💡 Для показательных уравнений: если основания равны, то <span class="highlight">равны показатели</span>!</div>
+            </div>
+        </div>
+
+        <!-- 4. Иррациональные уравнения (корни) -->
+        <div class="section">
+            <h2>4. Иррациональные уравнения</h2>
+
+            <div class="theory-card root">
+                <h3>📖 Определение</h3>
+                <p><strong>Иррациональное уравнение</strong> — уравнение, в котором переменная содержится <span class="highlight">под знаком корня</span>.</p>
+
+                <h3 style="margin-top: 14px;">Алгоритм решения</h3>
+                <ol>
+                    <li><span class="highlight-red">Найти ОДЗ</span> (подкоренное выражение \(\geq 0\)).</li>
+                    <li>Уединить корень (оставить его в одной части).</li>
+                    <li>Возвести обе части в квадрат (или в нужную степень).</li>
+                    <li>Решить полученное уравнение.</li>
+                    <li><span class="highlight-red">Проверить</span> корни по ОДЗ.</li>
+                </ol>
+
+                <div class="tip">⚠️ <strong>Важно:</strong> при возведении в квадрат могут появиться <span class="highlight-red">посторонние корни</span>!</div>
+
+                <h3 style="margin-top: 14px;">Два главных типа</h3>
+
+                <p><strong>Тип 1:</strong> \(\sqrt{f(x)} = g(x)\)</p>
+                <div class="formula">
+                    \[ \begin{cases}
+                    f(x) = (g(x))^2 \\
+                    g(x) \geq 0
+                    \end{cases} \]
+                </div>
+
+                <p><strong>Тип 2:</strong> \(\sqrt{f(x)} = \sqrt{g(x)}\)</p>
+                <div class="formula">
+                    \[ \begin{cases}
+                    f(x) = g(x) \\
+                    f(x) \geq 0
+                    \end{cases} \]
+                </div>
+
+                <h3 style="margin-top: 14px;">Корни нечётной степени</h3>
+                <div class="example-box">
+                    \(\sqrt[3]{x} = a\) → \(x = a^3\)<br>
+                    ОДЗ не требуется (корень нечётной степени определён при любом \(x\)).
+                </div>
+
+                <div class="tip-green">💡 Корень чётной степени — ОДЗ обязательна! Корень нечётной степени — ОДЗ не нужна.</div>
+            </div>
+        </div>
+
+        <!-- 5. Сводка правил -->
+        <div class="section">
+            <h2>5. Сводка правил</h2>
+
+            <div class="grid-2">
+                <div class="theory-card">
+                    <h3>📌 Квадратные уравнения</h3>
+                    <ul>
+                        <li>\(ax^2 + bx + c = 0\)</li>
+                        <li>Дискриминант: \(D = b^2 - 4ac\)</li>
+                        <li>Виета: \(x_1+x_2 = -p\), \(x_1 \cdot x_2 = q\)</li>
+                        <li>Неполные: вынести \(x\) или \(x^2 = -c/a\)</li>
+                        <li>Биквадратные: замена \(t = x^2\)</li>
+                    </ul>
+                </div>
+
+                <div class="theory-card power">
+                    <h3>📌 Свойства степеней</h3>
+                    <ul>
+                        <li>\(a^n \cdot a^m = a^{n+m}\)</li>
+                        <li>\(\frac{a^n}{a^m} = a^{n-m}\)</li>
+                        <li>\((a^n)^m = a^{n \cdot m}\)</li>
+                        <li>\(a^{-n} = \frac{1}{a^n}\)</li>
+                        <li>\(a^{\frac{1}{n}} = \sqrt[n]{a}\)</li>
+                        <li>\(a^0 = 1\) (при \(a \neq 0\))</li>
+                    </ul>
+                </div>
+
+                <div class="theory-card root">
+                    <h3>📌 Иррациональные уравнения</h3>
+                    <ul>
+                        <li><span class="highlight-red">Найти ОДЗ</span> (подкоренное \(\geq 0\)).</li>
+                        <li>Уединить корень.</li>
+                        <li>Возвести в квадрат.</li>
+                        <li>Решить уравнение.</li>
+                        <li><span class="highlight-red">Проверить</span> корни по ОДЗ.</li>
+                        <li>Корень чётной степени → ОДЗ обязательна.</li>
+                        <li>Корень нечётной степени → ОДЗ не нужна.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-card warning">
+                    <h3>📌 ФСУ</h3>
+                    <ul>
+                        <li>\((a \pm b)^2 = a^2 \pm 2ab + b^2\)</li>
+                        <li>\(a^2 - b^2 = (a-b)(a+b)\)</li>
+                        <li>\((a \pm b)^3 = a^3 \pm 3a^2b + 3ab^2 \pm b^3\)</li>
+                        <li>⚠️ \((a+b)^2 \neq a^2 + b^2\)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-card" style="border-left-color: #27ae60; background: #f0fdf4; margin-top: 8px;">
+                <p style="font-weight: 700; text-align: center; font-size: 16px;">
+                    📌 <span class="highlight">Главное правило:</span> все действия выполняем <span class="highlight">с обеими частями</span> уравнения одновременно!
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

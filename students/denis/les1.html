@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Урок: Уравнения и ОДЗ | ЕГЭ Профиль</title>
+
+    <!-- MathJax для красивых формул -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-orange: #d48a3a;
+            --accent-green: #1a8a5a;
+            --accent-purple: #7c3aed;
+            --accent-red: #a8431a;
+            --border-light: #d0ddea;
+            --grid-line: rgba(148, 163, 184, 0.35);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 920px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-ege { background: #dce5f2; color: #1d3a66; }
+        .tag-time { background: #f1f5f9; color: #475569; }
+        .tag-level { background: #fee2d6; color: var(--accent-red); }
+
+        /* SECTIONS */
+        .section { margin-bottom: 40px; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        .section-num {
+            background: var(--accent-blue);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .section-title { font-size: 20px; font-weight: 700; color: var(--text-main); }
+
+        .section-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-left: auto;
+            font-style: italic;
+        }
+
+        /* THEORY CARDS */
+        .theory-card {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .theory-card.warning { border-left-color: var(--accent-red); background: #fef8f0; }
+        .theory-card.module { border-left-color: var(--accent-purple); background: #faf5ff; }
+        .theory-card.param { border-left-color: var(--accent-green); background: #f0fdf4; }
+
+        .theory-card h3 { font-size: 17px; margin-bottom: 10px; color: var(--text-main); }
+        .theory-card p { font-size: 15px; margin-bottom: 8px; color: #1a2b41; }
+
+        .theory-card ul,
+        .theory-card ol {
+            padding-left: 22px;
+            margin: 8px 0;
+            font-size: 15px;
+            color: #1a2b41;
+            line-height: 1.7;
+        }
+
+        .theory-card li { margin-bottom: 4px; }
+
+        .formula {
+            background: #ffffff;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border: 1px dashed var(--border-light);
+            overflow-x: auto;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .example-box {
+            background: #ffffff;
+            border-left: 3px solid var(--accent-blue);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+
+        .example-box strong { color: var(--accent-blue); }
+
+        .tip {
+            background: #fee2d6;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 10px;
+            border-left: 3px solid var(--accent-red);
+            font-weight: 500;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* TASKS */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .task-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .task-label.orange { color: var(--accent-orange); }
+        .task-label.purple { color: var(--accent-purple); }
+        .task-label.green { color: var(--accent-green); }
+        .task-label.red { color: var(--accent-red); }
+
+        .task-condition {
+            font-size: 19px;
+            margin-bottom: 14px;
+            padding: 6px 0;
+            color: var(--text-main);
+        }
+
+        .task-note {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* ===== КЛЕТЧАТОЕ ПОЛЕ ДЛЯ РЕШЕНИЯ ===== */
+        .solution-area {
+            width: 100%;
+            height: 200px;
+            min-height: 200px;
+            background-color: #ffffff;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: -1px -1px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .solution-area::after {
+            content: "Место для решения";
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            font-size: 11px;
+            color: #b0c0d0;
+            pointer-events: none;
+            font-style: italic;
+        }
+
+        .answer-line {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .answer-blank {
+            flex: 1;
+            border-bottom: 2px solid var(--border-light);
+            height: 24px;
+        }
+
+        /* REFLECTION */
+        .reflection-card {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #e6edf6;
+        }
+
+        .reflection-card label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .reflection-card input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-blue);
+        }
+
+        .textarea-wrap {
+            width: 100%;
+            min-height: 80px;
+            border: 1px dashed var(--border-light);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #ffffff;
+        }
+
+        .textarea-wrap:focus { border-color: var(--accent-blue); }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; border-radius: 18px; }
+            .task-grid { grid-template-columns: 1fr; }
+            .theory-grid { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .section-desc { margin-left: 0; }
+            h1 { font-size: 22px; }
+            .task-condition { font-size: 17px; }
+            .solution-area { height: 180px; min-height: 180px; background-size: 22px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>📐 Урок: Уравнения и ОДЗ</h1>
+        <div class="subtitle">Первый урок. Повторяем базу и знакомимся с новыми темами для профильной подготовки</div>
+        <div class="tags">
+            <span class="tag tag-ege">ЕГЭ Профиль · Задания 1, 5, 18</span>
+            <span class="tag tag-time">⏱ 60 минут</span>
+            <span class="tag tag-level">Профильный уровень</span>
+        </div>
+    </header>
+
+    <!-- БЛОК 1: КЛЮЧЕВЫЕ ПРИНЦИПЫ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">1</div>
+            <div class="section-title">Ключевые принципы ЕГЭ</div>
+            <div class="section-desc"></div>
+        </div>
+
+        <div class="theory-grid">
+            <div class="theory-card warning">
+                <h3>⚠️ Главное правило</h3>
+                <p>В дробно-рациональных уравнениях <strong>всегда</strong> пиши ОДЗ первым действием.</p>
+                <div class="formula">\[ \frac{f(x)}{g(x)} = 0 \;\Rightarrow\; \begin{cases} f(x) = 0 \\ g(x) \neq 0 \end{cases} \]</div>
+                <div class="tip">💡 Потеря ОДЗ = потеря баллов на экзамене, даже если ответ правильный.</div>
+            </div>
+
+            <div class="theory-card">
+                <h3>💡 Что мы изучаем сегодня</h3>
+                <ul>
+                    <li>Линейные уравнения (в т.ч. «особые случаи»)</li>
+                    <li>Дробно-рациональные уравнения</li>
+                    <li>Ловушки ОДЗ</li>
+                    <li>Модуль числа</li>
+                    <li>Уравнения с параметром</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 2: ЛИНЕЙНЫЕ УРАВНЕНИЯ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Линейные уравнения</div>
+            <div class="section-desc">Повторение</div>
+        </div>
+
+        <div class="theory-card" style="margin-bottom: 20px;">
+            <h3>📖 Алгоритм</h3>
+            <ol>
+                <li>Раскрыть скобки (если есть).</li>
+                <li>Перенести слагаемые с \(x\) влево, без \(x\) — вправо (с противоположным знаком).</li>
+                <li>Привести подобные и разделить на коэффициент при \(x\).</li>
+            </ol>
+            <div class="tip">⚠️ Особые случаи: \(0\cdot x = 0\) — бесконечно много корней; \(0\cdot x = 5\) — корней нет.</div>
+        </div>
+
+        <div class="task-grid">
+            <div class="task-card">
+                <div class="task-label">Линейное с дробями</div>
+                <div class="task-condition">\[ \frac{2x - 5}{3} + \frac{x + 1}{2} = 4 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Со скобками</div>
+                <div class="task-condition">\[ 3(2x - 1) = 5(x + 2) \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Особый случай</div>
+                <div class="task-condition">\[ 5x - 3 = 5x + 2 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Пропорция</div>
+                <div class="task-condition">\[ \frac{2x - 3}{3} = \frac{x + 1}{2} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 3: ДРОБНО-РАЦИОНАЛЬНЫЕ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Дробно-рациональные уравнения</div>
+            <div class="section-desc">Не забудь ОДЗ!</div>
+        </div>
+
+        <div class="theory-card" style="margin-bottom: 20px;">
+            <h3>📖 Алгоритм</h3>
+            <ol>
+                <li>Записать ОДЗ: знаменатели ≠ 0.</li>
+                <li>Привести к общему знаменателю или использовать пропорцию.</li>
+                <li>Решить полученное уравнение.</li>
+                <li>Проверить корни по ОДЗ.</li>
+            </ol>
+            <div class="example-box">
+                <strong>Пример:</strong> \(\dfrac{2}{x-1} = \dfrac{3}{x+2}\)<br>
+                ОДЗ: \(x \neq 1,\; x \neq -2\). Пропорция: \(2(x+2) = 3(x-1) \Rightarrow x = 7\). ✓
+            </div>
+        </div>
+
+        <div class="task-grid">
+            <div class="task-card">
+                <div class="task-label">Простая пропорция</div>
+                <div class="task-condition">\[ \frac{5}{x + 2} = \frac{4}{x - 1} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Общий знаменатель</div>
+                <div class="task-condition">\[ \frac{1}{x} + \frac{1}{x + 1} = \frac{3}{2} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">С квадратным знаменателем</div>
+                <div class="task-condition">\[ \frac{x + 2}{x - 1} = \frac{x + 3}{x + 1} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Дробь = число</div>
+                <div class="task-condition">\[ \frac{x + 1}{x - 2} = 3 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Сумма дробей</div>
+                <div class="task-condition">\[ \frac{x}{x - 2} - \frac{2}{x + 2} = \frac{8}{x^2 - 4} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Разность квадратов в знаменателе</div>
+                <div class="task-condition">\[ \frac{3}{x^2 - 9} = \frac{1}{x - 3} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 4: ЛОВУШКИ ОДЗ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Ловушки ОДЗ</div>
+            <div class="section-desc">Типичные ошибки ЕГЭ</div>
+        </div>
+
+        <div class="theory-card warning" style="margin-bottom: 20px;">
+            <h3>⚠️ Три типа ловушек</h3>
+            <ul>
+                <li><strong>Корень совпадает с запрещённым значением</strong> — ответ: «нет корней».</li>
+                <li><strong>После сокращения</strong> исчезает знаменатель — нужно восстановить ОДЗ.</li>
+                <li><strong>Радикалы в знаменателе</strong> — подкоренное выражение > 0 (строгое неравенство).</li>
+            </ul>
+            <div class="tip">💡 Корень, который не входит в ОДЗ, <strong>не является решением</strong>.</div>
+        </div>
+
+        <div class="task-grid">
+            <div class="task-card">
+                <div class="task-label red">Ловушка №1</div>
+                <div class="task-condition">\[ \frac{x^2 - 4x + 4}{x - 2} = 0 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label red">Ловушка №2</div>
+                <div class="task-condition">\[ \frac{x^2 - 5x + 6}{x - 2} = 0 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label red">Ловушка №3</div>
+                <div class="task-condition">\[ \frac{5}{x - 1} = \frac{3}{x - 1} + 2 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label red">Радикал в знаменателе</div>
+                <div class="task-condition">\[ \sqrt{x - 2} = \frac{1}{\sqrt{x - 2}} \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label red">Дробь = число</div>
+                <div class="task-condition">\[ \frac{2x + 3}{x - 4} = 2 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 5: МОДУЛЬ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">5</div>
+            <div class="section-title">Уравнения с модулем</div>
+            <div class="section-desc">Новая тема</div>
+        </div>
+
+        <div class="theory-card module" style="margin-bottom: 20px;">
+            <h3>📖 Определение модуля</h3>
+            <p><strong>Модуль</strong> \(|a|\) — расстояние от точки \(a\) до нуля. Всегда неотрицателен.</p>
+            <div class="formula">\[
+                |a| = \begin{cases}
+                    a, & \text{если } a \geq 0 \\
+                    -a, & \text{если } a < 0
+                \end{cases}
+            \]</div>
+
+            <h3 style="margin-top:16px;">✏️ Два главных типа уравнений</h3>
+            <div class="example-box">
+                <strong>Тип 1:</strong> \(|f(x)| = a\), где \(a \geq 0\)<br>
+                Раскрывается как два уравнения: \(f(x) = a\) и \(f(x) = -a\).<br>
+                <em>Пример:</em> \(|x - 3| = 5 \;\Rightarrow\; x = 8\) или \(x = -2\)
+            </div>
+
+            <div class="example-box">
+                <strong>Тип 2:</strong> \(|f(x)| = |g(x)|\)<br>
+                Раскрывается как: \(f(x) = g(x)\) или \(f(x) = -g(x)\).
+            </div>
+
+            <div class="tip">⚠️ Если \(|f(x)| = a\), где \(a < 0\) — корней нет!</div>
+        </div>
+
+        <div class="task-grid">
+            <div class="task-card">
+                <div class="task-label purple">Простой модуль</div>
+                <div class="task-condition">\[ |3x - 7| = 5 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label purple">Модуль = отрицательное число</div>
+                <div class="task-condition">\[ |2x + 1| = -3 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label purple">Два модуля</div>
+                <div class="task-condition">\[ |2x - 1| = |x + 4| \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label purple">Модуль + число</div>
+                <div class="task-condition">\[ |x - 2| + 3 = 7 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label purple">Модуль с ОДЗ</div>
+                <div class="task-condition">\[ |x^2 - 4| = x - 2 \]</div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: <div class="answer-blank"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 6: ПАРАМЕТРЫ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">6</div>
+            <div class="section-title">Уравнения с параметром</div>
+            <div class="section-desc">Знакомство с заданием №18</div>
+        </div>
+
+        <div class="theory-card param" style="margin-bottom: 20px;">
+            <h3>📖 Что такое параметр?</h3>
+            <p><strong>Параметр</strong> — буква (\(a, p, c\)), которая ведёт себя как число, но её значение неизвестно. Нужно исследовать, как меняется ответ в зависимости от параметра.</p>
+
+            <h3 style="margin-top:16px;">✏️ Алгоритм</h3>
+            <ol>
+                <li>Решить уравнение «как обычно», считая параметр числом.</li>
+                <li>Выделить особые случаи (когда коэффициент при \(x\) равен 0).</li>
+                <li>Проанализировать каждый особый случай отдельно.</li>
+            </ol>
+
+            <div class="example-box">
+                <strong>Пример:</strong> \((a - 3)x = a^2 - 9\)<br>
+                <strong>Когда бесконечно много решений?</strong> Нужно: \(a - 3 = 0\) <strong>и</strong> \(a^2 - 9 = 0\).<br>
+                Оба условия дают \(a = 3\). Проверка: \(0\cdot x = 0\) — любое \(x\) решение. ✓<br>
+                <strong>Ответ:</strong> \(a = 3\).
+            </div>
+
+            <div class="tip">💡 Параметр не меняет методов решения — он добавляет <strong>исследование случаев</strong>.</div>
+        </div>
+
+        <div class="task-grid">
+            <div class="task-card">
+                <div class="task-label green">Бесконечно много решений</div>
+                <div class="task-condition">\[ (a - 3)x = a^2 - 9 \]<span class="task-note">При каких \(a\) бесконечно много решений?</span></div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: a = <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label green">Нет корней</div>
+                <div class="task-condition">\[ (p + 1)x = 2p + 2 \]<span class="task-note">При каких \(p\) уравнение <strong>не имеет</strong> корней?</span></div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: p = <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label green">Квадратное с параметром</div>
+                <div class="task-condition">\[ x^2 - 4x + a = 0 \]<span class="task-note">При каких \(a\) уравнение имеет ровно один корень?</span></div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: a = <div class="answer-blank"></div></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label green">Параметр + ОДЗ</div>
+                <div class="task-condition">\[ \frac{x - a}{x - 2} = 0 \]<span class="task-note">При каком \(a\) уравнение не имеет корней?</span></div>
+                <div class="solution-area"></div>
+                <div class="answer-line">Ответ: a = <div class="answer-blank"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 7: ИТОГИ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">7</div>
+            <div class="section-title">Итоги урока</div>
+        </div>
+
+        <div class="reflection-card">
+            <p style="margin-bottom: 15px; font-weight: 600;">Отметь честно:</p>
+
+            <label><input type="checkbox"> Уверен в линейных и дробно-рациональных уравнениях?</label>
+            <label><input type="checkbox"> Понял про важность ОДЗ?</label>
+            <label><input type="checkbox"> Разобрался с модулем?</label>
+            <label><input type="checkbox"> Понятна идея параметра?</label>
+            <label><input type="checkbox"> Нужно повторить формулы сокращённого умножения?</label>
+
+            <div style="margin-top: 20px;">
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">Что было самым сложным сегодня?</p>
+                <div class="textarea-wrap" contenteditable="true"></div>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">Что хочешь разобрать на следующем уроке?</p>
+                <div class="textarea-wrap" contenteditable="true"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <span>📌 Подготовка к ЕГЭ по математике (профиль) · Урок №1 · 2026</span>
+        <span class="tag tag-ege">24 задания</span>
+    </div>
+
+</div>
+
+</body>
+</html>
