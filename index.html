@@ -392,6 +392,11 @@
             <h3>📊 Мой прогресс</h3>
             <div id="progressContainer"></div>
         </div>
+        <!-- ---------- Пробники (только для Дениса) ---------- -->
+        <div class="tests-section" id="testsSection" style="display: none; margin-top: 14px; background: white; border-radius: 14px; padding: 12px 14px 14px; border: 1px solid #e9eff6;">
+            <h3 style="font-size: 0.85rem; font-weight: 600; color: #0b2a44; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 6px;">📊 Результаты пробников</h3>
+            <div id="testsContainer"></div>
+        </div>
     </div>
 </div>
 
@@ -546,6 +551,62 @@
         container.innerHTML = html;
         section.style.display = 'block';
     }
+        // ============================================================
+    //  📊  ПРОБНИКИ (ТОЛЬКО ДЛЯ ДЕНИСА)
+    // ============================================================
+    async function renderTests(studentId) {
+        const container = document.getElementById('testsContainer');
+        const section = document.getElementById('testsSection');
+    
+        // Показываем блок только для Дениса
+        if (studentId !== 'denis') {
+            section.style.display = 'none';
+            return;
+        }
+    
+        try {
+            const response = await fetch(`config/denis_tests.json?t=${Date.now()}`);
+            if (!response.ok) throw new Error('Нет данных о пробниках');
+            const tests = await response.json();
+    
+            if (!tests || tests.length === 0) {
+                container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Пока нет данных о пробниках.</p>';
+                section.style.display = 'block';
+                return;
+            }
+    
+            // Считаем средний балл
+            const totalScore = tests.reduce((sum, t) => sum + t.score, 0);
+            const avg = Math.round(totalScore / tests.length);
+    
+            let html = `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                    <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Всего пробников</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${tests.length}</div>
+                    </div>
+                    <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Средний балл</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${avg}</div>
+                    </div>
+                </div>
+                <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
+                    ${tests.map(t => `
+                        <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
+                            <span style="color:#4a627a;">${t.name}</span>
+                            <span style="font-weight:600; color:#0b2a44;">${t.score} / ${t.max}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+    
+            container.innerHTML = html;
+            section.style.display = 'block';
+        } catch {
+            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных о пробниках.</p>';
+            section.style.display = 'block';
+        }
+    }
 
     // ============================================================
     //  ВХОД С ПАРОЛЕМ
@@ -586,6 +647,7 @@
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
         renderProgress(id);
+        renderTests(id);  
     }
 
     loginBtn.addEventListener('click', handleLogin);
