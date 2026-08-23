@@ -373,7 +373,12 @@
 
 <script>
     // ============================================================
-    //  📥  ПОЛУЧАЕМ ДАННЫЕ ИЗ localStorage (от index.html)
+    //  📥  СПИСОК УЧЕНИКОВ (ДОБАВЛЯЙТЕ НОВЫХ СЮДА!)
+    // ============================================================
+    const studentList = ['valeriya', 'amina', 'aleksey', 'denis'];
+
+    // ============================================================
+    //  🖥  ПРОВЕРКА СЕССИИ И АВТОВХОД
     // ============================================================
     const sessionData = localStorage.getItem('teacherSession');
     if (sessionData) {
@@ -381,12 +386,12 @@
             const data = JSON.parse(sessionData);
             if (data && data.name === 'alina') {
                 document.getElementById('mainContent').style.display = 'block';
-                initTeacherPage();
+                // Вызываем initTeacherPage ПОСЛЕ объявления всех функций
+                // Но она будет вызвана в конце скрипта
             }
         } catch (e) {}
     }
 
-    const studentList = ['valeriya', 'amina', 'denis'];
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
@@ -404,8 +409,16 @@
     const modalDate = document.getElementById('modalDate');
     const modalStudentsContainer = document.getElementById('modalStudentsContainer');
 
+    // ============================================================
+    //  🧠  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+    // ============================================================
     function getStudentName(id) {
-        const names = { 'valeriya': 'Валерия', 'amina': 'Амина', 'denis': 'Денис' };
+        const names = { 
+            'valeriya': 'Валерия', 
+            'amina': 'Амина', 
+            'aleksey': 'Алексей',
+            'denis': 'Денис'
+        };
         return names[id] || id;
     }
 
@@ -421,6 +434,9 @@
         return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
     }
 
+    // ============================================================
+    //  📥  ЗАГРУЗКА ВСЕХ РАСПИСАНИЙ
+    // ============================================================
     async function loadAllLessons() {
         let all = [];
         for (let s of studentList) {
@@ -431,14 +447,19 @@
                     data.forEach(item => {
                         all.push({ ...item, student: s, studentName: getStudentName(s) });
                     });
+                } else {
+                    console.warn(`⚠️ Не удалось загрузить ${s}`);
                 }
             } catch (e) {
-                console.warn('Не удалось загрузить', s);
+                console.warn(`⚠️ Не удалось загрузить ${s}`);
             }
         }
         lessonsData = all;
     }
 
+    // ============================================================
+    //  📅  КАЛЕНДАРЬ
+    // ============================================================
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
     }
@@ -478,7 +499,6 @@
         }
         calendarGrid.innerHTML = html;
 
-        // Обработчики кликов на дни с уроками
         document.querySelectorAll('.day.has-lesson').forEach(el => {
             el.addEventListener('click', function() {
                 const dateStr = this.dataset.date;
@@ -489,7 +509,7 @@
     }
 
     // ============================================================
-    //  🖥  МОДАЛКА С РАЗДЕЛЬНЫМИ КАРТОЧКАМИ ДЛЯ КАЖДОГО УЧЕНИКА
+    //  🖥  МОДАЛКА
     // ============================================================
     function showModal(dateStr, lessons) {
         const [y, m, d] = dateStr.split('-').map(Number);
@@ -497,8 +517,7 @@
         modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
         let studentsHtml = '';
-        lessons.forEach((l, index) => {
-            // Собираем ссылки
+        lessons.forEach((l) => {
             let linksHtml = '';
             if (l.material) {
                 linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
@@ -534,6 +553,9 @@
     modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
+    // ============================================================
+    //  📋  СПИСОК УРОКОВ
+    // ============================================================
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
         if (!data.length) {
@@ -628,6 +650,9 @@
         });
     }
 
+    // ============================================================
+    //  📆  ПЕРЕКЛЮЧЕНИЕ МЕСЯЦЕВ
+    // ============================================================
     function changeMonth(delta) {
         currentMonth += delta;
         if (currentMonth < 0) { currentMonth = 11; currentYear--; }
@@ -639,12 +664,18 @@
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
     nextMonthBtn.addEventListener('click', () => changeMonth(1));
 
+    // ============================================================
+    //  🚀  ИНИЦИАЛИЗАЦИЯ
+    // ============================================================
     async function initTeacherPage() {
         await loadAllLessons();
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
 
+    // ============================================================
+    //  🚪  ВЫХОД
+    // ============================================================
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('teacherSession');
         for (let key in localStorage) {
@@ -655,6 +686,9 @@
         window.location.href = 'index.html';
     });
 
+    // ============================================================
+    //  🔄  АВТОМАТИЧЕСКИЙ ВХОД, ЕСЛИ ЕСТЬ СЕССИЯ
+    // ============================================================
     if (localStorage.getItem('teacherSession')) {
         mainContent.style.display = 'block';
         initTeacherPage();
