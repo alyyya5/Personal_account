@@ -331,6 +331,23 @@
             margin-bottom: 6px;
         }
 
+        /* ---------- Пробники (только для Дениса) ---------- */
+        .tests-section {
+            margin-top: 14px;
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+        }
+        .tests-section h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
         @media (max-width: 500px) {
             .container { padding: 12px 10px 16px; border-radius: 20px; }
             h1 { font-size: 1.1rem; margin-bottom: 10px; }
@@ -356,12 +373,13 @@
             .modal-card .modal-topic { font-size: 0.7rem; }
             .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
             .progress-section { padding: 10px 10px 12px; }
+            .tests-section { padding: 10px 10px 12px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📅 Личный кабинет </h1>
+    <h1>📅 Личный кабинет</h1>
 
     <div class="login-area" id="loginArea">
         <label for="nameInput">👤 Ваше имя</label>
@@ -392,9 +410,10 @@
             <h3>📊 Мой прогресс</h3>
             <div id="progressContainer"></div>
         </div>
-        <!-- ---------- Пробники (только для Дениса) ---------- -->
-        <div class="tests-section" id="testsSection" style="display: none; margin-top: 14px; background: white; border-radius: 14px; padding: 12px 14px 14px; border: 1px solid #e9eff6;">
-            <h3 style="font-size: 0.85rem; font-weight: 600; color: #0b2a44; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 6px;">📊 Результаты пробников</h3>
+
+        <!-- Пробники (только для Дениса) -->
+        <div class="tests-section" id="testsSection" style="display: none;">
+            <h3>📊 Результаты пробников</h3>
             <div id="testsContainer"></div>
         </div>
     </div>
@@ -415,10 +434,10 @@
     //  🔐  ПАРОЛИ УЧЕНИКОВ (МЕНЯЙТЕ ЗДЕСЬ!)
     // ============================================================
     const passwords = {
-        'valeriya': 'der44',    // Пароль Валерии
-        'amina': '5678',       // Пароль Амины
-        'denis': '1234',     // Пароль Дениса
-        'alina': '121212'     // Пароль Алины (преподаватель)
+        'valeriya': 'der44',
+        'amina': '5678',
+        'denis': '1234',
+        'alina': '121212'
     };
 
     // ============================================================
@@ -458,6 +477,8 @@
     const modalLinks = document.getElementById('modalLinks');
     const progressSection = document.getElementById('progressSection');
     const progressContainer = document.getElementById('progressContainer');
+    const testsSection = document.getElementById('testsSection');
+    const testsContainer = document.getElementById('testsContainer');
 
     function buildHomeworkLink(basePath, studentId, lesson) {
         if (!basePath) return '';
@@ -487,8 +508,8 @@
     //  📊  ПРОГРЕСС
     // ============================================================
     function renderProgress(studentId) {
-        const container = document.getElementById('progressContainer');
-        const section = document.getElementById('progressSection');
+        const container = progressContainer;
+        const section = progressSection;
 
         if (!lessonsData || lessonsData.length === 0) {
             container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
@@ -513,7 +534,7 @@
         const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
         const percent = Math.round((completed / total) * 100);
 
-        const topicsList = monthLessons.map((item, index) => {
+        const topicsList = monthLessons.map((item) => {
             const dateParts = item.date.split('-');
             const day = dateParts[2];
             const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
@@ -551,34 +572,33 @@
         container.innerHTML = html;
         section.style.display = 'block';
     }
-        // ============================================================
+
+    // ============================================================
     //  📊  ПРОБНИКИ (ТОЛЬКО ДЛЯ ДЕНИСА)
     // ============================================================
     async function renderTests(studentId) {
-        const container = document.getElementById('testsContainer');
-        const section = document.getElementById('testsSection');
-    
-        // Показываем блок только для Дениса
+        const container = testsContainer;
+        const section = testsSection;
+
         if (studentId !== 'denis') {
             section.style.display = 'none';
             return;
         }
-    
+
         try {
             const response = await fetch(`config/denis_tests.json?t=${Date.now()}`);
             if (!response.ok) throw new Error('Нет данных о пробниках');
             const tests = await response.json();
-    
+
             if (!tests || tests.length === 0) {
                 container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Пока нет данных о пробниках.</p>';
                 section.style.display = 'block';
                 return;
             }
-    
-            // Считаем средний балл
+
             const totalScore = tests.reduce((sum, t) => sum + t.score, 0);
             const avg = Math.round(totalScore / tests.length);
-    
+
             let html = `
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
                     <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
@@ -599,7 +619,7 @@
                     `).join('')}
                 </div>
             `;
-    
+
             container.innerHTML = html;
             section.style.display = 'block';
         } catch {
@@ -621,17 +641,12 @@
         const id = nameMap[raw.toLowerCase()];
         if (!id) { loginError.textContent = 'Ученик не найден'; return; }
 
-        // Проверка пароля
         if (passwords[id] !== password) {
             loginError.textContent = '❌ Неверный пароль';
             return;
         }
 
-        // ============================================================
-        //  🔑  ЕСЛИ АЛИНА — СОЗДАЁМ СЕССИЮ И ПЕРЕНАПРАВЛЯЕМ
-        // ============================================================
         if (id === 'alina') {
-            // Сохраняем сессию преподавателя
             localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() }));
             window.location.href = 'teacher.html';
             return;
@@ -647,7 +662,7 @@
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
         renderProgress(id);
-        renderTests(id);  
+        renderTests(id);
     }
 
     loginBtn.addEventListener('click', handleLogin);
@@ -675,14 +690,16 @@
 
     function renderCalendar(year, month) {
         const firstDay = new Date(year, month, 1).getDay();
+        // Сдвиг: чтобы понедельник был первым (в JS 0 = воскресенье)
+        const startDay = (firstDay === 0) ? 6 : firstDay - 1;
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
         const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
         monthYear.textContent = `${monthNames[month]} ${year}`;
         const lessonDates = new Set(lessonsData.map(item => item.date));
-        const weekdays = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
         let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
-        for (let i = 0; i < firstDay; i++) html += `<div class="day other-month"></div>`;
+        for (let i = 0; i < startDay; i++) html += `<div class="day other-month"></div>`;
         for (let d = 1; d <= daysInMonth; d++) {
             const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const hasLesson = lessonDates.has(dateStr);
@@ -804,9 +821,6 @@
             const id = nameMap[s.toLowerCase()];
             if (id) {
                 nameInput.value = s;
-                // Автоматически заполняем пароль для быстрого тестирования (можно убрать)
-                // passwordInput.value = passwords[id] || '';
-                // await handleLogin();
             }
         }
     });
