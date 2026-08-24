@@ -587,52 +587,30 @@
         const zoomLink = todaysLesson.zoomLink || '';
         const boardLink = todaysLesson.boardLink || '';
 
-        if (zoomLink && zoomLink !== '#') {
+        if (zoomLink) {
             zoomBtn.href = zoomLink;
-            zoomBtn.title = `Звонок на ${todaysLesson.date}`;
             zoomBtn.style.opacity = '1';
-            zoomBtn.style.pointerEvents = 'auto';
+            zoomBtn.style.cursor = 'pointer';
         } else {
-            zoomBtn.href = 'javascript:void(0)';
-            zoomBtn.title = 'Ссылка на звонок не указана';
-            zoomBtn.style.opacity = '0.5';
-            zoomBtn.style.pointerEvents = 'none';
-            zoomBtn.onclick = (e) => {
-                e.preventDefault();
-                alert('Ссылка на звонок ещё не добавлена');
-            };
+            zoomBtn.href = '#';
+            zoomBtn.style.opacity = '0.4';
+            zoomBtn.style.cursor = 'not-allowed';
         }
 
-        if (boardLink && boardLink !== '#') {
+        if (boardLink) {
             boardBtn.href = boardLink;
-            boardBtn.title = `Доска для урока на ${todaysLesson.date}`;
             boardBtn.style.opacity = '1';
-            boardBtn.style.pointerEvents = 'auto';
+            boardBtn.style.cursor = 'pointer';
         } else {
-            boardBtn.href = 'javascript:void(0)';
-            boardBtn.title = 'Ссылка на доску не указана';
-            boardBtn.style.opacity = '0.5';
-            boardBtn.style.pointerEvents = 'none';
-            boardBtn.onclick = (e) => {
-                e.preventDefault();
-                alert('Ссылка на доску ещё не добавлена');
-            };
+            boardBtn.href = '#';
+            boardBtn.style.opacity = '0.4';
+            boardBtn.style.cursor = 'not-allowed';
         }
     } else {
-        zoomBtn.href = 'javascript:void(0)';
-        boardBtn.href = 'javascript:void(0)';
-        zoomBtn.title = 'Нет запланированных уроков';
-        boardBtn.title = 'Нет запланированных уроков';
-        zoomBtn.style.opacity = '0.5';
-        boardBtn.style.opacity = '0.5';
-        zoomBtn.onclick = (e) => {
-            e.preventDefault();
-            alert('Нет запланированных уроков');
-        };
-        boardBtn.onclick = (e) => {
-            e.preventDefault();
-            alert('Нет запланированных уроков');
-        };
+        zoomBtn.href = '#';
+        boardBtn.href = '#';
+        zoomBtn.style.opacity = '0.4';
+        boardBtn.style.opacity = '0.4';
     }
 }
 
