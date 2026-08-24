@@ -89,6 +89,45 @@
         .login-area button:hover { background: #0f3550; }
         .login-error { color: #dc2626; font-size: 0.8rem; margin-top: 4px; min-height: 1.2em; }
 
+        /* ---------- Быстрые ссылки ---------- */
+        .quick-links-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .quick-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .quick-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .quick-link-btn span {
+            font-size: 1.1em;
+        }
+
+        .zoom-btn {
+            background: linear-gradient(135deg, #2D8CFF 0%, #0B5CFF 100%);
+        }
+
+        .board-btn {
+            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
+        }
+
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -354,6 +393,8 @@
             .login-area { padding: 12px 14px 16px; max-width: 100%; }
             .login-area input { font-size: 0.8rem; padding: 6px 12px; }
             .login-area button { font-size: 0.8rem; padding: 6px 16px; }
+            .quick-links-container { justify-content: center; }
+            .quick-link-btn { padding: 6px 12px; font-size: 0.75rem; }
             .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
             .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
             .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
@@ -391,6 +432,16 @@
     </div>
 
     <div id="mainContent" style="display: none;">
+        <!-- Быстрые ссылки -->
+        <div class="quick-links-container">
+            <a href="#" id="zoomBtn" target="_blank" class="quick-link-btn zoom-btn">
+                <span></span> Звонок
+            </a>
+            <a href="#" id="boardBtn" target="_blank" class="quick-link-btn board-btn">
+                <span>📝</span> Доска
+            </a>
+        </div>
+
         <div class="calendar-header">
             <span class="month-year" id="monthYear"></span>
             <div class="nav-buttons">
@@ -479,6 +530,8 @@
     const progressContainer = document.getElementById('progressContainer');
     const testsSection = document.getElementById('testsSection');
     const testsContainer = document.getElementById('testsContainer');
+    const zoomBtn = document.getElementById('zoomBtn');
+    const boardBtn = document.getElementById('boardBtn');
 
     function buildHomeworkLink(basePath, studentId, lesson) {
         if (!basePath) return '';
@@ -501,6 +554,59 @@
         } catch {
             lessonsData = [];
             return false;
+        }
+    }
+
+    // ============================================================
+    //  🔗  БЫСТРЫЕ ССЫЛКИ (Звонок и Доска)
+    // ============================================================
+    function updateQuickLinks() {
+        if (!currentStudentId || !lessonsData.length) {
+            zoomBtn.style.display = 'none';
+            boardBtn.style.display = 'none';
+            return;
+        }
+
+        zoomBtn.style.display = 'inline-flex';
+        boardBtn.style.display = 'inline-flex';
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+        let todaysLesson = lessonsData.find(l => l.date === todayStr);
+
+        if (!todaysLesson) {
+            const pastLessons = lessonsData.filter(l => l.date < todayStr);
+            if (pastLessons.length > 0) {
+                pastLessons.sort((a, b) => b.date.localeCompare(a.date));
+                todaysLesson = pastLessons[0];
+            }
+        }
+
+        if (todaysLesson) {
+            const zoomLink = todaysLesson.zoomLink || '';
+            const boardLink = todaysLesson.boardLink || '';
+
+            if (zoomLink) {
+                zoomBtn.href = zoomLink;
+                zoomBtn.title = `Звонок на ${todaysLesson.date}`;
+            } else {
+                zoomBtn.href = '#';
+                zoomBtn.title = 'Ссылка на звонок не указана';
+            }
+
+            if (boardLink) {
+                boardBtn.href = boardLink;
+                boardBtn.title = `Доска для урока на ${todaysLesson.date}`;
+            } else {
+                boardBtn.href = '#';
+                boardBtn.title = 'Ссылка на доску не указана';
+            }
+        } else {
+            zoomBtn.href = '#';
+            boardBtn.href = '#';
+            zoomBtn.title = 'Нет запланированных уроков';
+            boardBtn.title = 'Нет запланированных уроков';
         }
     }
 
@@ -663,6 +769,7 @@
         renderLessonsList(currentYear, currentMonth);
         renderProgress(id);
         renderTests(id);
+        updateQuickLinks();
     }
 
     loginBtn.addEventListener('click', handleLogin);
@@ -690,7 +797,6 @@
 
     function renderCalendar(year, month) {
         const firstDay = new Date(year, month, 1).getDay();
-        // Сдвиг: чтобы понедельник был первым (в JS 0 = воскресенье)
         const startDay = (firstDay === 0) ? 6 : firstDay - 1;
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
@@ -730,7 +836,7 @@
             if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
             if (l.homework) {
                 const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                html += `<a href="${hwLink}" target="_blank">📝 Домашка</a>`;
+                html += `<a href="${hwLink}" target="_blank"> Домашка</a>`;
             }
             modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
         } else {
@@ -741,7 +847,7 @@
                 if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
                 if (l.homework) {
                     const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank">📝 ${i+1}</a>`;
+                    links += `<a href="${hwLink}" target="_blank"> ${i+1}</a>`;
                 }
             });
             modalTime.textContent = time;
