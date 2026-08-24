@@ -41,7 +41,6 @@
         }
         .logout-btn:hover { background: #dce5ef; }
 
-        /* ----- Календарь ----- */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 0 0 8px; flex-wrap: wrap; gap: 6px; }
         .calendar-header .month-year { font-size: 1.2rem; font-weight: 700; color: #0b2a44; }
         .calendar-header .nav-buttons { display: flex; gap: 6px; }
@@ -99,7 +98,6 @@
         .calendar-grid .day .dot { width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; margin-top: 2px; }
         .calendar-grid .day.today { border: 2px solid #1e4663; }
 
-        /* ----- Список ----- */
         .lessons-list {
             margin-top: 8px;
             background: white;
@@ -197,7 +195,6 @@
 
         .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 8px 0; font-size: 0.8rem; }
 
-        /* ----- Модалка (увеличенная) ----- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -249,7 +246,6 @@
             padding-bottom: 8px;
         }
 
-        /* Карточка отдельного ученика внутри модалки */
         .modal-student-card {
             background: #f8fafc;
             border-radius: 16px;
@@ -362,7 +358,6 @@
     </div>
 </div>
 
-<!-- Модалка (увеличенная, с карточками учеников) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card">
         <button class="close-btn" id="modalClose">&times;</button>
@@ -373,12 +368,12 @@
 
 <script>
     // ============================================================
-    //  📥  СПИСОК УЧЕНИКОВ (ДОБАВЛЯЙТЕ НОВЫХ СЮДА!)
+    //  📥  СПИСОК УЧЕНИКОВ
     // ============================================================
     const studentList = ['valeriya', 'amina', 'denis'];
 
     // ============================================================
-    //  🖥  ПРОВЕРКА СЕССИИ И АВТОВХОД
+    //  🖥  ПРОВЕРКА СЕССИИ
     // ============================================================
     const sessionData = localStorage.getItem('teacherSession');
     if (sessionData) {
@@ -386,8 +381,6 @@
             const data = JSON.parse(sessionData);
             if (data && data.name === 'alina') {
                 document.getElementById('mainContent').style.display = 'block';
-                // Вызываем initTeacherPage ПОСЛЕ объявления всех функций
-                // Но она будет вызвана в конце скрипта
             }
         } catch (e) {}
     }
@@ -409,13 +402,10 @@
     const modalDate = document.getElementById('modalDate');
     const modalStudentsContainer = document.getElementById('modalStudentsContainer');
 
-    // ============================================================
-    //  🧠  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
-    // ============================================================
     function getStudentName(id) {
-        const names = { 
-            'valeriya': 'Валерия', 
-            'amina': 'Амина', 
+        const names = {
+            'valeriya': 'Валерия',
+            'amina': 'Амина',
             'denis': 'Денис'
         };
         return names[id] || id;
@@ -433,9 +423,6 @@
         return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
     }
 
-    // ============================================================
-    //  📥  ЗАГРУЗКА ВСЕХ РАСПИСАНИЙ
-    // ============================================================
     async function loadAllLessons() {
         let all = [];
         for (let s of studentList) {
@@ -456,9 +443,6 @@
         lessonsData = all;
     }
 
-    // ============================================================
-    //  📅  КАЛЕНДАРЬ
-    // ============================================================
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
     }
@@ -479,14 +463,16 @@
 
     function renderCalendar(year, month) {
         const firstDay = new Date(year, month, 1).getDay();
+        // Сдвиг: чтобы понедельник был первым
+        const startDay = (firstDay === 0) ? 6 : firstDay - 1;
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
         const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
         monthYear.textContent = `${monthNames[month]} ${year}`;
         const lessonDates = new Set(lessonsData.map(item => item.date));
-        const weekdays = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
         let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
-        for (let i = 0; i < firstDay; i++) html += `<div class="day other-month"></div>`;
+        for (let i = 0; i < startDay; i++) html += `<div class="day other-month"></div>`;
         for (let d = 1; d <= daysInMonth; d++) {
             const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const hasLesson = lessonDates.has(dateStr);
@@ -507,9 +493,6 @@
         });
     }
 
-    // ============================================================
-    //  🖥  МОДАЛКА
-    // ============================================================
     function showModal(dateStr, lessons) {
         const [y, m, d] = dateStr.split('-').map(Number);
         const dateObj = new Date(y, m-1, d);
@@ -552,9 +535,6 @@
     modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
-    // ============================================================
-    //  📋  СПИСОК УРОКОВ
-    // ============================================================
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
         if (!data.length) {
@@ -649,9 +629,6 @@
         });
     }
 
-    // ============================================================
-    //  📆  ПЕРЕКЛЮЧЕНИЕ МЕСЯЦЕВ
-    // ============================================================
     function changeMonth(delta) {
         currentMonth += delta;
         if (currentMonth < 0) { currentMonth = 11; currentYear--; }
@@ -663,18 +640,12 @@
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
     nextMonthBtn.addEventListener('click', () => changeMonth(1));
 
-    // ============================================================
-    //  🚀  ИНИЦИАЛИЗАЦИЯ
-    // ============================================================
     async function initTeacherPage() {
         await loadAllLessons();
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
     }
 
-    // ============================================================
-    //  🚪  ВЫХОД
-    // ============================================================
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('teacherSession');
         for (let key in localStorage) {
@@ -685,9 +656,6 @@
         window.location.href = 'index.html';
     });
 
-    // ============================================================
-    //  🔄  АВТОМАТИЧЕСКИЙ ВХОД, ЕСЛИ ЕСТЬ СЕССИЯ
-    // ============================================================
     if (localStorage.getItem('teacherSession')) {
         mainContent.style.display = 'block';
         initTeacherPage();
