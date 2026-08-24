@@ -560,55 +560,81 @@
     // ============================================================
     //  🔗  БЫСТРЫЕ ССЫЛКИ (Звонок и Доска)
     // ============================================================
-    function updateQuickLinks() {
-        if (!currentStudentId || !lessonsData.length) {
-            zoomBtn.style.display = 'none';
-            boardBtn.style.display = 'none';
-            return;
-        }
+   function updateQuickLinks() {
+    if (!currentStudentId || !lessonsData.length) {
+        zoomBtn.style.display = 'none';
+        boardBtn.style.display = 'none';
+        return;
+    }
 
-        zoomBtn.style.display = 'inline-flex';
-        boardBtn.style.display = 'inline-flex';
+    zoomBtn.style.display = 'inline-flex';
+    boardBtn.style.display = 'inline-flex';
 
-        const today = new Date();
-        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-        let todaysLesson = lessonsData.find(l => l.date === todayStr);
+    let todaysLesson = lessonsData.find(l => l.date === todayStr);
 
-        if (!todaysLesson) {
-            const pastLessons = lessonsData.filter(l => l.date < todayStr);
-            if (pastLessons.length > 0) {
-                pastLessons.sort((a, b) => b.date.localeCompare(a.date));
-                todaysLesson = pastLessons[0];
-            }
-        }
-
-        if (todaysLesson) {
-            const zoomLink = todaysLesson.zoomLink || '';
-            const boardLink = todaysLesson.boardLink || '';
-
-            if (zoomLink) {
-                zoomBtn.href = zoomLink;
-                zoomBtn.title = `Звонок на ${todaysLesson.date}`;
-            } else {
-                zoomBtn.href = '#';
-                zoomBtn.title = 'Ссылка на звонок не указана';
-            }
-
-            if (boardLink) {
-                boardBtn.href = boardLink;
-                boardBtn.title = `Доска для урока на ${todaysLesson.date}`;
-            } else {
-                boardBtn.href = '#';
-                boardBtn.title = 'Ссылка на доску не указана';
-            }
-        } else {
-            zoomBtn.href = '#';
-            boardBtn.href = '#';
-            zoomBtn.title = 'Нет запланированных уроков';
-            boardBtn.title = 'Нет запланированных уроков';
+    if (!todaysLesson) {
+        const pastLessons = lessonsData.filter(l => l.date < todayStr);
+        if (pastLessons.length > 0) {
+            pastLessons.sort((a, b) => b.date.localeCompare(a.date));
+            todaysLesson = pastLessons[0];
         }
     }
+
+    if (todaysLesson) {
+        const zoomLink = todaysLesson.zoomLink || '';
+        const boardLink = todaysLesson.boardLink || '';
+
+        if (zoomLink && zoomLink !== '#') {
+            zoomBtn.href = zoomLink;
+            zoomBtn.title = `Звонок на ${todaysLesson.date}`;
+            zoomBtn.style.opacity = '1';
+            zoomBtn.style.pointerEvents = 'auto';
+        } else {
+            zoomBtn.href = 'javascript:void(0)';
+            zoomBtn.title = 'Ссылка на звонок не указана';
+            zoomBtn.style.opacity = '0.5';
+            zoomBtn.style.pointerEvents = 'none';
+            zoomBtn.onclick = (e) => {
+                e.preventDefault();
+                alert('Ссылка на звонок ещё не добавлена');
+            };
+        }
+
+        if (boardLink && boardLink !== '#') {
+            boardBtn.href = boardLink;
+            boardBtn.title = `Доска для урока на ${todaysLesson.date}`;
+            boardBtn.style.opacity = '1';
+            boardBtn.style.pointerEvents = 'auto';
+        } else {
+            boardBtn.href = 'javascript:void(0)';
+            boardBtn.title = 'Ссылка на доску не указана';
+            boardBtn.style.opacity = '0.5';
+            boardBtn.style.pointerEvents = 'none';
+            boardBtn.onclick = (e) => {
+                e.preventDefault();
+                alert('Ссылка на доску ещё не добавлена');
+            };
+        }
+    } else {
+        zoomBtn.href = 'javascript:void(0)';
+        boardBtn.href = 'javascript:void(0)';
+        zoomBtn.title = 'Нет запланированных уроков';
+        boardBtn.title = 'Нет запланированных уроков';
+        zoomBtn.style.opacity = '0.5';
+        boardBtn.style.opacity = '0.5';
+        zoomBtn.onclick = (e) => {
+            e.preventDefault();
+            alert('Нет запланированных уроков');
+        };
+        boardBtn.onclick = (e) => {
+            e.preventDefault();
+            alert('Нет запланированных уроков');
+        };
+    }
+}
 
     // ============================================================
     //  📊  ПРОГРЕСС
