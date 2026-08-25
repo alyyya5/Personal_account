@@ -378,9 +378,9 @@
 
         .main-wrapper {
             width: 100%;
-
-            margin-left: 285px;
-
+            max-width: calc(100% - 285px);
+            margin-left: auto;
+            margin-right: auto;
             padding: 28px 32px 40px;
         }
 
@@ -744,7 +744,7 @@
             color: var(--text-primary);
 
             font-size: 0.95rem;
-            font-weight: 700;
+            font-weight: 750;
 
             cursor: pointer;
 
@@ -1360,6 +1360,8 @@
 
             .main-wrapper {
                 margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
                 padding: 78px 18px 30px;
             }
 
@@ -1472,7 +1474,7 @@
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-logo">
-            <div class="logo-icon">▰</div>
+            <div class="logo-icon"></div>
 
             <div class="logo-text">
                 Личный<br>
@@ -1508,7 +1510,7 @@
 
         <div class="sidebar-bottom">
             <button class="theme-toggle" id="themeToggle">
-                🌙
+                
                 Сменить тему
             </button>
         </div>
@@ -1527,7 +1529,7 @@
 
                 <div class="login-card">
 
-                    <div class="login-logo">▰</div>
+                    <div class="login-logo"></div>
 
                     <div class="login-title">
                         Личный кабинет
@@ -3748,7 +3750,7 @@
                             )}"
                             target="_blank"
                         >
-                            📝 Домашка
+                             Домашка
                         </a>
 
                     `;
