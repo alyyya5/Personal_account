@@ -4,164 +4,184 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Личный кабинет</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-gradient-start: #f0f5fe;
-            --bg-gradient-end: #e8eefa;
-            --container-bg: rgba(255, 255, 255, 0.8);
-            --text-primary: #1a2a3a;
-            --text-secondary: #4a627a;
-            --sidebar-bg: white;
-            --card-bg: white;
-            --border-color: rgba(255, 255, 255, 0.5);
-            --shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+            --bg-gradient-start: #f5f7fa;
+            --bg-gradient-end: #e8ecf1;
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --accent-blue: #4a90e2;
+            --accent-green: #7ed321;
+            --accent-orange: #f5a623;
+            --accent-red: #d0021b;
         }
 
         body.dark-mode {
             --bg-gradient-start: #1a1a2e;
             --bg-gradient-end: #16213e;
-            --container-bg: rgba(30, 30, 50, 0.9);
+            --container-bg: rgba(30, 30, 50, 0.95);
             --text-primary: #e8e8e8;
-            --text-secondary: #a0a0a0;
+            --text-secondary: #a0a0b0;
             --sidebar-bg: #232342;
             --card-bg: #2a2a4a;
             --border-color: rgba(255, 255, 255, 0.1);
-            --shadow: 0 16px 32px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         body {
             background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
-            padding: 16px 12px;
+            padding: 20px;
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
 
         /* ---------- Основной контейнер ---------- */
         .main-wrapper {
-            max-width: 980px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            gap: 20px;
+            gap: 24px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .container {
             flex: 1;
             background: var(--container-bg);
             backdrop-filter: blur(12px);
-            border-radius: 28px;
+            border-radius: 20px;
             box-shadow: var(--shadow);
-            padding: 18px 18px 22px;
+            padding: 28px 32px 32px;
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            min-height: calc(100vh - 40px);
         }
 
         h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 14px;
-            text-align: center;
+            margin-bottom: 0;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
         }
 
         /* ---------- Сайдбар ---------- */
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: var(--sidebar-bg);
-            box-shadow: 4px 0 20px rgba(0,0,0,0.06);
-            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border-radius: 20px;
             padding: 24px 20px;
-            overflow-y: auto;
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             flex-shrink: 0;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
         .sidebar.hidden {
-            width: 0;
-            padding: 24px 0;
-            overflow: hidden;
+            display: none;
         }
 
         .sidebar .logo {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
             border-bottom: 2px solid var(--border-color);
         }
         .sidebar .logo span {
-            color: #3b82f6;
+            color: var(--accent-blue);
         }
         .sidebar .nav-item {
             display: block;
             width: 100%;
-            padding: 12px 14px;
+            padding: 12px 16px;
             border: none;
             background: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 0.95rem;
             font-weight: 500;
-            color: var(--text-primary);
+            color: var(--text-secondary);
             text-align: left;
             cursor: pointer;
-            transition: 0.15s;
+            transition: all 0.2s;
             margin-bottom: 6px;
         }
         .sidebar .nav-item:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(74, 144, 226, 0.08);
+            color: var(--accent-blue);
         }
         .sidebar .nav-item.active {
-            background: #dbeafe;
-            color: #0b2a44;
+            background: var(--accent-blue);
+            color: white;
             font-weight: 600;
         }
         .sidebar .nav-item .icon {
             margin-right: 10px;
         }
         .sidebar .user-info {
-            margin-top: 20px;
-            padding-top: 16px;
+            margin-top: auto;
+            padding-top: 20px;
+            padding-bottom: 12px;
             border-top: 1px solid var(--border-color);
             font-size: 0.85rem;
             color: var(--text-secondary);
         }
         .sidebar .user-info strong {
             color: var(--text-primary);
+            display: block;
+            margin-bottom: 4px;
         }
 
         .sidebar-toggle {
-            position: absolute;
+            position: fixed;
             top: 20px;
-            right: -40px;
+            left: 20px;
             background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 8px;
+            border-radius: 10px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             box-shadow: var(--shadow);
             transition: all 0.2s;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
         }
 
         .sidebar-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+            background: var(--accent-blue);
+            color: white;
         }
 
         .theme-toggle {
-            margin-top: 20px;
-            padding: 12px 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(74, 144, 226, 0.1);
             border: none;
-            border-radius: 12px;
-            color: white;
+            border-radius: 10px;
+            color: var(--accent-blue);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -170,11 +190,12 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 0.9rem;
         }
 
         .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            background: var(--accent-blue);
+            color: white;
         }
 
         /* ---------- Вход ---------- */
@@ -182,7 +203,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 60vh;
+            min-height: 70vh;
         }
 
         .login-area {
@@ -191,139 +212,121 @@
             align-items: center;
             justify-content: center;
             background: var(--card-bg);
-            padding: 24px 28px 28px;
-            border-radius: 28px;
+            padding: 32px 40px 36px;
+            border-radius: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
-            max-width: 380px;
+            max-width: 400px;
             width: 100%;
         }
         .login-area label {
             font-weight: 600;
             font-size: 0.9rem;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             width: 100%;
             text-align: left;
         }
         .login-area input {
             width: 100%;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border: 2px solid var(--border-color);
-            border-radius: 24px;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            font-size: 1rem;
             background: var(--container-bg);
             outline: none;
-            transition: 0.2s;
+            transition: all 0.2s;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: var(--text-primary);
         }
         .login-area input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
         }
         .login-area button {
-            background: #1e4663;
+            background: var(--accent-blue);
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 0.95rem;
-            padding: 10px 32px;
-            border-radius: 24px;
+            font-size: 1rem;
+            padding: 12px 40px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
             margin-top: 8px;
             width: 100%;
         }
-        .login-area button:hover { background: #0f3550; }
+        .login-area button:hover { 
+            background: #357abd;
+            transform: translateY(-1px);
+        }
         .login-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            margin-top: 6px;
+            color: var(--accent-red);
+            font-size: 0.9rem;
+            margin-top: 12px;
             min-height: 1.2em;
-        }
-
-        /* ---------- Кнопка меню ---------- */
-        .menu-btn {
-            display: none;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: 0.2s;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            align-items: center;
-            gap: 6px;
-        }
-        .menu-btn:hover {
-            background: rgba(59, 130, 246, 0.1);
         }
 
         /* ---------- Быстрые ссылки ---------- */
         .quick-links-container {
             display: none;
             justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         .quick-link-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 20px;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: white;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .quick-link-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .quick-link-btn span { font-size: 1em; }
-        .zoom-btn { background: linear-gradient(135deg, #2D8CFF 0%, #0B5CFF 100%); }
-        .board-btn { background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%); }
+        .zoom-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .board-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
 
         /* ---------- Страницы ---------- */
         .page {
             display: none;
-            margin-top: 14px;
+            margin-top: 20px;
         }
         .page.active {
             display: block;
         }
 
-        /* ---------- Карточки уроков/домашек/материалов ---------- */
+        /* ---------- Карточки ---------- */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .lesson-card, .hw-card, .mat-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 18px;
+            padding: 22px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .lesson-card:hover, .hw-card:hover, .mat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
         .card-header {
@@ -333,44 +336,29 @@
             gap: 10px;
         }
 
-        .card-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.4;
-        }
-
         .card-date {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            background: rgba(59, 130, 246, 0.1);
-            padding: 4px 10px;
+            background: rgba(74, 144, 226, 0.1);
+            padding: 6px 12px;
             border-radius: 12px;
-            white-space: nowrap;
-        }
-
-        .card-time {
-            font-size: 0.85rem;
-            color: #3b82f6;
-            font-weight: 600;
-        }
-
-        .card-topic {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            flex: 1;
+            font-weight: 500;
         }
 
         .card-status {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 6px 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 12px;
             border-radius: 12px;
-            width: fit-content;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card-status:hover {
+            transform: scale(1.05);
         }
 
         .card-status.done {
@@ -388,61 +376,73 @@
             color: #2563eb;
         }
 
+        .card-topic {
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            flex: 1;
+            font-weight: 500;
+        }
+
         .card-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-top: 8px;
-            flex-wrap: wrap;
         }
 
         .card-btn {
             flex: 1;
-            min-width: 100px;
-            padding: 8px 12px;
+            padding: 10px 16px;
             border: none;
             border-radius: 10px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .card-btn.primary {
-            background: #3b82f6;
+            background: var(--accent-blue);
             color: white;
         }
 
         .card-btn.primary:hover {
-            background: #2563eb;
+            background: #357abd;
         }
 
         .card-btn.secondary {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--accent-blue);
         }
 
         .card-btn.secondary:hover {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(74, 144, 226, 0.2);
         }
 
         .show-more-btn {
             display: block;
             width: 100%;
             max-width: 300px;
-            margin: 20px auto 0;
-            padding: 12px 24px;
+            margin: 28px auto 0;
+            padding: 14px 28px;
             background: transparent;
-            border: 2px solid #3b82f6;
+            border: 2px solid var(--accent-blue);
             border-radius: 12px;
-            color: #3b82f6;
+            color: var(--accent-blue);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .show-more-btn:hover {
-            background: #3b82f6;
+            background: var(--accent-blue);
             color: white;
         }
 
@@ -451,148 +451,138 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 0 0 4px;
-            flex-wrap: wrap;
-            gap: 2px;
+            margin: 20px 0 16px;
         }
-        .calendar-header .month-year { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); }
-        .calendar-header .nav-buttons { display: flex; gap: 3px; }
+        .calendar-header .month-year { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            color: var(--text-primary); 
+        }
+        .calendar-header .nav-buttons { display: flex; gap: 8px; }
         .calendar-header .nav-buttons button {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
+            border-radius: 10px;
+            padding: 6px 16px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--text-primary);
-            transition: 0.15s;
+            transition: all 0.2s;
         }
         .calendar-header .nav-buttons button:hover {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: #3b82f6;
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
+            gap: 4px;
             background: var(--container-bg);
             border-radius: 12px;
-            padding: 6px 4px;
+            padding: 8px;
             border: 1px solid var(--border-color);
-            margin-top: 12px;
         }
         .calendar-grid .weekday {
             font-weight: 600;
-            font-size: 0.6rem;
+            font-size: 0.75rem;
             text-align: center;
             color: var(--text-secondary);
-            padding: 4px 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .calendar-grid .day {
-            aspect-ratio: 1/0.85;
+            aspect-ratio: 1/0.9;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border-radius: 10px;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             font-weight: 500;
             background: var(--card-bg);
             cursor: default;
             border: 1px solid transparent;
             position: relative;
-            transition: 0.15s;
+            transition: all 0.2s;
             color: var(--text-primary);
         }
         .calendar-grid .day.other-month { opacity: 0.4; }
         .calendar-grid .day.has-lesson {
-            background: #dbeafe;
-            border-color: #3b82f6;
+            background: rgba(74, 144, 226, 0.15);
+            border-color: var(--accent-blue);
             cursor: pointer;
             font-weight: 600;
-            color: #0b2a44;
+            color: var(--accent-blue);
         }
         .calendar-grid .day.has-lesson:hover {
-            background: #bfdbfe;
+            background: rgba(74, 144, 226, 0.25);
             transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(59,130,246,0.2);
         }
-        .calendar-grid .day .dot { width: 4px; height: 4px; border-radius: 50%; background: #3b82f6; margin-top: 2px; }
-        .calendar-grid .day.today { border: 2px solid #1e4663; }
+        .calendar-grid .day .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-blue); margin-top: 3px; }
+        .calendar-grid .day.today { border: 2px solid var(--accent-blue); }
 
         /* ---------- Прогресс ---------- */
         .progress-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             text-align: center;
         }
 
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            color: #3b82f6;
+            color: var(--accent-blue);
             margin-bottom: 8px;
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
 
         .stat-sublabel {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             opacity: 0.8;
         }
 
-        .progress-list {
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .chart-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             border: 1px solid var(--border-color);
-            max-height: 400px;
-            overflow-y: auto;
+            box-shadow: var(--shadow);
         }
 
-        .progress-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .progress-item:last-child {
-            border-bottom: none;
-        }
-
-        .progress-item-date {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .progress-item-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
+        .chart-card h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
         }
 
         /* ---------- Модалка ---------- */
@@ -602,21 +592,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10,25,45,0.40);
+            background: rgba(0,0,0,0.4);
             backdrop-filter: blur(4px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 14px;
+            padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
             background: var(--card-bg);
-            border-radius: 24px;
-            max-width: 350px;
+            border-radius: 20px;
+            max-width: 380px;
             width: 100%;
-            padding: 20px 22px 24px;
+            padding: 24px 28px 28px;
             box-shadow: 0 24px 48px rgba(0,0,0,0.2);
             animation: modalFade 0.2s ease-out;
             position: relative;
@@ -627,9 +617,9 @@
         }
         .modal-card .close-btn {
             position: absolute;
-            top: 10px;
-            right: 14px;
-            font-size: 1.3rem;
+            top: 12px;
+            right: 16px;
+            font-size: 1.5rem;
             cursor: pointer;
             color: var(--text-secondary);
             background: none;
@@ -637,76 +627,90 @@
             line-height: 1;
         }
         .modal-card .close-btn:hover { color: var(--text-primary); transform: rotate(90deg); }
-        .modal-card .modal-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px; }
-        .modal-card .modal-time { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
-        .modal-card .modal-topic { font-size: 0.95rem; font-weight: 600; margin: 6px 0 10px; color: var(--text-primary); }
+        .modal-card .modal-date { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
+        .modal-card .modal-time { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+        .modal-card .modal-topic { font-size: 1.05rem; font-weight: 600; margin: 8px 0 12px; color: var(--text-primary); }
         .modal-card .modal-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 4px;
+            gap: 8px;
+            margin-top: 6px;
         }
         .modal-card .modal-links a {
-            background: #1e4663;
+            background: var(--accent-blue);
             color: white;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.8rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            transition: 0.15s;
+            gap: 6px;
+            transition: all 0.2s;
         }
-        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
-        .modal-card .modal-links a.secondary { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-        .modal-card .modal-links a.secondary:hover { background: rgba(59, 130, 246, 0.3); }
+        .modal-card .modal-links a:hover { 
+            background: #357abd; 
+            transform: scale(1.02); 
+        }
+        .modal-card .modal-links a.secondary { 
+            background: rgba(74, 144, 226, 0.15); 
+            color: var(--accent-blue); 
+        }
+        .modal-card .modal-links a.secondary:hover { 
+            background: rgba(74, 144, 226, 0.25); 
+        }
 
         /* ---------- Адаптивность ---------- */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; }
-            .sidebar { width: 100%; }
+            .sidebar { 
+                width: 100%; 
+                position: relative;
+                top: 0;
+            }
             .sidebar.hidden { display: none; }
             .sidebar-toggle {
-                right: 20px;
-                top: -50px;
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 16px;
             }
             .cards-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
-            .container { padding: 12px 10px 16px; border-radius: 20px; }
-            .login-area { padding: 20px 24px 24px; }
-            .login-area input { font-size: 0.9rem; padding: 8px 14px; }
-            .login-area button { font-size: 0.9rem; padding: 10px 24px; }
-            .quick-links-container { justify-content: center; }
-            .quick-link-btn { padding: 6px 12px; font-size: 0.75rem; }
-            .calendar-grid { gap: 1px; padding: 4px 3px; border-radius: 10px; }
-            .calendar-grid .day { font-size: 0.65rem; border-radius: 8px; }
-            .calendar-grid .weekday { font-size: 0.5rem; }
-            .calendar-header .month-year { font-size: 0.8rem; }
-            .calendar-header .nav-buttons button { padding: 3px 10px; font-size: 0.65rem; }
-            .modal-card { padding: 16px 18px 20px; max-width: 300px; }
-            .modal-card .modal-time { font-size: 0.9rem; }
-            .modal-card .modal-topic { font-size: 0.85rem; }
-            .modal-card .modal-links a { font-size: 0.75rem; padding: 5px 12px; }
+            body { padding: 12px; }
+            .container { padding: 20px 16px 24px; border-radius: 16px; }
+            .login-area { padding: 28px 24px 32px; }
+            .login-area input { font-size: 0.95rem; padding: 10px 16px; }
+            .login-area button { font-size: 0.95rem; padding: 12px 24px; }
+            .quick-links-container { justify-content: center; flex-wrap: wrap; }
+            .quick-link-btn { padding: 8px 16px; font-size: 0.8rem; }
+            .calendar-grid { gap: 3px; padding: 6px; }
+            .calendar-grid .day { font-size: 0.8rem; }
+            .calendar-grid .weekday { font-size: 0.65rem; }
+            .modal-card { padding: 20px 22px 24px; max-width: 320px; }
             .progress-stats { grid-template-columns: 1fr; }
-            .cards-grid { gap: 12px; }
+            .charts-container { grid-template-columns: 1fr; }
+            .cards-grid { gap: 16px; }
         }
     </style>
 </head>
 <body>
+<div class="sidebar-toggle" id="sidebarToggle" title="Показать меню"></div>
+
 <div class="main-wrapper">
     <!-- Сайдбар -->
-    <div class="sidebar" id="sidebar">
-        <button class="sidebar-toggle" id="sidebarToggle" title="Скрыть/показать меню">◀</button>
+    <div class="sidebar hidden" id="sidebar">
         <div class="logo">📅 Личный <span>кабинет</span></div>
         <button class="nav-item active" data-page="schedule">📋 Расписание</button>
         <button class="nav-item" data-page="homework">📝 Домашки</button>
         <button class="nav-item" data-page="materials">📚 Материалы</button>
         <button class="nav-item" data-page="progress">📊 Прогресс</button>
-        <div class="user-info" id="sidebarUser"> <strong id="sidebarName">Загрузка...</strong></div>
+        <div class="user-info" id="sidebarUser">
+            <strong id="sidebarName">Загрузка...</strong>
+        </div>
         <button class="theme-toggle" id="themeToggle">🌓 Сменить тему</button>
     </div>
 
@@ -716,7 +720,7 @@
         <!-- Вход -->
         <div class="login-wrapper" id="loginWrapper">
             <div class="login-area" id="loginArea">
-                <label for="nameInput"> Ваше имя</label>
+                <label for="nameInput">👤 Ваше имя</label>
                 <input type="text" id="nameInput" placeholder="" />
                 <label for="passwordInput"> Пароль</label>
                 <input type="password" id="passwordInput" placeholder="Введите пароль" />
@@ -729,8 +733,8 @@
         <div id="mainContent" style="display: none;">
             <!-- Быстрые ссылки -->
             <div class="quick-links-container" id="quickLinks">
-                <a href="#" id="zoomBtn" target="_blank" class="quick-link-btn zoom-btn">📞 Звонок</a>
-                <a href="#" id="boardBtn" target="_blank" class="quick-link-btn board-btn"> Доска</a>
+                <a href="#" id="zoomBtn" target="_blank" class="quick-link-btn zoom-btn"> Звонок</a>
+                <a href="#" id="boardBtn" target="_blank" class="quick-link-btn board-btn">📝 Доска</a>
             </div>
 
             <!-- Страницы -->
@@ -746,20 +750,20 @@
             </div>
 
             <div class="page" id="page-homework">
-                <h3 style="margin-bottom: 12px; color: var(--text-primary);">📝 Ближайшие домашние задания</h3>
+                <h3 style="margin: 20px 0 0; color: var(--text-primary); font-size: 1.2rem;">📝 Ближайшие домашние задания</h3>
                 <div class="cards-grid" id="homeworkCards"></div>
                 <button class="show-more-btn" id="showAllHomework" style="display: none;">Показать все</button>
             </div>
 
             <div class="page" id="page-materials">
-                <h3 style="margin-bottom: 12px; color: var(--text-primary);">📚 Материалы уроков</h3>
+                <h3 style="margin: 20px 0 0; color: var(--text-primary); font-size: 1.2rem;">📚 Материалы уроков</h3>
                 <div class="cards-grid" id="materialsCards"></div>
                 <button class="show-more-btn" id="showAllMaterials" style="display: none;">Показать все</button>
             </div>
 
             <div class="page" id="page-progress">
                 <div class="progress-stats" id="progressStats"></div>
-                <div class="progress-list" id="progressList"></div>
+                <div class="charts-container" id="chartsContainer"></div>
             </div>
         </div>
     </div>
@@ -778,7 +782,7 @@
 
 <script>
     // ============================================================
-    //  🔐  ПАРОЛИ УЧЕНИКОВ
+    //    ПАРОЛИ УЧЕНИКОВ
     // ============================================================
     const passwords = {
         'valeriya': 'der44',
@@ -805,6 +809,7 @@
     let currentPage = 'schedule';
     let showAllHomework = false;
     let showAllMaterials = false;
+    let charts = {};
 
     // DOM
     const nameInput = document.getElementById('nameInput');
@@ -822,7 +827,7 @@
     const homeworkCards = document.getElementById('homeworkCards');
     const materialsCards = document.getElementById('materialsCards');
     const progressStats = document.getElementById('progressStats');
-    const progressList = document.getElementById('progressList');
+    const chartsContainer = document.getElementById('chartsContainer');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
     const modalOverlay = document.getElementById('modalOverlay');
@@ -850,6 +855,10 @@
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        // Перерисовать графики при смене темы
+        if (currentPage === 'progress') {
+            setTimeout(() => renderProgressPage(), 100);
+        }
     });
 
     // ============================================================
@@ -857,7 +866,8 @@
     // ============================================================
     sidebarToggle.addEventListener('click', () => {
         sidebar.classList.toggle('hidden');
-        sidebarToggle.textContent = sidebar.classList.contains('hidden') ? '▶' : '◀';
+        sidebarToggle.textContent = sidebar.classList.contains('hidden') ? '☰' : '◀';
+        sidebarToggle.title = sidebar.classList.contains('hidden') ? 'Показать меню' : 'Скрыть меню';
     });
 
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -930,20 +940,31 @@
     }
 
     // ============================================================
-    //    ПРОГРЕСС
+    //  📊  ПРОГРЕСС С ГРАФИКАМИ
     // ============================================================
     function renderProgressPage() {
         if (!lessonsData || lessonsData.length === 0) {
-            progressStats.innerHTML = '<p style="color:var(--text-secondary);">Нет данных</p>';
-            progressList.innerHTML = '';
+            progressStats.innerHTML = '<p style="color:var(--text-secondary); text-align:center; grid-column: 1/-1;">Нет данных</p>';
+            chartsContainer.innerHTML = '';
             return;
         }
 
         // Общая статистика
         const totalLessons = lessonsData.length;
-        const completedLessons = lessonsData.filter(l => l.topic && l.topic.trim() !== '').length;
+        const completedTopics = lessonsData.filter(l => l.topic && l.topic.trim() !== '').length;
         const totalHomework = lessonsData.filter(l => l.homework && l.homework.trim() !== '').length;
         
+        // Подсчитаем выполненные домашки
+        let completedHomework = 0;
+        lessonsData.forEach(l => {
+            if (l.homework && l.homework.trim() !== '') {
+                const status = localStorage.getItem(`hw_status_${currentStudentId}_${l.date}`);
+                if (status === 'done' || status === 'checked') {
+                    completedHomework++;
+                }
+            }
+        });
+
         // Статистика за месяц
         const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
         const currentYearStr = String(currentYear);
@@ -956,46 +977,126 @@
         // Статистика
         progressStats.innerHTML = `
             <div class="stat-card">
-                <div class="stat-value">${completedLessons}</div>
+                <div class="stat-value">${completedTopics}</div>
                 <div class="stat-label">Тем пройдено</div>
                 <div class="stat-sublabel">из них ${monthCompleted} в этом месяце</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">${totalHomework}</div>
-                <div class="stat-label">Домашних заданий</div>
-                <div class="stat-sublabel">всего</div>
+                <div class="stat-value">${completedHomework}</div>
+                <div class="stat-label">Домашек выполнено</div>
+                <div class="stat-sublabel">из ${totalHomework} всего</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">${totalLessons}</div>
-                <div class="stat-label">Всего уроков</div>
-                <div class="stat-sublabel">в расписании</div>
+                <div class="stat-value">${Math.round((completedHomework/totalHomework)*100) || 0}%</div>
+                <div class="stat-label">Успеваемость</div>
+                <div class="stat-sublabel">выполненных ДЗ</div>
             </div>
         `;
 
-        // Список уроков
-        const sorted = [...lessonsData].sort((a, b) => new Date(b.date) - new Date(a.date));
-        let html = '';
-        sorted.forEach(l => {
-            const dateParts = l.date.split('-');
-            const displayDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
-            const isCompleted = l.topic && l.topic.trim() !== '';
-            html += `
-                <div class="progress-item">
-                    <div>
-                        <div class="progress-item-date">${displayDate}</div>
-                        <div style="color: var(--text-primary); font-size: 0.9rem; margin-top: 4px;">${l.topic || 'Тема не указана'}</div>
-                    </div>
-                    <div class="progress-item-status">
-                        ${isCompleted ? '✅' : ''} ${isCompleted ? 'Пройдено' : 'Не пройдено'}
-                    </div>
-                </div>
-            `;
+        // Графики
+        chartsContainer.innerHTML = `
+            <div class="chart-card">
+                <h3>📈 Выполнение домашних заданий</h3>
+                <canvas id="homeworkChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📅 Активность по месяцам</h3>
+                <canvas id="activityChart"></canvas>
+            </div>
+        `;
+
+        // График домашних заданий
+        const hwCtx = document.getElementById('homeworkChart').getContext('2d');
+        if (charts.homework) charts.homework.destroy();
+        charts.homework = new Chart(hwCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Выполнено', 'Осталось'],
+                datasets: [{
+                    data: [completedHomework, totalHomework - completedHomework],
+                    backgroundColor: ['#7ed321', '#f5a623'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-primary'),
+                            padding: 15,
+                            font: { size: 13 }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
         });
-        progressList.innerHTML = html;
+
+        // График активности по месяцам
+        const monthsData = {};
+        lessonsData.forEach(l => {
+            const [year, month] = l.date.split('-').slice(0, 2);
+            const key = `${month}.${year}`;
+            if (!monthsData[key]) monthsData[key] = 0;
+            monthsData[key]++;
+        });
+
+        const sortedMonths = Object.keys(monthsData).sort((a, b) => {
+            const [ma, ya] = a.split('.');
+            const [mb, yb] = b.split('.');
+            return new Date(ya, ma-1) - new Date(yb, mb-1);
+        }).slice(-6);
+
+        const activityCtx = document.getElementById('activityChart').getContext('2d');
+        if (charts.activity) charts.activity.destroy();
+        charts.activity = new Chart(activityCtx, {
+            type: 'bar',
+            data: {
+                labels: sortedMonths,
+                datasets: [{
+                    label: 'Уроков',
+                    data: sortedMonths.map(m => monthsData[m]),
+                    backgroundColor: 'rgba(74, 144, 226, 0.7)',
+                    borderColor: 'rgba(74, 144, 226, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            color: getComputedStyle(document.body).getPropertyValue('--text-secondary')
+                        },
+                        grid: {
+                            color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-secondary')
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
     }
 
     // ============================================================
-    //  📝  ДОМАШКИ (КАРТОЧКИ)
+    //    ДОМАШКИ (КАРТОЧКИ)
     // ============================================================
     function renderHomeworkCards() {
         if (!lessonsData || lessonsData.length === 0) {
@@ -1032,7 +1133,7 @@
             const statusMap = {
                 'pending': { text: '⏳ Не сделано', class: 'pending' },
                 'done': { text: '✅ Сделано', class: 'done' },
-                'checked': { text: '📝 Проверено', class: 'checked' }
+                'checked': { text: ' Проверено', class: 'checked' }
             };
             const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
 
@@ -1040,13 +1141,11 @@
                 <div class="hw-card">
                     <div class="card-header">
                         <span class="card-date">${displayDate}</span>
-                        <span class="card-status ${statusMap[status].class}">${statusMap[status].text}</span>
+                        <span class="card-status ${statusMap[status].class} status-toggle" data-date="${l.date}" data-status="${status}">${statusMap[status].text}</span>
                     </div>
                     <div class="card-topic">${l.topic || 'Без темы'}</div>
                     <div class="card-actions">
-                        <a href="${hwLink}" target="_blank" class="card-btn primary">📝 Открыть</a>
-                        <button class="card-btn secondary status-btn" data-date="${l.date}" data-status="done">✅</button>
-                        <button class="card-btn secondary status-btn" data-date="${l.date}" data-status="checked"></button>
+                        <a href="${hwLink}" target="_blank" class="card-btn primary">📄 Открыть</a>
                     </div>
                 </div>
             `;
@@ -1054,12 +1153,20 @@
 
         homeworkCards.innerHTML = html;
 
-        document.querySelectorAll('.status-btn').forEach(btn => {
+        // Обработчик клика по статусу (переключение)
+        document.querySelectorAll('.status-toggle').forEach(btn => {
             btn.addEventListener('click', function() {
                 const date = this.dataset.date;
-                const status = this.dataset.status;
+                const currentStatus = this.dataset.status;
                 const key = `hw_status_${currentStudentId}_${date}`;
-                localStorage.setItem(key, status);
+                
+                // Если было done или checked - сбрасываем на pending, иначе ставим done
+                let newStatus = 'done';
+                if (currentStatus === 'done' || currentStatus === 'checked') {
+                    newStatus = 'pending';
+                }
+                
+                localStorage.setItem(key, newStatus);
                 renderHomeworkCards();
             });
         });
@@ -1071,7 +1178,7 @@
     }
 
     // ============================================================
-    //    МАТЕРИАЛЫ (КАРТОЧКИ)
+    //  📚  МАТЕРИАЛЫ (КАРТОЧКИ)
     // ============================================================
     function renderMaterialsCards() {
         if (!lessonsData || lessonsData.length === 0) {
@@ -1111,7 +1218,7 @@
                     </div>
                     <div class="card-topic">${l.topic || 'Без темы'}</div>
                     <div class="card-actions">
-                        <a href="${l.material}" target="_blank" class="card-btn primary"> Открыть материал</a>
+                        <a href="${l.material}" target="_blank" class="card-btn primary">📄 Открыть материал</a>
                     </div>
                 </div>
             `;
@@ -1179,6 +1286,8 @@
 
         loginWrapper.style.display = 'none';
         mainContent.style.display = 'block';
+        sidebar.classList.remove('hidden');
+        sidebarToggle.textContent = '';
         sidebarName.textContent = raw;
 
         switchPage('schedule');
