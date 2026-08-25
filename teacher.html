@@ -4,664 +4,1880 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Для преподавателя</title>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text: #27344a;
+            --muted: #718096;
+            --accent: #7184c9;
+            --accent-dark: #586bb0;
+            --accent-light: #e7ebfb;
+            --mint-light: #e8f5f2;
+            --surface: rgba(255, 255, 255, 0.78);
+            --surface-strong: rgba(255, 255, 255, 0.92);
+            --border: rgba(115, 132, 201, 0.14);
+            --shadow: 0 18px 50px rgba(61, 76, 120, 0.10);
+        }
+
         body {
-            background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             min-height: 100vh;
-            padding: 20px 16px;
-            color: #1a2a3a;
+            padding: 24px 16px;
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    rgba(191, 211, 255, 0.55) 0,
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 92% 12%,
+                    rgba(190, 232, 220, 0.50) 0,
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 80% 90%,
+                    rgba(221, 207, 250, 0.42) 0,
+                    transparent 30%
+                ),
+                linear-gradient(135deg, #edf2ff 0%, #f4f7fc 48%, #edf7f5 100%);
         }
+
         .container {
-            max-width: 960px;
+            max-width: 1050px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06);
-            padding: 24px 24px 28px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 26px;
+            background: var(--surface);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
         }
-        h1 { font-size: 1.6rem; font-weight: 700; color: #0b2a44; margin-bottom: 4px; text-align: center; }
-        .subtitle { text-align: center; color: #4a627a; font-size: 0.9rem; margin-bottom: 16px; }
+
+        /* =========================
+           ШАПКА
+        ========================= */
+
+        .page-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .title-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .title-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            background: linear-gradient(
+                135deg,
+                #e5ebff,
+                #eaf6f2
+            );
+            border: 1px solid rgba(113, 132, 201, 0.14);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 750;
+            letter-spacing: -0.3px;
+            color: #2c3950;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-top: 3px;
+        }
 
         .logout-btn {
-            background: #e9eff6;
             border: none;
-            color: #1f4970;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border);
+            color: #64738c;
             font-weight: 600;
-            font-size: 0.85rem;
-            padding: 4px 16px;
-            border-radius: 20px;
+            font-size: 0.82rem;
+            padding: 9px 15px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: 0.15s;
-            float: right;
-            margin-top: -30px;
+            transition: 0.18s ease;
         }
-        .logout-btn:hover { background: #dce5ef; }
 
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 0 0 8px; flex-wrap: wrap; gap: 6px; }
-        .calendar-header .month-year { font-size: 1.2rem; font-weight: 700; color: #0b2a44; }
-        .calendar-header .nav-buttons { display: flex; gap: 6px; }
-        .calendar-header .nav-buttons button {
-            background: white;
-            border: 1px solid #dce5ef;
-            border-radius: 20px;
-            padding: 4px 14px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            color: #1f4970;
-            transition: 0.15s;
+        .logout-btn:hover {
+            background: #fff;
+            color: #43516a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(61, 76, 120, 0.08);
         }
-        .calendar-header .nav-buttons button:hover { background: #f0f7ff; border-color: #3b82f6; }
+
+        /* =========================
+           КАЛЕНДАРЬ
+        ========================= */
+
+        .calendar-section {
+            background: rgba(255, 255, 255, 0.58);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .calendar-header .month-year {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #34425a;
+        }
+
+        .calendar-header .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-header .nav-buttons button {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #64738c;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.18s ease;
+        }
+
+        .calendar-header .nav-buttons button:hover {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border-color: rgba(113, 132, 201, 0.3);
+            transform: translateY(-1px);
+        }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            background: #f8fafc;
-            border-radius: 14px;
-            padding: 10px 8px;
-            border: 1px solid #e9eff6;
-            margin-bottom: 16px;
+            gap: 6px;
         }
+
         .calendar-grid .weekday {
-            font-weight: 600;
-            font-size: 0.65rem;
             text-align: center;
-            color: #4a627a;
-            padding: 4px 0 2px;
-            border-bottom: 1.5px solid #e2e8f0;
+            padding: 5px 0 7px;
+            font-size: 0.64rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.4px;
+            color: #98a3b5;
         }
+
         .calendar-grid .day {
-            aspect-ratio: 1/0.85;
+            min-height: 58px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border-radius: 16px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            background: white;
-            cursor: default;
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid transparent;
+            color: #4b5a70;
+            font-size: 0.85rem;
+            font-weight: 550;
+            cursor: default;
             position: relative;
-            transition: 0.15s;
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
         }
-        .calendar-grid .day.other-month { color: #b8c8da; background: transparent; box-shadow: none; }
-        .calendar-grid .day.has-lesson { background: #dbeafe; border-color: #3b82f6; cursor: pointer; font-weight: 600; }
-        .calendar-grid .day.has-lesson:hover { background: #bfdbfe; transform: scale(1.04); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12); }
-        .calendar-grid .day .dot { width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; margin-top: 2px; }
-        .calendar-grid .day.today { border: 2px solid #1e4663; }
+
+        .calendar-grid .day.other-month {
+            background: transparent;
+            color: #c7cfda;
+        }
+
+        .calendar-grid .day.has-lesson {
+            cursor: pointer;
+            background: linear-gradient(
+                135deg,
+                rgba(228, 234, 255, 0.95),
+                rgba(229, 246, 241, 0.95)
+            );
+            border-color: rgba(113, 132, 201, 0.18);
+            color: #485b9b;
+            font-weight: 700;
+        }
+
+        .calendar-grid .day.has-lesson:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(82, 102, 170, 0.12);
+            border-color: rgba(113, 132, 201, 0.38);
+        }
+
+        .calendar-grid .day .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 4px;
+        }
+
+        .calendar-grid .day.today {
+            border: 2px solid #6e7fc0;
+        }
+
+        /* =========================
+           СПИСОК УРОКОВ
+        ========================= */
 
         .lessons-list {
-            margin-top: 8px;
-            background: white;
-            border-radius: 14px;
-            padding: 10px 12px 12px;
-            border: 1px solid #e9eff6;
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 18px;
             max-height: 520px;
             overflow-y: auto;
         }
+
         .lessons-list h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #0b2a44;
-            margin-bottom: 4px;
-            border-bottom: 1.5px solid #e2e8f0;
-            padding-bottom: 4px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #3b485e;
+            margin-bottom: 12px;
         }
 
-        .lessons-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; table-layout: fixed; }
+        .lessons-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+            font-size: 0.76rem;
+            table-layout: fixed;
+        }
+
         .lessons-table th {
             text-align: left;
-            padding: 4px 4px 3px 0;
-            font-weight: 600;
-            color: #4a627a;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 0.6rem;
+            padding: 4px 8px 7px;
+            color: #9aa4b5;
+            font-size: 0.58rem;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.45px;
+            font-weight: 700;
         }
+
         .lessons-table td {
-            padding: 8px 4px;
-            border-bottom: 1px solid #f0f4fa;
+            padding: 10px 8px;
             vertical-align: middle;
+            background: rgba(244, 247, 252, 0.7);
+            color: #526075;
             line-height: 1.4;
         }
-        .lessons-table tr:last-child td { border-bottom: none; }
 
-        .col-date { width: 48px; }
-        .col-day { width: 42px; }
-        .col-student { width: 54px; }
-        .col-time { width: 76px; }
-        .col-topic { width: auto; }
-        .col-links { width: 70px; text-align: center; }
-        .col-done { width: 90px; text-align: center; }
+        .lessons-table td:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .lessons-table td:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .lessons-table tr:hover td {
+            background: rgba(235, 239, 251, 0.72);
+        }
+
+        .col-date {
+            width: 54px;
+        }
+
+        .col-day {
+            width: 48px;
+        }
+
+        .col-student {
+            width: 68px;
+        }
+
+        .col-time {
+            width: 82px;
+        }
+
+        .col-topic {
+            width: auto;
+        }
+
+        .col-links {
+            width: 78px;
+            text-align: center;
+        }
+
+        .col-done {
+            width: 96px;
+            text-align: center;
+        }
 
         .topic-cell {
-            font-size: 0.75rem;
-            line-height: 1.4;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
-            color: #1a2a3a;
+            color: #48566c;
         }
 
         .inner-flex {
             display: flex;
-            gap: 4px;
+            gap: 5px;
             align-items: center;
             justify-content: center;
             flex-wrap: nowrap;
         }
 
+        /* =========================
+           ССЫЛКИ
+        ========================= */
+
         .links-cell a {
+            width: 28px;
+            height: 28px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #e6f0ff;
-            color: #1e4a76;
-            width: 26px;
-            height: 26px;
-            border-radius: 8px;
             text-decoration: none;
-            font-size: 0.8rem;
-            transition: 0.15s;
+            background: #eef1fb;
+            color: #6476b9;
+            border-radius: 9px;
+            transition: 0.18s ease;
             flex-shrink: 0;
         }
-        .links-cell a:hover { background: #bfdbfe; }
+
+        .links-cell a:hover {
+            background: #dfe6fb;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           ГАЛОЧКИ
+        ========================= */
 
         .check-cell label {
             display: flex;
             align-items: center;
             gap: 4px;
+            color: #778399;
             font-size: 0.65rem;
-            color: #1f4970;
             cursor: pointer;
             white-space: nowrap;
         }
+
         .check-cell input[type="checkbox"] {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             cursor: pointer;
-            accent-color: #3b82f6;
+            accent-color: var(--accent);
             flex-shrink: 0;
         }
 
-        .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 8px 0; font-size: 0.8rem; }
+        .no-lessons-msg {
+            padding: 12px 4px;
+            color: #9aa5b6;
+            font-style: italic;
+            font-size: 0.82rem;
+        }
+
+        /* =========================
+           МОДАЛЬНОЕ ОКНО
+        ========================= */
 
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10,25,45,0.35);
-            backdrop-filter: blur(6px);
+            inset: 0;
+            padding: 20px;
+            background: rgba(44, 54, 80, 0.28);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 20px;
         }
-        .modal-overlay.active { display: flex; }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
         .modal-card {
-            background: white;
-            border-radius: 28px;
-            max-width: 520px;
+            position: relative;
             width: 100%;
+            max-width: 540px;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 24px 28px 28px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            padding: 26px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            box-shadow: 0 30px 80px rgba(45, 55, 85, 0.18);
             animation: modalFade 0.2s ease-out;
-            position: relative;
         }
+
         @keyframes modalFade {
-            0% { opacity: 0; transform: translateY(16px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
+
         .modal-card .close-btn {
             position: absolute;
-            top: 10px;
+            top: 12px;
             right: 14px;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #7a94b0;
-            background: none;
+            width: 34px;
+            height: 34px;
             border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #8995a8;
+            font-size: 1.45rem;
             line-height: 1;
+            cursor: pointer;
+            transition: 0.18s ease;
         }
-        .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
+
+        .modal-card .close-btn:hover {
+            background: #f1f3f8;
+            color: #536176;
+            transform: rotate(90deg);
+        }
+
         .modal-card .modal-date {
-            font-size: 1rem;
-            color: #4a627a;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 8px;
+            padding-bottom: 13px;
+            margin-bottom: 16px;
+            padding-right: 35px;
+            border-bottom: 1px solid #e8ebf2;
+            font-size: 0.98rem;
+            font-weight: 650;
+            color: #4b5970;
+            text-transform: capitalize;
         }
 
         .modal-student-card {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 14px 18px;
-            margin-bottom: 12px;
-            border-left: 4px solid #3b82f6;
+            padding: 15px 17px;
+            margin-bottom: 10px;
+            background: linear-gradient(
+                135deg,
+                #f5f7fd,
+                #f2f8f6
+            );
+            border: 1px solid rgba(113, 132, 201, 0.10);
+            border-radius: 18px;
+            transition: 0.18s ease;
         }
-        .modal-student-card:last-child { margin-bottom: 0; }
+
+        .modal-student-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-student-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(61, 76, 120, 0.07);
+        }
+
         .modal-student-card .student-name {
-            font-weight: 700;
-            color: #0b2a44;
             font-size: 1rem;
+            font-weight: 750;
+            color: #43516a;
         }
+
         .modal-student-card .student-time {
+            margin-top: 4px;
+            color: #718096;
+            font-size: 0.84rem;
             font-weight: 600;
-            color: #1f4970;
-            font-size: 0.9rem;
         }
+
         .modal-student-card .student-topic {
-            font-size: 0.9rem;
-            color: #1a2a3a;
-            margin: 4px 0 8px;
+            margin: 8px 0 11px;
+            color: #56647a;
+            font-size: 0.88rem;
+            line-height: 1.45;
         }
+
         .modal-student-card .student-links {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 4px;
         }
+
         .modal-student-card .student-links a {
-            background: #1e4663;
-            color: white;
-            padding: 4px 14px;
-            border-radius: 20px;
+            padding: 7px 13px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: 0.15s;
+            background: linear-gradient(
+                135deg,
+                #7184c9,
+                #6578ba
+            );
+            color: white;
+            font-size: 0.73rem;
+            font-weight: 600;
+            transition: 0.18s ease;
         }
-        .modal-student-card .student-links a:hover { background: #0f3550; transform: scale(1.02); }
+
+        .modal-student-card .student-links a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(101, 120, 186, 0.2);
+        }
+
         .modal-student-card .student-links a.secondary {
-            background: #e6f0ff;
-            color: #1e4a76;
+            background: #e6f2ee;
+            color: #587b70;
         }
-        .modal-student-card .student-links a.secondary:hover { background: #bfdbfe; }
+
+        .modal-student-card .student-links a.secondary:hover {
+            background: #dcece7;
+            box-shadow: none;
+        }
+
+        /* =========================
+           АДАПТАЦИЯ
+        ========================= */
 
         @media (max-width: 700px) {
-            .container { padding: 14px 12px 18px; }
-            .col-date { width: 38px; }
-            .col-day { width: 34px; }
-            .col-student { width: 44px; }
-            .col-time { width: 60px; }
-            .col-links { width: 60px; }
-            .col-done { width: 80px; }
-            .lessons-table { font-size: 0.65rem; }
-            .topic-cell { font-size: 0.65rem; }
-            .check-cell label { font-size: 0.55rem; }
-            .check-cell input[type="checkbox"] { width: 12px; height: 12px; }
-            .links-cell a { width: 22px; height: 22px; font-size: 0.7rem; }
-            .lessons-list { max-height: 400px; }
-            .calendar-grid { gap: 3px; padding: 8px 6px; }
-            .calendar-grid .day { font-size: 0.7rem; border-radius: 12px; aspect-ratio: 1/0.8; }
-            .calendar-grid .weekday { font-size: 0.55rem; }
-            .calendar-header .month-year { font-size: 1rem; }
-            .calendar-header .nav-buttons button { padding: 3px 10px; font-size: 0.75rem; }
-            .modal-card { max-width: 400px; padding: 18px 16px; }
-            .modal-student-card { padding: 12px 14px; }
+            body {
+                padding: 12px 8px;
+            }
+
+            .container {
+                padding: 16px 12px 18px;
+                border-radius: 22px;
+            }
+
+            .page-top {
+                margin-bottom: 16px;
+            }
+
+            .title-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 14px;
+                font-size: 1.2rem;
+            }
+
+            h1 {
+                font-size: 1.18rem;
+            }
+
+            .subtitle {
+                font-size: 0.76rem;
+            }
+
+            .logout-btn {
+                padding: 8px 10px;
+                font-size: 0.7rem;
+            }
+
+            .calendar-section {
+                padding: 12px 8px;
+                border-radius: 18px;
+            }
+
+            .calendar-grid {
+                gap: 3px;
+            }
+
+            .calendar-grid .day {
+                min-height: 43px;
+                font-size: 0.7rem;
+                border-radius: 11px;
+            }
+
+            .calendar-grid .weekday {
+                font-size: 0.5rem;
+            }
+
+            .calendar-header .month-year {
+                font-size: 1rem;
+            }
+
+            .calendar-header .nav-buttons button {
+                width: 31px;
+                height: 31px;
+                font-size: 0.72rem;
+            }
+
+            .lessons-list {
+                padding: 12px 8px;
+                border-radius: 18px;
+                max-height: 400px;
+            }
+
+            .col-date {
+                width: 42px;
+            }
+
+            .col-day {
+                width: 38px;
+            }
+
+            .col-student {
+                width: 52px;
+            }
+
+            .col-time {
+                width: 66px;
+            }
+
+            .col-links {
+                width: 60px;
+            }
+
+            .col-done {
+                width: 78px;
+            }
+
+            .lessons-table {
+                font-size: 0.65rem;
+                border-spacing: 0 3px;
+            }
+
+            .lessons-table th {
+                padding: 3px 4px 6px;
+                font-size: 0.5rem;
+            }
+
+            .lessons-table td {
+                padding: 8px 4px;
+            }
+
+            .topic-cell {
+                font-size: 0.64rem;
+            }
+
+            .links-cell a {
+                width: 23px;
+                height: 23px;
+                font-size: 0.68rem;
+                border-radius: 7px;
+            }
+
+            .check-cell label {
+                font-size: 0.55rem;
+            }
+
+            .check-cell input[type="checkbox"] {
+                width: 12px;
+                height: 12px;
+            }
+
+            .modal-card {
+                padding: 20px 15px;
+                border-radius: 22px;
+            }
+
+            .modal-student-card {
+                padding: 12px 13px;
+            }
         }
+
         @media (max-width: 450px) {
-            .col-date { width: 32px; }
-            .col-day { width: 28px; }
-            .col-student { width: 38px; }
-            .col-time { width: 52px; }
-            .col-links { width: 50px; }
-            .col-done { width: 70px; }
-            .check-cell label { font-size: 0.5rem; }
-            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
-            .lessons-list { max-height: 350px; }
-            .calendar-grid .day { font-size: 0.6rem; border-radius: 10px; }
-            .calendar-grid .weekday { font-size: 0.5rem; }
-            .modal-card { max-width: 320px; padding: 14px 12px; }
-            .modal-student-card { padding: 10px 12px; }
-            .modal-student-card .student-name { font-size: 0.9rem; }
-            .modal-student-card .student-time { font-size: 0.8rem; }
-            .modal-student-card .student-topic { font-size: 0.8rem; }
+            .title-block {
+                gap: 9px;
+            }
+
+            .title-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+
+            h1 {
+                font-size: 1.02rem;
+            }
+
+            .subtitle {
+                font-size: 0.65rem;
+            }
+
+            .logout-btn {
+                padding: 7px 8px;
+                font-size: 0.62rem;
+            }
+
+            .calendar-grid .day {
+                min-height: 37px;
+                font-size: 0.62rem;
+                border-radius: 9px;
+            }
+
+            .calendar-grid .weekday {
+                font-size: 0.45rem;
+            }
+
+            .calendar-grid .day .dot {
+                width: 4px;
+                height: 4px;
+                margin-top: 2px;
+            }
+
+            .col-date {
+                width: 34px;
+            }
+
+            .col-day {
+                width: 29px;
+            }
+
+            .col-student {
+                width: 43px;
+            }
+
+            .col-time {
+                width: 54px;
+            }
+
+            .col-links {
+                width: 50px;
+            }
+
+            .col-done {
+                width: 68px;
+            }
+
+            .lessons-list {
+                max-height: 350px;
+            }
+
+            .modal-card {
+                max-width: 340px;
+                padding: 17px 12px;
+            }
+
+            .modal-student-card .student-name {
+                font-size: 0.88rem;
+            }
+
+            .modal-student-card .student-time {
+                font-size: 0.75rem;
+            }
+
+            .modal-student-card .student-topic {
+                font-size: 0.78rem;
+            }
         }
     </style>
 </head>
+
 <body>
+
 <div class="container">
-    <h1>👩‍ Преподаватель</h1>
-    <div class="subtitle">Все занятия всех учеников</div>
 
     <div id="mainContent" style="display: none;">
-        <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
 
-        <div class="calendar-header">
-            <span class="month-year" id="monthYear"></span>
-            <div class="nav-buttons">
-                <button id="prevMonth">◀</button>
-                <button id="nextMonth">▶</button>
+        <div class="page-top">
+
+            <div class="title-block">
+                <div class="title-icon">👩‍🏫</div>
+
+                <div>
+                    <h1>Преподаватель</h1>
+                    <div class="subtitle">
+                        Все занятия всех учеников
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
 
-        <div class="lessons-list" id="lessonsList">
-            <h3>📋 Все уроки на месяц</h3>
-            <div id="lessonsTableContainer"></div>
+            <button class="logout-btn" id="logoutBtn">
+                🚪 Выйти
+            </button>
+
         </div>
+
+
+        <div class="calendar-section">
+
+            <div class="calendar-header">
+                <span class="month-year" id="monthYear"></span>
+
+                <div class="nav-buttons">
+                    <button id="prevMonth">◀</button>
+                    <button id="nextMonth">▶</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+        </div>
+
+
+        <div class="lessons-list">
+
+            <h3>📋 Все уроки на месяц</h3>
+
+            <div id="lessonsTableContainer"></div>
+
+        </div>
+
     </div>
+
 </div>
+
 
 <div class="modal-overlay" id="modalOverlay">
+
     <div class="modal-card">
-        <button class="close-btn" id="modalClose">&times;</button>
+
+        <button class="close-btn" id="modalClose">
+            &times;
+        </button>
+
         <div class="modal-date" id="modalDate"></div>
+
         <div id="modalStudentsContainer"></div>
+
     </div>
+
 </div>
 
+
 <script>
+
     // ============================================================
     //  📥  СПИСОК УЧЕНИКОВ
     // ============================================================
+
     const studentList = ['valeriya', 'amina', 'denis'];
+
 
     // ============================================================
     //  🖥  ПРОВЕРКА СЕССИИ
     // ============================================================
+
     const sessionData = localStorage.getItem('teacherSession');
+
     if (sessionData) {
         try {
             const data = JSON.parse(sessionData);
+
             if (data && data.name === 'alina') {
                 document.getElementById('mainContent').style.display = 'block';
             }
+
         } catch (e) {}
     }
+
 
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
 
-    const mainContent = document.getElementById('mainContent');
-    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const monthYear = document.getElementById('monthYear');
-    const calendarGrid = document.getElementById('calendarGrid');
-    const prevMonthBtn = document.getElementById('prevMonth');
-    const nextMonthBtn = document.getElementById('nextMonth');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalClose = document.getElementById('modalClose');
-    const modalDate = document.getElementById('modalDate');
-    const modalStudentsContainer = document.getElementById('modalStudentsContainer');
+
+    const mainContent =
+        document.getElementById('mainContent');
+
+    const lessonsTableContainer =
+        document.getElementById('lessonsTableContainer');
+
+    const logoutBtn =
+        document.getElementById('logoutBtn');
+
+    const monthYear =
+        document.getElementById('monthYear');
+
+    const calendarGrid =
+        document.getElementById('calendarGrid');
+
+    const prevMonthBtn =
+        document.getElementById('prevMonth');
+
+    const nextMonthBtn =
+        document.getElementById('nextMonth');
+
+    const modalOverlay =
+        document.getElementById('modalOverlay');
+
+    const modalClose =
+        document.getElementById('modalClose');
+
+    const modalDate =
+        document.getElementById('modalDate');
+
+    const modalStudentsContainer =
+        document.getElementById('modalStudentsContainer');
+
+
+    // ============================================================
+    //  ИМЯ УЧЕНИКА
+    // ============================================================
 
     function getStudentName(id) {
+
         const names = {
             'valeriya': 'Валерия',
             'amina': 'Амина',
             'denis': 'Денис'
         };
+
         return names[id] || id;
     }
+
+
+    // ============================================================
+    //  ГАЛОЧКИ ВЫПОЛНЕНИЯ
+    // ============================================================
 
     function getCheckKey(studentId, dateStr, type) {
         return `checked_${studentId}_${dateStr}_${type}`;
     }
 
+
     function saveCheck(studentId, dateStr, type, value) {
-        localStorage.setItem(getCheckKey(studentId, dateStr, type), value);
+        localStorage.setItem(
+            getCheckKey(studentId, dateStr, type),
+            value
+        );
     }
+
 
     function loadCheck(studentId, dateStr, type) {
-        return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
+
+        return localStorage.getItem(
+            getCheckKey(studentId, dateStr, type)
+        ) === 'true';
+
     }
 
+
+    // ============================================================
+    //  ЗАГРУЗКА ВСЕХ УРОКОВ
+    // ============================================================
+
     async function loadAllLessons() {
+
         let all = [];
+
         for (let s of studentList) {
+
             try {
-                const response = await fetch(`config/${s}.json`);
+
+                const response =
+                    await fetch(`config/${s}.json`);
+
                 if (response.ok) {
-                    const data = await response.json();
+
+                    const data =
+                        await response.json();
+
                     data.forEach(item => {
-                        all.push({ ...item, student: s, studentName: getStudentName(s) });
+
+                        all.push({
+                            ...item,
+                            student: s,
+                            studentName: getStudentName(s)
+                        });
+
                     });
+
                 } else {
-                    console.warn(`⚠️ Не удалось загрузить ${s}`);
+
+                    console.warn(
+                        `⚠️ Не удалось загрузить ${s}`
+                    );
+
                 }
+
             } catch (e) {
-                console.warn(`⚠️ Не удалось загрузить ${s}`);
+
+                console.warn(
+                    `⚠️ Не удалось загрузить ${s}`
+                );
+
             }
+
         }
+
         lessonsData = all;
     }
 
+
+    // ============================================================
+    //  УРОКИ НА КОНКРЕТНУЮ ДАТУ
+    // ============================================================
+
     function getLessonsForDate(dateStr) {
-        return lessonsData.filter(item => item.date === dateStr);
+
+        return lessonsData.filter(
+            item => item.date === dateStr
+        );
+
     }
 
+
+    // ============================================================
+    //  УРОКИ НА МЕСЯЦ
+    // ============================================================
+
     function getLessonsForMonth(year, month) {
+
         const result = [];
-        const days = new Date(year, month + 1, 0).getDate();
+
+        const days =
+            new Date(
+                year,
+                month + 1,
+                0
+            ).getDate();
+
+
         for (let d = 1; d <= days; d++) {
-            const dateObj = new Date(year, month, d);
-            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const dayLessons = lessonsData.filter(item => item.date === dateStr);
+
+            const dateObj =
+                new Date(year, month, d);
+
+            const dateStr =
+                `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+
+            const dayLessons =
+                lessonsData.filter(
+                    item => item.date === dateStr
+                );
+
+
             if (dayLessons.length) {
-                result.push({ date: dateObj, lessons: dayLessons });
+
+                result.push({
+                    date: dateObj,
+                    lessons: dayLessons
+                });
+
             }
+
         }
+
         return result;
     }
 
+
+    // ============================================================
+    //  ОТРИСОВКА КАЛЕНДАРЯ
+    // ============================================================
+
     function renderCalendar(year, month) {
-        const firstDay = new Date(year, month, 1).getDay();
-        // Сдвиг: чтобы понедельник был первым
-        const startDay = (firstDay === 0) ? 6 : firstDay - 1;
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const today = new Date();
-        const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
-        monthYear.textContent = `${monthNames[month]} ${year}`;
-        const lessonDates = new Set(lessonsData.map(item => item.date));
-        const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
-        for (let i = 0; i < startDay; i++) html += `<div class="day other-month"></div>`;
-        for (let d = 1; d <= daysInMonth; d++) {
-            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const hasLesson = lessonDates.has(dateStr);
-            let cls = 'day';
-            if (hasLesson) cls += ' has-lesson';
-            if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) cls += ' today';
-            const attr = hasLesson ? `data-date="${dateStr}"` : '';
-            html += `<div class="${cls}" ${attr}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
+
+        const firstDay =
+            new Date(year, month, 1).getDay();
+
+
+        // Понедельник — первый день недели
+
+        const startDay =
+            (firstDay === 0)
+                ? 6
+                : firstDay - 1;
+
+
+        const daysInMonth =
+            new Date(
+                year,
+                month + 1,
+                0
+            ).getDate();
+
+
+        const today =
+            new Date();
+
+
+        const monthNames = [
+            'Янв',
+            'Фев',
+            'Мар',
+            'Апр',
+            'Май',
+            'Июн',
+            'Июл',
+            'Авг',
+            'Сен',
+            'Окт',
+            'Ноя',
+            'Дек'
+        ];
+
+
+        monthYear.textContent =
+            `${monthNames[month]} ${year}`;
+
+
+        const lessonDates =
+            new Set(
+                lessonsData.map(
+                    item => item.date
+                )
+            );
+
+
+        const weekdays = [
+            'Пн',
+            'Вт',
+            'Ср',
+            'Чт',
+            'Пт',
+            'Сб',
+            'Вс'
+        ];
+
+
+        let html =
+            weekdays.map(
+                w => `<div class="weekday">${w}</div>`
+            ).join('');
+
+
+        // Пустые дни перед началом месяца
+
+        for (let i = 0; i < startDay; i++) {
+
+            html +=
+                `<div class="day other-month"></div>`;
+
         }
-        calendarGrid.innerHTML = html;
 
-        document.querySelectorAll('.day.has-lesson').forEach(el => {
-            el.addEventListener('click', function() {
-                const dateStr = this.dataset.date;
-                const lessons = getLessonsForDate(dateStr);
-                if (lessons.length) showModal(dateStr, lessons);
-            });
-        });
-    }
 
-    function showModal(dateStr, lessons) {
-        const [y, m, d] = dateStr.split('-').map(Number);
-        const dateObj = new Date(y, m-1, d);
-        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        // Дни месяца
 
-        let studentsHtml = '';
-        lessons.forEach((l) => {
-            let linksHtml = '';
-            if (l.material) {
-                linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
-            }
-            if (l.homework) {
-                const params = new URLSearchParams({
-                    student: l.student,
-                    date: l.date,
-                    topic: l.topic || '',
-                    start: l.start || '',
-                    end: l.end || ''
-                });
-                const separator = l.homework.includes('?') ? '&' : '?';
-                linksHtml += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 Домашка</a>`;
+        for (let d = 1; d <= daysInMonth; d++) {
+
+            const dateStr =
+                `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+
+            const hasLesson =
+                lessonDates.has(dateStr);
+
+
+            let cls = 'day';
+
+
+            if (hasLesson) {
+                cls += ' has-lesson';
             }
 
-            studentsHtml += `
-                <div class="modal-student-card">
-                    <div class="student-name">👤 ${getStudentName(l.student)}</div>
-                    <div class="student-time">⏰ ${l.start}–${l.end}</div>
-                    <div class="student-topic">📖 ${l.topic || 'Тема не указана'}</div>
-                    <div class="student-links">
-                        ${linksHtml || '<span style="color:#6c86a3;font-size:0.75rem;">Нет ссылок</span>'}
-                    </div>
+
+            if (
+                d === today.getDate() &&
+                month === today.getMonth() &&
+                year === today.getFullYear()
+            ) {
+
+                cls += ' today';
+
+            }
+
+
+            const attr =
+                hasLesson
+                    ? `data-date="${dateStr}"`
+                    : '';
+
+
+            html += `
+                <div class="${cls}" ${attr}>
+                    ${d}
+                    ${hasLesson
+                        ? '<span class="dot"></span>'
+                        : ''
+                    }
                 </div>
             `;
-        });
-
-        modalStudentsContainer.innerHTML = studentsHtml;
-        modalOverlay.classList.add('active');
-    }
-
-    modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
-    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
-
-    function renderLessonsList(year, month) {
-        const data = getLessonsForMonth(year, month);
-        if (!data.length) {
-            lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
-            return;
         }
 
-        let html = `
-            <table class="lessons-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Дата</th>
-                        <th class="col-day">День</th>
-                        <th class="col-student">Уч-к</th>
-                        <th class="col-time">Время</th>
-                        <th class="col-topic">Тема</th>
-                        <th class="col-links">Ссылки</th>
-                        <th class="col-done">Готово</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
 
-        data.forEach(item => {
-            const dateObj = item.date;
-            const day = String(dateObj.getDate()).padStart(2, '0');
-            const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const displayDate = `${day}.${monthNum}`;
-            const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
+        calendarGrid.innerHTML = html;
 
-            item.lessons.forEach((l, idx) => {
-                const studentId = l.student;
-                const rowspan = idx === 0 ? item.lessons.length : 0;
 
-                const hwChecked = loadCheck(studentId, l.date, 'homework');
-                const matChecked = loadCheck(studentId, l.date, 'material');
+        // Кликабельность дней с уроками
 
-                const checkHtml = `
-                    <td class="col-done">
-                        <div class="inner-flex check-cell">
-                            <label>
-                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="homework" ${hwChecked ? 'checked' : ''} />
-                                ДЗ
-                            </label>
-                            <label>
-                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="material" ${matChecked ? 'checked' : ''} />
-                                📚
-                            </label>
-                        </div>
-                    </td>
+        document
+            .querySelectorAll('.day.has-lesson')
+            .forEach(el => {
+
+                el.addEventListener(
+                    'click',
+                    function () {
+
+                        const dateStr =
+                            this.dataset.date;
+
+
+                        const lessons =
+                            getLessonsForDate(dateStr);
+
+
+                        if (lessons.length) {
+
+                            showModal(
+                                dateStr,
+                                lessons
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    // ============================================================
+    //  МОДАЛЬНОЕ ОКНО С УРОКАМИ
+    // ============================================================
+
+    function showModal(dateStr, lessons) {
+
+        const [y, m, d] =
+            dateStr
+                .split('-')
+                .map(Number);
+
+
+        const dateObj =
+            new Date(
+                y,
+                m - 1,
+                d
+            );
+
+
+        modalDate.textContent =
+            dateObj.toLocaleDateString(
+                'ru-RU',
+                {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }
+            );
+
+
+        let studentsHtml = '';
+
+
+        lessons.forEach((l) => {
+
+            let linksHtml = '';
+
+
+            // Ссылка на материал
+
+            if (l.material) {
+
+                linksHtml += `
+                    <a
+                        href="${l.material}"
+                        target="_blank"
+                        class="secondary"
+                    >
+                        📖 Материал
+                    </a>
                 `;
 
-                let links = '';
-                if (l.material) links += `<a href="${l.material}" target="_blank" title="Материал">📖</a>`;
-                if (l.homework) {
-                    const params = new URLSearchParams({
-                        student: studentId,
+            }
+
+
+            // Ссылка на домашнее задание
+
+            if (l.homework) {
+
+                const params =
+                    new URLSearchParams({
+                        student: l.student,
                         date: l.date,
                         topic: l.topic || '',
                         start: l.start || '',
                         end: l.end || ''
                     });
-                    const separator = l.homework.includes('?') ? '&' : '?';
-                    links += `<a href="${l.homework}${separator}${params.toString()}" target="_blank" title="Домашка">📝</a>`;
-                }
 
-                html += `<tr>
-                    ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
-                    <td class="col-student">${getStudentName(studentId)}</td>
-                    <td class="col-time">${l.start}–${l.end}</td>
-                    <td class="col-topic topic-cell">${l.topic || '—'}</td>
-                    <td class="col-links links-cell">
-                        <div class="inner-flex">
-                            ${links || '—'}
-                        </div>
-                    </td>
-                    ${checkHtml}
-                </tr>`;
-            });
+
+                const separator =
+                    l.homework.includes('?')
+                        ? '&'
+                        : '?';
+
+
+                linksHtml += `
+                    <a
+                        href="${l.homework}${separator}${params.toString()}"
+                        target="_blank"
+                    >
+                        📝 Домашка
+                    </a>
+                `;
+
+            }
+
+
+            studentsHtml += `
+
+                <div class="modal-student-card">
+
+                    <div class="student-name">
+                        👤 ${getStudentName(l.student)}
+                    </div>
+
+                    <div class="student-time">
+                        ⏰ ${l.start}–${l.end}
+                    </div>
+
+                    <div class="student-topic">
+                        📖 ${l.topic || 'Тема не указана'}
+                    </div>
+
+                    <div class="student-links">
+
+                        ${
+                            linksHtml ||
+                            '<span style="color:#8c98aa;font-size:0.75rem;">Нет ссылок</span>'
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
         });
 
-        html += '</tbody></table>';
-        lessonsTableContainer.innerHTML = html;
 
-        document.querySelectorAll('.check-done').forEach(cb => {
-            cb.addEventListener('change', function() {
-                const student = this.dataset.student;
-                const date = this.dataset.date;
-                const type = this.dataset.type;
-                saveCheck(student, date, type, this.checked);
-            });
-        });
+        modalStudentsContainer.innerHTML =
+            studentsHtml;
+
+
+        modalOverlay.classList.add(
+            'active'
+        );
+
     }
+
+
+    // ============================================================
+    //  ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА
+    // ============================================================
+
+    modalClose.addEventListener(
+        'click',
+        () => modalOverlay.classList.remove('active')
+    );
+
+
+    modalOverlay.addEventListener(
+        'click',
+        e => {
+
+            if (e.target === modalOverlay) {
+
+                modalOverlay.classList.remove(
+                    'active'
+                );
+
+            }
+
+        }
+    );
+
+
+    // ============================================================
+    //  ТАБЛИЦА УРОКОВ
+    // ============================================================
+
+    function renderLessonsList(year, month) {
+
+        const data =
+            getLessonsForMonth(
+                year,
+                month
+            );
+
+
+        if (!data.length) {
+
+            lessonsTableContainer.innerHTML = `
+                <div class="no-lessons-msg">
+                    На этот месяц уроков нет.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        let html = `
+
+            <table class="lessons-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="col-date">
+                            Дата
+                        </th>
+
+                        <th class="col-day">
+                            День
+                        </th>
+
+                        <th class="col-student">
+                            Уч-к
+                        </th>
+
+                        <th class="col-time">
+                            Время
+                        </th>
+
+                        <th class="col-topic">
+                            Тема
+                        </th>
+
+                        <th class="col-links">
+                            Ссылки
+                        </th>
+
+                        <th class="col-done">
+                            Готово
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+        `;
+
+
+        data.forEach(item => {
+
+            const dateObj =
+                item.date;
+
+
+            const day =
+                String(
+                    dateObj.getDate()
+                ).padStart(2, '0');
+
+
+            const monthNum =
+                String(
+                    dateObj.getMonth() + 1
+                ).padStart(2, '0');
+
+
+            const displayDate =
+                `${day}.${monthNum}`;
+
+
+            const dayName =
+                dateObj.toLocaleDateString(
+                    'ru-RU',
+                    {
+                        weekday: 'short'
+                    }
+                );
+
+
+            item.lessons.forEach(
+                (l, idx) => {
+
+                    const studentId =
+                        l.student;
+
+
+                    const rowspan =
+                        idx === 0
+                            ? item.lessons.length
+                            : 0;
+
+
+                    const hwChecked =
+                        loadCheck(
+                            studentId,
+                            l.date,
+                            'homework'
+                        );
+
+
+                    const matChecked =
+                        loadCheck(
+                            studentId,
+                            l.date,
+                            'material'
+                        );
+
+
+                    const checkHtml = `
+
+                        <td class="col-done">
+
+                            <div class="inner-flex check-cell">
+
+                                <label>
+
+                                    <input
+                                        type="checkbox"
+                                        class="check-done"
+                                        data-student="${studentId}"
+                                        data-date="${l.date}"
+                                        data-type="homework"
+                                        ${hwChecked ? 'checked' : ''}
+                                    />
+
+                                    ДЗ
+
+                                </label>
+
+
+                                <label>
+
+                                    <input
+                                        type="checkbox"
+                                        class="check-done"
+                                        data-student="${studentId}"
+                                        data-date="${l.date}"
+                                        data-type="material"
+                                        ${matChecked ? 'checked' : ''}
+                                    />
+
+                                    📚
+
+                                </label>
+
+                            </div>
+
+                        </td>
+
+                    `;
+
+
+                    let links = '';
+
+
+                    // Материал
+
+                    if (l.material) {
+
+                        links += `
+                            <a
+                                href="${l.material}"
+                                target="_blank"
+                                title="Материал"
+                            >
+                                📖
+                            </a>
+                        `;
+
+                    }
+
+
+                    // Домашнее задание
+
+                    if (l.homework) {
+
+                        const params =
+                            new URLSearchParams({
+                                student: studentId,
+                                date: l.date,
+                                topic: l.topic || '',
+                                start: l.start || '',
+                                end: l.end || ''
+                            });
+
+
+                        const separator =
+                            l.homework.includes('?')
+                                ? '&'
+                                : '?';
+
+
+                        links += `
+                            <a
+                                href="${l.homework}${separator}${params.toString()}"
+                                target="_blank"
+                                title="Домашка"
+                            >
+                                📝
+                            </a>
+                        `;
+
+                    }
+
+
+                    html += `
+
+                        <tr>
+
+                            ${
+                                rowspan
+                                    ? `
+                                        <td
+                                            rowspan="${rowspan}"
+                                            class="col-date"
+                                        >
+                                            ${displayDate}
+                                        </td>
+
+                                        <td
+                                            rowspan="${rowspan}"
+                                            class="col-day"
+                                        >
+                                            ${dayName}
+                                        </td>
+                                    `
+                                    : ''
+                            }
+
+
+                            <td class="col-student">
+                                ${getStudentName(studentId)}
+                            </td>
+
+
+                            <td class="col-time">
+                                ${l.start}–${l.end}
+                            </td>
+
+
+                            <td class="col-topic topic-cell">
+                                ${l.topic || '—'}
+                            </td>
+
+
+                            <td class="col-links links-cell">
+
+                                <div class="inner-flex">
+
+                                    ${links || '—'}
+
+                                </div>
+
+                            </td>
+
+
+                            ${checkHtml}
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+        });
+
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+
+        lessonsTableContainer.innerHTML =
+            html;
+
+
+        // Сохранение галочек
+
+        document
+            .querySelectorAll('.check-done')
+            .forEach(cb => {
+
+                cb.addEventListener(
+                    'change',
+                    function () {
+
+                        const student =
+                            this.dataset.student;
+
+                        const date =
+                            this.dataset.date;
+
+                        const type =
+                            this.dataset.type;
+
+
+                        saveCheck(
+                            student,
+                            date,
+                            type,
+                            this.checked
+                        );
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    // ============================================================
+    //  ПЕРЕКЛЮЧЕНИЕ МЕСЯЦА
+    // ============================================================
 
     function changeMonth(delta) {
+
         currentMonth += delta;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-        renderCalendar(currentYear, currentMonth);
-        renderLessonsList(currentYear, currentMonth);
+
+
+        if (currentMonth < 0) {
+
+            currentMonth = 11;
+            currentYear--;
+
+        }
+
+
+        if (currentMonth > 11) {
+
+            currentMonth = 0;
+            currentYear++;
+
+        }
+
+
+        renderCalendar(
+            currentYear,
+            currentMonth
+        );
+
+
+        renderLessonsList(
+            currentYear,
+            currentMonth
+        );
+
     }
 
-    prevMonthBtn.addEventListener('click', () => changeMonth(-1));
-    nextMonthBtn.addEventListener('click', () => changeMonth(1));
+
+    prevMonthBtn.addEventListener(
+        'click',
+        () => changeMonth(-1)
+    );
+
+
+    nextMonthBtn.addEventListener(
+        'click',
+        () => changeMonth(1)
+    );
+
+
+    // ============================================================
+    //  ЗАПУСК СТРАНИЦЫ
+    // ============================================================
 
     async function initTeacherPage() {
+
         await loadAllLessons();
-        renderCalendar(currentYear, currentMonth);
-        renderLessonsList(currentYear, currentMonth);
+
+
+        renderCalendar(
+            currentYear,
+            currentMonth
+        );
+
+
+        renderLessonsList(
+            currentYear,
+            currentMonth
+        );
+
     }
 
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('teacherSession');
-        for (let key in localStorage) {
-            if (key.startsWith('checked_')) {
-                localStorage.removeItem(key);
+
+    // ============================================================
+    //  ВЫХОД
+    // ============================================================
+
+    logoutBtn.addEventListener(
+        'click',
+        () => {
+
+            localStorage.removeItem(
+                'teacherSession'
+            );
+
+
+            for (let key in localStorage) {
+
+                if (
+                    key.startsWith('checked_')
+                ) {
+
+                    localStorage.removeItem(key);
+
+                }
+
             }
-        }
-        window.location.href = 'index.html';
-    });
 
-    if (localStorage.getItem('teacherSession')) {
-        mainContent.style.display = 'block';
+
+            window.location.href =
+                'index.html';
+
+        }
+    );
+
+
+    // ============================================================
+    //  ПРОВЕРКА АВТОРИЗАЦИИ
+    // ============================================================
+
+    if (
+        localStorage.getItem('teacherSession')
+    ) {
+
+        mainContent.style.display =
+            'block';
+
+
         initTeacherPage();
+
     } else {
-        window.location.href = 'index.html';
+
+        window.location.href =
+            'index.html';
+
     }
+
 </script>
+
 </body>
 </html>
