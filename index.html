@@ -6,6 +6,7 @@
     <title>Личный кабинет</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
@@ -16,8 +17,9 @@
             padding: 16px 12px;
             color: #1a2a3a;
         }
+
         .container {
-            max-width: 680px;
+            max-width: 780px;
             width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -25,15 +27,134 @@
             box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
             padding: 18px 18px 22px;
             border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0b2a44;
-            margin-bottom: 14px;
-            text-align: center;
+            position: relative;
         }
 
+        /* ---------- Кнопка меню (появляется после входа) ---------- */
+        .menu-btn {
+            display: none;
+            background: white;
+            border: 1px solid #dce5ef;
+            border-radius: 12px;
+            padding: 6px 14px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: 0.2s;
+            color: #1f4970;
+            margin-bottom: 12px;
+            align-items: center;
+            gap: 6px;
+        }
+        .menu-btn:hover {
+            background: #f0f7ff;
+            border-color: #3b82f6;
+        }
+
+        /* ---------- Сайдбар ---------- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 290px;
+            height: 100vh;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.06);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            padding: 24px 20px;
+            overflow-y: auto;
+            border-right: 1px solid #e9eff6;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #7a94b0;
+            float: right;
+            padding: 0 4px;
+        }
+        .sidebar .close-btn:hover {
+            color: #1e2f3e;
+        }
+        .sidebar .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0b2a44;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .sidebar .logo span {
+            color: #3b82f6;
+        }
+        .sidebar .nav-item {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            background: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1f4970;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.15s;
+            margin-bottom: 2px;
+        }
+        .sidebar .nav-item:hover {
+            background: #f0f7ff;
+        }
+        .sidebar .nav-item.active {
+            background: #dbeafe;
+            color: #0b2a44;
+            font-weight: 600;
+        }
+        .sidebar .nav-item .icon {
+            margin-right: 10px;
+        }
+        .sidebar .user-info {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #4a627a;
+        }
+        .sidebar .user-info strong {
+            color: #0b2a44;
+        }
+
+        /* ---------- Оверлей ---------- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.20);
+            backdrop-filter: blur(2px);
+            display: none;
+            z-index: 999;
+        }
+        .overlay.show {
+            display: block;
+        }
+
+        /* ---------- Страницы (под календарём) ---------- */
+        .page {
+            display: none;
+            margin-top: 14px;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ---------- Вход ---------- */
         .login-area {
             display: flex;
             flex-direction: column;
@@ -96,38 +217,28 @@
             gap: 10px;
             margin-bottom: 16px;
         }
-
         .quick-link-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: white;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-
         .quick-link-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
+        .quick-link-btn span { font-size: 1em; }
+        .zoom-btn { background: linear-gradient(135deg, #2D8CFF 0%, #0B5CFF 100%); }
+        .board-btn { background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%); }
 
-        .quick-link-btn span {
-            font-size: 1.1em;
-        }
-
-        .zoom-btn {
-            background: linear-gradient(135deg, #2D8CFF 0%, #0B5CFF 100%);
-        }
-
-        .board-btn {
-            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
-        }
-
+        /* ---------- Календарь ---------- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -203,8 +314,8 @@
         .calendar-grid .day .dot { width: 3px; height: 3px; border-radius: 50%; background: #3b82f6; margin-top: 0; }
         .calendar-grid .day.today { border: 2px solid #1e4663; }
 
+        /* ---------- Список уроков (страница "Расписание") ---------- */
         .lessons-list {
-            margin-top: 10px;
             background: white;
             border-radius: 14px;
             padding: 8px 10px 10px;
@@ -244,13 +355,11 @@
             line-height: 1.3;
         }
         .lessons-table tr:last-child td { border-bottom: none; }
-
         .lessons-table .col-date { width: 40px; }
         .lessons-table .col-day { width: 40px; }
         .lessons-table .col-time { width: 64px; }
         .lessons-table .col-topic { width: auto; }
         .lessons-table .col-links { width: 64px; text-align: center; }
-
         .lessons-table .topic-cell {
             font-size: 0.65rem;
             line-height: 1.3;
@@ -259,7 +368,6 @@
             hyphens: auto;
             color: #1a2a3a;
         }
-
         .inner-flex {
             display: flex;
             gap: 4px;
@@ -267,7 +375,6 @@
             justify-content: center;
             flex-wrap: nowrap;
         }
-
         .lessons-table .links-cell a {
             display: inline-flex;
             align-items: center;
@@ -284,8 +391,158 @@
         }
         .lessons-table .links-cell a:hover { background: #bfdbfe; }
 
-        .no-lessons-msg { color: #6c86a3; font-style: italic; padding: 6px 0; font-size: 0.75rem; }
+        /* ---------- Материалы (страница) ---------- */
+        .materials-list {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .materials-list h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
+        }
+        .material-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 4px;
+            border-bottom: 1px solid #f0f4fa;
+            font-size: 0.7rem;
+        }
+        .material-item:last-child { border-bottom: none; }
+        .material-item .mat-date {
+            color: #4a627a;
+            font-size: 0.6rem;
+            min-width: 50px;
+        }
+        .material-item .mat-topic {
+            flex: 1;
+            margin: 0 8px;
+            word-wrap: break-word;
+        }
+        .material-item .mat-link a {
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 2px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.6rem;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .material-item .mat-link a:hover { background: #bfdbfe; }
 
+        /* ---------- Домашки (страница) ---------- */
+        .homework-list {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .homework-list h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
+        }
+        .hw-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 4px;
+            border-bottom: 1px solid #f0f4fa;
+            font-size: 0.7rem;
+        }
+        .hw-item:last-child { border-bottom: none; }
+        .hw-item .hw-date {
+            color: #4a627a;
+            font-size: 0.6rem;
+            min-width: 50px;
+        }
+        .hw-item .hw-topic {
+            flex: 1;
+            margin: 0 8px;
+            word-wrap: break-word;
+        }
+        .hw-item .hw-status {
+            font-size: 0.6rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+            min-width: 60px;
+            text-align: center;
+        }
+        .hw-status.done {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .hw-status.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .hw-status.checked {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .hw-item .hw-link a {
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 2px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.6rem;
+            transition: 0.15s;
+            white-space: nowrap;
+            margin-left: 6px;
+        }
+        .hw-item .hw-link a:hover { background: #bfdbfe; }
+
+        /* ---------- Прогресс (страница) ---------- */
+        .progress-page {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+        }
+        .progress-page h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        .tests-page {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+            margin-top: 10px;
+        }
+        .tests-page h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
+        /* ---------- Модалка ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -353,48 +610,15 @@
         .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
         .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
 
-        /* ---------- Прогресс ---------- */
-        .progress-section {
-            margin-top: 14px;
-            background: white;
-            border-radius: 14px;
-            padding: 12px 14px 14px;
-            border: 1px solid #e9eff6;
-        }
-        .progress-section h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #0b2a44;
-            border-bottom: 1.5px solid #e2e8f0;
-            padding-bottom: 4px;
-            margin-bottom: 6px;
-        }
-
-        /* ---------- Пробники (только для Дениса) ---------- */
-        .tests-section {
-            margin-top: 14px;
-            background: white;
-            border-radius: 14px;
-            padding: 12px 14px 14px;
-            border: 1px solid #e9eff6;
-        }
-        .tests-section h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #0b2a44;
-            border-bottom: 1.5px solid #e2e8f0;
-            padding-bottom: 4px;
-            margin-bottom: 6px;
-        }
-
         @media (max-width: 500px) {
             .container { padding: 12px 10px 16px; border-radius: 20px; }
-            h1 { font-size: 1.1rem; margin-bottom: 10px; }
+            .sidebar { width: 260px; left: -260px; padding: 16px; }
+            .menu-btn { padding: 4px 10px; font-size: 1rem; }
             .login-area { padding: 12px 14px 16px; max-width: 100%; }
             .login-area input { font-size: 0.8rem; padding: 6px 12px; }
             .login-area button { font-size: 0.8rem; padding: 6px 16px; }
             .quick-links-container { justify-content: center; }
-            .quick-link-btn { padding: 6px 12px; font-size: 0.75rem; }
+            .quick-link-btn { padding: 4px 10px; font-size: 0.65rem; }
             .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
             .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
             .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
@@ -409,19 +633,42 @@
             .lessons-table .col-day { width: 34px; }
             .lessons-table .col-time { width: 54px; }
             .lessons-table .col-links { width: 54px; }
+            .materials-list { padding: 6px 6px 8px; max-height: 300px; }
+            .homework-list { padding: 6px 6px 8px; max-height: 300px; }
+            .progress-page { padding: 10px 10px 12px; }
+            .tests-page { padding: 10px 10px 12px; }
             .modal-card { padding: 12px 14px 16px; max-width: 260px; }
             .modal-card .modal-time { font-size: 0.8rem; }
             .modal-card .modal-topic { font-size: 0.7rem; }
             .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
-            .progress-section { padding: 10px 10px 12px; }
-            .tests-section { padding: 10px 10px 12px; }
+        }
+        @media (max-width: 400px) {
+            .sidebar { width: 220px; left: -220px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📅 Личный кабинет</h1>
+    <!-- Кнопка меню (появляется после входа) -->
+    <button class="menu-btn" id="menuBtn">☰ Меню</button>
 
+    <!-- Сайдбар -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" id="closeSidebar">&times;</button>
+        <div class="logo">📅 Личный <span>кабинет</span></div>
+        <button class="nav-item active" data-page="schedule">📋 Расписание</button>
+        <button class="nav-item" data-page="materials">📚 Материалы</button>
+        <button class="nav-item" data-page="homework">📝 Домашки</button>
+        <button class="nav-item" data-page="progress">📊 Прогресс</button>
+        <div class="user-info" id="sidebarUser">👤 <strong id="sidebarName">Загрузка...</strong></div>
+    </div>
+
+    <!-- Оверлей -->
+    <div class="overlay" id="overlay"></div>
+
+    <h1 id="pageTitle">📅 Личный кабинет</h1>
+
+    <!-- Вход -->
     <div class="login-area" id="loginArea">
         <label for="nameInput">👤 Ваше имя</label>
         <input type="text" id="nameInput" placeholder="" />
@@ -431,6 +678,7 @@
         <span class="login-error" id="loginError"></span>
     </div>
 
+    <!-- Основной контент (после входа) -->
     <div id="mainContent" style="display: none;">
         <!-- Быстрые ссылки -->
         <div class="quick-links-container">
@@ -442,6 +690,7 @@
             </a>
         </div>
 
+        <!-- Календарь (всегда виден) -->
         <div class="calendar-header">
             <span class="month-year" id="monthYear"></span>
             <div class="nav-buttons">
@@ -451,25 +700,46 @@
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
 
-        <div class="lessons-list" id="lessonsList">
-            <h3>📋 Все уроки на месяц</h3>
-            <div id="lessonsTableContainer"></div>
+        <!-- Страницы (переключаются) -->
+        <!-- Страница "Расписание" -->
+        <div class="page active" id="page-schedule">
+            <div class="lessons-list" id="lessonsList">
+                <h3>📋 Все уроки на месяц</h3>
+                <div id="lessonsTableContainer"></div>
+            </div>
         </div>
 
-        <!-- Прогресс -->
-        <div class="progress-section" id="progressSection" style="display: none;">
-            <h3>📊 Мой прогресс</h3>
-            <div id="progressContainer"></div>
+        <!-- Страница "Материалы" -->
+        <div class="page" id="page-materials">
+            <div class="materials-list">
+                <h3>📚 Все материалы</h3>
+                <div id="materialsContainer"></div>
+            </div>
         </div>
 
-        <!-- Пробники (только для Дениса) -->
-        <div class="tests-section" id="testsSection" style="display: none;">
-            <h3>📊 Результаты пробников</h3>
-            <div id="testsContainer"></div>
+        <!-- Страница "Домашки" -->
+        <div class="page" id="page-homework">
+            <div class="homework-list">
+                <h3>📝 Все домашние задания</h3>
+                <div id="homeworkContainer"></div>
+            </div>
+        </div>
+
+        <!-- Страница "Прогресс" -->
+        <div class="page" id="page-progress">
+            <div class="progress-page" id="progressPage">
+                <h3>📊 Мой прогресс</h3>
+                <div id="progressContainer"></div>
+            </div>
+            <div class="tests-page" id="testsPage">
+                <h3>📊 Результаты пробников</h3>
+                <div id="testsContainer"></div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Модалка -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card">
         <button class="close-btn" id="modalClose">&times;</button>
@@ -504,20 +774,32 @@
     };
 
     let currentStudentId = null;
+    let currentStudentName = '';
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
+    let currentPage = 'schedule';
 
+    // DOM
     const nameInput = document.getElementById('nameInput');
     const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
     const mainContent = document.getElementById('mainContent');
     const loginArea = document.getElementById('loginArea');
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('overlay');
+    const sidebarName = document.getElementById('sidebarName');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const materialsContainer = document.getElementById('materialsContainer');
+    const homeworkContainer = document.getElementById('homeworkContainer');
+    const progressContainer = document.getElementById('progressContainer');
+    const testsContainer = document.getElementById('testsContainer');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
     const modalOverlay = document.getElementById('modalOverlay');
@@ -526,13 +808,282 @@
     const modalTime = document.getElementById('modalTime');
     const modalTopic = document.getElementById('modalTopic');
     const modalLinks = document.getElementById('modalLinks');
-    const progressSection = document.getElementById('progressSection');
-    const progressContainer = document.getElementById('progressContainer');
-    const testsSection = document.getElementById('testsSection');
-    const testsContainer = document.getElementById('testsContainer');
+    const pageTitle = document.getElementById('pageTitle');
     const zoomBtn = document.getElementById('zoomBtn');
     const boardBtn = document.getElementById('boardBtn');
 
+    // ============================================================
+    //  📂  САЙДБАР
+    // ============================================================
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+
+    menuBtn.addEventListener('click', toggleSidebar);
+    closeSidebar.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            switchPage(this.dataset.page);
+            toggleSidebar();
+        });
+    });
+
+    function switchPage(page) {
+        currentPage = page;
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(`page-${page}`);
+        if (target) target.classList.add('active');
+
+        const titles = {
+            'schedule': '📅 Расписание занятий',
+            'materials': '📚 Материалы',
+            'homework': '📝 Домашние задания',
+            'progress': '📊 Мой прогресс'
+        };
+        pageTitle.textContent = titles[page] || '📅 Личный кабинет';
+
+        if (page === 'materials') renderMaterials();
+        if (page === 'homework') renderHomework();
+        if (page === 'progress') renderProgressPage();
+    }
+
+    // ============================================================
+    //  🔗  БЫСТРЫЕ ССЫЛКИ
+    // ============================================================
+    function updateQuickLinks() {
+        if (!currentStudentId || !lessonsData.length) {
+            zoomBtn.style.display = 'none';
+            boardBtn.style.display = 'none';
+            return;
+        }
+        zoomBtn.style.display = 'inline-flex';
+        boardBtn.style.display = 'inline-flex';
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        let todaysLesson = lessonsData.find(l => l.date === todayStr);
+
+        if (!todaysLesson) {
+            const pastLessons = lessonsData.filter(l => l.date < todayStr);
+            if (pastLessons.length > 0) {
+                pastLessons.sort((a, b) => b.date.localeCompare(a.date));
+                todaysLesson = pastLessons[0];
+            }
+        }
+
+        if (todaysLesson) {
+            const zoomLink = todaysLesson.zoomLink || '';
+            const boardLink = todaysLesson.boardLink || '';
+            zoomBtn.href = zoomLink || '#';
+            zoomBtn.style.opacity = zoomLink ? '1' : '0.4';
+            zoomBtn.style.cursor = zoomLink ? 'pointer' : 'not-allowed';
+            boardBtn.href = boardLink || '#';
+            boardBtn.style.opacity = boardLink ? '1' : '0.4';
+            boardBtn.style.cursor = boardLink ? 'pointer' : 'not-allowed';
+        } else {
+            zoomBtn.href = '#';
+            boardBtn.href = '#';
+            zoomBtn.style.opacity = '0.4';
+            boardBtn.style.opacity = '0.4';
+        }
+    }
+
+    // ============================================================
+    //  📊  ПРОГРЕСС
+    // ============================================================
+    function renderProgress() {
+        if (!lessonsData || lessonsData.length === 0) {
+            progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
+            return;
+        }
+        const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
+        const currentYearStr = String(currentYear);
+        const monthLessons = lessonsData.filter(item => {
+            const dateParts = item.date.split('-');
+            return dateParts[0] === currentYearStr && dateParts[1] === currentMonthStr;
+        });
+        if (monthLessons.length === 0) {
+            progressContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">На этот месяц нет уроков.</p>';
+            return;
+        }
+        const total = monthLessons.length;
+        const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
+        const percent = Math.round((completed / total) * 100);
+        const topicsList = monthLessons.map((item) => {
+            const dateParts = item.date.split('-');
+            const day = dateParts[2];
+            const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
+            const isCompleted = item.topic && item.topic.trim() !== '';
+            return `
+                <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
+                    <span style="color:#4a627a;">${day}.${currentMonthStr}</span>
+                    <span style="${isCompleted ? 'color:#16a34a;' : 'color:#dc2626;'}">
+                        ${isCompleted ? '✅' : '⏳'} ${isCompleted ? topic : 'Тема не указана'}
+                    </span>
+                </div>
+            `;
+        }).join('');
+        let html = `
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                    <div style="font-size:0.6rem; color:#4a627a;">Всего уроков</div>
+                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${total}</div>
+                </div>
+                <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                    <div style="font-size:0.6rem; color:#4a627a;">Пройдено тем</div>
+                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${completed} / ${total}</div>
+                    <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
+                        <div style="width:${percent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
+                    </div>
+                    <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${percent}%</div>
+                </div>
+            </div>
+            <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
+                ${topicsList}
+            </div>
+        `;
+        progressContainer.innerHTML = html;
+    }
+
+    async function renderTests() {
+        if (currentStudentId !== 'denis') {
+            testsContainer.innerHTML = '';
+            return;
+        }
+        try {
+            const response = await fetch(`config/denis_tests.json?t=${Date.now()}`);
+            if (!response.ok) throw new Error('Нет данных');
+            const tests = await response.json();
+            if (!tests || tests.length === 0) {
+                testsContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Пока нет данных о пробниках.</p>';
+                return;
+            }
+            const totalScore = tests.reduce((sum, t) => sum + t.score, 0);
+            const avg = Math.round(totalScore / tests.length);
+            let html = `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                    <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Всего пробников</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${tests.length}</div>
+                    </div>
+                    <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
+                        <div style="font-size:0.6rem; color:#4a627a;">Средний балл</div>
+                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${avg}</div>
+                    </div>
+                </div>
+                <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
+                    ${tests.map(t => `
+                        <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
+                            <span style="color:#4a627a;">${t.name}</span>
+                            <span style="font-weight:600; color:#0b2a44;">${t.score} / ${t.max}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            testsContainer.innerHTML = html;
+        } catch {
+            testsContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных о пробниках.</p>';
+        }
+    }
+
+    function renderProgressPage() {
+        renderProgress();
+        renderTests();
+    }
+
+    // ============================================================
+    //  📚  МАТЕРИАЛЫ
+    // ============================================================
+    function renderMaterials() {
+        if (!lessonsData || lessonsData.length === 0) {
+            materialsContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет материалов.</p>';
+            return;
+        }
+        const sorted = [...lessonsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const items = sorted.filter(l => l.material && l.material.trim() !== '');
+        if (items.length === 0) {
+            materialsContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет материалов.</p>';
+            return;
+        }
+        let html = '';
+        items.forEach(l => {
+            const dateParts = l.date.split('-');
+            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
+            html += `
+                <div class="material-item">
+                    <span class="mat-date">${displayDate}</span>
+                    <span class="mat-topic">${l.topic || 'Без темы'}</span>
+                    <span class="mat-link"><a href="${l.material}" target="_blank">📖 Открыть</a></span>
+                </div>
+            `;
+        });
+        materialsContainer.innerHTML = html;
+    }
+
+    // ============================================================
+    //  📝  ДОМАШКИ
+    // ============================================================
+    function renderHomework() {
+        if (!lessonsData || lessonsData.length === 0) {
+            homeworkContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет домашних заданий.</p>';
+            return;
+        }
+        const sorted = [...lessonsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const items = sorted.filter(l => l.homework && l.homework.trim() !== '');
+        if (items.length === 0) {
+            homeworkContainer.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет домашних заданий.</p>';
+            return;
+        }
+        let html = '';
+        items.forEach(l => {
+            const dateParts = l.date.split('-');
+            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
+            const hwKey = `hw_status_${currentStudentId}_${l.date}`;
+            const status = localStorage.getItem(hwKey) || 'pending';
+            const statusMap = {
+                'pending': '<span class="hw-status pending">⏳ Не сделано</span>',
+                'done': '<span class="hw-status done">✅ Сделано</span>',
+                'checked': '<span class="hw-status checked">📝 Проверено</span>'
+            };
+            const statusBtns = `
+                <button class="status-btn" data-date="${l.date}" data-status="pending" style="background:none;border:1px solid #fef3c7;border-radius:10px;padding:1px 6px;font-size:0.5rem;cursor:pointer;color:#d97706;">⏳</button>
+                <button class="status-btn" data-date="${l.date}" data-status="done" style="background:none;border:1px solid #dcfce7;border-radius:10px;padding:1px 6px;font-size:0.5rem;cursor:pointer;color:#16a34a;">✅</button>
+                <button class="status-btn" data-date="${l.date}" data-status="checked" style="background:none;border:1px solid #dbeafe;border-radius:10px;padding:1px 6px;font-size:0.5rem;cursor:pointer;color:#2563eb;">📝</button>
+            `;
+            const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
+            html += `
+                <div class="hw-item">
+                    <span class="hw-date">${displayDate}</span>
+                    <span class="hw-topic">${l.topic || 'Без темы'}</span>
+                    ${statusMap[status] || statusMap.pending}
+                    <span class="hw-link">
+                        <a href="${hwLink}" target="_blank">📝 Открыть</a>
+                        ${statusBtns}
+                    </span>
+                </div>
+            `;
+        });
+        homeworkContainer.innerHTML = html;
+
+        document.querySelectorAll('.status-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const date = this.dataset.date;
+                const status = this.dataset.status;
+                const key = `hw_status_${currentStudentId}_${date}`;
+                localStorage.setItem(key, status);
+                renderHomework();
+            });
+        });
+    }
+
+    // ============================================================
+    //  🛠  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+    // ============================================================
     function buildHomeworkLink(basePath, studentId, lesson) {
         if (!basePath) return '';
         const params = new URLSearchParams({
@@ -558,222 +1109,41 @@
     }
 
     // ============================================================
-    //  🔗  БЫСТРЫЕ ССЫЛКИ (Звонок и Доска)
-    // ============================================================
-   function updateQuickLinks() {
-    if (!currentStudentId || !lessonsData.length) {
-        zoomBtn.style.display = 'none';
-        boardBtn.style.display = 'none';
-        return;
-    }
-
-    zoomBtn.style.display = 'inline-flex';
-    boardBtn.style.display = 'inline-flex';
-
-    const today = new Date();
-    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-
-    let todaysLesson = lessonsData.find(l => l.date === todayStr);
-
-    if (!todaysLesson) {
-        const pastLessons = lessonsData.filter(l => l.date < todayStr);
-        if (pastLessons.length > 0) {
-            pastLessons.sort((a, b) => b.date.localeCompare(a.date));
-            todaysLesson = pastLessons[0];
-        }
-    }
-
-    if (todaysLesson) {
-        const zoomLink = todaysLesson.zoomLink || '';
-        const boardLink = todaysLesson.boardLink || '';
-
-        if (zoomLink) {
-            zoomBtn.href = zoomLink;
-            zoomBtn.style.opacity = '1';
-            zoomBtn.style.cursor = 'pointer';
-        } else {
-            zoomBtn.href = '#';
-            zoomBtn.style.opacity = '0.4';
-            zoomBtn.style.cursor = 'not-allowed';
-        }
-
-        if (boardLink) {
-            boardBtn.href = boardLink;
-            boardBtn.style.opacity = '1';
-            boardBtn.style.cursor = 'pointer';
-        } else {
-            boardBtn.href = '#';
-            boardBtn.style.opacity = '0.4';
-            boardBtn.style.cursor = 'not-allowed';
-        }
-    } else {
-        zoomBtn.href = '#';
-        boardBtn.href = '#';
-        zoomBtn.style.opacity = '0.4';
-        boardBtn.style.opacity = '0.4';
-    }
-}
-
-    // ============================================================
-    //  📊  ПРОГРЕСС
-    // ============================================================
-    function renderProgress(studentId) {
-        const container = progressContainer;
-        const section = progressSection;
-
-        if (!lessonsData || lessonsData.length === 0) {
-            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных об уроках.</p>';
-            section.style.display = 'block';
-            return;
-        }
-
-        const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
-        const currentYearStr = String(currentYear);
-        const monthLessons = lessonsData.filter(item => {
-            const dateParts = item.date.split('-');
-            return dateParts[0] === currentYearStr && dateParts[1] === currentMonthStr;
-        });
-
-        if (monthLessons.length === 0) {
-            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">На этот месяц нет уроков.</p>';
-            section.style.display = 'block';
-            return;
-        }
-
-        const total = monthLessons.length;
-        const completed = monthLessons.filter(item => item.topic && item.topic.trim() !== '').length;
-        const percent = Math.round((completed / total) * 100);
-
-        const topicsList = monthLessons.map((item) => {
-            const dateParts = item.date.split('-');
-            const day = dateParts[2];
-            const topic = item.topic && item.topic.trim() !== '' ? item.topic : '—';
-            const isCompleted = item.topic && item.topic.trim() !== '';
-            return `
-                <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
-                    <span style="color:#4a627a;">${day}.${currentMonthStr}</span>
-                    <span style="${isCompleted ? 'color:#16a34a;' : 'color:#dc2626;'}">
-                        ${isCompleted ? '✅' : '⏳'} ${isCompleted ? topic : 'Тема не указана'}
-                    </span>
-                </div>
-            `;
-        }).join('');
-
-        let html = `
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-                <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
-                    <div style="font-size:0.6rem; color:#4a627a;">Всего уроков</div>
-                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${total}</div>
-                </div>
-                <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
-                    <div style="font-size:0.6rem; color:#4a627a;">Пройдено тем</div>
-                    <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${completed} / ${total}</div>
-                    <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin-top:4px;">
-                        <div style="width:${percent}%; height:6px; background:#3b82f6; border-radius:4px;"></div>
-                    </div>
-                    <div style="font-size:0.55rem; color:#4a627a; margin-top:2px;">${percent}%</div>
-                </div>
-            </div>
-            <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
-                ${topicsList}
-            </div>
-        `;
-
-        container.innerHTML = html;
-        section.style.display = 'block';
-    }
-
-    // ============================================================
-    //  📊  ПРОБНИКИ (ТОЛЬКО ДЛЯ ДЕНИСА)
-    // ============================================================
-    async function renderTests(studentId) {
-        const container = testsContainer;
-        const section = testsSection;
-
-        if (studentId !== 'denis') {
-            section.style.display = 'none';
-            return;
-        }
-
-        try {
-            const response = await fetch(`config/denis_tests.json?t=${Date.now()}`);
-            if (!response.ok) throw new Error('Нет данных о пробниках');
-            const tests = await response.json();
-
-            if (!tests || tests.length === 0) {
-                container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Пока нет данных о пробниках.</p>';
-                section.style.display = 'block';
-                return;
-            }
-
-            const totalScore = tests.reduce((sum, t) => sum + t.score, 0);
-            const avg = Math.round(totalScore / tests.length);
-
-            let html = `
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-                    <div style="background:#f0f7ff; border-radius:12px; padding:8px 12px;">
-                        <div style="font-size:0.6rem; color:#4a627a;">Всего пробников</div>
-                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${tests.length}</div>
-                    </div>
-                    <div style="background:#f0fdf4; border-radius:12px; padding:8px 12px;">
-                        <div style="font-size:0.6rem; color:#4a627a;">Средний балл</div>
-                        <div style="font-size:1rem; font-weight:700; color:#0b2a44;">${avg}</div>
-                    </div>
-                </div>
-                <div style="margin-top:6px; max-height:120px; overflow-y:auto; border-top:1px solid #e2e8f0; padding-top:6px;">
-                    ${tests.map(t => `
-                        <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f0f4fa; font-size:0.65rem;">
-                            <span style="color:#4a627a;">${t.name}</span>
-                            <span style="font-weight:600; color:#0b2a44;">${t.score} / ${t.max}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            container.innerHTML = html;
-            section.style.display = 'block';
-        } catch {
-            container.innerHTML = '<p style="color:#6c86a3;font-size:0.75rem;">Нет данных о пробниках.</p>';
-            section.style.display = 'block';
-        }
-    }
-
-    // ============================================================
-    //  ВХОД С ПАРОЛЕМ
+    //  🔑  ВХОД
     // ============================================================
     async function handleLogin() {
         const raw = nameInput.value.trim();
         const password = passwordInput.value.trim();
-
         if (!raw) { loginError.textContent = 'Введите имя'; return; }
         if (!password) { loginError.textContent = 'Введите пароль'; return; }
-
         const id = nameMap[raw.toLowerCase()];
         if (!id) { loginError.textContent = 'Ученик не найден'; return; }
-
         if (passwords[id] !== password) {
             loginError.textContent = '❌ Неверный пароль';
             return;
         }
-
         if (id === 'alina') {
             localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() }));
             window.location.href = 'teacher.html';
             return;
         }
-
         loginError.textContent = '';
         currentStudentId = id;
+        currentStudentName = raw;
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
 
         loginArea.style.display = 'none';
         mainContent.style.display = 'block';
+        menuBtn.style.display = 'inline-flex';
+        sidebarName.textContent = raw;
+
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
-        renderProgress(id);
-        renderTests(id);
+        renderProgress();
+        renderTests();
         updateQuickLinks();
+        switchPage('schedule');
     }
 
     loginBtn.addEventListener('click', handleLogin);
@@ -781,7 +1151,7 @@
     passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
     // ============================================================
-    //  КАЛЕНДАРЬ И СПИСОК
+    //  📅  КАЛЕНДАРЬ
     // ============================================================
     function getLessonsForDate(dateStr) {
         return lessonsData.filter(item => item.date === dateStr);
@@ -807,7 +1177,7 @@
         const monthNames = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
         monthYear.textContent = `${monthNames[month]} ${year}`;
         const lessonDates = new Set(lessonsData.map(item => item.date));
-        const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+        const weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
         let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
         for (let i = 0; i < startDay; i++) html += `<div class="day other-month"></div>`;
         for (let d = 1; d <= daysInMonth; d++) {
@@ -840,7 +1210,7 @@
             if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
             if (l.homework) {
                 const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                html += `<a href="${hwLink}" target="_blank"> Домашка</a>`;
+                html += `<a href="${hwLink}" target="_blank">📝 Домашка</a>`;
             }
             modalLinks.innerHTML = html || '<span style="color:#6c86a3;">Нет ссылок</span>';
         } else {
@@ -851,7 +1221,7 @@
                 if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 ${i+1}</a>`;
                 if (l.homework) {
                     const hwLink = buildHomeworkLink(l.homework, currentStudentId, l);
-                    links += `<a href="${hwLink}" target="_blank"> ${i+1}</a>`;
+                    links += `<a href="${hwLink}" target="_blank">📝 ${i+1}</a>`;
                 }
             });
             modalTime.textContent = time;
@@ -864,6 +1234,9 @@
     modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
+    // ============================================================
+    //  📋  СПИСОК УРОКОВ
+    // ============================================================
     function renderLessonsList(year, month) {
         const data = getLessonsForMonth(year, month);
         if (!data.length) {
@@ -919,6 +1292,7 @@
         if (currentMonth > 11) { currentMonth = 0; currentYear++; }
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
+        if (currentPage === 'progress') renderProgressPage();
     }
 
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
