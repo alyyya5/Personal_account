@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Вход</title>
+    <title>Личный кабинет</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -11,39 +11,53 @@
             background: linear-gradient(145deg, #f0f5fe 0%, #e8eefa 100%);
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 16px 12px;
             color: #1a2a3a;
+            transition: transform 0.3s ease;
+        }
+
+        body.sidebar-open .main-wrapper {
+            transform: translateX(280px);
         }
 
         /* ---------- Основной контейнер ---------- */
+        .main-wrapper {
+            max-width: 780px;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
         .container {
-            max-width: 400px;
-            width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             border-radius: 28px;
             box-shadow: 0 16px 32px rgba(0, 20, 40, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
-            padding: 30px 28px 34px;
+            padding: 18px 18px 22px;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            text-align: center;
+            position: relative;
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #0b2a44;
-            margin-bottom: 24px;
+            margin-bottom: 14px;
+            text-align: center;
         }
 
-        /* ---------- Форма входа ---------- */
+        /* ---------- Вход (как был изначально) ---------- */
         .login-area {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            background: white;
+            padding: 16px 20px 20px;
+            border-radius: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #e9eff6;
+            max-width: 340px;
+            margin: 0 auto;
         }
         .login-area label {
             font-weight: 600;
@@ -55,15 +69,15 @@
         }
         .login-area input {
             width: 100%;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border: 2px solid #dce5ef;
             border-radius: 24px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             background: #f9fcff;
             outline: none;
             transition: 0.2s;
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 6px;
         }
         .login-area input:focus {
             border-color: #3b82f6;
@@ -74,67 +88,624 @@
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 1rem;
-            padding: 10px 24px;
+            font-size: 0.9rem;
+            padding: 8px 24px;
             border-radius: 24px;
             cursor: pointer;
             transition: 0.2s;
-            width: 100%;
             margin-top: 4px;
+            width: 100%;
         }
         .login-area button:hover { background: #0f3550; }
         .login-error {
             color: #dc2626;
-            font-size: 0.85rem;
-            margin-top: 10px;
+            font-size: 0.8rem;
+            margin-top: 4px;
             min-height: 1.2em;
         }
 
+        /* ---------- Кнопка меню (появляется после входа) ---------- */
+        .menu-btn {
+            display: none;
+            background: white;
+            border: 1px solid #dce5ef;
+            border-radius: 12px;
+            padding: 6px 14px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: 0.2s;
+            color: #1f4970;
+            margin-bottom: 12px;
+            align-items: center;
+            gap: 6px;
+        }
+        .menu-btn:hover {
+            background: #f0f7ff;
+            border-color: #3b82f6;
+        }
+
         /* ---------- Сайдбар (скрыт до входа) ---------- */
-        .sidebar,
-        .menu-btn,
-        .main-content,
-        .quick-links-container,
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.06);
+            z-index: 1000;
+            padding: 24px 20px;
+            overflow-y: auto;
+            border-right: 1px solid #e9eff6;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            display: none;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+            display: block;
+        }
+        .sidebar .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #7a94b0;
+            float: right;
+            padding: 0 4px;
+        }
+        .sidebar .close-btn:hover {
+            color: #1e2f3e;
+        }
+        .sidebar .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0b2a44;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .sidebar .logo span {
+            color: #3b82f6;
+        }
+        .sidebar .nav-item {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            background: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1f4970;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.15s;
+            margin-bottom: 2px;
+        }
+        .sidebar .nav-item:hover {
+            background: #f0f7ff;
+        }
+        .sidebar .nav-item.active {
+            background: #dbeafe;
+            color: #0b2a44;
+            font-weight: 600;
+        }
+        .sidebar .nav-item .icon {
+            margin-right: 10px;
+        }
+        .sidebar .user-info {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #4a627a;
+        }
+        .sidebar .user-info strong {
+            color: #0b2a44;
+        }
+
+        /* ---------- Оверлей ---------- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.20);
+            backdrop-filter: blur(2px);
+            display: none;
+            z-index: 999;
+        }
+        .overlay.show {
+            display: block;
+        }
+
+        /* ---------- Быстрые ссылки ---------- */
+        .quick-links-container {
+            display: none;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .quick-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .quick-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+        .quick-link-btn span { font-size: 1em; }
+        .zoom-btn { background: linear-gradient(135deg, #2D8CFF 0%, #0B5CFF 100%); }
+        .board-btn { background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%); }
+
+        /* ---------- Страницы ---------- */
         .page {
             display: none;
+            margin-top: 14px;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ---------- Календарь ---------- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 0 4px;
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+        .calendar-header .month-year { font-size: 0.8rem; font-weight: 700; color: #0b2a44; }
+        .calendar-header .nav-buttons { display: flex; gap: 3px; }
+        .calendar-header .nav-buttons button {
+            background: white;
+            border: 1px solid #dce5ef;
+            border-radius: 16px;
+            padding: 1px 8px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #1f4970;
+            transition: 0.15s;
+        }
+        .calendar-header .nav-buttons button:hover {
+            background: #f0f7ff;
+            border-color: #3b82f6;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1.5px;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 4px 3px;
+            border: 1px solid #e9eff6;
+        }
+        .calendar-grid .weekday {
+            font-weight: 600;
+            font-size: 0.45rem;
+            text-align: center;
+            color: #4a627a;
+            padding: 1px 0 0;
+            border-bottom: 1px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+        }
+        .calendar-grid .day {
+            aspect-ratio: 1/0.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.5rem;
+            font-weight: 500;
+            background: white;
+            cursor: default;
+            border: 1px solid transparent;
+            position: relative;
+            transition: 0.1s;
+        }
+        .calendar-grid .day.other-month { color: #b8c8da; background: transparent; box-shadow: none; }
+        .calendar-grid .day.has-lesson {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .calendar-grid .day.has-lesson:hover {
+            background: #bfdbfe;
+            transform: scale(1.04);
+            box-shadow: 0 2px 6px rgba(59,130,246,0.10);
+        }
+        .calendar-grid .day .dot { width: 3px; height: 3px; border-radius: 50%; background: #3b82f6; margin-top: 0; }
+        .calendar-grid .day.today { border: 2px solid #1e4663; }
+
+        /* ---------- Список уроков ---------- */
+        .lessons-list {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .lessons-list h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
+        }
+        .lessons-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.65rem;
+            table-layout: fixed;
+        }
+        .lessons-table th {
+            text-align: left;
+            padding: 2px 4px 1px 0;
+            font-weight: 600;
+            color: #4a627a;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+        }
+        .lessons-table td {
+            padding: 6px 4px;
+            border-bottom: 1px solid #f0f4fa;
+            vertical-align: middle;
+            line-height: 1.3;
+        }
+        .lessons-table tr:last-child td { border-bottom: none; }
+        .lessons-table .col-date { width: 40px; }
+        .lessons-table .col-day { width: 40px; }
+        .lessons-table .col-time { width: 64px; }
+        .lessons-table .col-topic { width: auto; }
+        .lessons-table .col-links { width: 64px; text-align: center; }
+        .lessons-table .topic-cell {
+            font-size: 0.65rem;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            color: #1a2a3a;
+        }
+        .inner-flex {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        .lessons-table .links-cell a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6f0ff;
+            color: #1e4a76;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: 0.15s;
+            flex-shrink: 0;
+        }
+        .lessons-table .links-cell a:hover { background: #bfdbfe; }
+
+        /* ---------- Материалы ---------- */
+        .materials-list {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .materials-list h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
+        }
+        .material-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 4px;
+            border-bottom: 1px solid #f0f4fa;
+            font-size: 0.7rem;
+        }
+        .material-item:last-child { border-bottom: none; }
+        .material-item .mat-date {
+            color: #4a627a;
+            font-size: 0.6rem;
+            min-width: 50px;
+        }
+        .material-item .mat-topic {
+            flex: 1;
+            margin: 0 8px;
+            word-wrap: break-word;
+        }
+        .material-item .mat-link a {
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 2px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.6rem;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .material-item .mat-link a:hover { background: #bfdbfe; }
+
+        /* ---------- Домашки ---------- */
+        .homework-list {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 10px 10px;
+            border: 1px solid #e9eff6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .homework-list h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-bottom: 3px;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 3px;
+        }
+        .hw-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 4px;
+            border-bottom: 1px solid #f0f4fa;
+            font-size: 0.7rem;
+        }
+        .hw-item:last-child { border-bottom: none; }
+        .hw-item .hw-date {
+            color: #4a627a;
+            font-size: 0.6rem;
+            min-width: 50px;
+        }
+        .hw-item .hw-topic {
+            flex: 1;
+            margin: 0 8px;
+            word-wrap: break-word;
+        }
+        .hw-item .hw-status {
+            font-size: 0.6rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+            min-width: 70px;
+            text-align: center;
+        }
+        .hw-status.done {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .hw-status.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .hw-status.checked {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .hw-item .hw-link a {
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 2px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.6rem;
+            transition: 0.15s;
+            white-space: nowrap;
+            margin-left: 6px;
+        }
+        .hw-item .hw-link a:hover { background: #bfdbfe; }
+        .hw-status-btns {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 6px;
+        }
+        .hw-status-btns button {
+            background: none;
+            border: 1px solid #dce5ef;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 0.5rem;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .hw-status-btns button:hover { background: #f0f7ff; }
+
+        /* ---------- Прогресс ---------- */
+        .progress-page {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+        }
+        .progress-page h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        .tests-page {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px 14px;
+            border: 1px solid #e9eff6;
+            margin-top: 10px;
+        }
+        .tests-page h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0b2a44;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
+        /* ---------- Модалка ---------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,25,45,0.30);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 14px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white;
+            border-radius: 24px;
+            max-width: 300px;
+            width: 100%;
+            padding: 16px 18px 20px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.10);
+            animation: modalFade 0.2s ease-out;
+            position: relative;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(10px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card .close-btn {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #7a94b0;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .modal-card .close-btn:hover { color: #1e2f3e; transform: rotate(90deg); }
+        .modal-card .modal-date { font-size: 0.7rem; color: #4a627a; margin-bottom: 2px; }
+        .modal-card .modal-time { font-size: 0.9rem; font-weight: 700; color: #0b2a44; }
+        .modal-card .modal-topic { font-size: 0.8rem; font-weight: 600; margin: 3px 0 6px; color: #0f2f4a; }
+        .modal-card .modal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 2px;
+        }
+        .modal-card .modal-links a {
+            background: #1e4663;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            transition: 0.15s;
+        }
+        .modal-card .modal-links a:hover { background: #0f3550; transform: scale(1.02); }
+        .modal-card .modal-links a.secondary { background: #e6f0ff; color: #1e4a76; }
+        .modal-card .modal-links a.secondary:hover { background: #bfdbfe; }
+
+        @media (max-width: 500px) {
+            .main-wrapper { max-width: 100%; }
+            body.sidebar-open .main-wrapper { transform: translateX(220px); }
+            .sidebar { width: 220px; }
+            .container { padding: 12px 10px 16px; border-radius: 20px; }
+            .menu-btn { padding: 4px 10px; font-size: 1rem; }
+            .login-area { padding: 12px 14px 16px; max-width: 100%; }
+            .login-area input { font-size: 0.8rem; padding: 6px 12px; }
+            .login-area button { font-size: 0.8rem; padding: 6px 16px; }
+            .quick-links-container { justify-content: center; }
+            .quick-link-btn { padding: 4px 10px; font-size: 0.65rem; }
+            .calendar-grid { gap: 1px; padding: 3px 2px; border-radius: 8px; }
+            .calendar-grid .day { font-size: 0.4rem; border-radius: 6px; aspect-ratio: 1/0.65; }
+            .calendar-grid .weekday { font-size: 0.35rem; padding: 1px 0; }
+            .calendar-header .month-year { font-size: 0.65rem; }
+            .calendar-header .nav-buttons button { padding: 1px 6px; font-size: 0.55rem; }
+            .lessons-list { padding: 6px 6px 8px; margin-top: 8px; border-radius: 10px; max-height: 350px;}
+            .lessons-list h3 { font-size: 0.7rem; }
+            .lessons-table { font-size: 0.55rem; }
+            .lessons-table th, .lessons-table td { padding: 4px 2px; }
+            .lessons-table .links-cell a { width: 20px; height: 20px; font-size: 0.6rem; }
+            .lessons-table .col-date { width: 34px; }
+            .lessons-table .col-day { width: 34px; }
+            .lessons-table .col-time { width: 54px; }
+            .lessons-table .col-links { width: 54px; }
+            .materials-list { padding: 6px 6px 8px; max-height: 300px; }
+            .homework-list { padding: 6px 6px 8px; max-height: 300px; }
+            .progress-page { padding: 10px 10px 12px; }
+            .tests-page { padding: 10px 10px 12px; }
+            .modal-card { padding: 12px 14px 16px; max-width: 260px; }
+            .modal-card .modal-time { font-size: 0.8rem; }
+            .modal-card .modal-topic { font-size: 0.7rem; }
+            .modal-card .modal-links a { font-size: 0.6rem; padding: 3px 10px; }
+            .hw-item { flex-wrap: wrap; gap: 4px; }
+            .hw-item .hw-status { min-width: 60px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>🔐 Вход</h1>
+<div class="main-wrapper">
+    <div class="container">
+        <!-- Кнопка меню (появляется после входа) -->
+        <button class="menu-btn" id="menuBtn">☰ Меню</button>
 
-    <div class="login-area" id="loginArea">
-        <label for="nameInput">Имя</label>
-        <input type="text" id="nameInput" placeholder="" />
-        <label for="passwordInput">Пароль</label>
-        <input type="password" id="passwordInput" placeholder="Введите пароль" />
-        <button id="loginBtn">Войти</button>
-        <span class="login-error" id="loginError"></span>
-    </div>
-</div>
+        <h1 id="pageTitle">📅 Личный кабинет</h1>
 
-<!-- Скрытый контент (появляется после входа) -->
-<div id="hiddenContent" style="display: none;">
-    <!-- Сайдбар -->
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn" id="closeSidebar">&times;</button>
-        <div class="logo">📅 Личный <span>кабинет</span></div>
-        <button class="nav-item active" data-page="schedule">📋 Расписание</button>
-        <button class="nav-item" data-page="materials">📚 Материалы</button>
-        <button class="nav-item" data-page="homework">📝 Домашки</button>
-        <button class="nav-item" data-page="progress">📊 Прогресс</button>
-        <div class="user-info" id="sidebarUser">👤 <strong id="sidebarName">Загрузка...</strong></div>
-    </div>
+        <!-- Вход -->
+        <div class="login-area" id="loginArea">
+            <label for="nameInput">👤 Ваше имя</label>
+            <input type="text" id="nameInput" placeholder="" />
+            <label for="passwordInput">🔑 Пароль</label>
+            <input type="password" id="passwordInput" placeholder="Введите пароль" />
+            <button id="loginBtn">Войти</button>
+            <span class="login-error" id="loginError"></span>
+        </div>
 
-    <div class="overlay" id="overlay"></div>
-
-    <div class="main-wrapper" id="mainWrapper">
-        <div class="container main-content" id="mainContent">
-            <button class="menu-btn" id="menuBtn">☰ Меню</button>
-            <h1 id="pageTitle">📅 Личный кабинет</h1>
-
-            <div class="quick-links-container">
+        <!-- Основной контент (после входа) -->
+        <div id="mainContent" style="display: none;">
+            <!-- Быстрые ссылки -->
+            <div class="quick-links-container" id="quickLinks">
                 <a href="#" id="zoomBtn" target="_blank" class="quick-link-btn zoom-btn">📞 Звонок</a>
                 <a href="#" id="boardBtn" target="_blank" class="quick-link-btn board-btn">📝 Доска</a>
             </div>
@@ -149,6 +720,7 @@
                     </div>
                 </div>
                 <div class="calendar-grid" id="calendarGrid"></div>
+
                 <div class="lessons-list" id="lessonsList">
                     <h3>📋 Все уроки на месяц</h3>
                     <div id="lessonsTableContainer"></div>
@@ -182,6 +754,20 @@
         </div>
     </div>
 </div>
+
+<!-- Сайдбар (физически находится вне main-wrapper) -->
+<div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeSidebar">&times;</button>
+    <div class="logo">📅 Личный <span>кабинет</span></div>
+    <button class="nav-item active" data-page="schedule">📋 Расписание</button>
+    <button class="nav-item" data-page="materials">📚 Материалы</button>
+    <button class="nav-item" data-page="homework">📝 Домашки</button>
+    <button class="nav-item" data-page="progress">📊 Прогресс</button>
+    <div class="user-info" id="sidebarUser">👤 <strong id="sidebarName">Загрузка...</strong></div>
+</div>
+
+<!-- Оверлей -->
+<div class="overlay" id="overlay"></div>
 
 <!-- Модалка -->
 <div class="modal-overlay" id="modalOverlay">
@@ -227,7 +813,7 @@
     const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
-    const hiddenContent = document.getElementById('hiddenContent');
+    const loginArea = document.getElementById('loginArea');
     const mainContent = document.getElementById('mainContent');
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
@@ -252,6 +838,7 @@
     const pageTitle = document.getElementById('pageTitle');
     const zoomBtn = document.getElementById('zoomBtn');
     const boardBtn = document.getElementById('boardBtn');
+    const quickLinks = document.getElementById('quickLinks');
 
     // ============================================================
     //  📂  САЙДБАР
@@ -303,12 +890,10 @@
     // ============================================================
     function updateQuickLinks() {
         if (!currentStudentId || !lessonsData.length) {
-            zoomBtn.style.display = 'none';
-            boardBtn.style.display = 'none';
+            quickLinks.style.display = 'none';
             return;
         }
-        zoomBtn.style.display = 'inline-flex';
-        boardBtn.style.display = 'inline-flex';
+        quickLinks.style.display = 'flex';
 
         const today = new Date();
         const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -578,9 +1163,9 @@
         const ok = await loadLessons(id);
         if (!ok) { loginError.textContent = 'Нет расписания'; return; }
 
-        // Скрываем форму входа, показываем основной контент
-        document.querySelector('.container').style.display = 'none';
-        hiddenContent.style.display = 'block';
+        // Скрываем вход, показываем основной контент
+        loginArea.style.display = 'none';
+        mainContent.style.display = 'block';
         menuBtn.style.display = 'inline-flex';
         sidebarName.textContent = raw;
 
