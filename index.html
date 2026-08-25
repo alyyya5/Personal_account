@@ -33,12 +33,28 @@
         body { min-height: 100vh; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-primary); background: radial-gradient(circle at 10% 10%, rgba(103, 157, 255, 0.20), transparent 30%), radial-gradient(circle at 90% 15%, rgba(154, 111, 255, 0.18), transparent 32%), linear-gradient(135deg, var(--bg-start), var(--bg-middle), var(--bg-end)); background-attachment: fixed; overflow-x: hidden; }
         button, input { font: inherit; }
         button { -webkit-tap-highlight-color: transparent; }
-        .background-shape { position: fixed; border-radius: 50%; filter: blur(2px); pointer-events: none; z-index: -1; }
-        .shape-1 { width: 380px; height: 380px; background: rgba(98, 143, 230, 0.10); top: -120px; left: -120px; }
-        .shape-2 { width: 420px; height: 420px; background: rgba(135, 104, 220, 0.09); right: -150px; top: 100px; }
-        .shape-3 { width: 300px; height: 300px; background: rgba(70, 150, 200, 0.07); left: 40%; bottom: -180px; }
         
-        /* Сайдбар */
+        /* Математические символы на фоне */
+        .math-symbol {
+            position: fixed;
+            font-weight: 300;
+            color: rgba(100, 120, 180, 0.08);
+            pointer-events: none;
+            z-index: -1;
+            font-family: 'Times New Roman', serif;
+            user-select: none;
+        }
+        body.dark-mode .math-symbol {
+            color: rgba(150, 170, 220, 0.06);
+        }
+        .math-1 { top: 5%; left: 5%; font-size: 120px; transform: rotate(-15deg); }
+        .math-2 { top: 15%; right: 8%; font-size: 100px; transform: rotate(25deg); }
+        .math-3 { bottom: 20%; left: 8%; font-size: 140px; transform: rotate(-10deg); }
+        .math-4 { bottom: 10%; right: 12%; font-size: 120px; transform: rotate(15deg); }
+        .math-5 { top: 50%; left: 50%; font-size: 80px; transform: rotate(5deg); opacity: 0.05; }
+        
+        .background-shape { display: none; }
+        
         .sidebar { position: fixed; top: 18px; left: 18px; bottom: 18px; width: 250px; padding: 22px 16px; display: none; flex-direction: column; background: var(--sidebar-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); z-index: 100; transition: transform 0.3s ease, background 0.3s ease; }
         .sidebar.open { display: flex; }
         .sidebar-logo { display: flex; align-items: center; gap: 12px; padding: 8px 12px 22px; margin-bottom: 18px; border-bottom: 1px solid var(--border-color); }
@@ -53,16 +69,10 @@
         .sidebar-bottom { margin-top: auto; }
         .theme-toggle { width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 13px; border: 1px solid var(--border-color); border-radius: 14px; background: rgba(100, 125, 185, 0.07); color: var(--text-secondary); font-weight: 650; cursor: pointer; transition: all 0.2s ease; }
         .theme-toggle:hover { transform: translateY(-2px); color: var(--accent-blue); background: rgba(89, 112, 185, 0.12); }
-        
-        /* Кнопка меню */
         .sidebar-toggle { display: none; position: fixed; top: 14px; left: 14px; width: 44px; height: 44px; border: none; border-radius: 13px; background: white; color: var(--accent-blue); font-size: 1.3rem; box-shadow: var(--shadow-md); cursor: pointer; z-index: 200; }
-        
-        /* Основной контент - ИСПРАВЛЕНО */
         .main-wrapper { width: 100%; min-width: 0; padding: 28px 32px 40px; }
         .main-wrapper.with-sidebar { width: calc(100% - 285px); margin-left: 285px; }
         .container { width: 100%; min-width: 0; max-width: 1500px; margin: 0 auto; }
-        
-        /* Вход */
         .login-wrapper { min-height: calc(100vh - 56px); display: flex; align-items: center; justify-content: center; }
         .login-card { width: 100%; max-width: 410px; padding: 42px 38px; background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 28px; box-shadow: var(--shadow-lg); }
         .login-logo { width: 58px; height: 58px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; border-radius: 18px; color: white; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
@@ -77,8 +87,6 @@
         .login-btn { width: 100%; margin-top: 4px; padding: 14px; border: none; border-radius: 14px; color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); font-weight: 750; font-size: 1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(66, 89, 180, 0.25); transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(66, 89, 180, 0.32); }
         .login-error { min-height: 1.2em; text-align: center; color: var(--accent-red); font-size: 0.9rem; font-weight: 600; }
-        
-        /* Верхняя панель */
         .top-bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 26px; flex-wrap: wrap; }
         .welcome-block h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.03em; }
         .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; }
@@ -87,13 +95,9 @@
         .quick-link-btn:hover { transform: translateY(-2px); }
         .zoom-btn { color: var(--accent-blue); background: rgba(255, 255, 255, 0.70); border: 1px solid rgba(53, 103, 201, 0.18); box-shadow: var(--shadow-sm); }
         .board-btn { color: var(--accent-purple); background: rgba(255, 255, 255, 0.70); border: 1px solid rgba(109, 84, 199, 0.18); box-shadow: var(--shadow-sm); }
-        
-        /* Страницы */
         .page { display: none; }
         .page.active { display: block; }
         .section-title { margin-bottom: 20px; font-size: 1.35rem; font-weight: 800; }
-        
-        /* Календарь */
         .calendar-wrapper { padding: 26px; background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
         .calendar-title { display: flex; align-items: center; gap: 12px; }
@@ -112,12 +116,11 @@
         body.dark-mode .day { background: rgba(255, 255, 255, 0.035); }
         .day.other-month { opacity: 0.28; }
         .day.has-lesson { cursor: pointer; color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); box-shadow: 0 7px 16px rgba(65, 88, 180, 0.20); }
+        body.dark-mode .day.has-lesson { background: linear-gradient(135deg, #4a6fd6, #7b68d6); border: 1px solid rgba(150, 170, 255, 0.3); }
         .day.has-lesson:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 24px rgba(65, 88, 180, 0.28); }
         .day.today:not(.has-lesson) { border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 800; }
         .day.today.has-lesson { border: 2px solid white; box-shadow: 0 0 0 3px var(--accent-blue), 0 7px 16px rgba(65, 88, 180, 0.20); }
         .day .dot { width: 5px; height: 5px; margin-top: 5px; border-radius: 50%; background: white; }
-        
-        /* Карточки */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
         .hw-card, .mat-card { min-height: 210px; display: flex; flex-direction: column; padding: 21px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
         .hw-card:hover, .mat-card:hover { transform: translateY(-4px); background: var(--card-hover); box-shadow: var(--shadow-md); }
@@ -132,8 +135,6 @@
         .card-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(65, 88, 180, 0.28); }
         .show-more-btn { display: block; width: 100%; max-width: 300px; margin: 24px auto 0; padding: 13px 20px; border: 1px solid rgba(53, 103, 201, 0.20); border-radius: 14px; background: rgba(255, 255, 255, 0.55); color: var(--accent-blue); font-weight: 750; cursor: pointer; box-shadow: var(--shadow-sm); transition: transform 0.2s, background 0.2s; }
         .show-more-btn:hover { transform: translateY(-2px); background: rgba(53, 103, 201, 0.08); }
-        
-        /* Прогресс */
         .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 22px; }
         .stat-card { position: relative; overflow: hidden; padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; }
         .stat-card::after { content: ""; position: absolute; width: 100px; height: 100px; border-radius: 50%; right: -35px; top: -45px; background: rgba(84, 106, 210, 0.06); }
@@ -144,8 +145,6 @@
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
-        
-        /* Модальное окно */
         .modal-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(23, 30, 52, 0.45); backdrop-filter: blur(7px); z-index: 1000; }
         .modal-overlay.active { display: flex; }
         .modal-card { position: relative; width: 100%; max-width: 470px; padding: 30px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 25px; box-shadow: var(--shadow-lg); animation: modalShow 0.25s ease; }
@@ -160,8 +159,6 @@
         .modal-links a:hover { transform: translateY(-2px); }
         .modal-links a.secondary { color: var(--accent-blue); background: rgba(53, 103, 201, 0.10); }
         .empty-message { grid-column: 1 / -1; padding: 35px 20px; text-align: center; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
-        
-        /* Адаптив */
         @media (max-width: 950px) {
             .sidebar { transform: translateX(-120%); }
             .sidebar.open { transform: translateX(0); }
@@ -169,6 +166,7 @@
             .main-wrapper { width: 100%; margin-left: 0; padding: 78px 18px 30px; }
             .main-wrapper.with-sidebar { width: 100%; margin-left: 0; }
             .sidebar { top: 10px; left: 10px; bottom: 10px; }
+            .math-symbol { font-size: 80px; }
         }
         @media (max-width: 700px) {
             .top-bar { flex-direction: column; gap: 18px; }
@@ -180,6 +178,7 @@
             .day { min-height: 52px; font-size: 0.9rem; }
             .calendar-grid { gap: 5px; }
             .weekday { font-size: 0.68rem; }
+            .math-symbol { display: none; }
         }
         @media (max-width: 500px) {
             .main-wrapper { padding-left: 10px; padding-right: 10px; }
@@ -193,9 +192,13 @@
     </style>
 </head>
 <body>
-    <div class="background-shape shape-1"></div>
-    <div class="background-shape shape-2"></div>
-    <div class="background-shape shape-3"></div>
+    <!-- Математические символы на фоне -->
+    <div class="math-symbol math-1">π</div>
+    <div class="math-symbol math-2">∫</div>
+    <div class="math-symbol math-3">e</div>
+    <div class="math-symbol math-4">x²</div>
+    <div class="math-symbol math-5">D</div>
+    
     <button class="sidebar-toggle" id="sidebarToggle" title="Меню">☰</button>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
@@ -311,7 +314,7 @@
         
         sidebarToggle.addEventListener('click', () => { 
             sidebar.classList.toggle('open'); 
-            sidebarToggle.textContent = sidebar.classList.contains('open') ? '✕' : ''; 
+            sidebarToggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰'; 
         });
         
         document.querySelectorAll('.nav-item').forEach(item => { 
@@ -326,7 +329,6 @@
             }); 
         });
 
-        // Функции для приветствия
         function getStudentDisplayName() {
             const names = { valeriya: 'Валерия', amina: 'Амина', denis: 'Денис' };
             return names[currentStudentId] || '';
@@ -347,7 +349,7 @@
 
             if (todaysLessons.length === 1) {
                 const lesson = todaysLessons[0];
-                pageSubtitle.textContent = `Сегодня занятие в ${lesson.start}. Буду ждать тебя! `;
+                pageSubtitle.textContent = `Сегодня занятие в ${lesson.start}. Буду ждать тебя! 😊`;
             } else if (todaysLessons.length > 1) {
                 pageSubtitle.textContent = `Сегодня у тебя ${todaysLessons.length} занятия. Посмотри расписание ниже! 📚`;
             } else {
@@ -418,7 +420,10 @@
             const currentMonthStr = String(currentMonth + 1).padStart(2, '0'), currentYearStr = String(currentYear), monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length; 
             if (currentStudentId === 'denis') { try { const res = await fetch(`config/denis_tests.json?t=${Date.now()}`); if (res.ok) testsData = await res.json(); else testsData = []; } catch (e) { testsData = []; } } 
             let statsHTML = `<div class="stat-card"><div class="stat-value">${pastLessons.length}</div><div class="stat-label">Тем пройдено</div><div class="stat-sublabel">из них ${monthCompleted} в этом месяце</div></div><div class="stat-card"><div class="stat-value">${completedHw}</div><div class="stat-label">ДЗ выполнено</div><div class="stat-sublabel">из ${hwLessons.length} всего</div></div>`; 
-            if (currentStudentId === 'denis' && testsData.length > 0) { const avg = Math.round(testsData.reduce((sum, t) => sum + (t.score || 0), 0) / testsData.length); statsHTML += `<div class="stat-card"><div class="stat-value">${testsData.length}</div><div class="stat-label">Пробников решено</div><div class="stat-sublabel">средний балл: ${avg}</div></div>`; } 
+            if (currentStudentId === 'denis' && testsData.length > 0) { 
+                const avg = Math.round(testsData.reduce((sum, t) => sum + (t.score || 0), 0) / testsData.length); 
+                statsHTML += `<div class="stat-card"><div class="stat-value">${testsData.length}</div><div class="stat-label">Пробников решено</div><div class="stat-sublabel">средний балл: ${avg}</div></div>`; 
+            } 
             progressStats.innerHTML = statsHTML; 
             chartsContainer.innerHTML = `<div class="chart-card"><h3>Выполнение домашних заданий</h3><canvas id="hwChart"></canvas></div><div class="chart-card"><h3>Прогресс по темам</h3><canvas id="topicsChart"></canvas></div>`; 
             if (currentStudentId === 'denis' && testsData.length > 0) chartsContainer.innerHTML += `<div class="chart-card" style="grid-column: 1 / -1;"><h3>Результаты пробников</h3><canvas id="testsChart"></canvas></div>`; 
@@ -462,10 +467,10 @@
             let html = ''; 
             items.forEach(l => { 
                 const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase(); 
-                let statusText = ' Не решено', statusClass = 'pending'; 
+                let statusText = '⏳ Не решено', statusClass = 'pending'; 
                 if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; } 
-                else if (status.includes('не проверен') || status === 'done') { statusText = ' Не проверено'; statusClass = 'done'; } 
-                else if (status.includes('не решен') || status === 'pending') { statusText = ' Не решено'; statusClass = 'pending'; } 
+                else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; } 
+                else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; } 
                 html += `<div class="hw-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span><span class="card-status ${statusClass}">${statusText}</span></div><div class="card-topic">${l.topic}</div><a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a></div>`; 
             }); 
             homeworkCards.innerHTML = html; 
@@ -543,8 +548,8 @@
                 lessons.forEach((l, i) => { 
                     time += `${l.start}–${l.end}` + (i < lessons.length - 1 ? ', ' : ''); 
                     topic += l.topic + (i < lessons.length - 1 ? ', ' : ''); 
-                    if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary"> Материал ${i + 1}</a>`; 
-                    if (l.homework) links += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank"> Домашка ${i + 1}</a>`; 
+                    if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал ${i + 1}</a>`; 
+                    if (l.homework) links += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank">📝 Домашка ${i + 1}</a>`; 
                 }); 
                 modalTime.textContent = time; 
                 modalTopic.textContent = topic; 
