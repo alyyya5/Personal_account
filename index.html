@@ -37,35 +37,42 @@
         /* Математические символы на фоне */
         .math-symbol {
             position: fixed;
-            font-weight: 300;
-            color: rgba(100, 120, 180, 0.08);
+            font-weight: 400;
+            color: rgba(80, 100, 160, 0.15);
             pointer-events: none;
             z-index: -1;
             font-family: 'Times New Roman', serif;
             user-select: none;
         }
         body.dark-mode .math-symbol {
-            color: rgba(150, 170, 220, 0.06);
+            color: rgba(130, 150, 200, 0.12);
         }
-        .math-1 { top: 5%; left: 5%; font-size: 120px; transform: rotate(-15deg); }
-        .math-2 { top: 15%; right: 8%; font-size: 100px; transform: rotate(25deg); }
-        .math-3 { bottom: 20%; left: 8%; font-size: 140px; transform: rotate(-10deg); }
-        .math-4 { bottom: 10%; right: 12%; font-size: 120px; transform: rotate(15deg); }
-        .math-5 { top: 50%; left: 50%; font-size: 80px; transform: rotate(5deg); opacity: 0.05; }
-        
-        .background-shape { display: none; }
+        .math-1 { top: 3%; left: 3%; font-size: 140px; transform: rotate(-15deg); }
+        .math-2 { top: 8%; right: 5%; font-size: 110px; transform: rotate(25deg); }
+        .math-3 { top: 25%; left: 15%; font-size: 90px; transform: rotate(-8deg); }
+        .math-4 { top: 35%; right: 10%; font-size: 130px; transform: rotate(12deg); }
+        .math-5 { top: 50%; left: 5%; font-size: 100px; transform: rotate(-20deg); }
+        .math-6 { top: 55%; right: 15%; font-size: 120px; transform: rotate(18deg); }
+        .math-7 { bottom: 30%; left: 20%; font-size: 95px; transform: rotate(-12deg); }
+        .math-8 { bottom: 25%; right: 8%; font-size: 115px; transform: rotate(22deg); }
+        .math-9 { bottom: 15%; left: 10%; font-size: 105px; transform: rotate(-18deg); }
+        .math-10 { bottom: 10%; right: 20%; font-size: 125px; transform: rotate(15deg); }
+        .math-11 { top: 15%; left: 40%; font-size: 85px; transform: rotate(-5deg); opacity: 0.12; }
+        .math-12 { top: 45%; left: 45%; font-size: 95px; transform: rotate(10deg); opacity: 0.10; }
+        .math-13 { bottom: 40%; left: 40%; font-size: 110px; transform: rotate(-25deg); opacity: 0.11; }
         
         .sidebar { position: fixed; top: 18px; left: 18px; bottom: 18px; width: 250px; padding: 22px 16px; display: none; flex-direction: column; background: var(--sidebar-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); z-index: 100; transition: transform 0.3s ease, background 0.3s ease; }
         .sidebar.open { display: flex; }
         .sidebar-logo { display: flex; align-items: center; gap: 12px; padding: 8px 12px 22px; margin-bottom: 18px; border-bottom: 1px solid var(--border-color); }
-        .logo-icon { width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); box-shadow: 0 7px 18px rgba(66, 93, 180, 0.25); }
+        .logo-icon { width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center; color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); box-shadow: 0 7px 18px rgba(66, 93, 180, 0.25); }
         .logo-icon svg { width: 24px; height: 24px; fill: white; }
         .logo-text { font-size: 1.12rem; font-weight: 800; line-height: 1.2; color: var(--text-primary); }
         .nav-list { display: flex; flex-direction: column; gap: 7px; }
         .nav-item { width: 100%; display: flex; align-items: center; gap: 13px; padding: 13px 14px; border: none; border-radius: 14px; background: transparent; color: var(--text-secondary); text-align: left; font-weight: 650; font-size: 0.96rem; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
         .nav-item:hover { background: rgba(86, 116, 190, 0.08); color: var(--accent-blue); }
         .nav-item.active { color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); box-shadow: 0 8px 20px rgba(65, 88, 180, 0.22); }
-        .nav-icon { width: 22px; text-align: center; font-size: 1.15rem; }
+        .nav-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+        .nav-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .sidebar-bottom { margin-top: auto; }
         .theme-toggle { width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 13px; border: 1px solid var(--border-color); border-radius: 14px; background: rgba(100, 125, 185, 0.07); color: var(--text-secondary); font-weight: 650; cursor: pointer; transition: all 0.2s ease; }
         .theme-toggle:hover { transform: translateY(-2px); color: var(--accent-blue); background: rgba(89, 112, 185, 0.12); }
@@ -75,7 +82,7 @@
         .container { width: 100%; min-width: 0; max-width: 1500px; margin: 0 auto; }
         .login-wrapper { min-height: calc(100vh - 56px); display: flex; align-items: center; justify-content: center; }
         .login-card { width: 100%; max-width: 410px; padding: 42px 38px; background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 28px; box-shadow: var(--shadow-lg); }
-        .login-logo { width: 58px; height: 58px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; border-radius: 18px; color: white; font-size: 1.8rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
+        .login-logo { width: 58px; height: 58px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; border-radius: 18px; color: white; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
         .login-logo svg { width: 32px; height: 32px; fill: white; }
         .login-title { font-size: 1.7rem; font-weight: 800; text-align: center; color: var(--text-primary); }
         .login-subtitle { margin-top: 8px; margin-bottom: 30px; color: var(--text-secondary); text-align: center; font-size: 0.94rem; }
@@ -101,8 +108,8 @@
         .calendar-wrapper { padding: 26px; background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
         .calendar-title { display: flex; align-items: center; gap: 12px; }
-        .calendar-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 13px; color: var(--accent-blue); background: rgba(53, 103, 201, 0.09); font-size: 1.25rem; }
-        .calendar-icon svg { width: 22px; height: 22px; fill: var(--accent-blue); }
+        .calendar-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 13px; color: var(--accent-blue); background: rgba(53, 103, 201, 0.09); }
+        .calendar-icon svg { width: 22px; height: 22px; stroke: var(--accent-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .calendar-title-text { display: flex; flex-direction: column; gap: 2px; }
         .calendar-title-text span:first-child { font-size: 1.05rem; font-weight: 800; }
         .month-year { color: var(--text-secondary); font-size: 0.88rem; font-weight: 650; }
@@ -198,6 +205,14 @@
     <div class="math-symbol math-3">e</div>
     <div class="math-symbol math-4">x²</div>
     <div class="math-symbol math-5">D</div>
+    <div class="math-symbol math-6">∑</div>
+    <div class="math-symbol math-7">√</div>
+    <div class="math-symbol math-8"></div>
+    <div class="math-symbol math-9">Δ</div>
+    <div class="math-symbol math-10">∂</div>
+    <div class="math-symbol math-11">±</div>
+    <div class="math-symbol math-12">≈</div>
+    <div class="math-symbol math-13">≠</div>
     
     <button class="sidebar-toggle" id="sidebarToggle" title="Меню">☰</button>
     <aside class="sidebar" id="sidebar">
@@ -208,13 +223,33 @@
             <div class="logo-text">Личный<br>кабинет</div>
         </div>
         <div class="nav-list">
-            <button class="nav-item active" data-page="schedule"><span class="nav-icon">▣</span> Расписание</button>
-            <button class="nav-item" data-page="homework"><span class="nav-icon">⌂</span> Домашки</button>
-            <button class="nav-item" data-page="materials"><span class="nav-icon"></span> Материалы</button>
-            <button class="nav-item" data-page="progress"><span class="nav-icon">▥</span> Прогресс</button>
+            <button class="nav-item active" data-page="schedule">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </span>
+                Расписание
+            </button>
+            <button class="nav-item" data-page="homework">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </span>
+                Домашки
+            </button>
+            <button class="nav-item" data-page="materials">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                </span>
+                Материалы
+            </button>
+            <button class="nav-item" data-page="progress">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                </span>
+                Прогресс
+            </button>
         </div>
         <div class="sidebar-bottom">
-            <button class="theme-toggle" id="themeToggle">🌙 Сменить тему</button>
+            <button class="theme-toggle" id="themeToggle"> Сменить тему</button>
         </div>
     </aside>
     <div class="main-wrapper" id="mainWrapper">
@@ -256,7 +291,7 @@
                         <div class="calendar-header">
                             <div class="calendar-title">
                                 <div class="calendar-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 </div>
                                 <div class="calendar-title-text">
                                     <span>Расписание занятий</span>
@@ -345,13 +380,13 @@
                 .filter(lesson => lesson.date === todayStr)
                 .sort((a, b) => (a.start || '').localeCompare(b.start || ''));
 
-            pageTitle.textContent = `Привет, ${studentName}! 👋`;
+            pageTitle.textContent = `Привет, ${studentName}! `;
 
             if (todaysLessons.length === 1) {
                 const lesson = todaysLessons[0];
-                pageSubtitle.textContent = `Сегодня занятие в ${lesson.start}. Буду ждать тебя! 😊`;
+                pageSubtitle.textContent = `Сегодня занятие в ${lesson.start}. Буду ждать тебя! `;
             } else if (todaysLessons.length > 1) {
-                pageSubtitle.textContent = `Сегодня у тебя ${todaysLessons.length} занятия. Посмотри расписание ниже! 📚`;
+                pageSubtitle.textContent = `Сегодня у тебя ${todaysLessons.length} занятия. Посмотри расписание ниже!`;
             } else {
                 const futureLessons = lessonsData
                     .filter(lesson => lesson.date > todayStr)
@@ -362,7 +397,7 @@
                     const [year, month, day] = nextLesson.date.split('-');
                     pageSubtitle.textContent = `Следующее занятие ${day}.${month} в ${nextLesson.start}. Увидимся! ✨`;
                 } else {
-                    pageSubtitle.textContent = `Посмотри своё расписание и будь готов к новым занятиям! 📚`;
+                    pageSubtitle.textContent = `Посмотри своё расписание и будь готов к новым занятиям!`;
                 }
             }
         }
@@ -375,7 +410,7 @@
             const titles = {
                 homework: { title: 'Домашние задания', subtitle: 'Здесь находятся задания после уроков' },
                 materials: { title: 'Материалы', subtitle: 'Все полезные материалы для занятий' },
-                progress: { title: 'Мой прогресс', subtitle: 'Посмотри, как у тебя всё получается! 📈' }
+                progress: { title: 'Мой прогресс', subtitle: 'Посмотри, как у тебя всё получается!' }
             };
 
             if (page === 'schedule') {
