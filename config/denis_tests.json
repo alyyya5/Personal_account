@@ -1,3 +1,17 @@
 [
-    { "name": "Пробник №1", "score": , "max": 100 }
+    {
+        "name": "",
+        "score": ,
+        "max": 100
+    },
+    {
+        "name": "",
+        "score": ,
+        "max": 100
+    },
+    {
+        "name": "",
+        "score": null,
+        "max": 100
+    }
 ]
