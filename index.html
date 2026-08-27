@@ -34,34 +34,51 @@
         button, input { font: inherit; }
         button { -webkit-tap-highlight-color: transparent; }
         
-        /* Математические символы на фоне (УЛУЧШЕННЫЙ КОНТРАСТ) */
+        /* Математические символы на фоне - ХАОТИЧНОЕ РАСПОЛОЖЕНИЕ */
         .math-symbol {
             position: fixed;
             font-weight: 500;
-            color: rgba(53, 103, 201, 0.18); /* Более контрастный акцентный синий */
+            color: rgba(53, 103, 201, 0.18);
             pointer-events: none;
             z-index: -1;
             font-family: 'Times New Roman', 'STIX Two Math', serif;
             user-select: none;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* Лёгкое свечение для читаемости */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         }
         body.dark-mode .math-symbol {
-            color: rgba(130, 160, 255, 0.18); /* Ярче для тёмной темы */
+            color: rgba(130, 160, 255, 0.18);
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
-        .math-1 { top: 3%; left: 3%; font-size: 140px; transform: rotate(-15deg); }
-        .math-2 { top: 8%; right: 5%; font-size: 110px; transform: rotate(25deg); }
-        .math-3 { top: 25%; left: 15%; font-size: 90px; transform: rotate(-8deg); }
-        .math-4 { top: 35%; right: 10%; font-size: 130px; transform: rotate(12deg); }
-        .math-5 { top: 50%; left: 5%; font-size: 100px; transform: rotate(-20deg); }
-        .math-6 { top: 55%; right: 15%; font-size: 120px; transform: rotate(18deg); }
-        .math-7 { bottom: 30%; left: 20%; font-size: 95px; transform: rotate(-12deg); }
-        .math-8 { bottom: 25%; right: 8%; font-size: 115px; transform: rotate(22deg); }
-        .math-9 { bottom: 15%; left: 10%; font-size: 105px; transform: rotate(-18deg); }
-        .math-10 { bottom: 10%; right: 20%; font-size: 125px; transform: rotate(15deg); }
-        .math-11 { top: 15%; left: 40%; font-size: 85px; transform: rotate(-5deg); opacity: 0.15; }
-        .math-12 { top: 45%; left: 45%; font-size: 95px; transform: rotate(10deg); opacity: 0.14; }
-        .math-13 { bottom: 40%; left: 40%; font-size: 110px; transform: rotate(-25deg); opacity: 0.15; }
+        
+        /* Случайные позиции по всему экрану */
+        .math-1 { top: 7%; left: 12%; font-size: 95px; transform: rotate(-23deg); }
+        .math-2 { top: 3%; right: 18%; font-size: 128px; transform: rotate(31deg); }
+        .math-3 { top: 19%; left: 6%; font-size: 76px; transform: rotate(-11deg); }
+        .math-4 { top: 14%; right: 7%; font-size: 110px; transform: rotate(17deg); }
+        .math-5 { top: 28%; left: 22%; font-size: 88px; transform: rotate(-34deg); }
+        .math-6 { top: 32%; right: 25%; font-size: 102px; transform: rotate(26deg); }
+        .math-7 { top: 41%; left: 3%; font-size: 118px; transform: rotate(-19deg); }
+        .math-8 { top: 47%; right: 11%; font-size: 84px; transform: rotate(42deg); }
+        .math-9 { top: 53%; left: 17%; font-size: 96px; transform: rotate(-27deg); }
+        .math-10 { top: 58%; right: 19%; font-size: 134px; transform: rotate(13deg); }
+        .math-11 { top: 64%; left: 8%; font-size: 72px; transform: rotate(-38deg); }
+        .math-12 { top: 69%; right: 6%; font-size: 108px; transform: rotate(29deg); }
+        .math-13 { top: 74%; left: 25%; font-size: 91px; transform: rotate(-16deg); }
+        .math-14 { top: 79%; right: 22%; font-size: 125px; transform: rotate(21deg); }
+        .math-15 { top: 85%; left: 14%; font-size: 87px; transform: rotate(-31deg); }
+        .math-16 { top: 89%; right: 13%; font-size: 103px; transform: rotate(37deg); }
+        .math-17 { top: 11%; left: 38%; font-size: 68px; transform: rotate(-9deg); opacity: 0.14; }
+        .math-18 { top: 24%; left: 48%; font-size: 79px; transform: rotate(19deg); opacity: 0.12; }
+        .math-19 { top: 37%; left: 42%; font-size: 93px; transform: rotate(-28deg); opacity: 0.13; }
+        .math-20 { top: 51%; left: 52%; font-size: 71px; transform: rotate(14deg); opacity: 0.11; }
+        .math-21 { top: 66%; left: 46%; font-size: 86px; transform: rotate(-22deg); opacity: 0.15; }
+        .math-22 { top: 81%; left: 39%; font-size: 98px; transform: rotate(33deg); opacity: 0.10; }
+        .math-23 { top: 9%; left: 62%; font-size: 82px; transform: rotate(-18deg); opacity: 0.13; }
+        .math-24 { top: 22%; left: 71%; font-size: 94px; transform: rotate(24deg); opacity: 0.12; }
+        .math-25 { top: 36%; left: 68%; font-size: 77px; transform: rotate(-35deg); opacity: 0.14; }
+        .math-26 { top: 49%; left: 74%; font-size: 89px; transform: rotate(16deg); opacity: 0.11; }
+        .math-27 { top: 63%; left: 65%; font-size: 101px; transform: rotate(-26deg); opacity: 0.13; }
+        .math-28 { top: 77%; left: 72%; font-size: 73px; transform: rotate(28deg); opacity: 0.12; }
         
         /* Анимация машущей руки */
         .wave-emoji {
@@ -191,7 +208,7 @@
             .main-wrapper { width: 100%; margin-left: 0; padding: 78px 18px 30px; }
             .main-wrapper.with-sidebar { width: 100%; margin-left: 0; }
             .sidebar { top: 10px; left: 10px; bottom: 10px; }
-            .math-symbol { font-size: 80px; }
+            .math-symbol { font-size: 60px !important; }
         }
         @media (max-width: 700px) {
             .top-bar { flex-direction: column; gap: 18px; }
@@ -217,7 +234,7 @@
     </style>
 </head>
 <body>
-    <!-- Математические символы на фоне -->
+    <!-- Математические символы на фоне - ХАОТИЧНОЕ РАСПОЛОЖЕНИЕ -->
     <div class="math-symbol math-1">π</div>
     <div class="math-symbol math-2">∫</div>
     <div class="math-symbol math-3">e</div>
@@ -231,6 +248,21 @@
     <div class="math-symbol math-11">±</div>
     <div class="math-symbol math-12">≈</div>
     <div class="math-symbol math-13">≠</div>
+    <div class="math-symbol math-14">β</div>
+    <div class="math-symbol math-15">θ</div>
+    <div class="math-symbol math-16">λ</div>
+    <div class="math-symbol math-17">μ</div>
+    <div class="math-symbol math-18">Ω</div>
+    <div class="math-symbol math-19">∇</div>
+    <div class="math-symbol math-20">∮</div>
+    <div class="math-symbol math-21">∏</div>
+    <div class="math-symbol math-22">∝</div>
+    <div class="math-symbol math-23">∠</div>
+    <div class="math-symbol math-24">⊥</div>
+    <div class="math-symbol math-25">∥</div>
+    <div class="math-symbol math-26">∈</div>
+    <div class="math-symbol math-27">∉</div>
+    <div class="math-symbol math-28">⊂</div>
     
     <button class="sidebar-toggle" id="sidebarToggle" title="Меню">☰</button>
     <aside class="sidebar" id="sidebar">
@@ -398,7 +430,6 @@
                 .filter(lesson => lesson.date === todayStr)
                 .sort((a, b) => (a.start || '').localeCompare(b.start || ''));
 
-            // Добавлена машущая рука с анимацией
             pageTitle.innerHTML = `Привет, ${studentName}! <span class="wave-emoji">👋</span>`;
 
             if (todaysLessons.length === 1) {
@@ -521,7 +552,7 @@
             let html = ''; 
             items.forEach(l => { 
                 const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase(); 
-                let statusText = '⏳ Не решено', statusClass = 'pending'; 
+                let statusText = ' Не решено', statusClass = 'pending'; 
                 if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; } 
                 else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; } 
                 else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; } 
