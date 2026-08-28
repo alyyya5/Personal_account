@@ -34,7 +34,6 @@
         button, input { font: inherit; }
         button { -webkit-tap-highlight-color: transparent; }
         
-        /* Математические символы на фоне - ХАОТИЧНОЕ РАСПОЛОЖЕНИЕ */
         .math-symbol {
             position: fixed;
             font-weight: 500;
@@ -50,7 +49,6 @@
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
         
-        /* Случайные позиции по всему экрану */
         .math-1 { top: 7%; left: 12%; font-size: 95px; transform: rotate(-23deg); }
         .math-2 { top: 3%; right: 18%; font-size: 128px; transform: rotate(31deg); }
         .math-3 { top: 19%; left: 6%; font-size: 76px; transform: rotate(-11deg); }
@@ -80,7 +78,6 @@
         .math-27 { top: 63%; left: 65%; font-size: 101px; transform: rotate(-26deg); opacity: 0.13; }
         .math-28 { top: 77%; left: 72%; font-size: 73px; transform: rotate(28deg); opacity: 0.12; }
         
-        /* Анимация машущей руки */
         .wave-emoji {
             display: inline-block;
             animation: wave 2.5s ease-in-out infinite;
@@ -187,6 +184,53 @@
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
+        
+        /* Стили для таблицы контрольных точек */
+        .tests-table-wrapper {
+            margin-top: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tests-table-wrapper h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+        .tests-table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .tests-table-wrapper th {
+            text-align: left;
+            padding: 10px 8px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .tests-table-wrapper td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .tests-table-wrapper tr:last-child td { border-bottom: none; }
+        .tests-table-wrapper .status-badge {
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .status-badge.excellent { background: rgba(47, 157, 104, 0.18); color: #2f9d68; }
+        .status-badge.good { background: rgba(217, 138, 38, 0.18); color: #d98a26; }
+        .status-badge.poor { background: rgba(216, 92, 92, 0.18); color: #d85c5c; }
+        .status-badge.pending { background: rgba(153, 163, 181, 0.18); color: #657087; }
+        .status-badge.avg-row { background: rgba(53, 103, 201, 0.08); font-weight: 800; }
+
         .modal-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(23, 30, 52, 0.45); backdrop-filter: blur(7px); z-index: 1000; }
         .modal-overlay.active { display: flex; }
         .modal-card { position: relative; width: 100%; max-width: 470px; padding: 30px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 25px; box-shadow: var(--shadow-lg); animation: modalShow 0.25s ease; }
@@ -221,6 +265,8 @@
             .calendar-grid { gap: 5px; }
             .weekday { font-size: 0.68rem; }
             .math-symbol { display: none; }
+            .tests-table-wrapper table { font-size: 0.78rem; }
+            .tests-table-wrapper th, .tests-table-wrapper td { padding: 6px 4px; }
         }
         @media (max-width: 500px) {
             .main-wrapper { padding-left: 10px; padding-right: 10px; }
@@ -230,11 +276,14 @@
             .calendar-icon { width: 36px; height: 36px; }
             .day { min-height: 45px; border-radius: 10px; font-size: 0.82rem; }
             .charts-container { grid-template-columns: 1fr; }
+            .tests-table-wrapper table { font-size: 0.7rem; }
+            .tests-table-wrapper th, .tests-table-wrapper td { padding: 4px 2px; }
+            .tests-table-wrapper .status-badge { font-size: 0.65rem; padding: 2px 8px; }
         }
     </style>
 </head>
 <body>
-    <!-- Математические символы на фоне - ХАОТИЧНОЕ РАСПОЛОЖЕНИЕ -->
+    <!-- Математические символы -->
     <div class="math-symbol math-1">π</div>
     <div class="math-symbol math-2">∫</div>
     <div class="math-symbol math-3">e</div>
@@ -369,6 +418,10 @@
                 <div class="page" id="page-progress">
                     <div class="progress-stats" id="progressStats"></div>
                     <div class="charts-container" id="chartsContainer"></div>
+                    <div class="tests-table-wrapper" id="testsTableWrapper">
+                        <h3 id="testsTableTitle">📋 Результаты контрольных точек</h3>
+                        <div id="testsTableContainer"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -387,7 +440,7 @@
         const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'ден': 'denis', 'алина': 'alina' };
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
-        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials');
+        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), testsTableWrapper = document.getElementById('testsTableWrapper'), testsTableTitle = document.getElementById('testsTableTitle'), testsTableContainer = document.getElementById('testsTableContainer');
         
         if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
         
@@ -497,50 +550,291 @@
             } 
         }
 
-        async function renderProgressPage() { 
-            if (!lessonsData.length) { progressStats.innerHTML = '<div class="empty-message">Нет данных</div>'; chartsContainer.innerHTML = ''; return; } 
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, pastLessons = lessonsData.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== ''), hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== ''); 
-            let completedHw = 0; 
-            hwLessons.forEach(l => { if (l.hwStatus === 'done' || l.hwStatus === 'checked' || l.hwStatus === 'Проверено' || l.hwStatus === 'Не проверено') completedHw++; }); 
-            const currentMonthStr = String(currentMonth + 1).padStart(2, '0'), currentYearStr = String(currentYear), monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length; 
-            if (currentStudentId === 'denis') { try { const res = await fetch(`config/denis_tests.json?t=${Date.now()}`); if (res.ok) testsData = await res.json(); else testsData = []; } catch (e) { testsData = []; } } 
-            let statsHTML = `<div class="stat-card"><div class="stat-value">${pastLessons.length}</div><div class="stat-label">Тем пройдено</div><div class="stat-sublabel">из них ${monthCompleted} в этом месяце</div></div><div class="stat-card"><div class="stat-value">${completedHw}</div><div class="stat-label">ДЗ выполнено</div><div class="stat-sublabel">из ${hwLessons.length} всего</div></div>`; 
-            if (currentStudentId === 'denis' && testsData.length > 0) { 
-                const avg = Math.round(testsData.reduce((sum, t) => sum + (t.score || 0), 0) / testsData.length); 
-                statsHTML += `<div class="stat-card"><div class="stat-value">${testsData.length}</div><div class="stat-label">Пробников решено</div><div class="stat-sublabel">средний балл: ${avg}</div></div>`; 
-            } 
-            progressStats.innerHTML = statsHTML; 
-            chartsContainer.innerHTML = `<div class="chart-card"><h3>Выполнение домашних заданий</h3><canvas id="hwChart"></canvas></div><div class="chart-card"><h3>Прогресс по темам</h3><canvas id="topicsChart"></canvas></div>`; 
-            if (currentStudentId === 'denis' && testsData.length > 0) chartsContainer.innerHTML += `<div class="chart-card" style="grid-column: 1 / -1;"><h3>Результаты пробников</h3><canvas id="testsChart"></canvas></div>`; 
-            const styles = getComputedStyle(document.body), textPrimary = styles.getPropertyValue('--text-primary').trim(), textSecondary = styles.getPropertyValue('--text-secondary').trim(), borderColor = styles.getPropertyValue('--border-color').trim(); 
-            const hwCtx = document.getElementById('hwChart').getContext('2d'); 
-            if (charts.hw) charts.hw.destroy(); 
-            charts.hw = new Chart(hwCtx, { 
-                type: 'doughnut', 
-                data: { labels: ['Выполнено', 'Осталось'], datasets: [{ data: [completedHw, Math.max(0, hwLessons.length - completedHw)], backgroundColor: ['#2f9d68', '#d85c5c'], hoverBackgroundColor: ['#2f9d68', '#d85c5c'], borderWidth: 0, hoverBorderWidth: 0 }] }, 
-                options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: textPrimary, font: { size: 12, weight: '600' } } } }, cutout: '65%' } 
-            }); 
-            const topicsByDate = {}; 
-            pastLessons.forEach(l => { if (!topicsByDate[l.date]) topicsByDate[l.date] = 0; topicsByDate[l.date]++; }); 
-            const sortedDates = Object.keys(topicsByDate).sort(); 
-            let cumulative = 0; 
-            const cumData = sortedDates.map(d => { cumulative += topicsByDate[d]; return cumulative; }); 
-            const topCtx = document.getElementById('topicsChart').getContext('2d'); 
-            if (charts.topics) charts.topics.destroy(); 
-            charts.topics = new Chart(topCtx, { 
-                type: 'line', 
-                data: { labels: sortedDates.map(d => d.split('-').slice(1).reverse().join('.')), datasets: [{ label: 'Тем', data: cumData, borderColor: '#3567c9', backgroundColor: 'rgba(53, 103, 201, 0.10)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#3567c9', pointBorderColor: '#ffffff', pointBorderWidth: 2 }] }, 
-                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, color: textSecondary, font: { weight: '600' } }, grid: { color: borderColor } }, x: { ticks: { color: textSecondary, font: { weight: '600' } }, grid: { display: false } } } } 
-            }); 
-            if (currentStudentId === 'denis' && testsData.length > 0) { 
-                const testCtx = document.getElementById('testsChart').getContext('2d'); 
-                if (charts.tests) charts.tests.destroy(); 
-                charts.tests = new Chart(testCtx, { 
-                    type: 'bar', 
-                    data: { labels: testsData.map((t, index) => t.name || `Пробник ${index + 1}`), datasets: [{ label: 'Балл', data: testsData.map(t => t.score || 0), backgroundColor: 'rgba(109, 84, 199, 0.70)', borderColor: '#6d54c7', borderWidth: 2, borderRadius: 8 }] }, 
-                    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { stepSize: 10, color: textSecondary, font: { weight: '600' } }, grid: { color: borderColor } }, x: { ticks: { color: textSecondary, font: { weight: '600' } }, grid: { display: false } } } } 
-                }); 
-            } 
+        // ============================================================
+        //  ЗАГРУЗКА КОНТРОЛЬНЫХ ТОЧЕК / ПРОБНИКОВ
+        // ============================================================
+        async function loadTests(studentId) {
+            const testFiles = {
+                'valeriya': 'valeriya_tests.json',
+                'amina': 'amina_tests.json',
+                'denis': 'denis_tests.json'
+            };
+
+            const fileName = testFiles[studentId];
+            if (!fileName) {
+                testsData = [];
+                return false;
+            }
+
+            try {
+                const response = await fetch(`config/${fileName}?t=${Date.now()}`);
+                if (!response.ok) throw new Error('Нет данных');
+                testsData = await response.json();
+                return true;
+            } catch {
+                testsData = [];
+                return false;
+            }
+        }
+
+        // ============================================================
+        //  СТРАНИЦА ПРОГРЕССА
+        // ============================================================
+        async function renderProgressPage() {
+            if (!lessonsData.length) {
+                progressStats.innerHTML = '<div class="empty-message">Нет данных об уроках</div>';
+                chartsContainer.innerHTML = '';
+                testsTableContainer.innerHTML = '';
+                testsTableWrapper.style.display = 'none';
+                return;
+            }
+
+            // Загружаем контрольные точки / пробники
+            await loadTests(currentStudentId);
+
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            const pastLessons = lessonsData.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
+            const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
+
+            let completedHw = 0;
+            hwLessons.forEach(l => {
+                const status = (l.hwStatus || 'pending').toLowerCase();
+                if (status.includes('проверен') || status === 'checked' || status === 'done') {
+                    completedHw++;
+                }
+            });
+
+            const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
+            const currentYearStr = String(currentYear);
+            const monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length;
+
+            // Статистика по контрольным точкам / пробникам
+            const isDenis = currentStudentId === 'denis';
+            const validTests = testsData.filter(t => t.name && t.name.trim() !== '');
+            const testsTotal = validTests.length;
+            const testsCompleted = validTests.filter(t => t.score !== undefined && t.score !== null).length;
+            const avgScore = testsTotal > 0 ? Math.round(validTests.reduce((sum, t) => sum + (t.score || 0), 0) / testsTotal) : 0;
+
+            let statsHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${pastLessons.length}</div>
+                    <div class="stat-label">Тем пройдено</div>
+                    <div class="stat-sublabel">из них ${monthCompleted} в этом месяце</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${completedHw}</div>
+                    <div class="stat-label">ДЗ выполнено</div>
+                    <div class="stat-sublabel">из ${hwLessons.length} всего</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${testsCompleted} / ${testsTotal}</div>
+                    <div class="stat-label">${isDenis ? 'Пробников' : 'Контрольных точек'}</div>
+                    <div class="stat-sublabel">средний балл: ${avgScore}</div>
+                </div>
+            `;
+
+            progressStats.innerHTML = statsHTML;
+
+            // Графики
+            chartsContainer.innerHTML = `
+                <div class="chart-card">
+                    <h3>Выполнение домашних заданий</h3>
+                    <canvas id="hwChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>${isDenis ? 'Результаты пробников' : 'Результаты контрольных точек'}</h3>
+                    <canvas id="testsChart"></canvas>
+                </div>
+            `;
+
+            const styles = getComputedStyle(document.body);
+            const textPrimary = styles.getPropertyValue('--text-primary').trim();
+            const textSecondary = styles.getPropertyValue('--text-secondary').trim();
+            const borderColor = styles.getPropertyValue('--border-color').trim();
+
+            // График домашек
+            const hwCtx = document.getElementById('hwChart').getContext('2d');
+            if (charts.hw) charts.hw.destroy();
+            charts.hw = new Chart(hwCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Выполнено', 'Осталось'],
+                    datasets: [{
+                        data: [completedHw, Math.max(0, hwLessons.length - completedHw)],
+                        backgroundColor: ['#2f9d68', '#d85c5c'],
+                        hoverBackgroundColor: ['#2f9d68', '#d85c5c'],
+                        borderWidth: 0,
+                        hoverBorderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: textPrimary,
+                                font: { size: 12, weight: '600' }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            // График контрольных точек / пробников
+            const testCtx = document.getElementById('testsChart').getContext('2d');
+            if (charts.tests) charts.tests.destroy();
+
+            const validTestsForChart = validTests.filter(t => t.score !== undefined && t.score !== null);
+            const testLabels = validTestsForChart.map((t, index) => t.name || (isDenis ? `Пробник ${index + 1}` : `КТ ${index + 1}`));
+            const testScores = validTestsForChart.map(t => t.score || 0);
+            const testColors = validTestsForChart.map(t => {
+                const score = t.score || 0;
+                const max = t.max || 100;
+                const percent = score / max;
+                if (percent >= 0.8) return 'rgba(47, 157, 104, 0.70)';
+                if (percent >= 0.6) return 'rgba(217, 138, 38, 0.70)';
+                return 'rgba(216, 92, 92, 0.70)';
+            });
+
+            charts.tests = new Chart(testCtx, {
+                type: 'bar',
+                data: {
+                    labels: testLabels,
+                    datasets: [{
+                        label: isDenis ? 'Балл' : 'Балл',
+                        data: testScores,
+                        backgroundColor: testColors.length ? testColors : ['rgba(109, 84, 199, 0.70)'],
+                        borderColor: testColors.length ? testColors.map(c => c.replace('0.70', '1')) : ['#6d54c7'],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const test = validTestsForChart[context.dataIndex];
+                                    if (test && test.description) {
+                                        return '📌 ' + test.description;
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                color: textSecondary,
+                                font: { weight: '600' }
+                            },
+                            grid: { color: borderColor }
+                        },
+                        x: {
+                            ticks: {
+                                color: textSecondary,
+                                font: { weight: '600' },
+                                maxRotation: 20,
+                                minRotation: 0
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // === ТАБЛИЦА С КОНТРОЛЬНЫМИ ТОЧКАМИ / ПРОБНИКАМИ ===
+            renderTestsTable(isDenis);
+        }
+
+        // ============================================================
+        //  ТАБЛИЦА КОНТРОЛЬНЫХ ТОЧЕК / ПРОБНИКОВ
+        // ============================================================
+        function renderTestsTable(isDenis) {
+            const container = testsTableContainer;
+            const title = testsTableTitle;
+
+            const validTests = testsData.filter(t => t.name && t.name.trim() !== '');
+
+            if (!validTests || validTests.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); padding: 12px 0;">Нет данных</p>';
+                testsTableWrapper.style.display = 'block';
+                return;
+            }
+
+            title.textContent = isDenis ? '📋 Результаты пробников' : '📋 Результаты контрольных точек';
+            testsTableWrapper.style.display = 'block';
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th style="text-align: center;">Баллы</th>
+                            <th style="text-align: center;">Статус</th>
+                            ${!isDenis ? '<th>Описание</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            validTests.forEach(t => {
+                const score = t.score !== undefined && t.score !== null ? t.score : '—';
+                const max = t.max || 100;
+                const isCompleted = t.score !== undefined && t.score !== null;
+                const percent = isCompleted ? Math.round((t.score / max) * 100) : 0;
+                let statusText, statusClass;
+
+                if (!isCompleted) {
+                    statusText = '⏳ Не выполнено';
+                    statusClass = 'pending';
+                } else if (percent >= 80) {
+                    statusText = '✅ Отлично';
+                    statusClass = 'excellent';
+                } else if (percent >= 60) {
+                    statusText = '📝 Хорошо';
+                    statusClass = 'good';
+                } else {
+                    statusText = '⚠️ Нужно повторить';
+                    statusClass = 'poor';
+                }
+
+                html += `
+                    <tr>
+                        <td style="font-weight: 600;">${t.name || 'Без названия'}</td>
+                        <td style="text-align: center; font-weight: 700;">${isCompleted ? `${score} / ${max}` : '—'}</td>
+                        <td style="text-align: center;">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </td>
+                        ${!isDenis ? `<td style="color: var(--text-secondary); font-size: 0.85rem;">${t.description || '—'}</td>` : ''}
+                    </tr>
+                `;
+            });
+
+            // Строка со средним баллом
+            const completedTests = validTests.filter(t => t.score !== undefined && t.score !== null);
+            const avg = completedTests.length > 0 ? Math.round(completedTests.reduce((sum, t) => sum + t.score, 0) / completedTests.length) : 0;
+
+            html += `
+                <tr class="avg-row">
+                    <td style="padding: 12px 8px; font-weight: 800; border-top: 2px solid var(--border-color);">Средний балл</td>
+                    <td style="text-align: center; padding: 12px 8px; font-weight: 800; color: var(--accent-blue); border-top: 2px solid var(--border-color);">${completedTests.length > 0 ? avg : '—'}</td>
+                    <td style="text-align: center; padding: 12px 8px; border-top: 2px solid var(--border-color);"></td>
+                    ${!isDenis ? '<td style="padding: 12px 8px; border-top: 2px solid var(--border-color);"></td>' : ''}
+                </tr>
+            `;
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
         }
 
         function renderHomeworkCards() { 
