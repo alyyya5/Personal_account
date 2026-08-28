@@ -3,230 +3,203 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Домашнее задание | Задачи на движение</title>
+    <title>Контрольная точка №1 | 6 класс</title>
 
     <script>
         window.MathJax = {
             tex: { 
                 inlineMath: [['\\(', '\\)']], 
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                displayMath: [['$$', '$$'], ['\\[', '\\]']] 
             },
-            options: { 
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-            }
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
         };
     </script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <style>
         :root {
-            --bg-color: #f0f5fc;
-            --card-bg: #ffffff;
-            --text-main: #0b1e33;
-            --text-secondary: #5e6f8c;
-            --accent-blue: #1d6f9c;
-            --accent-green: #1a8a5a;
-            --accent-orange: #d48a3a;
-            --accent-purple: #7c3aed;
-            --accent-red: #c0392b;
-            --border-light: #d0ddea;
+            --bg: #eef3fa;
+            --card: #ffffff;
+            --text: #0b1e33;
+            --text-sec: #5e6f8c;
+            --blue: #1d6f9c;
+            --green: #1a8a5a;
+            --red: #c0392b;
+            --border: #d0ddea;
             --correct-bg: #eafaf1;
-            --correct-border: #1a8a5a;
             --wrong-bg: #fdf0ee;
-            --wrong-border: #c0392b;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            background: linear-gradient(160deg, #f0f5fc 0%, #e8f0f9 100%);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 30px 16px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
         }
-
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
-            background: var(--card-bg);
+            background: var(--card);
             border-radius: 28px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-            padding: 40px;
+            padding: 35px 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
         }
-
         header {
             text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
             border-bottom: 2px solid #eef2f7;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
         }
-
-        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-        .subtitle { font-size: 15px; color: var(--text-secondary); }
-
+        h1 { font-size: 32px; font-weight: 800; color: var(--blue); }
+        .subtitle { font-size: 16px; color: var(--text-sec); }
         .info-line {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 12px;
-            padding: 8px 16px;
-            background: #f8faff;
-            border-radius: 8px;
+            font-size: 14px; color: var(--text-sec);
+            margin-top: 12px; padding: 8px 16px;
+            background: #f8faff; border-radius: 8px;
             display: inline-block;
         }
-        .info-line strong { color: var(--text-main); }
-
+        .info-line strong { color: var(--text); }
         .tags { display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-
         .tag {
             font-size: 12px; font-weight: 600; padding: 4px 14px;
-            border-radius: 40px; text-transform: uppercase; letter-spacing: 0.5px;
+            border-radius: 40px; background: #dce5f2; color: #1d3a66;
         }
-        .tag-ege   { background: #dce5f2; color: #1d3a66; }
-        .tag-time  { background: #f1f5f9; color: #475569; }
-        .tag-level { background: #fee2d6; color: var(--accent-red); }
 
-        /* Прогресс */
         .progress-wrap {
-            background: #f4f8fd;
-            border: 1px solid #e2ebf5;
-            border-radius: 16px;
-            padding: 14px 18px;
-            margin-bottom: 32px;
+            background: #f4f8fd; border: 1px solid #e2ebf5;
+            border-radius: 16px; padding: 14px 18px; margin-bottom: 28px;
         }
         .progress-top {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;
+            display: flex; justify-content: space-between;
+            font-size: 13px; font-weight: 600; color: var(--text-sec);
+            margin-bottom: 8px;
         }
         .progress-bar {
             height: 10px; background: #e3ecf5; border-radius: 20px; overflow: hidden;
         }
         .progress-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
-            border-radius: 20px; transition: width 0.5s ease, background 0.5s ease;
+            background: linear-gradient(90deg, var(--blue), #4a9fd8);
+            border-radius: 20px; transition: width 0.5s;
         }
-        .progress-fill.good { background: linear-gradient(90deg, #1a8a5a, #34c98a); }
-        .progress-fill.bad  { background: linear-gradient(90deg, #c0392b, #e67e5a); }
+        .progress-fill.good { background: linear-gradient(90deg, var(--green), #34c98a); }
+        .progress-fill.bad { background: linear-gradient(90deg, var(--red), #e67e5a); }
 
-        .section { margin-bottom: 38px; }
-
+        .section { margin-bottom: 32px; }
         .section-header {
             display: flex; align-items: center; gap: 12px;
-            margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #eef2f7;
+            margin-bottom: 14px; padding-bottom: 8px;
+            border-bottom: 2px solid #eef2f7;
         }
         .section-num {
-            background: var(--accent-blue); color: white;
-            width: 32px; height: 32px; border-radius: 8px;
+            background: var(--blue); color: white;
+            width: 30px; height: 30px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 14px; flex-shrink: 0;
+            font-weight: 700; font-size: 13px; flex-shrink: 0;
         }
-        .section-title { font-size: 20px; font-weight: 700; }
-        .section-desc { font-size: 14px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+        .section-title { font-size: 18px; font-weight: 700; }
+        .section-desc { font-size: 13px; color: var(--text-sec); margin-left: auto; }
 
         .task-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 14px;
         }
-
         .task-card {
             background: #fafcff;
             border-radius: 14px;
-            padding: 18px 20px 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            padding: 16px 18px 14px;
             border: 2px solid #e6edf6;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s, background 0.3s;
+            transition: 0.2s;
             display: flex; flex-direction: column;
-            position: relative;
         }
-        .task-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-        .task-card.is-correct { border-color: var(--correct-border); background: var(--correct-bg); }
-        .task-card.is-wrong   { border-color: var(--wrong-border);   background: var(--wrong-bg); }
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+        .task-card.is-correct { border-color: var(--green); background: var(--correct-bg); }
+        .task-card.is-wrong { border-color: var(--red); background: var(--wrong-bg); }
 
         .task-label {
-            font-size: 11px; font-weight: 700; color: var(--accent-blue);
-            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;
+            font-size: 10px; font-weight: 700; color: var(--blue);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
         .task-label.orange { color: #d48a3a; }
+        .task-label.green { color: var(--green); }
+        .task-label.red { color: var(--red); }
         .task-label.purple { color: #7c3aed; }
-        .task-label.green  { color: var(--accent-green); }
-        .task-label.red    { color: var(--accent-red); }
 
         .task-condition {
-            font-size: 16px; margin-bottom: 14px; padding: 4px 0;
-            color: var(--text-main); flex: 1; line-height: 1.5;
+            font-size: 15px; margin-bottom: 12px;
+            color: var(--text); line-height: 1.6;
+            min-height: 40px;
+            display: flex; align-items: center;
         }
+        .task-condition mjx-container { font-size: 110% !important; }
 
         .answer-row {
             display: flex; align-items: center; gap: 10px;
-            margin-top: 6px; padding-top: 10px;
-            border-top: 1px solid #eef2f7;
-            font-size: 14px; font-weight: 600; color: var(--text-secondary);
+            padding-top: 10px; border-top: 1px solid #eef2f7;
+            font-size: 14px; font-weight: 600; color: var(--text-sec);
         }
-
         .answer-input {
             flex: 1; border: none;
-            border-bottom: 2px solid var(--border-light);
+            border-bottom: 2px solid var(--border);
             outline: none; font-size: 16px; font-weight: 600;
             padding: 4px 6px; background: transparent;
-            color: var(--text-main);
-            transition: border-color 0.2s, background 0.2s;
-            min-width: 60px; font-family: inherit;
+            color: var(--text); font-family: inherit;
         }
-        .answer-input:focus { border-bottom-color: var(--accent-blue); }
-        .answer-input.correct { border-bottom-color: var(--correct-border); background: #dff5e9; border-radius: 4px 4px 0 0; }
-        .answer-input.wrong   { border-bottom-color: var(--wrong-border);   background: #fbe3df; border-radius: 4px 4px 0 0; }
+        .answer-input:focus { border-bottom-color: var(--blue); }
+        .answer-input.correct { border-bottom-color: var(--green); background: #dff5e9; border-radius: 4px 4px 0 0; }
+        .answer-input.wrong { border-bottom-color: var(--red); background: #fbe3df; border-radius: 4px 4px 0 0; }
 
         .status-badge {
             font-size: 12px; font-weight: 700; padding: 3px 10px;
             border-radius: 30px; white-space: nowrap; display: none;
         }
-        .status-badge.show { display: inline-block; animation: pop 0.25s ease-out; }
-        .status-badge.ok  { background: #d5f2e3; color: var(--correct-border); }
-        .status-badge.err { background: #fadbd6; color: var(--wrong-border); }
-        @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .status-badge.show { display: inline-block; animation: pop 0.2s ease-out; }
+        .status-badge.ok { background: #d5f2e3; color: var(--green); }
+        .status-badge.err { background: #fadbd6; color: var(--red); }
+        @keyframes pop { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .action-bar { display: flex; flex-wrap: wrap; gap: 14px; margin: 20px 0 24px; justify-content: center; }
-
+        .action-bar {
+            display: flex; flex-wrap: wrap; gap: 14px;
+            margin: 20px 0 18px; justify-content: center;
+        }
         .btn {
             padding: 10px 32px; border: none; border-radius: 40px;
             font-size: 15px; font-weight: 600; cursor: pointer;
-            transition: 0.2s; background: var(--accent-blue); color: white;
+            transition: 0.2s; background: var(--blue); color: white;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29,111,156,0.3); }
         .btn:active { transform: scale(0.97); }
-        .btn-success { background: var(--accent-green); }
+        .btn-success { background: var(--green); }
         .btn-success:hover { box-shadow: 0 4px 12px rgba(26,138,90,0.3); }
-        .btn-danger { background: var(--accent-red); }
+        .btn-danger { background: var(--red); }
         .btn-danger:hover { box-shadow: 0 4px 12px rgba(192,57,43,0.3); }
-        .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
-        .btn-outline:hover { background: #f0f4fa; border-color: #a0b4cc; box-shadow: none; }
 
         .result-area {
             background: #f0f9ff; border-radius: 20px; padding: 20px 24px;
-            margin-top: 20px; font-size: 0.95rem;
-            border: 1px solid #bfdbfe; min-height: 80px;
+            margin-top: 16px; font-size: 0.95rem;
+            border: 1px solid #bfdbfe; min-height: 70px;
         }
-        .result-area .big-score { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
-        .result-area ul { margin: 10px 0 0 20px; }
-        .result-area li { margin-bottom: 4px; }
+        .result-area .big-score { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+        .result-area .percent { font-size: 2rem; color: var(--blue); font-weight: 900; }
+        .result-area ul { margin: 8px 0 0 20px; }
+        .result-area li { margin-bottom: 6px; }
 
-        /* Модалка */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(10, 25, 45, 0.35);
-            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            background: rgba(10,25,45,0.35);
+            backdrop-filter: blur(6px);
             display: none; align-items: center; justify-content: center;
             z-index: 1000; padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
             background: white; border-radius: 28px;
-            max-width: 500px; width: 100%; padding: 28px 30px;
+            max-width: 600px; width: 100%; padding: 28px 30px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.12);
             animation: modalFade 0.25s ease-out;
         }
@@ -240,557 +213,557 @@
             width: 100%; padding: 12px 16px;
             border: 2px solid #dce5ef; border-radius: 18px;
             font-size: 0.95rem; font-family: inherit;
-            resize: vertical; outline: none; transition: 0.2s;
+            resize: vertical; outline: none;
         }
-        .modal-card textarea:focus { border-color: #3b82f6; }
+        .modal-card textarea:focus { border-color: var(--blue); }
         .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
         .modal-buttons .btn { flex: 1; }
         #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; }
 
         .footer-note {
-            margin-top: 30px; padding-top: 16px;
+            margin-top: 25px; padding-top: 14px;
             border-top: 2px solid #eef2f7;
-            font-size: 13px; color: var(--text-secondary);
-            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center;
+            font-size: 13px; color: var(--text-sec);
+            display: flex; justify-content: space-between; flex-wrap: wrap;
         }
 
         @media (max-width: 700px) {
-            .container { padding: 22px 18px; border-radius: 18px; }
+            .container { padding: 18px; }
             .task-grid { grid-template-columns: 1fr; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 6px; }
             .section-desc { margin-left: 0; }
-            h1 { font-size: 22px; }
-            .task-condition { font-size: 15px; }
-            .action-bar .btn { flex: 1; min-width: 120px; text-align: center; }
+            h1 { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header>
-            <h1> Домашнее задание</h1>
-            <div class="subtitle">по теме «Задачи на движение» · Повторение</div>
-            <div class="info-line">
-                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
-                <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
-                <strong>Тема:</strong> <span id="lessonTopic"></span>
-            </div>
-            <div class="tags">
-                <span class="tag tag-ege">15 заданий</span>
-                <span class="tag tag-time">⏱ 40–60 минут</span>
-                <span class="tag tag-level">Средний уровень</span>
-            </div>
-        </header>
-
-        <!-- Прогресс -->
-        <div class="progress-wrap">
-            <div class="progress-top">
-                <span>📈 Прогресс выполнения</span>
-                <span id="progressText">Заполнено: 0 / 15</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <header>
+        <h1>📝 Контрольная точка №1</h1>
+        <div class="subtitle">6 класс</div>
+        <div class="info-line">
+            <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+            <strong>Дата:</strong> <span id="lessonDate"></span>
         </div>
-
-        <!-- ТИП 1: Простейшие задачи -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-num">1</div>
-                <div class="section-title">Простейшие задачи на формулу S = V · t</div>
-                <div class="section-desc">3 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label">Тип 1</div>
-                    <div class="task-condition">Поезд шёл 5 часов со скоростью 72 км/ч. Какой путь он прошёл?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км):</span>
-                        <input class="answer-input" type="text" id="q1" placeholder="S =" autocomplete="off">
-                        <span class="status-badge" id="badge-q1"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Тип 1</div>
-                    <div class="task-condition">Велосипедист проехал 45 км со скоростью 15 км/ч. Сколько времени он затратил?</div>
-                    <div class="answer-row">
-                        <span>Ответ (ч):</span>
-                        <input class="answer-input" type="text" id="q2" placeholder="t =" autocomplete="off">
-                        <span class="status-badge" id="badge-q2"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Тип 1</div>
-                    <div class="task-condition">Автомобиль за 3 часа проехал 240 км. Какова его скорость?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км/ч):</span>
-                        <input class="answer-input" type="text" id="q3" placeholder="V =" autocomplete="off">
-                        <span class="status-badge" id="badge-q3"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ТИП 2: Встречное движение -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-num">2</div>
-                <div class="section-title">Встречное движение</div>
-                <div class="section-desc">3 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label orange">Тип 2</div>
-                    <div class="task-condition">Из двух городов, расстояние между которыми 520 км, выехали навстречу друг другу два автомобиля со скоростями 60 и 70 км/ч. Через сколько часов они встретятся?</div>
-                    <div class="answer-row">
-                        <span>Ответ (ч):</span>
-                        <input class="answer-input" type="text" id="q4" placeholder="t =" autocomplete="off">
-                        <span class="status-badge" id="badge-q4"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label orange">Тип 2</div>
-                    <div class="task-condition">Два пешехода вышли одновременно навстречу друг другу из двух посёлков. Скорость первого 5 км/ч, второго 4 км/ч. Они встретились через 3 часа. Каково расстояние между посёлками?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км):</span>
-                        <input class="answer-input" type="text" id="q5" placeholder="S =" autocomplete="off">
-                        <span class="status-badge" id="badge-q5"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label orange">Тип 2</div>
-                    <div class="task-condition">Расстояние между пристанями 180 км. Навстречу друг другу вышли два катера и встретились через 4 часа. Скорость одного катера 25 км/ч. Найдите скорость второго катера.</div>
-                    <div class="answer-row">
-                        <span>Ответ (км/ч):</span>
-                        <input class="answer-input" type="text" id="q6" placeholder="V =" autocomplete="off">
-                        <span class="status-badge" id="badge-q6"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ТИП 3: Противоположные направления -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-num">3</div>
-                <div class="section-title">Движение в противоположных направлениях</div>
-                <div class="section-desc">3 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label purple">Тип 3</div>
-                    <div class="task-condition">Из одного пункта одновременно в противоположных направлениях вышли два пешехода. Скорость первого 4 км/ч, второго 6 км/ч. Какое расстояние будет между ними через 2 часа?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км):</span>
-                        <input class="answer-input" type="text" id="q7" placeholder="S =" autocomplete="off">
-                        <span class="status-badge" id="badge-q7"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label purple">Тип 3</div>
-                    <div class="task-condition">Из двух пунктов, расстояние между которыми 10 км, вышли одновременно в противоположных направлениях два велосипедиста. Скорость первого 12 км/ч, второго 15 км/ч. На каком расстоянии они будут через 3 часа?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км):</span>
-                        <input class="answer-input" type="text" id="q8" placeholder="S =" autocomplete="off">
-                        <span class="status-badge" id="badge-q8"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label purple">Тип 3</div>
-                    <div class="task-condition">Два автомобиля выехали из одного пункта в противоположных направлениях. Через 3 часа расстояние между ними было 450 км. Скорость одного автомобиля 70 км/ч. Найдите скорость второго автомобиля.</div>
-                    <div class="answer-row">
-                        <span>Ответ (км/ч):</span>
-                        <input class="answer-input" type="text" id="q9" placeholder="V =" autocomplete="off">
-                        <span class="status-badge" id="badge-q9"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ТИП 4: Вдогонку -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-num">4</div>
-                <div class="section-title">Движение в одном направлении (вдогонку)</div>
-                <div class="section-desc">3 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label red">Тип 4</div>
-                    <div class="task-condition">Из города выехал велосипедист со скоростью 12 км/ч. Через 2 часа вслед за ним выехал мотоциклист со скоростью 36 км/ч. Через сколько часов мотоциклист догонит велосипедиста?</div>
-                    <div class="answer-row">
-                        <span>Ответ (ч):</span>
-                        <input class="answer-input" type="text" id="q10" placeholder="t =" autocomplete="off">
-                        <span class="status-badge" id="badge-q10"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label red">Тип 4</div>
-                    <div class="task-condition">Из двух пунктов, расстояние между которыми 30 км, вышли одновременно в одном направлении два пешехода. Скорость первого 5 км/ч, второго 7 км/ч. Через сколько часов второй догонит первого?</div>
-                    <div class="answer-row">
-                        <span>Ответ (ч):</span>
-                        <input class="answer-input" type="text" id="q11" placeholder="t =" autocomplete="off">
-                        <span class="status-badge" id="badge-q11"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label red">Тип 4</div>
-                    <div class="task-condition">Из одного пункта в одном направлении выехали две машины. Скорость первой 90 км/ч, второй 70 км/ч. Какое расстояние будет между ними через 4 часа?</div>
-                    <div class="answer-row">
-                        <span>Ответ (км):</span>
-                        <input class="answer-input" type="text" id="q12" placeholder="S =" autocomplete="off">
-                        <span class="status-badge" id="badge-q12"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ТИП 5: По реке -->
-        <section class="section">
-            <div class="section-header">
-                <div class="section-num">5</div>
-                <div class="section-title">Движение по реке</div>
-                <div class="section-desc">3 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label green">Тип 5</div>
-                    <div class="task-condition">Собственная скорость катера 18 км/ч, скорость течения реки 3 км/ч. Какова скорость катера по течению и против течения?</div>
-                    <div class="answer-row">
-                        <span>Ответ (по течению; против):</span>
-                        <input class="answer-input" type="text" id="q13" placeholder="V₁; V₂" autocomplete="off">
-                        <span class="status-badge" id="badge-q13"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label green">Тип 5</div>
-                    <div class="task-condition">Скорость моторной лодки по течению 28 км/ч, а против течения 22 км/ч. Найдите собственную скорость лодки и скорость течения реки.</div>
-                    <div class="answer-row">
-                        <span>Ответ (собств; теч):</span>
-                        <input class="answer-input" type="text" id="q14" placeholder="Vсоб; Vтеч" autocomplete="off">
-                        <span class="status-badge" id="badge-q14"></span>
-                    </div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label green">Тип 5</div>
-                    <div class="task-condition">Собственная скорость теплохода 30 км/ч, скорость течения 4 км/ч. Сколько времени затратит теплоход на путь по течению между двумя причалами, если расстояние между ними 136 км?</div>
-                    <div class="answer-row">
-                        <span>Ответ (ч):</span>
-                        <input class="answer-input" type="text" id="q15" placeholder="t =" autocomplete="off">
-                        <span class="status-badge" id="badge-q15"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- КНОПКИ -->
-        <div class="action-bar">
-            <button class="btn" id="checkBtn">✅ Проверить задания</button>
-            <button class="btn btn-success" id="reportBtn"> Отправить отчёт</button>
-            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+        <div class="tags">
+            <span class="tag">35 заданий</span>
+            <span class="tag">Все темы</span>
         </div>
+    </header>
 
-        <!-- РЕЗУЛЬТАТ -->
-        <div id="resultArea" class="result-area">
-            📌 После выполнения нажмите «Проверить задания», затем «Отправить отчёт».
+    <div class="progress-wrap">
+        <div class="progress-top">
+            <span> Прогресс</span>
+            <span id="progressText">0 / 35</span>
         </div>
-
-        <div class="footer-note">
-            <span>📌 Задачи на движение · 15 заданий</span>
-            <span class="tag tag-ege">Повторение</span>
-        </div>
-
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
-    <!-- МОДАЛКА -->
-    <div class="modal-overlay" id="reportModal">
-        <div class="modal-card">
-            <h3>📤 Отправить отчёт</h3>
-            <p>Было сложно? Какие вопросы возникли?</p>
-            <textarea id="reportComment" rows="4" placeholder="Напишите, что было непонятно, или задайте вопрос..."></textarea>
-            <div class="modal-buttons">
-                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
-                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
-            </div>
-            <div id="modalStatus"></div>
+    <!-- ЗАДАНИЯ -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">1</div>
+            <div class="section-title">Сложение и вычитание</div>
+            <div class="section-desc">4 задания</div>
         </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label">№1</div>
+                <div class="task-condition">\((-15) + (-9) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q1"><span class="status-badge" id="b1"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№2</div>
+                <div class="task-condition">\((-4.8) + (-3.2) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q2"><span class="status-badge" id="b2"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№3</div>
+                <div class="task-condition">\(8 - (-12) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q3"><span class="status-badge" id="b3"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№4</div>
+                <div class="task-condition">\(-6 - (-14) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q4"><span class="status-badge" id="b4"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">2</div>
+            <div class="section-title">Алгебраическая сумма · Длина отрезка</div>
+            <div class="section-desc">3 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label orange">№5</div>
+                <div class="task-condition">\(-35 + 18 + (-12) + 29 =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q5"><span class="status-badge" id="b5"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№6</div>
+                <div class="task-condition">\(4.5 + (-6.2) + (-4.5) + 6.2 =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q6"><span class="status-badge" id="b6"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№7</div>
+                <div class="task-condition">\(A(-8)\) и \(B(4)\) → длина</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q7"><span class="status-badge" id="b7"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Умножение и деление дробей</div>
+            <div class="section-desc">4 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label green">№8</div>
+                <div class="task-condition">\(\left(\dfrac{-2}{5}\right) \cdot \dfrac{3}{7} =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q8"><span class="status-badge" id="b8"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label green">№9</div>
+                <div class="task-condition">\(\left(\dfrac{-4}{9}\right) \cdot \left(\dfrac{-3}{8}\right) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q9"><span class="status-badge" id="b9"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label green">№10</div>
+                <div class="task-condition">\(\left(\dfrac{-5}{6}\right) : \dfrac{2}{3} =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q10"><span class="status-badge" id="b10"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label green">№11</div>
+                <div class="task-condition">\(\dfrac{3}{4} : \left(\dfrac{-9}{10}\right) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q11"><span class="status-badge" id="b11"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">4</div>
+            <div class="section-title">Степень · Смешанные выражения</div>
+            <div class="section-desc">3 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label purple">№12</div>
+                <div class="task-condition">\(\left(\dfrac{-3}{5}\right)^2 =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q12"><span class="status-badge" id="b12"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label purple">№13</div>
+                <div class="task-condition">\(\left(\dfrac{-1}{4}\right)^3 =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q13"><span class="status-badge" id="b13"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label purple">№14</div>
+                <div class="task-condition">\(\left(\dfrac{-2}{3}\right)\cdot 6 + \left(\dfrac{1}{3}\right)^2 =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q14"><span class="status-badge" id="b14"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">5</div>
+            <div class="section-title">Приведение подобных</div>
+            <div class="section-desc">4 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label">№15</div>
+                <div class="task-condition">\(7a - 4a + 3b - 8b =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q15"><span class="status-badge" id="b15"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№16</div>
+                <div class="task-condition">\(3x + 6y - 5x + 8y - 2x =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q16"><span class="status-badge" id="b16"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№17</div>
+                <div class="task-condition">\(0.3x + 0.5y - 0.1x + 0.2y + x =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q17"><span class="status-badge" id="b17"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№18</div>
+                <div class="task-condition">\(\dfrac{1}{2} a - \dfrac{1}{3} b + \dfrac{1}{4} a - \dfrac{2}{3} b + a =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q18"><span class="status-badge" id="b18"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">6</div>
+            <div class="section-title">Подобные со скобками</div>
+            <div class="section-desc">2 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label red">№19</div>
+                <div class="task-condition">\(3a - 4b + 2c - a + 3b - c - 2a =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q19"><span class="status-badge" id="b19"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label red">№20</div>
+                <div class="task-condition">\(5x - (3x - 2y) + 4y - (2x - y) =\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q20"><span class="status-badge" id="b20"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">7</div>
+            <div class="section-title">Решение уравнений</div>
+            <div class="section-desc">6 заданий</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label">№21</div>
+                <div class="task-condition">\(x + 9 = 21\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q21"><span class="status-badge" id="b21"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№22</div>
+                <div class="task-condition">\(y - 5 = 14\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q22"><span class="status-badge" id="b22"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№23</div>
+                <div class="task-condition">\(6x = 42\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q23"><span class="status-badge" id="b23"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label">№24</div>
+                <div class="task-condition">\(3(x + 4) = 18\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q24"><span class="status-badge" id="b24"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№25</div>
+                <div class="task-condition">\(6x - (3x + 2) = 13\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q25"><span class="status-badge" id="b25"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№26</div>
+                <div class="task-condition">\(5x - 2 = 3x + 10\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q26"><span class="status-badge" id="b26"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">8</div>
+            <div class="section-title">Дроби · Модуль</div>
+            <div class="section-desc">4 задания</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label green">№27</div>
+                <div class="task-condition">\(\dfrac{x + 3}{4} = 6\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q27"><span class="status-badge" id="b27"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label green">№28</div>
+                <div class="task-condition">\(\dfrac{2x - 1}{3} = 5\)</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" id="q28"><span class="status-badge" id="b28"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label purple">№29</div>
+                <div class="task-condition">\(|x| = 20\)</div>
+                <div class="answer-row"><span>Ответ (через ;):</span><input class="answer-input" id="q29"><span class="status-badge" id="b29"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label purple">№30</div>
+                <div class="task-condition">\(|x - 3| = 7\)</div>
+                <div class="answer-row"><span>Ответ (через ;):</span><input class="answer-input" id="q30"><span class="status-badge" id="b30"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">9</div>
+            <div class="section-title">Задачи на движение</div>
+            <div class="section-desc">5 заданий</div>
+        </div>
+        <div class="task-grid">
+            <div class="task-card"><div class="task-label">№31</div>
+                <div class="task-condition">🚗 Автомобиль ехал 4 часа со скоростью 85 км/ч. Какой путь он проехал?</div>
+                <div class="answer-row"><span>Ответ (км):</span><input class="answer-input" id="q31"><span class="status-badge" id="b31"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label orange">№32</div>
+                <div class="task-condition">🚗 Из двух городов, расстояние 480 км, выехали навстречу два авто со скоростями 55 и 65 км/ч. Через сколько часов они встретятся?</div>
+                <div class="answer-row"><span>Ответ (ч):</span><input class="answer-input" id="q32"><span class="status-badge" id="b32"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label purple">№33</div>
+                <div class="task-condition"> Из одного пункта в противоположных направлениях вышли два пешехода со скоростями 5 и 7 км/ч. Какое расстояние будет между ними через 3 часа?</div>
+                <div class="answer-row"><span>Ответ (км):</span><input class="answer-input" id="q33"><span class="status-badge" id="b33"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label red">№34</div>
+                <div class="task-condition">🏃 Из пункта A вышел пешеход со скоростью 6 км/ч. Через 2 часа вслед за ним выехал велосипедист со скоростью 18 км/ч. Через сколько часов велосипедист догонит пешехода?</div>
+                <div class="answer-row"><span>Ответ (ч):</span><input class="answer-input" id="q34"><span class="status-badge" id="b34"></span></div>
+            </div>
+            <div class="task-card"><div class="task-label green">№35</div>
+                <div class="task-condition"> Собственная скорость катера 22 км/ч, скорость течения 4 км/ч. Сколько времени затратит катер на путь по течению между причалами, если расстояние 130 км?</div>
+                <div class="answer-row"><span>Ответ (ч):</span><input class="answer-input" id="q35"><span class="status-badge" id="b35"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="action-bar">
+        <button class="btn" id="checkBtn">✅ Проверить</button>
+        <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
+        <button class="btn btn-danger" id="resetBtn">🔄 Очистить</button>
     </div>
 
-    <script src="../../config.js"></script>
-    <script>
-        (function() {
+    <div id="resultArea" class="result-area">
+        📌 После выполнения нажмите «Проверить», затем «Отправить отчёт».
+    </div>
 
-            // ПРАВИЛЬНЫЕ ОТВЕТЫ
-            const answers = {
-                q1: "360",
-                q2: "3",
-                q3: "80",
-                q4: "4",
-                q5: "27",
-                q6: "20",
-                q7: "20",
-                q8: "91",
-                q9: "80",
-                q10: "1",
-                q11: "15",
-                q12: "80",
-                q13: "21; 15",
-                q14: "25; 3",
-                q15: "4"
-            };
+    <div class="footer-note">
+        <span>📌 Контрольная точка №1 · 6 класс</span>
+        <span class="tag">35 заданий</span>
+    </div>
 
-            const answerInputs = document.querySelectorAll('.answer-input');
-            const checkBtn   = document.getElementById('checkBtn');
-            const resetBtn   = document.getElementById('resetBtn');
-            const reportBtn  = document.getElementById('reportBtn');
-            const resultArea = document.getElementById('resultArea');
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
+</div>
 
-            const reportModal     = document.getElementById('reportModal');
-            const cancelReportBtn = document.getElementById('cancelReportBtn');
-            const sendReportBtn   = document.getElementById('sendReportBtn');
-            const reportComment   = document.getElementById('reportComment');
-            const modalStatus     = document.getElementById('modalStatus');
+<div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+        <h3>📤 Отправить отчёт</h3>
+        <p>Напишите комментарий (необязательно)</p>
+        <textarea id="reportComment" rows="4" placeholder="Что было сложно? Какие вопросы?"></textarea>
+        <div class="modal-buttons">
+            <button class="btn" id="sendReportBtn">✅ Отправить</button>
+            <button class="btn" style="background:#e9eff6;color:#1f4970;" id="cancelReportBtn">Отмена</button>
+        </div>
+        <div id="modalStatus"></div>
+    </div>
+</div>
 
-            // Информация об ученике
-            const params  = new URLSearchParams(window.location.search);
-            const student = params.get('student') || 'Ученик';
-            const date    = params.get('date') || new Date().toLocaleDateString('ru-RU');
-            const topic   = params.get('topic') || 'Задачи на движение';
+<script>
+    try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
 
-            document.getElementById('studentName').textContent  = student;
-            document.getElementById('lessonDate').textContent   = date;
-            document.getElementById('lessonTopic').textContent  = topic;
+    (function() {
+        const answers = {
+            q1: "-24", q2: "-8", q3: "20", q4: "8",
+            q5: "0", q6: "0", q7: "12",
+            q8: "-6/35", q9: "1/6", q10: "-5/4", q11: "-5/6",
+            q12: "9/25", q13: "-1/64", q14: "-35/9",
+            q15: "3a-5b", q16: "-4x+14y", q17: "1.2x+0.7y", q18: "7/4a-b",
+            q19: "0a-b+c", q20: "0x+7y",
+            q21: "12", q22: "19", q23: "7", q24: "2",
+            q25: "5", q26: "6", q27: "21", q28: "8",
+            q29: "20; -20", q30: "10; -4",
+            q31: "340", q32: "4", q33: "36", q34: "1", q35: "5"
+        };
 
-            // НОРМАЛИЗАЦИЯ
-            function normalize(str) {
-                return str.trim().replace(/\s/g, '').replace(',', '.').toLowerCase();
+        const inputs = document.querySelectorAll('.answer-input');
+        const checkBtn = document.getElementById('checkBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const reportBtn = document.getElementById('reportBtn');
+        const resultArea = document.getElementById('resultArea');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        const modal = document.getElementById('reportModal');
+        const cancelBtn = document.getElementById('cancelReportBtn');
+        const sendBtn = document.getElementById('sendReportBtn');
+        const comment = document.getElementById('reportComment');
+        const modalStatus = document.getElementById('modalStatus');
+
+        const params = new URLSearchParams(window.location.search);
+        const student = params.get('student') || 'Ученик';
+        const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+
+        document.getElementById('studentName').textContent = student;
+        document.getElementById('lessonDate').textContent = date;
+
+        function normalize(s) { return s.trim().replace(/\s/g, '').toLowerCase(); }
+        function toNum(s) {
+            let v = parseFloat(s.trim().replace(/\s/g, '').replace(',', '.'));
+            return isNaN(v) ? null : v;
+        }
+        function parseMulti(s) {
+            return s.trim().split(/[,;]\s*/).filter(p => p.trim() !== '');
+        }
+
+        function isCorrect(id, userVal) {
+            const right = answers[id];
+            if (!right) return false;
+
+            if (right.includes(';') || right.includes(',')) {
+                let u = parseMulti(userVal).map(normalize);
+                let r = parseMulti(right).map(normalize);
+                if (u.length !== r.length) return false;
+                u.sort(); r.sort();
+                return u.every((v, i) => v === r[i]);
             }
 
-            function toNumber(str) {
-                let s = str.trim().replace(/\s/g, '').replace(',', '.');
-                if (s === '') return null;
-                let n = parseFloat(s);
-                return isNaN(n) ? null : n;
-            }
+            let uNum = toNum(userVal);
+            let rNum = toNum(right);
+            if (uNum !== null && rNum !== null) return Math.abs(uNum - rNum) < 1e-9;
+            return normalize(userVal) === normalize(right);
+        }
 
-            const EPS = 1e-9;
-            function numsEqual(a, b) {
-                return a !== null && b !== null && Math.abs(a - b) < EPS;
-            }
+        function updateProgress() {
+            let filled = 0;
+            inputs.forEach(i => { if (i.value.trim() !== '') filled++; });
+            const pct = Math.round((filled / inputs.length) * 100);
+            progressFill.style.width = pct + '%';
+            progressText.textContent = `${filled} / ${inputs.length}`;
+        }
 
-            function parseMultipleAnswers(str) {
-                let s = str.trim().replace(/\s+/g, ' ');
-                if (s === "") return [];
-                return s.split(/[,;]\s*/).map(p => p.trim()).filter(p => p !== "");
-            }
+        function checkAll() {
+            let correct = 0, total = inputs.length;
+            let mistakes = [];
 
-            function singleAnswerCorrect(userVal, rightVal) {
-                let u = toNumber(userVal);
-                let r = toNumber(rightVal);
-                if (u !== null && r !== null) return numsEqual(u, r);
-                return normalize(userVal) === normalize(rightVal);
-            }
+            inputs.forEach(inp => {
+                const id = inp.id;
+                const val = inp.value.trim();
+                const card = inp.closest('.task-card');
+                const badge = document.getElementById('b' + id.slice(1));
+                const condition = card.querySelector('.task-condition')?.textContent?.trim() || '';
 
-            function multiAnswerCorrect(userVal, rightVal) {
-                let userParts  = parseMultipleAnswers(userVal);
-                let rightParts = parseMultipleAnswers(rightVal);
-                if (userParts.length !== rightParts.length) return false;
+                inp.classList.remove('correct', 'wrong');
+                card.classList.remove('is-correct', 'is-wrong');
+                badge.classList.remove('show', 'ok', 'err');
 
-                let uNums = userParts.map(toNumber);
-                let rNums = rightParts.map(toNumber);
-
-                if (uNums.every(v => v !== null) && rNums.every(v => v !== null)) {
-                    for (let i = 0; i < uNums.length; i++) {
-                        if (!numsEqual(uNums[i], rNums[i])) return false;
-                    }
-                    return true;
-                }
-                
-                let uStr = userParts.map(normalize);
-                let rStr = rightParts.map(normalize);
-                for (let i = 0; i < uStr.length; i++) {
-                    if (uStr[i] !== rStr[i]) return false;
-                }
-                return true;
-            }
-
-            function isAnswerCorrect(id, userVal) {
-                const right = answers[id];
-                if (!right) return false;
-                if (right.includes(';') || right.includes(',')) {
-                    return multiAnswerCorrect(userVal, right);
-                }
-                return singleAnswerCorrect(userVal, right);
-            }
-
-            // ПРОГРЕСС
-            function updateProgress() {
-                let filled = 0;
-                answerInputs.forEach(i => { if (i.value.trim() !== '') filled++; });
-                const total = answerInputs.length;
-                const pct = Math.round((filled / total) * 100);
-                progressFill.style.width = pct + '%';
-                progressText.textContent = `Заполнено: ${filled} / ${total}`;
-            }
-
-            // ПРОВЕРКА
-            function checkAll() {
-                let correct = 0, total = answerInputs.length;
-                let mistakes = [];
-                let userAnswers = {};
-
-                answerInputs.forEach(input => {
-                    const id = input.id;
-                    const userVal = input.value.trim();
-                    const card  = input.closest('.task-card');
-                    const badge = document.getElementById('badge-' + id);
-
-                    userAnswers[id] = userVal;
-
-                    input.classList.remove('correct', 'wrong');
-                    card.classList.remove('is-correct', 'is-wrong');
-                    badge.classList.remove('show', 'ok', 'err');
-
-                    if (userVal === '') {
-                        badge.textContent = '⚪ пусто';
-                        badge.classList.add('show', 'err');
-                        mistakes.push(`⚪ Задание ${id}: нет ответа`);
-                        return;
-                    }
-
-                    if (isAnswerCorrect(id, userVal)) {
-                        input.classList.add('correct');
-                        card.classList.add('is-correct');
-                        badge.textContent = '✅ верно';
-                        badge.classList.add('show', 'ok');
-                        correct++;
-                    } else {
-                        input.classList.add('wrong');
-                        card.classList.add('is-wrong');
-                        badge.textContent = '❌ неверно';
-                        badge.classList.add('show', 'err');
-                        const cond = card.querySelector('.task-condition')?.textContent?.trim() || id;
-                        mistakes.push(`❌ ${cond.substring(0, 60)}... → ваш ответ: ${userVal}`);
-                    }
-                });
-
-                const percent = Math.round((correct / total) * 100);
-
-                progressFill.classList.remove('good', 'bad');
-                if (percent >= 70) progressFill.classList.add('good');
-                else if (percent < 40) progressFill.classList.add('bad');
-                progressFill.style.width = percent + '%';
-                progressText.textContent = `Результат: ${correct} / ${total} (${percent}%)`;
-
-                let html = `<div class="big-score">📊 Результат: ${correct} из ${total} (${percent}%)</div>`;
-                if (mistakes.length === 0) {
-                    html += '🎉 Отлично! Все задания выполнены верно!';
-                } else {
-                    html += '<div>⚠️ Что нужно исправить:</div><ul>' +
-                            mistakes.map(m => `<li>${m}</li>`).join('') + '</ul>';
-                }
-                resultArea.innerHTML = html;
-
-                window.userAnswers = userAnswers;
-                window.lastReport  = `Результат: ${correct} из ${total} (${percent}%)`;
-            }
-
-            // СБРОС
-            function resetAll() {
-                answerInputs.forEach(input => {
-                    input.value = '';
-                    input.classList.remove('correct', 'wrong');
-                    const card  = input.closest('.task-card');
-                    const badge = document.getElementById('badge-' + input.id);
-                    if (card)  card.classList.remove('is-correct', 'is-wrong');
-                    if (badge) badge.classList.remove('show', 'ok', 'err');
-                });
-                resultArea.innerHTML = '🧹 Поля очищены. Нажмите «Проверить задания».';
-                progressFill.style.width = '0%';
-                progressFill.classList.remove('good', 'bad');
-                progressText.textContent = `Заполнено: 0 / ${answerInputs.length}`;
-                window.userAnswers = {};
-                window.lastReport = '';
-            }
-
-            // МОДАЛКА
-            reportBtn.addEventListener('click', function() {
-                reportModal.classList.add('active');
-                reportComment.value = '';
-                modalStatus.textContent = '';
-            });
-            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
-            reportModal.addEventListener('click', function(e) {
-                if (e.target === this) this.classList.remove('active');
-            });
-
-            // ОТПРАВКА ОТЧЁТА
-            sendReportBtn.addEventListener('click', async function() {
-                const comment = reportComment.value.trim();
-                if (!comment) {
-                    modalStatus.textContent = '⚠️ Напишите комментарий.';
-                    modalStatus.style.color = '#dc2626';
+                if (!val) {
+                    badge.textContent = '';
+                    badge.classList.add('show', 'err');
                     return;
                 }
 
-                let answersText = '';
-                for (let [id, right] of Object.entries(answers)) {
-                    const input = document.getElementById(id);
-                    const userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
-                    const isCorrect = input && input.classList.contains('correct');
-                    answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
-                }
-
-                const title = `Отчёт: ${student} — ${topic} (${date})`;
-                const body =
-                    `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n` +
-                    `**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n` +
-                    `**Комментарий:**\n${comment}`;
-
-                const btn = this;
-                btn.disabled = true;
-                btn.textContent = '⏳ Отправка...';
-                modalStatus.textContent = '';
-                modalStatus.style.color = '#4a627a';
-
-                try {
-                    if (typeof createGitHubIssue === 'function') {
-                        const issueUrl = await createGitHubIssue(title, body);
-                        modalStatus.innerHTML =
-                            `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Посмотреть Issue</a>`;
-                        modalStatus.style.color = '#16a34a';
-                    } else {
-                        console.log('📤 Отправка отчёта:', title, body);
-                        modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим)';
-                        modalStatus.style.color = '#16a34a';
-                    }
-                    setTimeout(() => reportModal.classList.remove('active'), 3000);
-                } catch (error) {
-                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
-                    modalStatus.style.color = '#dc2626';
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = '✅ Отправить';
+                if (isCorrect(id, val)) {
+                    inp.classList.add('correct');
+                    card.classList.add('is-correct');
+                    badge.textContent = '✅';
+                    badge.classList.add('show', 'ok');
+                    correct++;
+                } else {
+                    inp.classList.add('wrong');
+                    card.classList.add('is-wrong');
+                    badge.textContent = '❌';
+                    badge.classList.add('show', 'err');
+                    mistakes.push({
+                        num: id.replace('q', ''),
+                        condition: condition,
+                        userAnswer: val,
+                        correctAnswer: answers[id]
+                    });
                 }
             });
 
-            // СОБЫТИЯ
-            checkBtn.addEventListener('click', checkAll);
-            resetBtn.addEventListener('click', resetAll);
-            answerInputs.forEach(input => input.addEventListener('input', updateProgress));
+            const pct = Math.round((correct / total) * 100);
+            progressFill.classList.remove('good', 'bad');
+            if (pct >= 70) progressFill.classList.add('good');
+            else if (pct < 40) progressFill.classList.add('bad');
+            progressFill.style.width = pct + '%';
+            progressText.textContent = `${correct} / ${total}`;
 
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && e.target.classList.contains('answer-input')) {
-                    checkAll();
-                }
+            let html = `<div class="big-score"> Результат: ${correct} из ${total}</div>`;
+            html += `<div class="percent">${pct}%</div>`;
+            
+            if (mistakes.length === 0) {
+                html += '<div style="margin-top:10px; color:var(--green); font-weight:700;">🎉 Отлично! Все задания выполнены верно!</div>';
+            } else {
+                html += '<div style="margin-top:15px; font-weight:700; color:var(--red);"> Ошибки:</div><ul style="margin-top:8px;">';
+                mistakes.forEach(m => {
+                    html += `<li><strong>Задание №${m.num}:</strong> ${m.condition}<br>`;
+                    html += `<span style="color:var(--red);">Ваш ответ:</span> ${m.userAnswer} | `;
+                    html += `<span style="color:var(--green);">Правильно:</span> ${m.correctAnswer}</li>`;
+                });
+                html += '</ul>';
+            }
+            resultArea.innerHTML = html;
+            window.lastReport = html;
+        }
+
+        function resetAll() {
+            inputs.forEach(inp => {
+                inp.value = '';
+                inp.classList.remove('correct', 'wrong');
+                const card = inp.closest('.task-card');
+                const badge = document.getElementById('b' + inp.id.slice(1));
+                if (card) card.classList.remove('is-correct', 'is-wrong');
+                if (badge) badge.classList.remove('show', 'ok', 'err');
             });
+            resultArea.innerHTML = '🧹 Поля очищены. Нажмите «Проверить».';
+            progressFill.style.width = '0%';
+            progressFill.classList.remove('good', 'bad');
+            progressText.textContent = `0 / ${inputs.length}`;
+        }
 
-            updateProgress();
+        reportBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            modalStatus.textContent = '';
+        });
+        cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
 
-        })();
-    </script>
+        sendBtn.addEventListener('click', async function() {
+            const msg = comment.value.trim();
+
+            let table = '';
+            let wrongTasks = [];
+            
+            for (let [id, right] of Object.entries(answers)) {
+                const inp = document.getElementById(id);
+                const user = inp ? (inp.value.trim() || '—') : '—';
+                const ok = inp && inp.classList.contains('correct');
+                const condition = inp?.closest('.task-card')?.querySelector('.task-condition')?.textContent?.trim() || '';
+                
+                if (!ok && user !== '—') {
+                    wrongTasks.push({
+                        num: id.replace('q', ''),
+                        condition: condition,
+                        userAnswer: user,
+                        correctAnswer: right
+                    });
+                }
+                
+                table += `№${id.replace('q', '')} | ${user} | ${right} | ${ok ? '✅' : '❌'}\n`;
+            }
+
+            const correct = inputs.length - wrongTasks.length;
+            const pct = Math.round((correct / inputs.length) * 100);
+
+            const title = `Контрольная точка №1: ${student} — ${date}`;
+            let body = `**Ученик:** ${student}\n**Дата:** ${date}\n\n`;
+            body += `**Результат:** ${correct} из ${inputs.length} (${pct}%)\n\n`;
+            
+            if (wrongTasks.length > 0) {
+                body += `**❌ Ошибки:**\n\n`;
+                body += `| № | Задание | Ответ ученика | Правильный |\n`;
+                body += `|---|---------|---------------|------------|\n`;
+                wrongTasks.forEach(t => {
+                    body += `| ${t.num} | ${t.condition} | ${t.userAnswer} | ${t.correctAnswer} |\n`;
+                });
+                body += `\n`;
+            }
+            
+            body += `**📋 Все ответы:**\n\`\`\`\n${table}\`\`\``;
+            
+            if (msg) {
+                body += `\n\n**💬 Комментарий:**\n${msg}`;
+            }
+
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                if (typeof createGitHubIssue === 'function') {
+                    const url = await createGitHubIssue(title, body);
+                    modalStatus.innerHTML = `✅ Отправлено! <a href="${url}" target="_blank">Открыть</a>`;
+                    modalStatus.style.color = '#16a34a';
+                } else {
+                    console.log('📤 ОТЧЕТ:', '\n\n', body);
+                    modalStatus.textContent = '✅ Отчёт в консоли (демо)';
+                    modalStatus.style.color = '#16a34a';
+                }
+                setTimeout(() => modal.classList.remove('active'), 3000);
+            } catch (e) {
+                modalStatus.textContent = `❌ Ошибка: ${e.message}`;
+                modalStatus.style.color = '#dc2626';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '✅ Отправить';
+            }
+        });
+
+        checkBtn.addEventListener('click', checkAll);
+        resetBtn.addEventListener('click', resetAll);
+        inputs.forEach(i => i.addEventListener('input', updateProgress));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && e.target.classList.contains('answer-input')) checkAll();
+        });
+
+        updateProgress();
+    })();
+</script>
 
 </body>
 </html>
