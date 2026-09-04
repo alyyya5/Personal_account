@@ -93,13 +93,13 @@
             60%, 100% { transform: rotate(0deg); }
         }
 
-        /* ---------- ОГНЕННЫЙ СЧЁТЧИК ---------- */
+        /* ---------- ОГНЕННЫЙ СЧЁТЧИК (исправленный) ---------- */
         .streak-container {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             background: linear-gradient(135deg, #ff6b35, #f7931e);
-            padding: 6px 16px 6px 12px;
+            padding: 4px 14px 4px 10px;
             border-radius: 40px;
             color: white;
             font-weight: 700;
@@ -113,20 +113,17 @@
             transform: scale(1.04);
         }
         .fire-icon {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 1;
         }
         .streak-number {
             font-size: 1.8rem;
             font-weight: 900;
             line-height: 1;
-            min-width: 28px;
+            min-width: 30px;
             text-align: center;
-        }
-        .streak-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            opacity: 0.9;
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
         }
         body.dark-mode .streak-container {
             background: linear-gradient(135deg, #ff8a5c, #f7a83e);
@@ -420,7 +417,6 @@
                         <span class="streak-container" id="streakContainer">
                             <span class="fire-icon">🔥</span>
                             <span class="streak-number" id="streakNumber">0</span>
-                            <span class="streak-label">подряд</span>
                         </span>
                         <p id="pageSubtitle">Посмотри, что тебя ждёт</p>
                     </div>
@@ -523,7 +519,6 @@
             const today = new Date();
             const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-            // Берём все уроки с домашкой, сортируем по дате (старые → новые)
             const hwLessons = lessonsData
                 .filter(l => l.homework && l.homework.trim() !== '')
                 .sort((a, b) => a.date.localeCompare(b.date));
@@ -532,13 +527,11 @@
             let maxStreak = 0;
 
             for (let lesson of hwLessons) {
-                // Если урок в будущем — пропускаем (время ещё есть)
                 if (lesson.date > todayStr) continue;
 
                 const status = lesson.hwStatus || '';
                 const hasTopic = lesson.topic && lesson.topic.trim() !== '';
 
-                // Если тема пустая — пропускаем (урок не состоялся)
                 if (!hasTopic) continue;
 
                 const isDone = status.includes('Проверено') || status.includes('Выполнено');
@@ -547,7 +540,6 @@
                     streak++;
                     if (streak > maxStreak) maxStreak = streak;
                 } else {
-                    // СБРАСЫВАЕМ только если урок уже прошёл И тема есть
                     streak = 0;
                 }
             }
@@ -593,7 +585,6 @@
                 }
             }
 
-            // Обновляем счётчик
             updateStreak();
         }
 
