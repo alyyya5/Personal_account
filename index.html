@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Личный кабинет</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -33,7 +33,7 @@
         body { min-height: 100vh; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-primary); background: radial-gradient(circle at 10% 10%, rgba(103, 157, 255, 0.20), transparent 30%), radial-gradient(circle at 90% 15%, rgba(154, 111, 255, 0.18), transparent 32%), linear-gradient(135deg, var(--bg-start), var(--bg-middle), var(--bg-end)); background-attachment: fixed; overflow-x: hidden; }
         button, input { font: inherit; }
         button { -webkit-tap-highlight-color: transparent; }
-        
+
         .math-symbol {
             position: fixed;
             font-weight: 500;
@@ -48,7 +48,7 @@
             color: rgba(130, 160, 255, 0.18);
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
-        
+
         .math-1 { top: 7%; left: 12%; font-size: 95px; transform: rotate(-23deg); }
         .math-2 { top: 3%; right: 18%; font-size: 128px; transform: rotate(31deg); }
         .math-3 { top: 19%; left: 6%; font-size: 76px; transform: rotate(-11deg); }
@@ -77,7 +77,7 @@
         .math-26 { top: 49%; left: 74%; font-size: 89px; transform: rotate(16deg); opacity: 0.11; }
         .math-27 { top: 63%; left: 65%; font-size: 101px; transform: rotate(-26deg); opacity: 0.13; }
         .math-28 { top: 77%; left: 72%; font-size: 73px; transform: rotate(28deg); opacity: 0.12; }
-        
+
         .wave-emoji {
             display: inline-block;
             animation: wave 2.5s ease-in-out infinite;
@@ -91,6 +91,45 @@
             40% { transform: rotate(-4deg); }
             50% { transform: rotate(10deg); }
             60%, 100% { transform: rotate(0deg); }
+        }
+
+        /* ---------- ОГНЕННЫЙ СЧЁТЧИК ---------- */
+        .streak-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            padding: 6px 16px 6px 12px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(247, 147, 30, 0.3);
+            margin-top: 4px;
+            margin-left: 12px;
+            cursor: default;
+            transition: transform 0.2s;
+        }
+        .streak-container:hover {
+            transform: scale(1.04);
+        }
+        .fire-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+        .streak-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1;
+            min-width: 28px;
+            text-align: center;
+        }
+        .streak-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        body.dark-mode .streak-container {
+            background: linear-gradient(135deg, #ff8a5c, #f7a83e);
         }
 
         .sidebar { position: fixed; top: 18px; left: 18px; bottom: 18px; width: 250px; padding: 22px 16px; display: none; flex-direction: column; background: var(--sidebar-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); z-index: 100; transition: transform 0.3s ease, background 0.3s ease; }
@@ -127,8 +166,9 @@
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(66, 89, 180, 0.32); }
         .login-error { min-height: 1.2em; text-align: center; color: var(--accent-red); font-size: 0.9rem; font-weight: 600; }
         .top-bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 26px; flex-wrap: wrap; }
+        .welcome-block { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
         .welcome-block h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; }
+        .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; width: 100%; }
         .quick-links-container { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .quick-link-btn { min-width: 145px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 20px; border-radius: 15px; text-decoration: none; font-weight: 750; transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s; }
         .quick-link-btn:hover { transform: translateY(-2px); }
@@ -184,8 +224,7 @@
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
-        
-        /* Стили для таблицы контрольных точек */
+
         .tests-table-wrapper {
             margin-top: 24px;
             background: var(--card-bg);
@@ -312,7 +351,7 @@
     <div class="math-symbol math-26">∈</div>
     <div class="math-symbol math-27">∉</div>
     <div class="math-symbol math-28">⊂</div>
-    
+
     <button class="sidebar-toggle" id="sidebarToggle" title="Меню">☰</button>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
@@ -378,6 +417,11 @@
                 <div class="top-bar">
                     <div class="welcome-block">
                         <h1 id="pageTitle">Расписание занятий</h1>
+                        <span class="streak-container" id="streakContainer">
+                            <span class="fire-icon">🔥</span>
+                            <span class="streak-number" id="streakNumber">0</span>
+                            <span class="streak-label">подряд</span>
+                        </span>
                         <p id="pageSubtitle">Посмотри, что тебя ждёт</p>
                     </div>
                     <div class="quick-links-container" id="quickLinks">
@@ -440,36 +484,81 @@
         const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'ден': 'denis', 'алина': 'alina' };
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
-        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), testsTableWrapper = document.getElementById('testsTableWrapper'), testsTableTitle = document.getElementById('testsTableTitle'), testsTableContainer = document.getElementById('testsTableContainer');
-        
+        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), testsTableWrapper = document.getElementById('testsTableWrapper'), testsTableTitle = document.getElementById('testsTableTitle'), testsTableContainer = document.getElementById('testsTableContainer'), streakNumber = document.getElementById('streakNumber'), streakContainer = document.getElementById('streakContainer');
+
         if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
-        
-        themeToggle.addEventListener('click', () => { 
-            document.body.classList.toggle('dark-mode'); 
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); 
-            if (currentPage === 'progress') setTimeout(renderProgressPage, 100); 
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            if (currentPage === 'progress') setTimeout(renderProgressPage, 100);
         });
-        
-        sidebarToggle.addEventListener('click', () => { 
-            sidebar.classList.toggle('open'); 
-            sidebarToggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰'; 
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            sidebarToggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
         });
-        
-        document.querySelectorAll('.nav-item').forEach(item => { 
-            item.addEventListener('click', function () { 
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); 
-                this.classList.add('active'); 
-                switchPage(this.dataset.page); 
-                if (window.innerWidth <= 950) { 
-                    sidebar.classList.remove('open'); 
-                    sidebarToggle.textContent = '☰'; 
-                } 
-            }); 
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                switchPage(this.dataset.page);
+                if (window.innerWidth <= 950) {
+                    sidebar.classList.remove('open');
+                    sidebarToggle.textContent = '☰';
+                }
+            });
         });
 
         function getStudentDisplayName() {
             const names = { valeriya: 'Валерия', amina: 'Амина', denis: 'Денис' };
             return names[currentStudentId] || '';
+        }
+
+        // ============================================================
+        //  🔥  ОГНЕННЫЙ СЧЁТЧИК (ПРАВИЛЬНАЯ ЛОГИКА)
+        // ============================================================
+        function calculateStreak() {
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+            // Берём все уроки с домашкой, сортируем по дате (старые → новые)
+            const hwLessons = lessonsData
+                .filter(l => l.homework && l.homework.trim() !== '')
+                .sort((a, b) => a.date.localeCompare(b.date));
+
+            let streak = 0;
+            let maxStreak = 0;
+
+            for (let lesson of hwLessons) {
+                // Если урок в будущем — пропускаем (время ещё есть)
+                if (lesson.date > todayStr) continue;
+
+                const status = lesson.hwStatus || '';
+                const hasTopic = lesson.topic && lesson.topic.trim() !== '';
+
+                // Если тема пустая — пропускаем (урок не состоялся)
+                if (!hasTopic) continue;
+
+                const isDone = status.includes('Проверено') || status.includes('Выполнено');
+
+                if (isDone) {
+                    streak++;
+                    if (streak > maxStreak) maxStreak = streak;
+                } else {
+                    // СБРАСЫВАЕМ только если урок уже прошёл И тема есть
+                    streak = 0;
+                }
+            }
+
+            return { currentStreak: streak, maxStreak: maxStreak };
+        }
+
+        function updateStreak() {
+            const { currentStreak, maxStreak } = calculateStreak();
+            streakNumber.textContent = currentStreak;
+            streakContainer.title = `Максимальный результат: ${maxStreak} подряд 🔥`;
         }
 
         function updateWelcome() {
@@ -478,7 +567,7 @@
 
             const today = new Date();
             const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            
+
             const todaysLessons = lessonsData
                 .filter(lesson => lesson.date === todayStr)
                 .sort((a, b) => (a.start || '').localeCompare(b.start || ''));
@@ -503,6 +592,9 @@
                     pageSubtitle.textContent = `Посмотри своё расписание и будь готов к новым занятиям!`;
                 }
             }
+
+            // Обновляем счётчик
+            updateStreak();
         }
 
         function switchPage(page) {
@@ -534,20 +626,20 @@
             }
         }
 
-        function updateQuickLinks() { 
-            if (!currentStudentId || !lessonsData.length) { quickLinks.style.display = 'none'; return; } 
-            quickLinks.style.display = 'flex'; 
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`; 
-            let todaysLesson = lessonsData.find(l => l.date === todayStr) || lessonsData.filter(l => l.date < todayStr).sort((a, b) => b.date.localeCompare(a.date))[0]; 
-            if (todaysLesson) { 
-                zoomBtn.href = todaysLesson.zoomLink || '#'; 
-                zoomBtn.style.opacity = todaysLesson.zoomLink ? '1' : '0.45'; 
-                boardBtn.href = todaysLesson.boardLink || '#'; 
-                boardBtn.style.opacity = todaysLesson.boardLink ? '1' : '0.45'; 
-            } else { 
-                zoomBtn.href = '#'; boardBtn.href = '#'; 
-                zoomBtn.style.opacity = '0.45'; boardBtn.style.opacity = '0.45'; 
-            } 
+        function updateQuickLinks() {
+            if (!currentStudentId || !lessonsData.length) { quickLinks.style.display = 'none'; return; }
+            quickLinks.style.display = 'flex';
+            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            let todaysLesson = lessonsData.find(l => l.date === todayStr) || lessonsData.filter(l => l.date < todayStr).sort((a, b) => b.date.localeCompare(a.date))[0];
+            if (todaysLesson) {
+                zoomBtn.href = todaysLesson.zoomLink || '#';
+                zoomBtn.style.opacity = todaysLesson.zoomLink ? '1' : '0.45';
+                boardBtn.href = todaysLesson.boardLink || '#';
+                boardBtn.style.opacity = todaysLesson.boardLink ? '1' : '0.45';
+            } else {
+                zoomBtn.href = '#'; boardBtn.href = '#';
+                zoomBtn.style.opacity = '0.45'; boardBtn.style.opacity = '0.45';
+            }
         }
 
         // ============================================================
@@ -589,7 +681,6 @@
                 return;
             }
 
-            // Загружаем контрольные точки / пробники
             await loadTests(currentStudentId);
 
             const today = new Date();
@@ -609,7 +700,6 @@
             const currentYearStr = String(currentYear);
             const monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length;
 
-            // Статистика по контрольным точкам / пробникам
             const isDenis = currentStudentId === 'denis';
             const validTests = testsData.filter(t => t.name && t.name.trim() !== '');
             const testsTotal = validTests.length;
@@ -636,7 +726,6 @@
 
             progressStats.innerHTML = statsHTML;
 
-            // Графики
             chartsContainer.innerHTML = `
                 <div class="chart-card">
                     <h3>Выполнение домашних заданий</h3>
@@ -653,7 +742,6 @@
             const textSecondary = styles.getPropertyValue('--text-secondary').trim();
             const borderColor = styles.getPropertyValue('--border-color').trim();
 
-            // График домашек
             const hwCtx = document.getElementById('hwChart').getContext('2d');
             if (charts.hw) charts.hw.destroy();
             charts.hw = new Chart(hwCtx, {
@@ -683,7 +771,6 @@
                 }
             });
 
-            // График контрольных точек / пробников
             const testCtx = document.getElementById('testsChart').getContext('2d');
             if (charts.tests) charts.tests.destroy();
 
@@ -752,7 +839,6 @@
                 }
             });
 
-            // === ТАБЛИЦА С КОНТРОЛЬНЫМИ ТОЧКАМИ / ПРОБНИКАМИ ===
             renderTestsTable(isDenis);
         }
 
@@ -820,7 +906,6 @@
                 `;
             });
 
-            // Строка со средним баллом
             const completedTests = validTests.filter(t => t.score !== undefined && t.score !== null);
             const avg = completedTests.length > 0 ? Math.round(completedTests.reduce((sum, t) => sum + t.score, 0) / completedTests.length) : 0;
 
@@ -837,117 +922,117 @@
             container.innerHTML = html;
         }
 
-        function renderHomeworkCards() { 
-            if (!lessonsData.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; } 
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(a.date) - new Date(b.date)), items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length)); 
-            if (!items.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; } 
-            showAllHomeworkBtn.style.display = sorted.length > 6 ? 'block' : 'none'; 
-            showAllHomeworkBtn.textContent = showAllHomework ? 'Скрыть' : 'Показать все'; 
-            let html = ''; 
-            items.forEach(l => { 
-                const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase(); 
-                let statusText = ' Не решено', statusClass = 'pending'; 
-                if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; } 
-                else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; } 
-                else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; } 
-                html += `<div class="hw-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span><span class="card-status ${statusClass}">${statusText}</span></div><div class="card-topic">${l.topic}</div><a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a></div>`; 
-            }); 
-            homeworkCards.innerHTML = html; 
-            showAllHomeworkBtn.onclick = () => { showAllHomework = !showAllHomework; renderHomeworkCards(); }; 
+        function renderHomeworkCards() {
+            if (!lessonsData.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
+            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(a.date) - new Date(b.date)), items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
+            if (!items.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
+            showAllHomeworkBtn.style.display = sorted.length > 6 ? 'block' : 'none';
+            showAllHomeworkBtn.textContent = showAllHomework ? 'Скрыть' : 'Показать все';
+            let html = '';
+            items.forEach(l => {
+                const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase();
+                let statusText = ' Не решено', statusClass = 'pending';
+                if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; }
+                else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; }
+                else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; }
+                html += `<div class="hw-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span><span class="card-status ${statusClass}">${statusText}</span></div><div class="card-topic">${l.topic}</div><a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a></div>`;
+            });
+            homeworkCards.innerHTML = html;
+            showAllHomeworkBtn.onclick = () => { showAllHomework = !showAllHomework; renderHomeworkCards(); };
         }
 
-        function renderMaterialsCards() { 
-            if (!lessonsData.length) { materialsCards.innerHTML = '<div class="empty-message">Нет материалов</div>'; showAllMaterialsBtn.style.display = 'none'; return; } 
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.material && l.material.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(b.date) - new Date(a.date)), items = sorted.slice(0, showAllMaterials ? sorted.length : Math.min(6, sorted.length)); 
-            if (!items.length) { materialsCards.innerHTML = '<div class="empty-message">Нет материалов</div>'; showAllMaterialsBtn.style.display = 'none'; return; } 
-            showAllMaterialsBtn.style.display = sorted.length > 6 ? 'block' : 'none'; 
-            showAllMaterialsBtn.textContent = showAllMaterials ? 'Скрыть' : 'Показать все'; 
-            let html = ''; 
-            items.forEach(l => { const d = l.date.split('-'); html += `<div class="mat-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span></div><div class="card-topic">${l.topic}</div><a href="${l.material}" target="_blank" class="card-btn">Открыть материал</a></div>`; }); 
-            materialsCards.innerHTML = html; 
-            showAllMaterialsBtn.onclick = () => { showAllMaterials = !showAllMaterials; renderMaterialsCards(); }; 
+        function renderMaterialsCards() {
+            if (!lessonsData.length) { materialsCards.innerHTML = '<div class="empty-message">Нет материалов</div>'; showAllMaterialsBtn.style.display = 'none'; return; }
+            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.material && l.material.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(b.date) - new Date(a.date)), items = sorted.slice(0, showAllMaterials ? sorted.length : Math.min(6, sorted.length));
+            if (!items.length) { materialsCards.innerHTML = '<div class="empty-message">Нет материалов</div>'; showAllMaterialsBtn.style.display = 'none'; return; }
+            showAllMaterialsBtn.style.display = sorted.length > 6 ? 'block' : 'none';
+            showAllMaterialsBtn.textContent = showAllMaterials ? 'Скрыть' : 'Показать все';
+            let html = '';
+            items.forEach(l => { const d = l.date.split('-'); html += `<div class="mat-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span></div><div class="card-topic">${l.topic}</div><a href="${l.material}" target="_blank" class="card-btn">Открыть материал</a></div>`; });
+            materialsCards.innerHTML = html;
+            showAllMaterialsBtn.onclick = () => { showAllMaterials = !showAllMaterials; renderMaterialsCards(); };
         }
 
         function buildHomeworkLink(basePath, studentId, lesson) { if (!basePath) return '#'; return basePath + '?' + new URLSearchParams({ student: studentId, date: lesson.date, topic: lesson.topic || '', start: lesson.start || '', end: lesson.end || '' }).toString(); }
         async function loadLessons(studentId) { try { const res = await fetch(`config/${studentId}.json`); if (!res.ok) throw new Error(); lessonsData = await res.json(); return true; } catch { lessonsData = []; return false; } }
-        
-        async function handleLogin() { 
-            const raw = nameInput.value.trim(), password = passwordInput.value.trim(); 
-            if (!raw) { loginError.textContent = 'Введите имя'; return; } 
-            if (!password) { loginError.textContent = 'Введите пароль'; return; } 
-            const id = nameMap[raw.toLowerCase()]; 
-            if (!id) { loginError.textContent = 'Ученик не найден'; return; } 
-            if (passwords[id] !== password) { loginError.textContent = 'Неверный пароль'; return; } 
-            if (id === 'alina') { localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() })); window.location.href = 'teacher.html'; return; } 
-            loginError.textContent = ''; 
-            currentStudentId = id; 
-            if (!(await loadLessons(id))) { loginError.textContent = 'Нет расписания'; return; } 
-            loginWrapper.style.display = 'none'; 
-            mainContent.style.display = 'block'; 
-            sidebar.style.display = 'flex'; 
-            mainWrapper.classList.add('with-sidebar'); 
-            switchPage('schedule'); 
-            updateQuickLinks(); 
+
+        async function handleLogin() {
+            const raw = nameInput.value.trim(), password = passwordInput.value.trim();
+            if (!raw) { loginError.textContent = 'Введите имя'; return; }
+            if (!password) { loginError.textContent = 'Введите пароль'; return; }
+            const id = nameMap[raw.toLowerCase()];
+            if (!id) { loginError.textContent = 'Ученик не найден'; return; }
+            if (passwords[id] !== password) { loginError.textContent = 'Неверный пароль'; return; }
+            if (id === 'alina') { localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() })); window.location.href = 'teacher.html'; return; }
+            loginError.textContent = '';
+            currentStudentId = id;
+            if (!(await loadLessons(id))) { loginError.textContent = 'Нет расписания'; return; }
+            loginWrapper.style.display = 'none';
+            mainContent.style.display = 'block';
+            sidebar.style.display = 'flex';
+            mainWrapper.classList.add('with-sidebar');
+            switchPage('schedule');
+            updateQuickLinks();
         }
-        
+
         loginBtn.addEventListener('click', handleLogin);
         nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
         passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-        
-        function renderCalendar(year, month) { 
-            const firstDay = new Date(year, month, 1).getDay(), startDay = firstDay === 0 ? 6 : firstDay - 1, daysInMonth = new Date(year, month + 1, 0).getDate(), today = new Date(), monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']; 
-            monthYear.textContent = `${monthNames[month]} ${year}`; 
-            const lessonDates = new Set(lessonsData.map(item => item.date)), weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']; 
-            let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join(''); 
-            for (let i = 0; i < startDay; i++) html += '<div class="day other-month"></div>'; 
-            for (let d = 1; d <= daysInMonth; d++) { 
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`, hasLesson = lessonDates.has(dateStr); 
-                let cls = 'day'; 
-                if (hasLesson) cls += ' has-lesson'; 
-                if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) cls += ' today'; 
-                html += `<div class="${cls}" ${hasLesson ? `data-date="${dateStr}"` : ''}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`; 
-            } 
-            calendarGrid.innerHTML = html; 
-            document.querySelectorAll('.day.has-lesson').forEach(el => { el.addEventListener('click', function () { const lessons = lessonsData.filter(item => item.date === this.dataset.date); if (lessons.length) showModal(this.dataset.date, lessons); }); }); 
+
+        function renderCalendar(year, month) {
+            const firstDay = new Date(year, month, 1).getDay(), startDay = firstDay === 0 ? 6 : firstDay - 1, daysInMonth = new Date(year, month + 1, 0).getDate(), today = new Date(), monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            monthYear.textContent = `${monthNames[month]} ${year}`;
+            const lessonDates = new Set(lessonsData.map(item => item.date)), weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
+            for (let i = 0; i < startDay; i++) html += '<div class="day other-month"></div>';
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`, hasLesson = lessonDates.has(dateStr);
+                let cls = 'day';
+                if (hasLesson) cls += ' has-lesson';
+                if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) cls += ' today';
+                html += `<div class="${cls}" ${hasLesson ? `data-date="${dateStr}"` : ''}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
+            }
+            calendarGrid.innerHTML = html;
+            document.querySelectorAll('.day.has-lesson').forEach(el => { el.addEventListener('click', function () { const lessons = lessonsData.filter(item => item.date === this.dataset.date); if (lessons.length) showModal(this.dataset.date, lessons); }); });
         }
-        
-        function showModal(dateStr, lessons) { 
-            const [y, m, d] = dateStr.split('-').map(Number), dateObj = new Date(y, m - 1, d); 
-            modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
-            if (lessons.length === 1) { 
-                const l = lessons[0]; 
-                modalTime.textContent = `${l.start}–${l.end}`; 
-                modalTopic.textContent = l.topic; 
-                let html = ''; 
-                if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`; 
-                if (l.homework) html += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank">📝 Домашка</a>`; 
-                modalLinks.innerHTML = html || '<span style="color: var(--text-secondary)">Нет ссылок</span>'; 
-            } else { 
-                let time = '', topic = '', links = ''; 
-                lessons.forEach((l, i) => { 
-                    time += `${l.start}–${l.end}` + (i < lessons.length - 1 ? ', ' : ''); 
-                    topic += l.topic + (i < lessons.length - 1 ? ', ' : ''); 
-                    if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал ${i + 1}</a>`; 
-                    if (l.homework) links += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank">📝 Домашка ${i + 1}</a>`; 
-                }); 
-                modalTime.textContent = time; 
-                modalTopic.textContent = topic; 
-                modalLinks.innerHTML = links || '<span style="color: var(--text-secondary)">Нет ссылок</span>'; 
-            } 
-            modalOverlay.classList.add('active'); 
+
+        function showModal(dateStr, lessons) {
+            const [y, m, d] = dateStr.split('-').map(Number), dateObj = new Date(y, m - 1, d);
+            modalDate.textContent = dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            if (lessons.length === 1) {
+                const l = lessons[0];
+                modalTime.textContent = `${l.start}–${l.end}`;
+                modalTopic.textContent = l.topic;
+                let html = '';
+                if (l.material) html += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+                if (l.homework) html += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank">📝 Домашка</a>`;
+                modalLinks.innerHTML = html || '<span style="color: var(--text-secondary)">Нет ссылок</span>';
+            } else {
+                let time = '', topic = '', links = '';
+                lessons.forEach((l, i) => {
+                    time += `${l.start}–${l.end}` + (i < lessons.length - 1 ? ', ' : '');
+                    topic += l.topic + (i < lessons.length - 1 ? ', ' : '');
+                    if (l.material) links += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал ${i + 1}</a>`;
+                    if (l.homework) links += `<a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank">📝 Домашка ${i + 1}</a>`;
+                });
+                modalTime.textContent = time;
+                modalTopic.textContent = topic;
+                modalLinks.innerHTML = links || '<span style="color: var(--text-secondary)">Нет ссылок</span>';
+            }
+            modalOverlay.classList.add('active');
         }
-        
+
         modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
         modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
-        
-        function changeMonth(delta) { 
-            currentMonth += delta; 
-            if (currentMonth < 0) { currentMonth = 11; currentYear--; } 
-            if (currentMonth > 11) { currentMonth = 0; currentYear++; } 
-            if (currentPage === 'schedule') renderCalendar(currentYear, currentMonth); 
-            if (currentPage === 'progress') renderProgressPage(); 
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            if (currentPage === 'schedule') renderCalendar(currentYear, currentMonth);
+            if (currentPage === 'progress') renderProgressPage();
         }
-        
+
         prevMonthBtn.addEventListener('click', () => changeMonth(-1));
         nextMonthBtn.addEventListener('click', () => changeMonth(1));
         window.addEventListener('DOMContentLoaded', () => { const s = new URLSearchParams(window.location.search).get('student'); if (s && nameMap[s.toLowerCase()]) nameInput.value = s; });
