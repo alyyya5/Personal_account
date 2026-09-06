@@ -476,8 +476,8 @@
         </div>
     </div>
     <script>
-        const passwords = { 'valeriya': 'der44', 'amina': '5678', 'denis': '1234', 'alina': '121212' };
-        const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'ден': 'denis', 'алина': 'alina' };
+        const passwords = { 'valeriya': 'der44', 'amina': '5678', 'denis': '1234', 'sanie': '1122', 'alina': '121212' };
+        const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'сание': 'sanie', 'ден': 'denis', 'алина': 'alina' };
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
         const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), testsTableWrapper = document.getElementById('testsTableWrapper'), testsTableTitle = document.getElementById('testsTableTitle'), testsTableContainer = document.getElementById('testsTableContainer'), streakNumber = document.getElementById('streakNumber'), streakContainer = document.getElementById('streakContainer');
@@ -508,7 +508,7 @@
         });
 
         function getStudentDisplayName() {
-            const names = { valeriya: 'Валерия', amina: 'Амина', denis: 'Денис' };
+            const names = { valeriya: 'Валерия', amina: 'Амина', denis: 'Денис', sanie: 'Сание' };
             return names[currentStudentId] || '';
         }
 
@@ -640,7 +640,8 @@
             const testFiles = {
                 'valeriya': 'valeriya_tests.json',
                 'amina': 'amina_tests.json',
-                'denis': 'denis_tests.json'
+                'denis': 'denis_tests.json',
+                'sanie': 'sanie_tests.json'
             };
 
             const fileName = testFiles[studentId];
