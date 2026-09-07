@@ -322,24 +322,14 @@
         }
 
         .result-area {
-            background: #f0f9ff;
+            background: #f8faff;
             border-radius: 20px;
             padding: 20px 24px;
             margin-top: 20px;
             font-size: 0.95rem;
-            border: 1px solid #bfdbfe;
-            min-height: 80px;
-        }
-        .result-area .big-score {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        .result-area ul {
-            margin: 10px 0 0 20px;
-        }
-        .result-area li {
-            margin-bottom: 4px;
+            border: 1px solid #dce5ef;
+            min-height: 60px;
+            color: var(--text-secondary);
         }
 
         .modal-overlay {
@@ -360,7 +350,7 @@
         .modal-card {
             background: white;
             border-radius: 28px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             padding: 28px 30px;
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
@@ -471,7 +461,7 @@
 
         <header>
             <h1>🏠 Домашнее задание</h1>
-            <div class="subtitle">Алгебра + Геометрия · 6 класс</div>
+            <div class="subtitle">Алгебра + Геометрия</div>
             <div class="info-line">
                 <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
                 <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
@@ -838,7 +828,7 @@
         </div>
 
         <div class="footer-note">
-            <span>📌 Алгебра + Геометрия · 6 класс</span>
+            <span>📌 Алгебра + Геометрия</span>
             <span class="tag">38 заданий</span>
         </div>
 
@@ -859,6 +849,8 @@
     </div>
 
     <script>
+        try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
+
         (function() {
 
             // ============================================================
@@ -886,12 +878,12 @@
                 q18: "10; -2",
                 q19: "5; -5",
                 q20: "4; -10",
-                // Геометрия — тест (несколько правильных вариантов!)
+                // Геометрия — тест
                 q21: "B",
                 q22: "C",
                 q23: "B",
                 q24: "D",
-                q25: "B;D",  // два правильных варианта: ∠AOB и ∠BOA
+                q25: "B;D",
                 q26: "B",
                 // Геометрия — ввод
                 q27: "отрезок",
@@ -982,14 +974,11 @@
                 const right = answers[id];
                 if (!right) return false;
 
-                // Для примеров (q9-q12) — лишь бы не пусто
                 if (['q9','q10','q11','q12'].includes(id)) {
                     return userVal.trim() !== '';
                 }
 
-                // Для радио
                 if (['q21','q22','q23','q24','q25','q26'].includes(id)) {
-                    // Для q25 (угол) — два правильных варианта: B или D
                     if (id === 'q25') {
                         const valid = ['B', 'D'];
                         return valid.includes(userVal);
@@ -997,7 +986,6 @@
                     return userVal === right;
                 }
 
-                // Для модуля (с ;)
                 if (right.includes(';') || right.includes(',')) {
                     let uParts = parseMultiple(userVal);
                     let rParts = parseMultiple(right);
@@ -1065,7 +1053,7 @@
             });
 
             // ============================================================
-            //  ОТПРАВКА
+            //  ОТПРАВКА (без показа результата ученику!)
             // ============================================================
             sendReportBtn.addEventListener('click', async function() {
                 setRadioHidden();
@@ -1099,52 +1087,60 @@
                     total++;
                     if (isCorrect) correct++;
                     else {
-                        let cond = id;
-                        const input = document.getElementById(id);
-                        const card = input?.closest('.task-card');
-                        if (card) {
-                            const textEl = card.querySelector('.task-condition');
-                            if (textEl) cond = textEl.textContent.trim().replace(/\s+/g, ' ').substring(0, 50) + '...';
-                        }
-                        mistakes.push(`❌ ${cond} → ваш ответ: ${userAnswer}`);
+                        const card = document.getElementById(id)?.closest('.task-card');
+                        const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
+                        mistakes.push(`❌ ${cond} → ${userAnswer}`);
                     }
                     answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
                 }
 
                 const percent = Math.round((correct / total) * 100);
 
-                let resultHtml = `<div class="big-score">📊 Результат: ${correct} из ${total} (${percent}%)</div>`;
-                if (mistakes.length === 0) {
-                    resultHtml += '🎉 Отлично! Все задания выполнены верно!';
-                } else {
-                    resultHtml += '<div>⚠️ Ошибки:</div><ul>' + mistakes.map(m => `<li>${m}</li>`).join('') + '</ul>';
+                let reportBody = `**Ученик:** ${student}\n`;
+                reportBody += `**Дата:** ${date}\n`;
+                reportBody += `**Тема:** ${topic}\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
+
+                if (mistakes.length > 0) {
+                    reportBody += `**❌ Ошибки:**\n\n`;
+                    reportBody += `| № | Задание | Ответ ученика |\n`;
+                    reportBody += `|---|---------|---------------|\n`;
+                    mistakes.forEach(m => {
+                        const parts = m.replace('❌ ', '').split(' → ');
+                        reportBody += `| ${parts[0]} | ${parts[1] || ''} | ${parts[2] || ''} |\n`;
+                    });
+                    reportBody += `\n`;
                 }
-                resultArea.innerHTML = resultHtml;
+
+                reportBody += `**📋 Все ответы:**\n\`\`\`\n${answersText}\`\`\``;
+                reportBody += `\n\n**💬 Комментарий:**\n${comment}`;
 
                 const title = `Домашнее задание: ${student} — ${topic} (${date})`;
-                const body =
-                    `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n` +
-                    `**Результат:** ${correct} из ${total} (${percent}%)\n\n` +
-                    `**Результаты:**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
 
                 const btn = this;
                 btn.disabled = true;
                 btn.textContent = '⏳ Отправка...';
                 modalStatus.textContent = '';
+                modalStatus.style.color = '#4a627a';
 
                 try {
                     if (typeof createGitHubIssue === 'function') {
-                        const url = await createGitHubIssue(title, body);
-                        modalStatus.innerHTML = `✅ Отправлено! <a href="${url}" target="_blank">Ссылка</a>`;
+                        const issueUrl = await createGitHubIssue(title, reportBody);
+                        modalStatus.innerHTML =
+                            `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Посмотреть</a>`;
                         modalStatus.style.color = '#16a34a';
                     } else {
-                        console.log('📤', title, '\n', body);
-                        modalStatus.textContent = '✅ Отчёт отправлен (демо)';
+                        console.log('📤 Отправка отчёта:', title, '\n', reportBody);
+                        modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим)';
                         modalStatus.style.color = '#16a34a';
                     }
+
+                    // Показываем ученику только сообщение об отправке
+                    resultArea.innerHTML = '📤 Отчёт успешно отправлен преподавателю!';
+
                     setTimeout(() => reportModal.classList.remove('active'), 3000);
-                } catch (e) {
-                    modalStatus.textContent = `❌ Ошибка: ${e.message}`;
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
                     modalStatus.style.color = '#dc2626';
                 } finally {
                     btn.disabled = false;
