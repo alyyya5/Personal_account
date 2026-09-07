@@ -23,6 +23,9 @@
             --shadow: 0 12px 40px rgba(30, 42, 58, 0.08);
             --radius: 20px;
             --transition: 0.2s ease;
+            --green: #2d8f6f;
+            --orange: #d98a26;
+            --red: #c0392b;
         }
 
         body {
@@ -36,7 +39,6 @@
             background-attachment: fixed;
         }
 
-        /* ========== ОБЩИЙ КОНТЕЙНЕР ========== */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -109,10 +111,10 @@
             transform: translateY(-1px);
         }
 
-        /* ========== СТАТИСТИКА ========== */
+        /* ========== ОБЩАЯ СТАТИСТИКА ========== */
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 12px;
             margin-bottom: 24px;
         }
@@ -144,6 +146,115 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+        }
+
+        /* ========== КАРТОЧКИ УЧЕНИКОВ ========== */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px 20px;
+            transition: var(--transition);
+        }
+
+        .student-card:hover {
+            background: #fff;
+            box-shadow: 0 6px 20px rgba(30, 42, 58, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .student-card .student-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e2a3a;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .student-card .student-name .badge {
+            font-size: 0.55rem;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .student-card .student-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .student-card .student-stats .ss-item {
+            text-align: center;
+            padding: 6px 4px;
+            background: rgba(244, 247, 252, 0.6);
+            border-radius: 10px;
+        }
+
+        .student-card .student-stats .ss-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .student-card .student-stats .ss-label {
+            font-size: 0.55rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        .student-card .progress-bar-wrap {
+            margin-top: 10px;
+            height: 6px;
+            background: #e8ecf2;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .student-card .progress-bar-wrap .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent), #6a9bc7);
+            transition: width 0.6s ease;
+        }
+
+        .student-card .student-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .student-card .student-actions button {
+            padding: 5px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .student-card .student-actions button:hover {
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         /* ========== КАЛЕНДАРЬ ========== */
@@ -254,6 +365,44 @@
             border: 2px solid var(--accent);
         }
 
+        /* ========== ТАБЫ ========== */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tabs button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tabs button:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .tabs button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* ========== СПИСОК УРОКОВ ========== */
         .lessons-list {
             background: var(--surface-strong);
@@ -317,6 +466,7 @@
         .col-topic { width: auto; }
         .col-links { width: 72px; text-align: center; }
         .col-done { width: 92px; text-align: center; }
+        .col-status { width: 74px; text-align: center; }
 
         .topic-cell {
             word-wrap: break-word;
@@ -379,6 +529,30 @@
             cursor: pointer;
             accent-color: var(--accent);
             flex-shrink: 0;
+        }
+
+        .status-badge {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .status-badge.done {
+            background: #dcfce7;
+            color: #2d8f6f;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #d98a26;
+        }
+
+        .status-badge.checked {
+            background: #dbeafe;
+            color: #2563eb;
         }
 
         .no-lessons-msg {
@@ -533,6 +707,7 @@
             .header-icon { width: 42px; height: 42px; font-size: 1.2rem; }
             .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .stat-number { font-size: 1.4rem; }
+            .students-grid { grid-template-columns: 1fr; }
             .calendar-grid .day { min-height: 38px; font-size: 0.7rem; border-radius: 10px; }
             .calendar-grid .weekday { font-size: 0.5rem; }
             .lessons-list { padding: 12px 8px; max-height: 400px; }
@@ -543,12 +718,14 @@
             .col-time { width: 60px; }
             .col-links { width: 56px; }
             .col-done { width: 72px; }
+            .col-status { width: 60px; }
             .lessons-table td { padding: 6px 4px; }
             .topic-cell { font-size: 0.6rem; }
             .links-cell a { width: 22px; height: 22px; font-size: 0.6rem; }
             .check-cell label { font-size: 0.5rem; }
             .check-cell input[type="checkbox"] { width: 12px; height: 12px; }
             .modal-card { padding: 18px 16px; border-radius: 22px; max-width: 400px; }
+            .tabs button { font-size: 0.7rem; padding: 6px 14px; }
         }
 
         @media (max-width: 480px) {
@@ -563,6 +740,8 @@
             .stat-card { padding: 10px 8px; }
             .stat-number { font-size: 1.2rem; }
             .stat-label { font-size: 0.55rem; }
+            .students-grid { grid-template-columns: 1fr; }
+            .student-card .student-stats { grid-template-columns: 1fr 1fr 1fr; }
             .calendar-grid .day { min-height: 32px; font-size: 0.6rem; border-radius: 8px; }
             .calendar-grid .day .dot { width: 4px; height: 4px; }
             .col-date { width: 30px; }
@@ -571,6 +750,7 @@
             .col-time { width: 48px; }
             .col-links { width: 44px; }
             .col-done { width: 60px; }
+            .col-status { width: 52px; }
             .lessons-list { max-height: 320px; }
             .lessons-table td { padding: 4px 3px; font-size: 0.55rem; }
             .links-cell a { width: 18px; height: 18px; font-size: 0.5rem; }
@@ -581,6 +761,7 @@
             .modal-student-card { padding: 10px 12px; }
             .modal-student-card .student-name { font-size: 0.85rem; }
             .modal-student-card .student-topic { font-size: 0.75rem; }
+            .status-badge { font-size: 0.5rem; padding: 1px 6px; }
         }
     </style>
 </head>
@@ -601,23 +782,35 @@
             <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
         </div>
 
-        <!-- ===== СТАТИСТИКА ===== -->
+        <!-- ===== ОБЩАЯ СТАТИСТИКА ===== -->
         <div class="stats-row" id="statsRow">
             <div class="stat-card">
                 <div class="stat-number" id="statTotalLessons">0</div>
                 <div class="stat-label">Всего уроков</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="statStudents">0</div>
-                <div class="stat-label">Учеников</div>
+                <div class="stat-number" id="statTotalMaterials">0</div>
+                <div class="stat-label">Материалов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalHomework">0</div>
+                <div class="stat-label">Домашек</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="statDone">0</div>
                 <div class="stat-label">ДЗ выполнено</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statStudents">0</div>
+                <div class="stat-label">Учеников</div>
+            </div>
         </div>
 
-        <!-- ===== КАЛЕНДАРЬ ===== -->
+        <!-- ===== КАРТОЧКИ УЧЕНИКОВ ===== -->
+        <h3 style="font-size:0.9rem; font-weight:700; color:#1e2a3a; margin-bottom:12px;">👥 Ученики</h3>
+        <div class="students-grid" id="studentsGrid"></div>
+
+        <!-- ===== КАЛЕНДАРЬ И ТАБЫ ===== -->
         <div class="calendar-section">
             <div class="calendar-header">
                 <span class="month-year" id="monthYear"></span>
@@ -629,10 +822,35 @@
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
-        <!-- ===== СПИСОК УРОКОВ ===== -->
-        <div class="lessons-list">
-            <h3>📋 Все уроки на месяц</h3>
-            <div id="lessonsTableContainer"></div>
+        <!-- ===== ТАБЫ ===== -->
+        <div class="tabs">
+            <button class="active" data-tab="lessons">📋 Уроки</button>
+            <button data-tab="materials">📚 Материалы</button>
+            <button data-tab="homework">📝 Домашки</button>
+        </div>
+
+        <!-- ===== ТАБ: УРОКИ ===== -->
+        <div class="tab-content active" id="tab-lessons">
+            <div class="lessons-list">
+                <h3>📋 Все уроки на месяц</h3>
+                <div id="lessonsTableContainer"></div>
+            </div>
+        </div>
+
+        <!-- ===== ТАБ: МАТЕРИАЛЫ ===== -->
+        <div class="tab-content" id="tab-materials">
+            <div class="lessons-list">
+                <h3>📚 Все материалы</h3>
+                <div id="materialsTableContainer"></div>
+            </div>
+        </div>
+
+        <!-- ===== ТАБ: ДОМАШКИ ===== -->
+        <div class="tab-content" id="tab-homework">
+            <div class="lessons-list">
+                <h3>📝 Все домашние задания</h3>
+                <div id="homeworkTableContainer"></div>
+            </div>
         </div>
 
     </div>
@@ -670,10 +888,13 @@
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
     let lessonsData = [];
+    let currentTab = 'lessons';
 
     // DOM
     const mainContent = document.getElementById('mainContent');
     const lessonsTableContainer = document.getElementById('lessonsTableContainer');
+    const materialsTableContainer = document.getElementById('materialsTableContainer');
+    const homeworkTableContainer = document.getElementById('homeworkTableContainer');
     const logoutBtn = document.getElementById('logoutBtn');
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
@@ -683,9 +904,12 @@
     const modalClose = document.getElementById('modalClose');
     const modalDate = document.getElementById('modalDate');
     const modalStudentsContainer = document.getElementById('modalStudentsContainer');
+    const studentsGrid = document.getElementById('studentsGrid');
     const statTotalLessons = document.getElementById('statTotalLessons');
-    const statStudents = document.getElementById('statStudents');
+    const statTotalMaterials = document.getElementById('statTotalMaterials');
+    const statTotalHomework = document.getElementById('statTotalHomework');
     const statDone = document.getElementById('statDone');
+    const statStudents = document.getElementById('statStudents');
 
     // ============================================================
     //  ИМЯ УЧЕНИКА
@@ -741,6 +965,7 @@
         }
         lessonsData = all;
         updateStats();
+        renderStudentsCards();
     }
 
     // ============================================================
@@ -749,6 +974,8 @@
     function updateStats() {
         const total = lessonsData.length;
         const uniqueStudents = new Set(lessonsData.map(l => l.student)).size;
+        const materials = lessonsData.filter(l => l.material && l.material.trim() !== '').length;
+        const homeworks = lessonsData.filter(l => l.homework && l.homework.trim() !== '').length;
 
         let doneCount = 0;
         const today = new Date();
@@ -760,8 +987,87 @@
         });
 
         statTotalLessons.textContent = total;
-        statStudents.textContent = uniqueStudents;
+        statTotalMaterials.textContent = materials;
+        statTotalHomework.textContent = homeworks;
         statDone.textContent = doneCount;
+        statStudents.textContent = uniqueStudents;
+    }
+
+    // ============================================================
+    //  КАРТОЧКИ УЧЕНИКОВ
+    // ============================================================
+    function renderStudentsCards() {
+        const students = {};
+        lessonsData.forEach(l => {
+            if (!students[l.student]) {
+                students[l.student] = {
+                    name: getStudentName(l.student),
+                    lessons: [],
+                    materials: 0,
+                    homeworks: 0,
+                    done: 0,
+                    total: 0
+                };
+            }
+            students[l.student].lessons.push(l);
+            if (l.material && l.material.trim() !== '') students[l.student].materials++;
+            if (l.homework && l.homework.trim() !== '') students[l.student].homeworks++;
+            if (l.hwStatus && l.hwStatus.includes('Проверено')) students[l.student].done++;
+            students[l.student].total++;
+        });
+
+        let html = '';
+        for (let [id, data] of Object.entries(students)) {
+            const progress = data.total > 0 ? Math.round((data.done / data.total) * 100) : 0;
+            html += `
+                <div class="student-card">
+                    <div class="student-name">
+                        ${data.name}
+                        <span class="badge">${id}</span>
+                    </div>
+                    <div class="student-stats">
+                        <div class="ss-item">
+                            <div class="ss-number">${data.total}</div>
+                            <div class="ss-label">Уроков</div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="ss-number">${data.materials}</div>
+                            <div class="ss-label">Материалов</div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="ss-number">${data.homeworks}</div>
+                            <div class="ss-label">Домашек</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-fill" style="width: ${progress}%;"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--muted); margin-top:4px;">
+                        <span>Выполнено ДЗ: ${data.done}</span>
+                        <span>${progress}%</span>
+                    </div>
+                    <div class="student-actions">
+                        <button onclick="filterByStudent('${id}')">📋 Показать уроки</button>
+                    </div>
+                </div>
+            `;
+        }
+        studentsGrid.innerHTML = html;
+    }
+
+    // ============================================================
+    //  ФИЛЬТР ПО УЧЕНИКУ
+    // ============================================================
+    function filterByStudent(studentId) {
+        // Переключаем на вкладку "Уроки"
+        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-tab="lessons"]').classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-lessons').classList.add('active');
+        currentTab = 'lessons';
+
+        // Фильтруем и перерисовываем
+        renderLessonsList(currentYear, currentMonth, studentId);
     }
 
     // ============================================================
@@ -871,11 +1177,37 @@
     });
 
     // ============================================================
-    //  ТАБЛИЦА УРОКОВ
+    //  ТАБЫ
     // ============================================================
-    function renderLessonsList(year, month) {
+    document.querySelectorAll('.tabs button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const tab = this.dataset.tab;
+            currentTab = tab;
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+
+            if (tab === 'lessons') renderLessonsList(currentYear, currentMonth);
+            if (tab === 'materials') renderMaterialsList();
+            if (tab === 'homework') renderHomeworkList();
+        });
+    });
+
+    // ============================================================
+    //  ТАБ: УРОКИ
+    // ============================================================
+    function renderLessonsList(year, month, filterStudent = null) {
         const data = getLessonsForMonth(year, month);
-        if (!data.length) {
+        let filteredData = data;
+        if (filterStudent) {
+            filteredData = data.map(item => ({
+                ...item,
+                lessons: item.lessons.filter(l => l.student === filterStudent)
+            })).filter(item => item.lessons.length > 0);
+        }
+
+        if (!filteredData.length) {
             lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
             return;
         }
@@ -890,13 +1222,14 @@
                         <th class="col-time">Время</th>
                         <th class="col-topic">Тема</th>
                         <th class="col-links">Ссылки</th>
+                        <th class="col-status">Статус</th>
                         <th class="col-done">Готово</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        data.forEach(item => {
+        filteredData.forEach(item => {
             const dateObj = item.date;
             const day = String(dateObj.getDate()).padStart(2, '0');
             const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -909,6 +1242,15 @@
 
                 const hwChecked = loadCheck(studentId, l.date, 'homework');
                 const matChecked = loadCheck(studentId, l.date, 'material');
+
+                // Статус домашки
+                let statusHtml = '<span class="status-badge pending">⏳ Нет</span>';
+                if (l.hwStatus) {
+                    const s = l.hwStatus.toLowerCase();
+                    if (s.includes('проверено')) statusHtml = '<span class="status-badge checked">📝 Проверено</span>';
+                    else if (s.includes('выполнено') || s.includes('сделано')) statusHtml = '<span class="status-badge done">✅ Выполнено</span>';
+                    else if (s.includes('не решено')) statusHtml = '<span class="status-badge pending">⏳ Не решено</span>';
+                }
 
                 const checkHtml = `
                     <td class="col-done">
@@ -947,6 +1289,7 @@
                     <td class="col-links links-cell">
                         <div class="inner-flex">${links || '—'}</div>
                     </td>
+                    <td class="col-status">${statusHtml}</td>
                     ${checkHtml}
                 </tr>`;
             });
@@ -966,6 +1309,113 @@
     }
 
     // ============================================================
+    //  ТАБ: МАТЕРИАЛЫ
+    // ============================================================
+    function renderMaterialsList() {
+        const items = lessonsData
+            .filter(l => l.material && l.material.trim() !== '')
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (!items.length) {
+            materialsTableContainer.innerHTML = '<div class="no-lessons-msg">Нет материалов.</div>';
+            return;
+        }
+
+        let html = `
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th class="col-date">Дата</th>
+                        <th class="col-student">Уч-к</th>
+                        <th class="col-topic">Тема</th>
+                        <th class="col-links">Ссылка</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        items.forEach(l => {
+            const dateParts = l.date.split('-');
+            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
+            html += `
+                <tr>
+                    <td class="col-date">${displayDate}</td>
+                    <td class="col-student">${getStudentName(l.student)}</td>
+                    <td class="col-topic topic-cell">${l.topic || 'Без темы'}</td>
+                    <td class="col-links links-cell"><a href="${l.material}" target="_blank" title="Материал">📖 Открыть</a></td>
+                </tr>
+            `;
+        });
+
+        html += '</tbody></table>';
+        materialsTableContainer.innerHTML = html;
+    }
+
+    // ============================================================
+    //  ТАБ: ДОМАШКИ
+    // ============================================================
+    function renderHomeworkList() {
+        const items = lessonsData
+            .filter(l => l.homework && l.homework.trim() !== '')
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (!items.length) {
+            homeworkTableContainer.innerHTML = '<div class="no-lessons-msg">Нет домашних заданий.</div>';
+            return;
+        }
+
+        let html = `
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th class="col-date">Дата</th>
+                        <th class="col-student">Уч-к</th>
+                        <th class="col-topic">Тема</th>
+                        <th class="col-status">Статус</th>
+                        <th class="col-links">Ссылка</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        items.forEach(l => {
+            const dateParts = l.date.split('-');
+            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
+
+            let statusHtml = '<span class="status-badge pending">⏳ Нет</span>';
+            if (l.hwStatus) {
+                const s = l.hwStatus.toLowerCase();
+                if (s.includes('проверено')) statusHtml = '<span class="status-badge checked">📝 Проверено</span>';
+                else if (s.includes('выполнено') || s.includes('сделано')) statusHtml = '<span class="status-badge done">✅ Выполнено</span>';
+                else if (s.includes('не решено')) statusHtml = '<span class="status-badge pending">⏳ Не решено</span>';
+            }
+
+            const params = new URLSearchParams({
+                student: l.student,
+                date: l.date,
+                topic: l.topic || '',
+                start: l.start || '',
+                end: l.end || ''
+            });
+            const separator = l.homework.includes('?') ? '&' : '?';
+            const hwLink = l.homework + separator + params.toString();
+
+            html += `
+                <tr>
+                    <td class="col-date">${displayDate}</td>
+                    <td class="col-student">${getStudentName(l.student)}</td>
+                    <td class="col-topic topic-cell">${l.topic || 'Без темы'}</td>
+                    <td class="col-status">${statusHtml}</td>
+                    <td class="col-links links-cell"><a href="${hwLink}" target="_blank" title="Домашка">📝 Открыть</a></td>
+                </tr>
+            `;
+        });
+
+        html += '</tbody></table>';
+        homeworkTableContainer.innerHTML = html;
+    }
+
+    // ============================================================
     //  ПЕРЕКЛЮЧЕНИЕ МЕСЯЦА
     // ============================================================
     function changeMonth(delta) {
@@ -973,7 +1423,7 @@
         if (currentMonth < 0) { currentMonth = 11; currentYear--; }
         if (currentMonth > 11) { currentMonth = 0; currentYear++; }
         renderCalendar(currentYear, currentMonth);
-        renderLessonsList(currentYear, currentMonth);
+        if (currentTab === 'lessons') renderLessonsList(currentYear, currentMonth);
     }
 
     prevMonthBtn.addEventListener('click', () => changeMonth(-1));
@@ -986,6 +1436,8 @@
         await loadAllLessons();
         renderCalendar(currentYear, currentMonth);
         renderLessonsList(currentYear, currentMonth);
+        renderMaterialsList();
+        renderHomeworkList();
     }
 
     // ============================================================
