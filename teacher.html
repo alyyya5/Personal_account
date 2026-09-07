@@ -3,267 +3,322 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Для преподавателя</title>
+    <title>Преподаватель</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ============================================================
+           ПЕРЕМЕННЫЕ — СВЕТЛАЯ ТЕМА (по умолчанию)
+           ============================================================ */
+        :root {
+            --bg-body: #f0f4fc;
+            --bg-container: rgba(255, 255, 255, 0.78);
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-hover: #ffffff;
+            --bg-sidebar: rgba(255, 255, 255, 0.92);
+            --bg-input: #f5f8fd;
+            --text-primary: #1e2a3a;
+            --text-secondary: #5a6b82;
+            --text-muted: #8a9aaa;
+            --border-color: rgba(74, 111, 165, 0.12);
+            --shadow: 0 12px 40px rgba(30, 42, 58, 0.08);
+            --shadow-md: 0 8px 24px rgba(30, 42, 58, 0.06);
+            --accent-blue: #4a6fa5;
+            --accent-purple: #6d54c7;
+            --accent-green: #2f9d68;
+            --accent-orange: #d98a26;
+            --accent-red: #d85c5c;
+            --radius: 20px;
+            --transition: 0.25s ease;
         }
 
-        :root {
-            --text: #1e2a3a;
-            --muted: #5a6b82;
-            --accent: #4a6fa5;
-            --accent-light: #e8eff9;
-            --mint-light: #e6f5f0;
-            --surface: rgba(255, 255, 255, 0.78);
-            --surface-strong: rgba(255, 255, 255, 0.92);
-            --border: rgba(74, 111, 165, 0.12);
-            --shadow: 0 12px 40px rgba(30, 42, 58, 0.08);
-            --radius: 20px;
-            --transition: 0.2s ease;
-            --green: #2d8f6f;
-            --orange: #d98a26;
-            --red: #c0392b;
+        /* ============================================================
+           ТЁМНАЯ ТЕМА
+           ============================================================ */
+        body.dark-mode {
+            --bg-body: #121826;
+            --bg-container: rgba(28, 34, 56, 0.85);
+            --bg-card: rgba(38, 47, 72, 0.88);
+            --bg-card-hover: rgba(46, 56, 84, 0.96);
+            --bg-sidebar: rgba(28, 34, 56, 0.92);
+            --bg-input: rgba(255, 255, 255, 0.06);
+            --text-primary: #edf2ff;
+            --text-secondary: #b9c3d8;
+            --text-muted: #7f8aa3;
+            --border-color: rgba(173, 188, 225, 0.10);
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.30);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.20);
+            --accent-blue: #5a82c9;
         }
+
+        /* ============================================================
+           ОБЩИЕ СТИЛИ
+           ============================================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             min-height: 100vh;
-            padding: 24px 16px;
+            padding: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: var(--text);
-            background: radial-gradient(circle at 10% 8%, rgba(74, 111, 165, 0.06) 0%, transparent 35%),
-                        radial-gradient(circle at 92% 15%, rgba(74, 165, 130, 0.06) 0%, transparent 30%),
-                        linear-gradient(135deg, #f0f4fc 0%, #f7f9fc 50%, #f0f7f5 100%);
-            background-attachment: fixed;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            transition: background var(--transition), color var(--transition);
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 28px 30px 32px;
-            background: var(--surface);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 32px;
-            box-shadow: var(--shadow);
+        /* ============================================================
+           САЙДБАР
+           ============================================================ */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-sidebar);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 16px 24px;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: left 0.3s ease, background var(--transition);
+            box-shadow: var(--shadow-md);
         }
 
-        /* ========== ШАПКА ========== */
-        .header {
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 16px;
         }
 
-        .header-left {
+        .sidebar-header .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sidebar-header .logo span {
+            color: var(--accent-blue);
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .sidebar-close:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+
+        .sidebar .student-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: transparent;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 550;
+            transition: var(--transition);
+            text-align: left;
         }
 
-        .header-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #e8eff9, #e6f5f0);
+        .sidebar .student-item:hover {
+            background: rgba(74, 111, 165, 0.06);
+            color: var(--text-primary);
+        }
+
+        .sidebar .student-item.active {
+            background: rgba(74, 111, 165, 0.12);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .sidebar .student-item .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .header-title {
-            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
             font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #1e2a3a;
-        }
-
-        .header-sub {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 2px;
-        }
-
-        .logout-btn {
-            padding: 8px 18px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.6);
-            color: var(--muted);
-            font-weight: 600;
             font-size: 0.8rem;
-            cursor: pointer;
-            transition: var(--transition);
+            flex-shrink: 0;
         }
 
-        .logout-btn:hover {
-            background: #fff;
-            color: var(--text);
-            box-shadow: 0 4px 12px rgba(30, 42, 58, 0.06);
-            transform: translateY(-1px);
-        }
-
-        /* ========== ОБЩАЯ СТАТИСТИКА ========== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(30, 42, 58, 0.04);
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        /* ========== КАРТОЧКИ УЧЕНИКОВ ========== */
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .student-card {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 20px 20px;
-            transition: var(--transition);
-        }
-
-        .student-card:hover {
-            background: #fff;
-            box-shadow: 0 6px 20px rgba(30, 42, 58, 0.06);
-            transform: translateY(-2px);
-        }
-
-        .student-card .student-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1e2a3a;
-            margin-bottom: 4px;
+        .sidebar .theme-toggle {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            padding: 10px 14px;
+            margin-top: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: 550;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            width: 100%;
         }
 
-        .student-card .student-name .badge {
-            font-size: 0.55rem;
-            padding: 2px 10px;
-            border-radius: 20px;
-            background: var(--accent-light);
-            color: var(--accent);
-            font-weight: 600;
+        .sidebar .theme-toggle:hover {
+            background: rgba(74, 111, 165, 0.06);
+            color: var(--text-primary);
         }
 
-        .student-card .student-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            margin-top: 10px;
-        }
-
-        .student-card .student-stats .ss-item {
-            text-align: center;
-            padding: 6px 4px;
-            background: rgba(244, 247, 252, 0.6);
-            border-radius: 10px;
-        }
-
-        .student-card .student-stats .ss-number {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-
-        .student-card .student-stats .ss-label {
-            font-size: 0.55rem;
-            color: var(--muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.2px;
-        }
-
-        .student-card .progress-bar-wrap {
-            margin-top: 10px;
-            height: 6px;
-            background: #e8ecf2;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .student-card .progress-bar-wrap .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, var(--accent), #6a9bc7);
-            transition: width 0.6s ease;
-        }
-
-        .student-card .student-actions {
-            margin-top: 12px;
+        .sidebar .logout-btn {
             display: flex;
-            gap: 8px;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            margin-top: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            color: var(--accent-red);
+            font-weight: 550;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .sidebar .logout-btn:hover {
+            background: rgba(216, 92, 92, 0.08);
+        }
+
+        .sidebar .sidebar-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            padding: 8px 14px 6px;
+            font-weight: 700;
+        }
+
+        /* ============================================================
+           ОСНОВНОЙ КОНТЕНТ
+           ============================================================ */
+        .main-wrapper {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 20px 20px 28px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-wrapper.shifted {
+            margin-left: 280px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
-        .student-card .student-actions button {
-            padding: 5px 14px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            color: var(--muted);
-            font-size: 0.7rem;
-            font-weight: 600;
+        .top-bar .hamburger {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 1.2rem;
             cursor: pointer;
+            color: var(--text-primary);
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
-        .student-card .student-actions button:hover {
-            background: var(--accent-light);
-            color: var(--accent);
+        .top-bar .hamburger:hover {
+            box-shadow: var(--shadow-md);
         }
 
-        /* ========== КАЛЕНДАРЬ ========== */
+        .top-bar .page-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .top-bar .page-title small {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+           КОНТЕЙНЕР СТРАНИЦЫ УЧЕНИКА
+           ============================================================ */
+        .student-page {
+            display: none;
+        }
+
+        .student-page.active {
+            display: block;
+        }
+
+        .student-page .welcome-block {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            backdrop-filter: blur(8px);
+            transition: background var(--transition);
+        }
+
+        .student-page .welcome-block h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .student-page .welcome-block p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================================
+           КАЛЕНДАРЬ (как у учеников)
+           ============================================================ */
         .calendar-section {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid var(--border);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: var(--radius);
             padding: 18px 16px 16px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(8px);
+            transition: background var(--transition);
         }
 
         .calendar-header {
@@ -275,9 +330,9 @@
         }
 
         .calendar-header .month-year {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: #1e2a3a;
+            color: var(--text-primary);
         }
 
         .calendar-header .nav-buttons {
@@ -288,18 +343,18 @@
         .calendar-header .nav-buttons button {
             width: 34px;
             height: 34px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--muted);
+            background: var(--bg-input);
+            color: var(--text-secondary);
             cursor: pointer;
             font-size: 0.8rem;
             transition: var(--transition);
         }
 
         .calendar-header .nav-buttons button:hover {
-            background: var(--accent-light);
-            color: var(--accent);
+            background: var(--accent-blue);
+            color: white;
         }
 
         .calendar-grid {
@@ -315,84 +370,85 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.4px;
-            color: #8a9aaa;
+            color: var(--text-muted);
         }
 
         .calendar-grid .day {
-            min-height: 48px;
+            min-height: 44px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            background: var(--bg-input);
             border: 1px solid transparent;
-            color: #3e4e62;
-            font-size: 0.8rem;
-            font-weight: 550;
+            color: var(--text-primary);
+            font-size: 0.78rem;
+            font-weight: 500;
             cursor: default;
             transition: var(--transition);
         }
 
         .calendar-grid .day.other-month {
-            background: transparent;
-            color: #c5ced9;
+            opacity: 0.3;
         }
 
         .calendar-grid .day.has-lesson {
             cursor: pointer;
-            background: linear-gradient(135deg, rgba(74, 111, 165, 0.08), rgba(74, 165, 130, 0.08));
+            background: rgba(74, 111, 165, 0.08);
             border-color: rgba(74, 111, 165, 0.15);
-            color: #2e4a7a;
+            color: var(--accent-blue);
             font-weight: 600;
         }
 
         .calendar-grid .day.has-lesson:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(74, 111, 165, 0.10);
-            border-color: rgba(74, 111, 165, 0.3);
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.10);
         }
 
         .calendar-grid .day .dot {
             width: 5px;
             height: 5px;
             border-radius: 50%;
-            background: var(--accent);
+            background: var(--accent-blue);
             margin-top: 2px;
         }
 
         .calendar-grid .day.today {
-            border: 2px solid var(--accent);
+            border: 2px solid var(--accent-blue);
         }
 
-        /* ========== ТАБЫ ========== */
-        .tabs {
+        /* ============================================================
+           СТРАНИЦЫ: РАСПИСАНИЕ, ДОМАШКИ, МАТЕРИАЛЫ, ПРОГРЕСС
+           ============================================================ */
+        .page-tabs {
             display: flex;
             gap: 6px;
             margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
-        .tabs button {
-            padding: 8px 20px;
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.5);
-            color: var(--muted);
-            font-size: 0.8rem;
+        .page-tabs button {
+            padding: 8px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-input);
+            color: var(--text-secondary);
             font-weight: 600;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .tabs button:hover {
-            background: rgba(255, 255, 255, 0.8);
+        .page-tabs button:hover {
+            background: rgba(74, 111, 165, 0.06);
+            color: var(--text-primary);
         }
 
-        .tabs button.active {
-            background: var(--accent);
+        .page-tabs button.active {
+            background: var(--accent-blue);
             color: white;
-            border-color: var(--accent);
+            border-color: var(--accent-blue);
         }
 
         .tab-content {
@@ -403,76 +459,68 @@
             display: block;
         }
 
-        /* ========== СПИСОК УРОКОВ ========== */
+        /* ============================================================
+           СПИСОК УРОКОВ (расписание)
+           ============================================================ */
         .lessons-list {
-            background: var(--surface-strong);
-            border: 1px solid var(--border);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            padding: 16px 14px 18px;
-            max-height: 540px;
+            padding: 14px 12px 16px;
+            max-height: 460px;
             overflow-y: auto;
+            transition: background var(--transition);
         }
 
         .lessons-list h3 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            color: #1e2a3a;
             margin-bottom: 10px;
+            color: var(--text-primary);
         }
 
         .lessons-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0 4px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             table-layout: fixed;
         }
 
         .lessons-table th {
             text-align: left;
             padding: 4px 8px 6px;
-            color: #8a9aaa;
-            font-size: 0.55rem;
+            color: var(--text-muted);
+            font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.4px;
             font-weight: 700;
         }
 
         .lessons-table td {
-            padding: 8px 8px;
+            padding: 6px 8px;
             vertical-align: middle;
-            background: rgba(244, 247, 252, 0.6);
-            color: #3e4e62;
-            line-height: 1.4;
+            background: rgba(244, 247, 252, 0.4);
+            color: var(--text-primary);
+            line-height: 1.3;
             border-radius: 0;
         }
 
-        .lessons-table td:first-child {
-            border-radius: 12px 0 0 12px;
-        }
+        .lessons-table td:first-child { border-radius: 10px 0 0 10px; }
+        .lessons-table td:last-child { border-radius: 0 10px 10px 0; }
+        .lessons-table tr:hover td { background: rgba(74, 111, 165, 0.04); }
 
-        .lessons-table td:last-child {
-            border-radius: 0 12px 12px 0;
-        }
-
-        .lessons-table tr:hover td {
-            background: rgba(232, 239, 249, 0.7);
-        }
-
-        .col-date { width: 50px; }
-        .col-day { width: 44px; }
-        .col-student { width: 62px; }
-        .col-time { width: 76px; }
+        .col-date { width: 46px; }
+        .col-day { width: 40px; }
+        .col-time { width: 68px; }
         .col-topic { width: auto; }
-        .col-links { width: 72px; text-align: center; }
-        .col-done { width: 92px; text-align: center; }
-        .col-status { width: 74px; text-align: center; }
+        .col-links { width: 64px; text-align: center; }
 
         .topic-cell {
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
         }
 
         .inner-flex {
@@ -483,97 +531,263 @@
             flex-wrap: nowrap;
         }
 
-        /* ========== ССЫЛКИ ========== */
         .links-cell a {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            background: #eef1fb;
-            color: #4a6fa5;
+            background: rgba(74, 111, 165, 0.08);
+            color: var(--accent-blue);
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             transition: var(--transition);
             flex-shrink: 0;
         }
 
         .links-cell a:hover {
-            background: #dce5f5;
+            background: rgba(74, 111, 165, 0.15);
             transform: translateY(-1px);
         }
 
-        /* ========== ГАЛОЧКИ ========== */
-        .check-cell {
+        /* ============================================================
+           ДОМАШКИ И МАТЕРИАЛЫ (карточки)
+           ============================================================ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .hw-card, .mat-card {
+            padding: 16px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
             display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
         }
 
-        .check-cell label {
+        .hw-card:hover, .mat-card:hover {
+            transform: translateY(-3px);
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .hw-card .card-header,
+        .mat-card .card-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 3px;
-            color: #6a7b90;
-            font-size: 0.6rem;
-            cursor: pointer;
-            white-space: nowrap;
+            margin-bottom: 10px;
         }
 
-        .check-cell input[type="checkbox"] {
-            width: 14px;
-            height: 14px;
-            cursor: pointer;
-            accent-color: var(--accent);
-            flex-shrink: 0;
+        .hw-card .card-date,
+        .mat-card .card-date {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            background: rgba(74, 111, 165, 0.08);
+            padding: 2px 12px;
+            border-radius: 20px;
         }
 
-        .status-badge {
-            font-size: 0.6rem;
+        .hw-card .card-status {
+            font-size: 0.65rem;
             font-weight: 600;
             padding: 2px 10px;
             border-radius: 20px;
+        }
+
+        .card-status.pending {
+            background: rgba(216, 92, 92, 0.12);
+            color: var(--accent-red);
+        }
+
+        .card-status.done {
+            background: rgba(74, 111, 165, 0.10);
+            color: var(--accent-blue);
+        }
+
+        .card-status.checked {
+            background: rgba(47, 157, 104, 0.14);
+            color: var(--accent-green);
+        }
+
+        .hw-card .card-topic,
+        .mat-card .card-topic {
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex: 1;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .hw-card .card-btn,
+        .mat-card .card-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--accent-blue);
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .hw-card .card-btn:hover,
+        .mat-card .card-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.2);
+        }
+
+        /* ============================================================
+           ПРОГРЕСС
+           ============================================================ */
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            line-height: 1.2;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .chart-card {
+            padding: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .chart-card h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .chart-card canvas {
+            max-height: 180px;
+        }
+
+        .tests-table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 18px;
+            transition: var(--transition);
+        }
+
+        .tests-table-wrapper h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .tests-table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .tests-table-wrapper th {
+            text-align: left;
+            padding: 6px 6px;
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tests-table-wrapper td {
+            padding: 6px 6px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .tests-table-wrapper .status-badge {
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
             display: inline-block;
-            white-space: nowrap;
         }
 
-        .status-badge.done {
-            background: #dcfce7;
-            color: #2d8f6f;
+        .status-badge.excellent {
+            background: rgba(47, 157, 104, 0.14);
+            color: var(--accent-green);
         }
-
+        .status-badge.good {
+            background: rgba(217, 138, 38, 0.14);
+            color: var(--accent-orange);
+        }
+        .status-badge.poor {
+            background: rgba(216, 92, 92, 0.14);
+            color: var(--accent-red);
+        }
         .status-badge.pending {
-            background: #fef3c7;
-            color: #d98a26;
+            background: rgba(153, 163, 181, 0.14);
+            color: var(--text-muted);
         }
 
-        .status-badge.checked {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .no-lessons-msg {
-            padding: 12px 4px;
-            color: #8a9aaa;
-            font-style: italic;
-            font-size: 0.8rem;
-        }
-
-        /* ========== МОДАЛКА ========== */
+        /* ============================================================
+           МОДАЛКА (для клика по дню)
+           ============================================================ */
         .modal-overlay {
             position: fixed;
             inset: 0;
             padding: 20px;
             background: rgba(30, 42, 58, 0.25);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 1100;
         }
 
         .modal-overlay.active {
@@ -581,16 +795,15 @@
         }
 
         .modal-card {
-            position: relative;
+            max-width: 460px;
             width: 100%;
-            max-width: 540px;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
-            padding: 24px 28px 28px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 28px;
-            box-shadow: 0 24px 60px rgba(30, 42, 58, 0.12);
+            padding: 22px 24px 26px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
             animation: modalFade 0.2s ease-out;
         }
 
@@ -600,88 +813,72 @@
         }
 
         .modal-card .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 34px;
-            height: 34px;
+            float: right;
+            background: none;
             border: none;
-            border-radius: 10px;
-            background: transparent;
-            color: #8a9aaa;
             font-size: 1.4rem;
+            color: var(--text-muted);
             cursor: pointer;
             transition: var(--transition);
         }
 
         .modal-card .close-btn:hover {
-            background: #f1f3f8;
-            color: #1e2a3a;
+            color: var(--text-primary);
             transform: rotate(90deg);
         }
 
         .modal-card .modal-date {
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-            padding-right: 35px;
-            border-bottom: 1px solid #e8ebf2;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #3e4e62;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .modal-student-card {
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #f5f8fd, #f2f8f6);
-            border: 1px solid rgba(74, 111, 165, 0.08);
-            border-radius: 16px;
-            transition: var(--transition);
+            padding: 12px 14px;
+            background: var(--bg-input);
+            border-radius: 14px;
+            margin-bottom: 8px;
         }
 
         .modal-student-card:last-child {
             margin-bottom: 0;
         }
 
-        .modal-student-card:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(30, 42, 58, 0.05);
-        }
-
         .modal-student-card .student-name {
-            font-size: 0.95rem;
             font-weight: 700;
-            color: #1e2a3a;
+            font-size: 0.9rem;
+            color: var(--text-primary);
         }
 
         .modal-student-card .student-time {
-            margin-top: 3px;
-            color: var(--muted);
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin: 2px 0 4px;
         }
 
         .modal-student-card .student-topic {
-            margin: 6px 0 10px;
-            color: #3e4e62;
-            font-size: 0.85rem;
-            line-height: 1.45;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
 
         .modal-student-card .student-links {
             display: flex;
-            flex-wrap: wrap;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .modal-student-card .student-links a {
-            padding: 6px 14px;
-            border-radius: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
             text-decoration: none;
-            background: linear-gradient(135deg, #4a6fa5, #3d5f8f);
-            color: #fff;
             font-size: 0.7rem;
             font-weight: 600;
+            background: var(--accent-blue);
+            color: white;
             transition: var(--transition);
         }
 
@@ -691,172 +888,133 @@
         }
 
         .modal-student-card .student-links a.secondary {
-            background: #e6f5f0;
-            color: #2d6b5a;
+            background: rgba(74, 111, 165, 0.08);
+            color: var(--accent-blue);
         }
 
         .modal-student-card .student-links a.secondary:hover {
-            background: #d4ede6;
-            box-shadow: none;
+            background: rgba(74, 111, 165, 0.15);
         }
 
-        /* ========== АДАПТИВ ========== */
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
         @media (max-width: 768px) {
-            .container { padding: 18px 14px 22px; border-radius: 24px; }
-            .header-title { font-size: 1.2rem; }
-            .header-icon { width: 42px; height: 42px; font-size: 1.2rem; }
-            .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-            .stat-number { font-size: 1.4rem; }
-            .students-grid { grid-template-columns: 1fr; }
-            .calendar-grid .day { min-height: 38px; font-size: 0.7rem; border-radius: 10px; }
-            .calendar-grid .weekday { font-size: 0.5rem; }
-            .lessons-list { padding: 12px 8px; max-height: 400px; }
-            .lessons-table { font-size: 0.6rem; }
-            .col-date { width: 38px; }
-            .col-day { width: 34px; }
-            .col-student { width: 48px; }
-            .col-time { width: 60px; }
-            .col-links { width: 56px; }
-            .col-done { width: 72px; }
-            .col-status { width: 60px; }
-            .lessons-table td { padding: 6px 4px; }
-            .topic-cell { font-size: 0.6rem; }
-            .links-cell a { width: 22px; height: 22px; font-size: 0.6rem; }
-            .check-cell label { font-size: 0.5rem; }
-            .check-cell input[type="checkbox"] { width: 12px; height: 12px; }
-            .modal-card { padding: 18px 16px; border-radius: 22px; max-width: 400px; }
-            .tabs button { font-size: 0.7rem; padding: 6px 14px; }
+            .main-wrapper.shifted {
+                margin-left: 0;
+            }
+            .sidebar {
+                width: 260px;
+                left: -260px;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .top-bar .page-title {
+                font-size: 1.1rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            .progress-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .calendar-grid .day {
+                min-height: 36px;
+                font-size: 0.7rem;
+            }
         }
 
         @media (max-width: 480px) {
-            body { padding: 12px 6px; }
-            .container { padding: 14px 10px 18px; border-radius: 20px; }
-            .header { flex-direction: column; align-items: stretch; gap: 12px; }
-            .header-left { gap: 10px; }
-            .header-title { font-size: 1rem; }
-            .header-sub { font-size: 0.7rem; }
-            .logout-btn { align-self: flex-end; padding: 6px 14px; font-size: 0.7rem; }
-            .stats-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-            .stat-card { padding: 10px 8px; }
-            .stat-number { font-size: 1.2rem; }
-            .stat-label { font-size: 0.55rem; }
-            .students-grid { grid-template-columns: 1fr; }
-            .student-card .student-stats { grid-template-columns: 1fr 1fr 1fr; }
-            .calendar-grid .day { min-height: 32px; font-size: 0.6rem; border-radius: 8px; }
-            .calendar-grid .day .dot { width: 4px; height: 4px; }
-            .col-date { width: 30px; }
-            .col-day { width: 26px; }
-            .col-student { width: 38px; }
-            .col-time { width: 48px; }
-            .col-links { width: 44px; }
-            .col-done { width: 60px; }
-            .col-status { width: 52px; }
-            .lessons-list { max-height: 320px; }
-            .lessons-table td { padding: 4px 3px; font-size: 0.55rem; }
-            .links-cell a { width: 18px; height: 18px; font-size: 0.5rem; }
-            .check-cell { gap: 4px; }
-            .check-cell label { font-size: 0.45rem; }
-            .check-cell input[type="checkbox"] { width: 10px; height: 10px; }
-            .modal-card { padding: 14px 12px; max-width: 320px; }
-            .modal-student-card { padding: 10px 12px; }
-            .modal-student-card .student-name { font-size: 0.85rem; }
-            .modal-student-card .student-topic { font-size: 0.75rem; }
-            .status-badge { font-size: 0.5rem; padding: 1px 6px; }
+            .main-wrapper {
+                padding: 12px 10px 18px;
+            }
+            .top-bar .hamburger {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+            .top-bar .page-title {
+                font-size: 0.95rem;
+            }
+            .top-bar .page-title small {
+                font-size: 0.7rem;
+            }
+            .calendar-grid .day {
+                min-height: 30px;
+                font-size: 0.6rem;
+                border-radius: 8px;
+            }
+            .calendar-grid .day .dot {
+                width: 4px;
+                height: 4px;
+            }
+            .lessons-table {
+                font-size: 0.6rem;
+            }
+            .col-date { width: 34px; }
+            .col-day { width: 30px; }
+            .col-time { width: 52px; }
+            .col-links { width: 50px; }
+            .lessons-table td { padding: 4px 4px; }
+            .progress-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-card .stat-value {
+                font-size: 1.2rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-tabs button {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .modal-card {
+                padding: 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="mainContent" style="display: none;">
-
-        <!-- ===== ШАПКА ===== -->
-        <div class="header">
-            <div class="header-left">
-                <div class="header-icon">👩‍🏫</div>
-                <div>
-                    <div class="header-title">Преподаватель</div>
-                    <div class="header-sub">Все занятия всех учеников</div>
-                </div>
-            </div>
-            <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
-        </div>
-
-        <!-- ===== ОБЩАЯ СТАТИСТИКА ===== -->
-        <div class="stats-row" id="statsRow">
-            <div class="stat-card">
-                <div class="stat-number" id="statTotalLessons">0</div>
-                <div class="stat-label">Всего уроков</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statTotalMaterials">0</div>
-                <div class="stat-label">Материалов</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statTotalHomework">0</div>
-                <div class="stat-label">Домашек</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statDone">0</div>
-                <div class="stat-label">ДЗ выполнено</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statStudents">0</div>
-                <div class="stat-label">Учеников</div>
-            </div>
-        </div>
-
-        <!-- ===== КАРТОЧКИ УЧЕНИКОВ ===== -->
-        <h3 style="font-size:0.9rem; font-weight:700; color:#1e2a3a; margin-bottom:12px;">👥 Ученики</h3>
-        <div class="students-grid" id="studentsGrid"></div>
-
-        <!-- ===== КАЛЕНДАРЬ И ТАБЫ ===== -->
-        <div class="calendar-section">
-            <div class="calendar-header">
-                <span class="month-year" id="monthYear"></span>
-                <div class="nav-buttons">
-                    <button id="prevMonth">◀</button>
-                    <button id="nextMonth">▶</button>
-                </div>
-            </div>
-            <div class="calendar-grid" id="calendarGrid"></div>
-        </div>
-
-        <!-- ===== ТАБЫ ===== -->
-        <div class="tabs">
-            <button class="active" data-tab="lessons">📋 Уроки</button>
-            <button data-tab="materials">📚 Материалы</button>
-            <button data-tab="homework">📝 Домашки</button>
-        </div>
-
-        <!-- ===== ТАБ: УРОКИ ===== -->
-        <div class="tab-content active" id="tab-lessons">
-            <div class="lessons-list">
-                <h3>📋 Все уроки на месяц</h3>
-                <div id="lessonsTableContainer"></div>
-            </div>
-        </div>
-
-        <!-- ===== ТАБ: МАТЕРИАЛЫ ===== -->
-        <div class="tab-content" id="tab-materials">
-            <div class="lessons-list">
-                <h3>📚 Все материалы</h3>
-                <div id="materialsTableContainer"></div>
-            </div>
-        </div>
-
-        <!-- ===== ТАБ: ДОМАШКИ ===== -->
-        <div class="tab-content" id="tab-homework">
-            <div class="lessons-list">
-                <h3>📝 Все домашние задания</h3>
-                <div id="homeworkTableContainer"></div>
-            </div>
-        </div>
-
+<!-- ============================================================
+     САЙДБАР
+     ============================================================ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">👩‍🏫 <span>Преподаватель</span></div>
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
     </div>
+
+    <div class="sidebar-label">Ученики</div>
+    <div id="studentListContainer"></div>
+
+    <button class="theme-toggle" id="themeToggle">🌓 Сменить тему</button>
+    <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
+</aside>
+
+<!-- ============================================================
+     ОСНОВНОЙ КОНТЕНТ
+     ============================================================ -->
+<div class="main-wrapper" id="mainWrapper">
+    <div class="top-bar">
+        <button class="hamburger" id="hamburgerBtn">☰ Меню</button>
+        <div class="page-title" id="pageTitle">
+            Выберите ученика
+            <small>Нажмите на имя в меню слева</small>
+        </div>
+    </div>
+
+    <!-- Контейнер для страниц учеников -->
+    <div id="studentPagesContainer"></div>
 </div>
 
-<!-- ===== МОДАЛКА ===== -->
+<!-- ============================================================
+     МОДАЛКА
+     ============================================================ -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card">
         <button class="close-btn" id="modalClose">&times;</button>
@@ -867,241 +1025,296 @@
 
 <script>
     // ============================================================
-    //  📥  СПИСОК УЧЕНИКОВ (добавьте нового сюда!)
+    //  🔐  НАСТРОЙКИ
     // ============================================================
     const studentList = ['valeriya', 'amina', 'denis', 'sanie'];
+    const studentNames = {
+        'valeriya': 'Валерия',
+        'amina': 'Амина',
+        'denis': 'Денис',
+        'sanie': 'Сание'
+    };
+    const nameMap = {
+        'valeriya': 'Валерия',
+        'amina': 'Амина',
+        'denis': 'Денис',
+        'sanie': 'Сание'
+    };
 
-    // ============================================================
-    //  🖥  ПРОВЕРКА СЕССИИ
-    // ============================================================
-    const sessionData = localStorage.getItem('teacherSession');
-    if (sessionData) {
-        try {
-            const data = JSON.parse(sessionData);
-            if (data && data.name === 'alina') {
-                document.getElementById('mainContent').style.display = 'block';
-            }
-        } catch (e) {}
-    }
-
+    let currentStudentId = null;
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
-    let lessonsData = [];
-    let currentTab = 'lessons';
-
-    // DOM
-    const mainContent = document.getElementById('mainContent');
-    const lessonsTableContainer = document.getElementById('lessonsTableContainer');
-    const materialsTableContainer = document.getElementById('materialsTableContainer');
-    const homeworkTableContainer = document.getElementById('homeworkTableContainer');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const monthYear = document.getElementById('monthYear');
-    const calendarGrid = document.getElementById('calendarGrid');
-    const prevMonthBtn = document.getElementById('prevMonth');
-    const nextMonthBtn = document.getElementById('nextMonth');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalClose = document.getElementById('modalClose');
-    const modalDate = document.getElementById('modalDate');
-    const modalStudentsContainer = document.getElementById('modalStudentsContainer');
-    const studentsGrid = document.getElementById('studentsGrid');
-    const statTotalLessons = document.getElementById('statTotalLessons');
-    const statTotalMaterials = document.getElementById('statTotalMaterials');
-    const statTotalHomework = document.getElementById('statTotalHomework');
-    const statDone = document.getElementById('statDone');
-    const statStudents = document.getElementById('statStudents');
+    let allLessonsData = {};
+    let allTestsData = {};
+    let charts = {};
+    let currentTab = 'schedule';
 
     // ============================================================
-    //  ИМЯ УЧЕНИКА
+    //  🖥  СЕССИЯ
     // ============================================================
-    function getStudentName(id) {
-        const names = {
-            'valeriya': 'Валерия',
-            'amina': 'Амина',
-            'denis': 'Денис',
-            'sanie': 'Сание'
-        };
-        return names[id] || id;
+    const sessionData = localStorage.getItem('teacherSession');
+    if (!sessionData) {
+        window.location.href = 'index.html';
+    } else {
+        try {
+            const data = JSON.parse(sessionData);
+            if (data.name !== 'alina') {
+                window.location.href = 'index.html';
+            }
+        } catch {
+            window.location.href = 'index.html';
+        }
     }
 
     // ============================================================
-    //  ГАЛОЧКИ
+    //  ТЁМНАЯ ТЕМА
     // ============================================================
-    function getCheckKey(studentId, dateStr, type) {
-        return `checked_${studentId}_${dateStr}_${type}`;
+    if (localStorage.getItem('teacherDarkMode') === 'true') {
+        document.body.classList.add('dark-mode');
     }
 
-    function saveCheck(studentId, dateStr, type, value) {
-        localStorage.setItem(getCheckKey(studentId, dateStr, type), value);
-    }
-
-    function loadCheck(studentId, dateStr, type) {
-        return localStorage.getItem(getCheckKey(studentId, dateStr, type)) === 'true';
-    }
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('teacherDarkMode', document.body.classList.contains('dark-mode'));
+        // Перерисовываем графики
+        if (currentStudentId) {
+            setTimeout(() => renderStudentPage(currentStudentId), 100);
+        }
+    });
 
     // ============================================================
-    //  ЗАГРУЗКА ВСЕХ УРОКОВ
+    //  САЙДБАР
     // ============================================================
-    async function loadAllLessons() {
-        let all = [];
+    const sidebar = document.getElementById('sidebar');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const mainWrapper = document.getElementById('mainWrapper');
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        mainWrapper.classList.toggle('shifted');
+    }
+
+    hamburgerBtn.addEventListener('click', toggleSidebar);
+    sidebarClose.addEventListener('click', toggleSidebar);
+
+    // ============================================================
+    //  ЗАГРУЗКА ДАННЫХ
+    // ============================================================
+    async function loadAllData() {
         for (let s of studentList) {
             try {
-                const response = await fetch(`config/${s}.json`);
-                if (response.ok) {
-                    const data = await response.json();
-                    data.forEach(item => {
-                        all.push({
-                            ...item,
-                            student: s,
-                            studentName: getStudentName(s)
-                        });
-                    });
+                const resp = await fetch(`config/${s}.json`);
+                if (resp.ok) {
+                    allLessonsData[s] = await resp.json();
                 } else {
+                    allLessonsData[s] = [];
                     console.warn(`⚠️ Не удалось загрузить ${s}`);
                 }
-            } catch (e) {
-                console.warn(`⚠️ Не удалось загрузить ${s}`);
+            } catch {
+                allLessonsData[s] = [];
+                console.warn(`⚠️ Ошибка загрузки ${s}`);
+            }
+
+            // Загружаем контрольные точки
+            const testFiles = {
+                'valeriya': 'valeriya_tests.json',
+                'amina': 'amina_tests.json',
+                'denis': 'denis_tests.json',
+                'sanie': 'sanie_tests.json'
+            };
+            const testFile = testFiles[s];
+            if (testFile) {
+                try {
+                    const resp = await fetch(`config/${testFile}?t=${Date.now()}`);
+                    if (resp.ok) {
+                        allTestsData[s] = await resp.json();
+                    } else {
+                        allTestsData[s] = [];
+                    }
+                } catch {
+                    allTestsData[s] = [];
+                }
+            } else {
+                allTestsData[s] = [];
             }
         }
-        lessonsData = all;
-        updateStats();
-        renderStudentsCards();
+        renderStudentList();
+        // Выбираем первого ученика по умолчанию
+        if (studentList.length > 0) {
+            selectStudent(studentList[0]);
+        }
     }
 
     // ============================================================
-    //  СТАТИСТИКА
+    //  СПИСОК УЧЕНИКОВ В САЙДБАРЕ
     // ============================================================
-    function updateStats() {
-        const total = lessonsData.length;
-        const uniqueStudents = new Set(lessonsData.map(l => l.student)).size;
-        const materials = lessonsData.filter(l => l.material && l.material.trim() !== '').length;
-        const homeworks = lessonsData.filter(l => l.homework && l.homework.trim() !== '').length;
-
-        let doneCount = 0;
-        const today = new Date();
-        const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-        lessonsData.forEach(l => {
-            if (l.date <= todayStr && l.hwStatus && l.hwStatus.includes('Проверено')) {
-                doneCount++;
-            }
+    function renderStudentList() {
+        const container = document.getElementById('studentListContainer');
+        container.innerHTML = '';
+        studentList.forEach(id => {
+            const btn = document.createElement('button');
+            btn.className = 'student-item' + (id === currentStudentId ? ' active' : '');
+            btn.dataset.student = id;
+            const name = studentNames[id] || id;
+            const initial = name.charAt(0);
+            btn.innerHTML = `
+                <span class="avatar">${initial}</span>
+                ${name}
+            `;
+            btn.addEventListener('click', () => {
+                selectStudent(id);
+                if (window.innerWidth <= 768) toggleSidebar();
+            });
+            container.appendChild(btn);
         });
-
-        statTotalLessons.textContent = total;
-        statTotalMaterials.textContent = materials;
-        statTotalHomework.textContent = homeworks;
-        statDone.textContent = doneCount;
-        statStudents.textContent = uniqueStudents;
     }
 
     // ============================================================
-    //  КАРТОЧКИ УЧЕНИКОВ
+    //  ВЫБОР УЧЕНИКА
     // ============================================================
-    function renderStudentsCards() {
-        const students = {};
-        lessonsData.forEach(l => {
-            if (!students[l.student]) {
-                students[l.student] = {
-                    name: getStudentName(l.student),
-                    lessons: [],
-                    materials: 0,
-                    homeworks: 0,
-                    done: 0,
-                    total: 0
-                };
-            }
-            students[l.student].lessons.push(l);
-            if (l.material && l.material.trim() !== '') students[l.student].materials++;
-            if (l.homework && l.homework.trim() !== '') students[l.student].homeworks++;
-            if (l.hwStatus && l.hwStatus.includes('Проверено')) students[l.student].done++;
-            students[l.student].total++;
+    function selectStudent(studentId) {
+        currentStudentId = studentId;
+        // Обновляем активный элемент в сайдбаре
+        document.querySelectorAll('.student-item').forEach(el => {
+            el.classList.toggle('active', el.dataset.student === studentId);
         });
+        renderStudentPage(studentId);
+        document.getElementById('pageTitle').innerHTML = `
+            ${studentNames[studentId] || studentId}
+            <small>Все занятия и прогресс</small>
+        `;
+        // Закрываем сайдбар на мобильных
+        if (window.innerWidth <= 768) {
+            sidebar.classList.remove('open');
+            mainWrapper.classList.remove('shifted');
+        }
+    }
 
-        let html = '';
-        for (let [id, data] of Object.entries(students)) {
-            const progress = data.total > 0 ? Math.round((data.done / data.total) * 100) : 0;
-            html += `
-                <div class="student-card">
-                    <div class="student-name">
-                        ${data.name}
-                        <span class="badge">${id}</span>
-                    </div>
-                    <div class="student-stats">
-                        <div class="ss-item">
-                            <div class="ss-number">${data.total}</div>
-                            <div class="ss-label">Уроков</div>
+    // ============================================================
+    //  ОТРИСОВКА СТРАНИЦЫ УЧЕНИКА
+    // ============================================================
+    function renderStudentPage(studentId) {
+        const container = document.getElementById('studentPagesContainer');
+        const lessons = allLessonsData[studentId] || [];
+        const tests = allTestsData[studentId] || [];
+
+        container.innerHTML = `
+            <div class="student-page active" data-student="${studentId}">
+                <!-- Вкладки -->
+                <div class="page-tabs">
+                    <button class="tab-btn active" data-tab="schedule">📋 Расписание</button>
+                    <button class="tab-btn" data-tab="homework">📝 Домашки</button>
+                    <button class="tab-btn" data-tab="materials">📚 Материалы</button>
+                    <button class="tab-btn" data-tab="progress">📊 Прогресс</button>
+                </div>
+
+                <!-- Содержимое вкладок -->
+                <div class="tab-content active" id="tab-schedule">
+                    <div class="calendar-section">
+                        <div class="calendar-header">
+                            <span class="month-year" id="monthYear-${studentId}"></span>
+                            <div class="nav-buttons">
+                                <button class="prev-month" data-student="${studentId}">◀</button>
+                                <button class="next-month" data-student="${studentId}">▶</button>
+                            </div>
                         </div>
-                        <div class="ss-item">
-                            <div class="ss-number">${data.materials}</div>
-                            <div class="ss-label">Материалов</div>
-                        </div>
-                        <div class="ss-item">
-                            <div class="ss-number">${data.homeworks}</div>
-                            <div class="ss-label">Домашек</div>
-                        </div>
+                        <div class="calendar-grid" id="calendarGrid-${studentId}"></div>
                     </div>
-                    <div class="progress-bar-wrap">
-                        <div class="progress-fill" style="width: ${progress}%;"></div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--muted); margin-top:4px;">
-                        <span>Выполнено ДЗ: ${data.done}</span>
-                        <span>${progress}%</span>
-                    </div>
-                    <div class="student-actions">
-                        <button onclick="filterByStudent('${id}')">📋 Показать уроки</button>
+                    <div class="lessons-list">
+                        <h3>📋 Все уроки на месяц</h3>
+                        <div id="lessonsTableContainer-${studentId}"></div>
                     </div>
                 </div>
-            `;
+
+                <div class="tab-content" id="tab-homework">
+                    <div class="cards-grid" id="homeworkCards-${studentId}"></div>
+                </div>
+
+                <div class="tab-content" id="tab-materials">
+                    <div class="cards-grid" id="materialsCards-${studentId}"></div>
+                </div>
+
+                <div class="tab-content" id="tab-progress">
+                    <div class="progress-stats" id="progressStats-${studentId}"></div>
+                    <div class="charts-container" id="chartsContainer-${studentId}"></div>
+                    <div class="tests-table-wrapper">
+                        <h4>📋 Результаты ${studentId === 'denis' ? 'пробников' : 'контрольных точек'}</h4>
+                        <div id="testsTableContainer-${studentId}"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Обработчики вкладок
+        container.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tab = this.dataset.tab;
+                container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                const target = document.getElementById(`tab-${tab}`);
+                if (target) target.classList.add('active');
+                currentTab = tab;
+                if (tab === 'progress') {
+                    renderProgress(studentId, tests);
+                }
+                if (tab === 'homework') {
+                    renderHomeworkCards(studentId, lessons);
+                }
+                if (tab === 'materials') {
+                    renderMaterialsCards(studentId, lessons);
+                }
+            });
+        });
+
+        // Календарь
+        renderCalendar(studentId, currentYear, currentMonth, lessons);
+
+        // Список уроков
+        renderLessonsList(studentId, currentYear, currentMonth, lessons);
+
+        // Домашки и материалы (первая вкладка активна, но они не видны до переключения)
+        renderHomeworkCards(studentId, lessons);
+        renderMaterialsCards(studentId, lessons);
+
+        // Прогресс (пока не активен, но данные готовы)
+        renderProgress(studentId, tests);
+
+        // Навигация по месяцам
+        container.querySelectorAll('.prev-month').forEach(btn => {
+            btn.addEventListener('click', () => changeMonth(studentId, -1));
+        });
+        container.querySelectorAll('.next-month').forEach(btn => {
+            btn.addEventListener('click', () => changeMonth(studentId, 1));
+        });
+
+        // На случай, если вкладка прогресса уже активна
+        if (currentTab === 'progress') {
+            container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            container.querySelector('.tab-btn[data-tab="progress"]')?.classList.add('active');
+            container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-progress')?.classList.add('active');
         }
-        studentsGrid.innerHTML = html;
-    }
-
-    // ============================================================
-    //  ФИЛЬТР ПО УЧЕНИКУ
-    // ============================================================
-    function filterByStudent(studentId) {
-        // Переключаем на вкладку "Уроки"
-        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-tab="lessons"]').classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-lessons').classList.add('active');
-        currentTab = 'lessons';
-
-        // Фильтруем и перерисовываем
-        renderLessonsList(currentYear, currentMonth, studentId);
-    }
-
-    // ============================================================
-    //  УРОКИ НА ДАТУ / МЕСЯЦ
-    // ============================================================
-    function getLessonsForDate(dateStr) {
-        return lessonsData.filter(item => item.date === dateStr);
-    }
-
-    function getLessonsForMonth(year, month) {
-        const result = [];
-        const days = new Date(year, month + 1, 0).getDate();
-        for (let d = 1; d <= days; d++) {
-            const dateObj = new Date(year, month, d);
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-            const dayLessons = lessonsData.filter(item => item.date === dateStr);
-            if (dayLessons.length) {
-                result.push({ date: dateObj, lessons: dayLessons });
-            }
-        }
-        return result;
     }
 
     // ============================================================
     //  КАЛЕНДАРЬ
     // ============================================================
-    function renderCalendar(year, month) {
+    function renderCalendar(studentId, year, month, lessons) {
+        const grid = document.getElementById(`calendarGrid-${studentId}`);
+        const monthYearEl = document.getElementById(`monthYear-${studentId}`);
+        if (!grid) return;
+
         const firstDay = new Date(year, month, 1).getDay();
         const startDay = (firstDay === 0) ? 6 : firstDay - 1;
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
         const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-        monthYear.textContent = `${monthNames[month]} ${year}`;
-        const lessonDates = new Set(lessonsData.map(item => item.date));
+        if (monthYearEl) monthYearEl.textContent = `${monthNames[month]} ${year}`;
+
+        const lessonDates = new Set(lessons.map(item => item.date));
         const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
         let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
         for (let i = 0; i < startDay; i++) html += `<div class="day other-month"></div>`;
@@ -1111,104 +1324,31 @@
             let cls = 'day';
             if (hasLesson) cls += ' has-lesson';
             if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) cls += ' today';
-            const attr = hasLesson ? `data-date="${dateStr}"` : '';
+            const attr = hasLesson ? `data-date="${dateStr}" data-student="${studentId}"` : '';
             html += `<div class="${cls}" ${attr}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
         }
-        calendarGrid.innerHTML = html;
-        document.querySelectorAll('.day.has-lesson').forEach(el => {
+        grid.innerHTML = html;
+
+        grid.querySelectorAll('.day.has-lesson').forEach(el => {
             el.addEventListener('click', function() {
                 const dateStr = this.dataset.date;
-                const lessons = getLessonsForDate(dateStr);
-                if (lessons.length) showModal(dateStr, lessons);
+                const sid = this.dataset.student;
+                const lessonsForDate = (allLessonsData[sid] || []).filter(item => item.date === dateStr);
+                if (lessonsForDate.length) showModal(dateStr, lessonsForDate);
             });
         });
     }
 
     // ============================================================
-    //  МОДАЛКА
+    //  СПИСОК УРОКОВ
     // ============================================================
-    function showModal(dateStr, lessons) {
-        const [y, m, d] = dateStr.split('-').map(Number);
-        const dateObj = new Date(y, m - 1, d);
-        modalDate.textContent = dateObj.toLocaleDateString('ru-RU', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
+    function renderLessonsList(studentId, year, month, lessons) {
+        const container = document.getElementById(`lessonsTableContainer-${studentId}`);
+        if (!container) return;
 
-        let studentsHtml = '';
-        lessons.forEach((l) => {
-            let linksHtml = '';
-            if (l.material) {
-                linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
-            }
-            if (l.homework) {
-                const params = new URLSearchParams({
-                    student: l.student,
-                    date: l.date,
-                    topic: l.topic || '',
-                    start: l.start || '',
-                    end: l.end || ''
-                });
-                const separator = l.homework.includes('?') ? '&' : '?';
-                linksHtml += `<a href="${l.homework}${separator}${params.toString()}" target="_blank">📝 Домашка</a>`;
-            }
-
-            studentsHtml += `
-                <div class="modal-student-card">
-                    <div class="student-name">👤 ${getStudentName(l.student)}</div>
-                    <div class="student-time">⏰ ${l.start}–${l.end}</div>
-                    <div class="student-topic">📖 ${l.topic || 'Тема не указана'}</div>
-                    <div class="student-links">
-                        ${linksHtml || '<span style="color:#8a9aaa;font-size:0.75rem;">Нет ссылок</span>'}
-                    </div>
-                </div>
-            `;
-        });
-
-        modalStudentsContainer.innerHTML = studentsHtml;
-        modalOverlay.classList.add('active');
-    }
-
-    modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
-    modalOverlay.addEventListener('click', e => {
-        if (e.target === modalOverlay) modalOverlay.classList.remove('active');
-    });
-
-    // ============================================================
-    //  ТАБЫ
-    // ============================================================
-    document.querySelectorAll('.tabs button').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            const tab = this.dataset.tab;
-            currentTab = tab;
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(`tab-${tab}`).classList.add('active');
-
-            if (tab === 'lessons') renderLessonsList(currentYear, currentMonth);
-            if (tab === 'materials') renderMaterialsList();
-            if (tab === 'homework') renderHomeworkList();
-        });
-    });
-
-    // ============================================================
-    //  ТАБ: УРОКИ
-    // ============================================================
-    function renderLessonsList(year, month, filterStudent = null) {
-        const data = getLessonsForMonth(year, month);
-        let filteredData = data;
-        if (filterStudent) {
-            filteredData = data.map(item => ({
-                ...item,
-                lessons: item.lessons.filter(l => l.student === filterStudent)
-            })).filter(item => item.lessons.length > 0);
-        }
-
-        if (!filteredData.length) {
-            lessonsTableContainer.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
+        const data = getLessonsForMonth(lessons, year, month);
+        if (!data.length) {
+            container.innerHTML = '<div class="no-lessons-msg">На этот месяц уроков нет.</div>';
             return;
         }
 
@@ -1218,18 +1358,15 @@
                     <tr>
                         <th class="col-date">Дата</th>
                         <th class="col-day">День</th>
-                        <th class="col-student">Уч-к</th>
                         <th class="col-time">Время</th>
                         <th class="col-topic">Тема</th>
                         <th class="col-links">Ссылки</th>
-                        <th class="col-status">Статус</th>
-                        <th class="col-done">Готово</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        filteredData.forEach(item => {
+        data.forEach(item => {
             const dateObj = item.date;
             const day = String(dateObj.getDate()).padStart(2, '0');
             const monthNum = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -1237,36 +1374,6 @@
             const dayName = dateObj.toLocaleDateString('ru-RU', { weekday: 'short' });
 
             item.lessons.forEach((l, idx) => {
-                const studentId = l.student;
-                const rowspan = idx === 0 ? item.lessons.length : 0;
-
-                const hwChecked = loadCheck(studentId, l.date, 'homework');
-                const matChecked = loadCheck(studentId, l.date, 'material');
-
-                // Статус домашки
-                let statusHtml = '<span class="status-badge pending">⏳ Нет</span>';
-                if (l.hwStatus) {
-                    const s = l.hwStatus.toLowerCase();
-                    if (s.includes('проверено')) statusHtml = '<span class="status-badge checked">📝 Проверено</span>';
-                    else if (s.includes('выполнено') || s.includes('сделано')) statusHtml = '<span class="status-badge done">✅ Выполнено</span>';
-                    else if (s.includes('не решено')) statusHtml = '<span class="status-badge pending">⏳ Не решено</span>';
-                }
-
-                const checkHtml = `
-                    <td class="col-done">
-                        <div class="inner-flex check-cell">
-                            <label>
-                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="homework" ${hwChecked ? 'checked' : ''} />
-                                ДЗ
-                            </label>
-                            <label>
-                                <input type="checkbox" class="check-done" data-student="${studentId}" data-date="${l.date}" data-type="material" ${matChecked ? 'checked' : ''} />
-                                📚
-                            </label>
-                        </div>
-                    </td>
-                `;
-
                 let links = '';
                 if (l.material) links += `<a href="${l.material}" target="_blank" title="Материал">📖</a>`;
                 if (l.homework) {
@@ -1280,188 +1387,370 @@
                     const separator = l.homework.includes('?') ? '&' : '?';
                     links += `<a href="${l.homework}${separator}${params.toString()}" target="_blank" title="Домашка">📝</a>`;
                 }
-
+                const rowspan = idx === 0 ? item.lessons.length : 0;
                 html += `<tr>
                     ${rowspan ? `<td rowspan="${rowspan}" class="col-date">${displayDate}</td><td rowspan="${rowspan}" class="col-day">${dayName}</td>` : ''}
-                    <td class="col-student">${getStudentName(studentId)}</td>
                     <td class="col-time">${l.start}–${l.end}</td>
                     <td class="col-topic topic-cell">${l.topic || '—'}</td>
-                    <td class="col-links links-cell">
-                        <div class="inner-flex">${links || '—'}</div>
-                    </td>
-                    <td class="col-status">${statusHtml}</td>
-                    ${checkHtml}
+                    <td class="col-links links-cell"><div class="inner-flex">${links || '—'}</div></td>
                 </tr>`;
             });
         });
 
         html += '</tbody></table>';
-        lessonsTableContainer.innerHTML = html;
-
-        document.querySelectorAll('.check-done').forEach(cb => {
-            cb.addEventListener('change', function() {
-                const student = this.dataset.student;
-                const date = this.dataset.date;
-                const type = this.dataset.type;
-                saveCheck(student, date, type, this.checked);
-            });
-        });
+        container.innerHTML = html;
     }
 
-    // ============================================================
-    //  ТАБ: МАТЕРИАЛЫ
-    // ============================================================
-    function renderMaterialsList() {
-        const items = lessonsData
-            .filter(l => l.material && l.material.trim() !== '')
-            .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        if (!items.length) {
-            materialsTableContainer.innerHTML = '<div class="no-lessons-msg">Нет материалов.</div>';
-            return;
-        }
-
-        let html = `
-            <table class="lessons-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Дата</th>
-                        <th class="col-student">Уч-к</th>
-                        <th class="col-topic">Тема</th>
-                        <th class="col-links">Ссылка</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        items.forEach(l => {
-            const dateParts = l.date.split('-');
-            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
-            html += `
-                <tr>
-                    <td class="col-date">${displayDate}</td>
-                    <td class="col-student">${getStudentName(l.student)}</td>
-                    <td class="col-topic topic-cell">${l.topic || 'Без темы'}</td>
-                    <td class="col-links links-cell"><a href="${l.material}" target="_blank" title="Материал">📖 Открыть</a></td>
-                </tr>
-            `;
-        });
-
-        html += '</tbody></table>';
-        materialsTableContainer.innerHTML = html;
-    }
-
-    // ============================================================
-    //  ТАБ: ДОМАШКИ
-    // ============================================================
-    function renderHomeworkList() {
-        const items = lessonsData
-            .filter(l => l.homework && l.homework.trim() !== '')
-            .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        if (!items.length) {
-            homeworkTableContainer.innerHTML = '<div class="no-lessons-msg">Нет домашних заданий.</div>';
-            return;
-        }
-
-        let html = `
-            <table class="lessons-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Дата</th>
-                        <th class="col-student">Уч-к</th>
-                        <th class="col-topic">Тема</th>
-                        <th class="col-status">Статус</th>
-                        <th class="col-links">Ссылка</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        items.forEach(l => {
-            const dateParts = l.date.split('-');
-            const displayDate = `${dateParts[2]}.${dateParts[1]}`;
-
-            let statusHtml = '<span class="status-badge pending">⏳ Нет</span>';
-            if (l.hwStatus) {
-                const s = l.hwStatus.toLowerCase();
-                if (s.includes('проверено')) statusHtml = '<span class="status-badge checked">📝 Проверено</span>';
-                else if (s.includes('выполнено') || s.includes('сделано')) statusHtml = '<span class="status-badge done">✅ Выполнено</span>';
-                else if (s.includes('не решено')) statusHtml = '<span class="status-badge pending">⏳ Не решено</span>';
+    function getLessonsForMonth(lessons, year, month) {
+        const result = [];
+        const days = new Date(year, month + 1, 0).getDate();
+        for (let d = 1; d <= days; d++) {
+            const dateObj = new Date(year, month, d);
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const dayLessons = lessons.filter(item => item.date === dateStr);
+            if (dayLessons.length) {
+                result.push({ date: dateObj, lessons: dayLessons });
             }
+        }
+        return result;
+    }
 
-            const params = new URLSearchParams({
-                student: l.student,
-                date: l.date,
-                topic: l.topic || '',
-                start: l.start || '',
-                end: l.end || ''
-            });
-            const separator = l.homework.includes('?') ? '&' : '?';
-            const hwLink = l.homework + separator + params.toString();
+    // ============================================================
+    //  ДОМАШКИ (карточки)
+    // ============================================================
+    function renderHomeworkCards(studentId, lessons) {
+        const container = document.getElementById(`homeworkCards-${studentId}`);
+        if (!container) return;
 
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const sorted = lessons
+            .filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (!sorted.length) {
+            container.innerHTML = '<div class="empty-message" style="grid-column:1/-1;padding:24px;text-align:center;color:var(--text-muted);">Нет домашних заданий</div>';
+            return;
+        }
+
+        let html = '';
+        sorted.forEach(l => {
+            const d = l.date.split('-');
+            const status = (l.hwStatus || 'pending').toLowerCase();
+            let statusText = '⏳ Не решено', statusClass = 'pending';
+            if (status.includes('проверен') || status === 'checked') {
+                statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено';
+                statusClass = 'checked';
+            } else if (status.includes('не проверен') || status === 'done') {
+                statusText = '📝 Не проверено';
+                statusClass = 'done';
+            } else if (status.includes('не решен') || status === 'pending') {
+                statusText = '⏳ Не решено';
+                statusClass = 'pending';
+            }
+            const hwLink = buildHomeworkLink(l.homework, studentId, l);
             html += `
-                <tr>
-                    <td class="col-date">${displayDate}</td>
-                    <td class="col-student">${getStudentName(l.student)}</td>
-                    <td class="col-topic topic-cell">${l.topic || 'Без темы'}</td>
-                    <td class="col-status">${statusHtml}</td>
-                    <td class="col-links links-cell"><a href="${hwLink}" target="_blank" title="Домашка">📝 Открыть</a></td>
-                </tr>
+                <div class="hw-card">
+                    <div class="card-header">
+                        <span class="card-date">${d[2]}.${d[1]}</span>
+                        <span class="card-status ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="card-topic">${l.topic}</div>
+                    <a href="${hwLink}" target="_blank" class="card-btn">📝 Открыть</a>
+                </div>
             `;
         });
+        container.innerHTML = html;
+    }
 
-        html += '</tbody></table>';
-        homeworkTableContainer.innerHTML = html;
+    // ============================================================
+    //  МАТЕРИАЛЫ (карточки)
+    // ============================================================
+    function renderMaterialsCards(studentId, lessons) {
+        const container = document.getElementById(`materialsCards-${studentId}`);
+        if (!container) return;
+
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const sorted = lessons
+            .filter(l => l.topic && l.topic.trim() !== '' && l.material && l.material.trim() !== '' && l.date <= todayStr)
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (!sorted.length) {
+            container.innerHTML = '<div class="empty-message" style="grid-column:1/-1;padding:24px;text-align:center;color:var(--text-muted);">Нет материалов</div>';
+            return;
+        }
+
+        let html = '';
+        sorted.forEach(l => {
+            const d = l.date.split('-');
+            html += `
+                <div class="mat-card">
+                    <div class="card-header">
+                        <span class="card-date">${d[2]}.${d[1]}</span>
+                    </div>
+                    <div class="card-topic">${l.topic}</div>
+                    <a href="${l.material}" target="_blank" class="card-btn">📖 Открыть</a>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    //  ПРОГРЕСС
+    // ============================================================
+    function renderProgress(studentId, tests) {
+        const container = document.getElementById(`progressStats-${studentId}`);
+        const chartsContainer = document.getElementById(`chartsContainer-${studentId}`);
+        const testsContainer = document.getElementById(`testsTableContainer-${studentId}`);
+        if (!container) return;
+
+        const lessons = allLessonsData[studentId] || [];
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const pastLessons = lessons.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
+        const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
+
+        let completedHw = 0;
+        hwLessons.forEach(l => {
+            const status = (l.hwStatus || 'pending').toLowerCase();
+            if (status.includes('проверен') || status === 'checked' || status === 'done') {
+                completedHw++;
+            }
+        });
+
+        const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
+        const currentYearStr = String(currentYear);
+        const monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length;
+
+        const isDenis = studentId === 'denis';
+        const validTests = (tests || []).filter(t => t.name && t.name.trim() !== '');
+        const testsTotal = validTests.length;
+        const testsCompleted = validTests.filter(t => t.score !== undefined && t.score !== null).length;
+        const avgScore = testsTotal > 0 ? Math.round(validTests.reduce((sum, t) => sum + (t.score || 0), 0) / testsTotal) : 0;
+
+        container.innerHTML = `
+            <div class="stat-card"><div class="stat-value">${pastLessons.length}</div><div class="stat-label">Тем пройдено</div></div>
+            <div class="stat-card"><div class="stat-value">${completedHw}</div><div class="stat-label">ДЗ выполнено</div></div>
+            <div class="stat-card"><div class="stat-value">${testsCompleted} / ${testsTotal}</div><div class="stat-label">${isDenis ? 'Пробников' : 'Контрольных точек'}</div></div>
+        `;
+
+        // Графики
+        chartsContainer.innerHTML = `
+            <div class="chart-card"><h4>Выполнение домашних заданий</h4><canvas id="hwChart-${studentId}"></canvas></div>
+            <div class="chart-card"><h4>${isDenis ? 'Результаты пробников' : 'Результаты контрольных точек'}</h4><canvas id="testsChart-${studentId}"></canvas></div>
+        `;
+
+        const styles = getComputedStyle(document.body);
+        const textPrimary = styles.getPropertyValue('--text-primary').trim();
+        const textSecondary = styles.getPropertyValue('--text-secondary').trim();
+        const borderColor = styles.getPropertyValue('--border-color').trim();
+
+        // График домашек
+        const hwCtx = document.getElementById(`hwChart-${studentId}`)?.getContext('2d');
+        if (hwCtx) {
+            if (charts[`hw_${studentId}`]) charts[`hw_${studentId}`].destroy();
+            charts[`hw_${studentId}`] = new Chart(hwCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Выполнено', 'Осталось'],
+                    datasets: [{
+                        data: [completedHw, Math.max(0, hwLessons.length - completedHw)],
+                        backgroundColor: ['#2f9d68', '#d85c5c'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom', labels: { color: textPrimary, font: { size: 12, weight: '600' } } } },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // График тестов
+        const testCtx = document.getElementById(`testsChart-${studentId}`)?.getContext('2d');
+        if (testCtx) {
+            if (charts[`tests_${studentId}`]) charts[`tests_${studentId}`].destroy();
+            const validForChart = validTests.filter(t => t.score !== undefined && t.score !== null);
+            const labels = validForChart.map((t, i) => t.name || (isDenis ? `Пробник ${i+1}` : `КТ ${i+1}`));
+            const scores = validForChart.map(t => t.score || 0);
+            const colors = validForChart.map(t => {
+                const p = (t.score || 0) / (t.max || 100);
+                if (p >= 0.8) return 'rgba(47,157,104,0.7)';
+                if (p >= 0.6) return 'rgba(217,138,38,0.7)';
+                return 'rgba(216,92,92,0.7)';
+            });
+
+            charts[`tests_${studentId}`] = new Chart(testCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Балл',
+                        data: scores,
+                        backgroundColor: colors.length ? colors : ['rgba(74,111,165,0.7)'],
+                        borderColor: colors.length ? colors.map(c => c.replace('0.7', '1')) : ['#4a6fa5'],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { stepSize: 20, color: textSecondary }, grid: { color: borderColor } },
+                        x: { ticks: { color: textSecondary, maxRotation: 20 }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // Таблица тестов
+        if (testsContainer) {
+            if (!validTests.length) {
+                testsContainer.innerHTML = '<p style="color:var(--text-muted);padding:8px 0;">Нет данных</p>';
+                return;
+            }
+            let html = `
+                <table>
+                    <thead><tr>
+                        <th>Название</th>
+                        <th style="text-align:center;">Баллы</th>
+                        <th style="text-align:center;">Статус</th>
+                        ${!isDenis ? '<th>Описание</th>' : ''}
+                    </tr></thead>
+                    <tbody>
+            `;
+            validTests.forEach(t => {
+                const score = t.score !== undefined && t.score !== null ? t.score : '—';
+                const max = t.max || 100;
+                const isCompleted = t.score !== undefined && t.score !== null;
+                const percent = isCompleted ? Math.round((t.score / max) * 100) : 0;
+                let statusText, statusClass;
+                if (!isCompleted) { statusText = '⏳ Не выполнено'; statusClass = 'pending'; }
+                else if (percent >= 80) { statusText = '✅ Отлично'; statusClass = 'excellent'; }
+                else if (percent >= 60) { statusText = '📝 Хорошо'; statusClass = 'good'; }
+                else { statusText = '⚠️ Нужно повторить'; statusClass = 'poor'; }
+                html += `
+                    <tr>
+                        <td style="font-weight:600;">${t.name || 'Без названия'}</td>
+                        <td style="text-align:center;font-weight:700;">${isCompleted ? `${score} / ${max}` : '—'}</td>
+                        <td style="text-align:center;"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        ${!isDenis ? `<td style="color:var(--text-secondary);font-size:0.75rem;">${t.description || '—'}</td>` : ''}
+                    </tr>
+                `;
+            });
+            const completedTests = validTests.filter(t => t.score !== undefined && t.score !== null);
+            const avg = completedTests.length > 0 ? Math.round(completedTests.reduce((sum, t) => sum + t.score, 0) / completedTests.length) : 0;
+            html += `
+                <tr>
+                    <td style="padding:10px 6px;font-weight:800;border-top:2px solid var(--border-color);">Средний балл</td>
+                    <td style="text-align:center;padding:10px 6px;font-weight:800;color:var(--accent-blue);border-top:2px solid var(--border-color);">${completedTests.length > 0 ? avg : '—'}</td>
+                    <td style="padding:10px 6px;border-top:2px solid var(--border-color);"></td>
+                    ${!isDenis ? '<td style="padding:10px 6px;border-top:2px solid var(--border-color);"></td>' : ''}
+                </tr>
+            `;
+            html += '</tbody></table>';
+            testsContainer.innerHTML = html;
+        }
     }
 
     // ============================================================
     //  ПЕРЕКЛЮЧЕНИЕ МЕСЯЦА
     // ============================================================
-    function changeMonth(delta) {
-        currentMonth += delta;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-        renderCalendar(currentYear, currentMonth);
-        if (currentTab === 'lessons') renderLessonsList(currentYear, currentMonth);
+    function changeMonth(studentId, delta) {
+        let month = currentMonth + delta;
+        let year = currentYear;
+        if (month < 0) { month = 11; year--; }
+        if (month > 11) { month = 0; year++; }
+        currentMonth = month;
+        currentYear = year;
+        const lessons = allLessonsData[studentId] || [];
+        renderCalendar(studentId, year, month, lessons);
+        renderLessonsList(studentId, year, month, lessons);
+        // Обновляем прогресс, если он открыт
+        if (currentTab === 'progress') {
+            renderProgress(studentId, allTestsData[studentId] || []);
+        }
     }
 
-    prevMonthBtn.addEventListener('click', () => changeMonth(-1));
-    nextMonthBtn.addEventListener('click', () => changeMonth(1));
+    // ============================================================
+    //  МОДАЛКА
+    // ============================================================
+    function showModal(dateStr, lessons) {
+        const [y, m, d] = dateStr.split('-').map(Number);
+        const dateObj = new Date(y, m - 1, d);
+        document.getElementById('modalDate').textContent = dateObj.toLocaleDateString('ru-RU', {
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+        });
+
+        let html = '';
+        lessons.forEach(l => {
+            let linksHtml = '';
+            if (l.material) linksHtml += `<a href="${l.material}" target="_blank" class="secondary">📖 Материал</a>`;
+            if (l.homework) {
+                const params = new URLSearchParams({
+                    student: l.student,
+                    date: l.date,
+                    topic: l.topic || '',
+                    start: l.start || '',
+                    end: l.end || ''
+                });
+                const sep = l.homework.includes('?') ? '&' : '?';
+                linksHtml += `<a href="${l.homework}${sep}${params.toString()}" target="_blank">📝 Домашка</a>`;
+            }
+            html += `
+                <div class="modal-student-card">
+                    <div class="student-name">👤 ${studentNames[l.student] || l.student}</div>
+                    <div class="student-time">⏰ ${l.start}–${l.end}</div>
+                    <div class="student-topic">📖 ${l.topic || 'Тема не указана'}</div>
+                    <div class="student-links">${linksHtml || '<span style="color:var(--text-muted);font-size:0.75rem;">Нет ссылок</span>'}</div>
+                </div>
+            `;
+        });
+        document.getElementById('modalStudentsContainer').innerHTML = html;
+        document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+        document.getElementById('modalOverlay').classList.remove('active');
+    });
+    document.getElementById('modalOverlay').addEventListener('click', e => {
+        if (e.target === e.currentTarget) {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+    });
 
     // ============================================================
-    //  ЗАПУСК
+    //  ВСПОМОГАТЕЛЬНЫЕ
     // ============================================================
-    async function initTeacherPage() {
-        await loadAllLessons();
-        renderCalendar(currentYear, currentMonth);
-        renderLessonsList(currentYear, currentMonth);
-        renderMaterialsList();
-        renderHomeworkList();
+    function buildHomeworkLink(basePath, studentId, lesson) {
+        if (!basePath) return '#';
+        const params = new URLSearchParams({
+            student: studentId,
+            date: lesson.date,
+            topic: lesson.topic || '',
+            start: lesson.start || '',
+            end: lesson.end || ''
+        });
+        return basePath + '?' + params.toString();
     }
 
     // ============================================================
     //  ВЫХОД
     // ============================================================
-    logoutBtn.addEventListener('click', () => {
+    document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.removeItem('teacherSession');
-        for (let key in localStorage) {
-            if (key.startsWith('checked_')) {
-                localStorage.removeItem(key);
-            }
-        }
         window.location.href = 'index.html';
     });
 
     // ============================================================
-    //  АВТОВХОД
+    //  ЗАПУСК
     // ============================================================
-    if (localStorage.getItem('teacherSession')) {
-        mainContent.style.display = 'block';
-        initTeacherPage();
-    } else {
-        window.location.href = 'index.html';
-    }
+    loadAllData();
 </script>
+
 </body>
 </html>
