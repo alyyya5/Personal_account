@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Алгебра + Геометрия</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: #eef3fa;
+            color: #0b1e33;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 45px 50px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #eef2f7;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1d6f9c;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #5e6f8c;
+            margin-top: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            background: #dce5f2;
+            color: #1d3a66;
+            margin-top: 10px;
+        }
+        .tag.orange { background: #fee2d6; color: #b85a3a; }
+        .tag.green { background: #d5f2e3; color: #1a6a4a; }
+        .tag.purple { background: #e8dff5; color: #5a2a9a; }
+        .tag.red { background: #fadbd6; color: #a03226; }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d6f9c;
+            border-left: 6px solid #1d6f9c;
+            padding-left: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .section-title .badge {
+            font-size: 11px;
+            font-weight: 700;
+            background: #1d6f9c;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-title .badge.orange { background: #d48a3a; }
+        .section-title .badge.green { background: #1a8a5a; }
+        .section-title .badge.red { background: #c0392b; }
+        .section-title .badge.purple { background: #7c3aed; }
+
+        .section-title.orange { border-left-color: #d48a3a; color: #b85a2a; }
+        .section-title.green { border-left-color: #1a8a5a; color: #1a6a4a; }
+        .section-title.red { border-left-color: #c0392b; color: #a03226; }
+        .section-title.purple { border-left-color: #7c3aed; color: #5a2a9a; }
+
+        .card {
+            background: #f8faff;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            border: 1px solid #e6edf6;
+        }
+
+        .card .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #1d6f9c;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .card .label.orange { color: #d48a3a; }
+        .card .label.green { color: #1a8a5a; }
+        .card .label.red { color: #c0392b; }
+        .card .label.purple { color: #7c3aed; }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #1e2f3e;
+        }
+
+        .card .example {
+            background: #e6f0ff;
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            color: #0b2a44;
+        }
+        .card .example.orange-bg { background: #fee2d6; }
+        .card .example.green-bg { background: #d5f2e3; }
+        .card .example.red-bg { background: #fadbd6; }
+        .card .example.purple-bg { background: #e8dff5; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, #1d6f9c, #7c3aed);
+            border-radius: 10px;
+            margin: 40px 0 30px;
+            opacity: 0.3;
+        }
+
+        .figure {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0 8px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e6edf6;
+        }
+        .figure svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .figure-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #5e6f8c;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .figure-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .figure-row .figure-item {
+            text-align: center;
+            background: #ffffff;
+            padding: 10px 16px 12px;
+            border-radius: 12px;
+            border: 1px solid #e6edf6;
+            flex: 0 1 auto;
+            min-width: 160px;
+        }
+        .figure-row .figure-item .caption {
+            font-size: 14px;
+            color: #5e6f8c;
+            margin-top: 4px;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: #5e6f8c;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 19px;
+            }
+            .figure-row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📐 Теория · Алгебра + Геометрия</h1>
+            <div class="subtitle">Повторение перед домашним заданием</div>
+            <span class="tag">Шпаргалка</span>
+            <span class="tag orange">Алгебра</span>
+            <span class="tag purple">Геометрия</span>
+        </header>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <div class="section">
+            <div class="section-title">
+                Алгебра
+                <span class="badge">Рациональные числа</span>
+            </div>
+
+            <!-- 1. Множества чисел -->
+            <div class="card">
+                <div class="label">Натуральные числа (N)</div>
+                <p>Числа, которые используют при счёте предметов.</p>
+                <div class="example">1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...</div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Целые числа (Z)</div>
+                <p>Натуральные числа, противоположные им (отрицательные) и нуль.</p>
+                <div class="example orange-bg">..., –5, –4, –3, –2, –1, 0, 1, 2, 3, 4, 5, ...</div>
+            </div>
+
+            <div class="card">
+                <div class="label green">Рациональные числа (Q)</div>
+                <p>Целые и дробные числа (положительные и отрицательные).</p>
+                <div class="example green-bg">–5; 0; 3; –2/3; 7/8; 0.25; –1.5</div>
+            </div>
+
+            <div class="card">
+                <div class="label purple">Важно!</div>
+                <p>Все натуральные числа — целые. Все целые числа — рациональные.</p>
+                <div class="example purple-bg">\( \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \)</div>
+            </div>
+
+            <!-- 2. Сравнение чисел -->
+            <div style="margin-top: 20px;">
+                <div class="section-title orange" style="border-left-color: #d48a3a; color: #b85a2a; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Сравнение чисел
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="label orange">Правило 1</div>
+                        <p>Из двух чисел <strong>больше</strong> то, которое на координатной прямой находится <strong>правее</strong>.</p>
+                    </div>
+                    <div class="card">
+                        <div class="label orange">Правило 2</div>
+                        <p>Из двух отрицательных чисел <strong>больше</strong> то, у которого <strong>модуль меньше</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="label orange">Примеры</div>
+                    <div class="example orange-bg">
+                        –5 &lt; –3 &nbsp;&nbsp;(–5 левее, чем –3)<br>
+                        0 &gt; –7 &nbsp;&nbsp;(0 правее, чем –7)<br>
+                        –2 &lt; 4 &nbsp;&nbsp;(–2 левее, чем 4)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Модуль числа -->
+            <div style="margin-top: 20px;">
+                <div class="section-title red" style="border-left-color: #c0392b; color: #a03226; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Модуль числа
+                </div>
+
+                <div class="card">
+                    <div class="label red">Определение</div>
+                    <p><strong>Модуль числа</strong> — это расстояние от нуля до этого числа на координатной прямой. Модуль всегда неотрицателен.</p>
+                    <div class="example red-bg">\(|5| = 5\) &nbsp;&nbsp; \(|–5| = 5\) &nbsp;&nbsp; \(|0| = 0\)</div>
+                </div>
+
+                <div class="card">
+                    <div class="label red">Как раскрывать модуль</div>
+                    <p>Если \(a \ge 0\), то \(|a| = a\)<br>
+                       Если \(a < 0\), то \(|a| = -a\)</p>
+                    <div class="example red-bg">
+                        \(|7| = 7\) &nbsp;&nbsp; \(|–7| = 7\)<br>
+                        \(|x - 3| = 5\) → \(x - 3 = 5\) или \(x - 3 = -5\) → \(x = 8\) или \(x = -2\)
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="label red">Уравнения с модулем</div>
+                    <p>\(|x| = a\), где \(a > 0\) → \(x = a\) или \(x = -a\)</p>
+                    <div class="example red-bg">
+                        \(|x| = 6\) → \(x = 6\) или \(x = -6\)<br>
+                        \(|2x| = 10\) → \(2x = 10\) или \(2x = -10\) → \(x = 5\) или \(x = -5\)
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="label red">Модуль с выражением</div>
+                    <p>Если \(a < 4\), то \(a - 4 < 0\), значит \(|a-4| = -(a-4) = -a + 4\)<br>
+                       Если \(a \ge 4\), то \(a - 4 \ge 0\), значит \(|a-4| = a-4\)</p>
+                    <div class="example red-bg">
+                        При \(a = 2\): \(|2-4| = |-2| = 2\)<br>
+                        При \(a = 7\): \(|7-4| = |3| = 3\)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Сравнение дробей -->
+            <div style="margin-top: 20px;">
+                <div class="section-title green" style="border-left-color: #1a8a5a; color: #1a6a4a; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Сравнение дробей
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="label green">С одинаковым знаменателем</div>
+                        <p>Больше та дробь, у которой <strong>числитель больше</strong>.</p>
+                        <div class="example green-bg">\(\frac{5}{8} > \frac{3}{8}\)</div>
+                    </div>
+                    <div class="card">
+                        <div class="label green">С разными знаменателями</div>
+                        <p>Приведи к <strong>общему знаменателю</strong>, затем сравни.</p>
+                        <div class="example green-bg">\(\frac{2}{3}\) и \(\frac{3}{4}\) → \(\frac{8}{12} < \frac{9}{12}\)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== РАЗДЕЛИТЕЛЬ ==================== -->
+        <div class="divider"></div>
+
+        <!-- ==================== ГЕОМЕТРИЯ ==================== -->
+
+        <div class="section">
+            <div class="section-title purple">
+                Геометрия
+                <span class="badge purple">Прямая, отрезок, луч, угол</span>
+            </div>
+
+            <!-- 1. Прямая -->
+            <div class="card">
+                <div class="label">Прямая</div>
+                <p><strong>Прямая</strong> — это основная геометрическая фигура, которая <strong>не имеет ни начала, ни конца</strong>.</p>
+
+                <div class="figure">
+                    <svg width="400" height="60" viewBox="0 0 400 60">
+                        <line x1="20" y1="30" x2="380" y2="30" stroke="#1d6f9c" stroke-width="3" />
+                        <circle cx="100" cy="30" r="5" fill="#c0392b" />
+                        <text x="100" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <circle cx="300" cy="30" r="5" fill="#c0392b" />
+                        <text x="300" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <text x="200" y="52" text-anchor="middle" font-size="14" fill="#1d6f9c" font-style="italic">Прямая a (или AB)</text>
+                        <polygon points="380,25 390,30 380,35" fill="#1d6f9c" />
+                        <polygon points="20,25 10,30 20,35" fill="#1d6f9c" />
+                    </svg>
+                </div>
+                <div class="figure-caption">Прямая не имеет начала и конца</div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Аксиома</div>
+                <p><strong>Через любые две точки можно провести прямую, и притом только одну.</strong></p>
+
+                <div class="figure">
+                    <svg width="400" height="80" viewBox="0 0 400 80">
+                        <line x1="60" y1="40" x2="340" y2="40" stroke="#1d6f9c" stroke-width="3" />
+                        <circle cx="140" cy="40" r="6" fill="#c0392b" />
+                        <text x="140" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <circle cx="260" cy="40" r="6" fill="#c0392b" />
+                        <text x="260" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <text x="200" y="68" text-anchor="middle" font-size="13" fill="#5e6f8c">Через точки A и B — только одна прямая</text>
+                        <polygon points="340,35 350,40 340,45" fill="#1d6f9c" />
+                        <polygon points="60,35 50,40 60,45" fill="#1d6f9c" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 2. Отрезок -->
+            <div style="margin-top: 16px;">
+                <div class="section-title orange" style="border-left-color: #d48a3a; color: #b85a2a; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Отрезок
+                </div>
+
+                <div class="card">
+                    <div class="label orange">Определение</div>
+                    <p><strong>Отрезок</strong> — это часть прямой, ограниченная двумя точками. Эти точки называются <strong>концами отрезка</strong>.</p>
+
+                    <div class="figure">
+                        <svg width="400" height="70" viewBox="0 0 400 70">
+                            <line x1="60" y1="35" x2="340" y2="35" stroke="#d48a3a" stroke-width="4" />
+                            <circle cx="60" cy="35" r="6" fill="#c0392b" />
+                            <text x="60" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                            <circle cx="340" cy="35" r="6" fill="#c0392b" />
+                            <text x="340" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                            <text x="200" y="60" text-anchor="middle" font-size="14" fill="#d48a3a" font-weight="600">Отрезок AB</text>
+                            <text x="200" y="50" text-anchor="middle" font-size="11" fill="#5e6f8c">концы отрезка</text>
+                            <line x1="60" y1="28" x2="60" y2="42" stroke="#c0392b" stroke-width="2" />
+                            <line x1="340" y1="28" x2="340" y2="42" stroke="#c0392b" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <div class="figure-caption">Отрезок AB — часть прямой между точками A и B</div>
+                </div>
+            </div>
+
+            <!-- 3. Луч -->
+            <div style="margin-top: 16px;">
+                <div class="section-title green" style="border-left-color: #1a8a5a; color: #1a6a4a; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Луч
+                </div>
+
+                <div class="card">
+                    <div class="label green">Определение</div>
+                    <p><strong>Луч</strong> — это часть прямой, которая <strong>имеет начало, но не имеет конца</strong>.</p>
+
+                    <div class="figure">
+                        <svg width="400" height="70" viewBox="0 0 400 70">
+                            <line x1="60" y1="35" x2="380" y2="35" stroke="#1a8a5a" stroke-width="3" />
+                            <circle cx="60" cy="35" r="6" fill="#c0392b" />
+                            <text x="60" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">O</text>
+                            <circle cx="200" cy="35" r="5" fill="#1d6f9c" />
+                            <text x="200" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">A</text>
+                            <text x="130" y="60" text-anchor="middle" font-size="14" fill="#1a8a5a" font-weight="600">Луч OA</text>
+                            <polygon points="380,30 395,35 380,40" fill="#1a8a5a" />
+                            <line x1="60" y1="28" x2="60" y2="42" stroke="#c0392b" stroke-width="2" />
+                            <text x="60" y="55" text-anchor="middle" font-size="11" fill="#5e6f8c">начало</text>
+                        </svg>
+                    </div>
+                    <div class="figure-caption">Луч OA — начало в точке O, проходит через точку A</div>
+                </div>
+
+                <div class="card">
+                    <div class="label green">Обозначение</div>
+                    <p>Первая буква — <strong>начало луча</strong>, вторая — любая точка на луче.</p>
+                    <div class="example green-bg">\(OK\) — луч с началом в точке \(O\), проходящий через точку \(K\).</div>
+                </div>
+            </div>
+
+            <!-- 4. Угол -->
+            <div style="margin-top: 16px;">
+                <div class="section-title red" style="border-left-color: #c0392b; color: #a03226; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Угол
+                </div>
+
+                <div class="card">
+                    <div class="label red">Определение</div>
+                    <p><strong>Угол</strong> — это фигура, образованная двумя лучами с общим началом.</p>
+                    <ul style="margin: 8px 0 0 20px; font-size: 16px; line-height: 1.7; color: #1e2f3e;">
+                        <li><strong>Лучи</strong> — стороны угла</li>
+                        <li><strong>Общее начало</strong> — вершина угла</li>
+                    </ul>
+
+                    <div class="figure">
+                        <svg width="350" height="180" viewBox="0 0 350 180">
+                            <line x1="60" y1="150" x2="160" y2="20" stroke="#c0392b" stroke-width="3" />
+                            <line x1="60" y1="150" x2="280" y2="150" stroke="#c0392b" stroke-width="3" />
+                            <circle cx="60" cy="150" r="5" fill="#1d6f9c" />
+                            <text x="60" y="175" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">O</text>
+                            <text x="165" y="12" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                            <text x="285" y="165" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                            <text x="170" y="175" text-anchor="middle" font-size="13" fill="#5e6f8c">\(\angle AOB\) — угол с вершиной O</text>
+                        </svg>
+                    </div>
+                    <div class="figure-caption">Угол AOB — вершина O, стороны OA и OB</div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="label red">Развёрнутый угол</div>
+                        <p>Стороны лежат на одной прямой. <strong>Равен 180°</strong>.</p>
+                        <div class="example red-bg">\(\angle AOB = 180°\)</div>
+
+                        <div class="figure">
+                            <svg width="300" height="60" viewBox="0 0 300 60">
+                                <line x1="30" y1="30" x2="270" y2="30" stroke="#c0392b" stroke-width="3" />
+                                <circle cx="150" cy="30" r="4" fill="#1d6f9c" />
+                                <text x="150" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1d6f9c">O</text>
+                                <text x="30" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">A</text>
+                                <text x="270" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">B</text>
+                                <text x="150" y="48" text-anchor="middle" font-size="12" fill="#c0392b">∠AOB = 180°</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="label red">Свойство</div>
+                        <p>Если луч \(OC\) проходит внутри угла \(AOB\), то</p>
+                        <div class="example red-bg">\(\angle AOC + \angle COB = \angle AOB\)</div>
+
+                        <div class="figure">
+                            <svg width="280" height="160" viewBox="0 0 280 160">
+                                <line x1="50" y1="140" x2="130" y2="20" stroke="#c0392b" stroke-width="2.5" />
+                                <line x1="50" y1="140" x2="240" y2="140" stroke="#c0392b" stroke-width="2.5" />
+                                <line x1="50" y1="140" x2="200" y2="65" stroke="#1d6f9c" stroke-width="2.5" stroke-dasharray="6,3" />
+                                <circle cx="50" cy="140" r="4" fill="#1d6f9c" />
+                                <text x="50" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#1d6f9c">O</text>
+                                <text x="135" y="12" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">A</text>
+                                <text x="245" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">B</text>
+                                <text x="205" y="57" text-anchor="middle" font-size="12" font-weight="700" fill="#1d6f9c">C</text>
+                            </svg>
+                        </div>
+                        <div class="figure-caption">Луч OC делит угол AOB на два угла</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="label red">Обозначение угла</div>
+                    <p>Угол можно обозначить двумя способами:</p>
+                    <div class="example red-bg">\(\angle AOB\) или \(\angle BOA\) — оба варианта правильные</div>
+                </div>
+            </div>
+
+            <!-- 5. Ломаная -->
+            <div style="margin-top: 16px;">
+                <div class="section-title purple" style="border-left-color: #7c3aed; color: #5a2a9a; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Ломаная
+                </div>
+
+                <div class="card">
+                    <div class="label purple">Определение</div>
+                    <p><strong>Ломаная</strong> — фигура, составленная из отрезков так, что соседние отрезки <strong>не лежат на одной прямой</strong>.</p>
+
+                    <div class="figure">
+                        <svg width="400" height="150" viewBox="0 0 400 150">
+                            <polyline points="40,120 120,30 220,90 310,20 380,100" stroke="#7c3aed" stroke-width="4" fill="none" stroke-linejoin="round" />
+                            <circle cx="40" cy="120" r="6" fill="#c0392b" />
+                            <text x="40" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                            <circle cx="120" cy="30" r="6" fill="#c0392b" />
+                            <text x="120" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                            <circle cx="220" cy="90" r="6" fill="#c0392b" />
+                            <text x="220" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">C</text>
+                            <circle cx="310" cy="20" r="6" fill="#c0392b" />
+                            <text x="310" y="12" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">D</text>
+                            <circle cx="380" cy="100" r="6" fill="#c0392b" />
+                            <text x="380" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">E</text>
+                            <text x="80" y="85" font-size="11" fill="#7c3aed" font-style="italic">звенья</text>
+                            <text x="170" y="70" font-size="11" fill="#7c3aed" font-style="italic">звенья</text>
+                            <text x="265" y="65" font-size="11" fill="#7c3aed" font-style="italic">звенья</text>
+                            <text x="350" y="65" font-size="11" fill="#7c3aed" font-style="italic">звенья</text>
+                            <text x="200" y="140" text-anchor="middle" font-size="13" fill="#5e6f8c">Ломаная ABCDE</text>
+                        </svg>
+                    </div>
+                    <div class="figure-caption">Ломаная ABCDE — звенья AB, BC, CD, DE</div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="label purple">Звенья</div>
+                        <p>Отрезки, из которых состоит ломаная, называются <strong>звеньями</strong>.</p>
+                        <div class="example purple-bg">\(AB\), \(BC\), \(CD\), \(DE\) — звенья</div>
+                    </div>
+                    <div class="card">
+                        <div class="label purple">Вершины</div>
+                        <p>Концы звеньев называются <strong>вершинами</strong> ломаной.</p>
+                        <div class="example purple-bg">\(A\), \(B\), \(C\), \(D\), \(E\) — вершины</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="label purple">Замкнутая ломаная</div>
+                    <p>Если концы ломаной совпадают, она называется <strong>замкнутой</strong>.</p>
+                    <div class="example purple-bg">\(A \to B \to C \to D \to A\) — замкнутая</div>
+
+                    <div class="figure">
+                        <svg width="300" height="160" viewBox="0 0 300 160">
+                            <polygon points="150,30 250,80 210,140 90,140 50,80" stroke="#7c3aed" stroke-width="4" fill="none" stroke-linejoin="round" />
+                            <circle cx="150" cy="30" r="5" fill="#c0392b" />
+                            <text x="150" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">A</text>
+                            <circle cx="250" cy="80" r="5" fill="#c0392b" />
+                            <text x="258" y="80" text-anchor="start" font-size="13" font-weight="700" fill="#c0392b">B</text>
+                            <circle cx="210" cy="140" r="5" fill="#c0392b" />
+                            <text x="218" y="140" text-anchor="start" font-size="13" font-weight="700" fill="#c0392b">C</text>
+                            <circle cx="90" cy="140" r="5" fill="#c0392b" />
+                            <text x="78" y="140" text-anchor="end" font-size="13" font-weight="700" fill="#c0392b">D</text>
+                            <circle cx="50" cy="80" r="5" fill="#c0392b" />
+                            <text x="42" y="80" text-anchor="end" font-size="13" font-weight="700" fill="#c0392b">E</text>
+                            <text x="150" y="155" text-anchor="middle" font-size="12" fill="#5e6f8c">Замкнутая ломаная</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Две прямые -->
+            <div style="margin-top: 16px;">
+                <div class="section-title" style="border-left-color: #1d6f9c; color: #1d6f9c; font-size: 19px; border-left-width: 4px; padding-left: 14px;">
+                    Две прямые
+                </div>
+
+                <div class="card">
+                    <p><strong>Две прямые либо пересекаются (имеют одну общую точку), либо не пересекаются.</strong></p>
+
+                    <div class="figure-row">
+                        <div class="figure-item">
+                            <svg width="180" height="180" viewBox="0 0 180 180">
+                                <line x1="20" y1="160" x2="160" y2="20" stroke="#1d6f9c" stroke-width="3" />
+                                <line x1="20" y1="20" x2="160" y2="160" stroke="#1a8a5a" stroke-width="3" />
+                                <circle cx="90" cy="90" r="5" fill="#c0392b" />
+                                <text x="90" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">O</text>
+                                <text x="170" y="28" font-size="13" fill="#1d6f9c" font-weight="600">a</text>
+                                <text x="170" y="168" font-size="13" fill="#1a8a5a" font-weight="600">b</text>
+                                <text x="90" y="175" text-anchor="middle" font-size="11" fill="#5e6f8c">пересекаются</text>
+                            </svg>
+                            <div class="caption">Пересекаются в точке O</div>
+                        </div>
+                        <div class="figure-item">
+                            <svg width="180" height="180" viewBox="0 0 180 180">
+                                <line x1="20" y1="40" x2="160" y2="40" stroke="#1d6f9c" stroke-width="3" />
+                                <line x1="20" y1="140" x2="160" y2="140" stroke="#1a8a5a" stroke-width="3" />
+                                <text x="170" y="40" font-size="13" fill="#1d6f9c" font-weight="600">a</text>
+                                <text x="170" y="140" font-size="13" fill="#1a8a5a" font-weight="600">b</text>
+                                <text x="90" y="175" text-anchor="middle" font-size="11" fill="#5e6f8c">не пересекаются</text>
+                            </svg>
+                            <div class="caption">Параллельные прямые</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            📌 Сохрани эту шпаргалку перед выполнением домашнего задания
+        </div>
+
+    </div>
+
+</body>
+</html>
