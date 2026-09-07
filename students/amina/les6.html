@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Алгебра. Рациональные числа</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: #eef3fa;
+            color: #0b1e33;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 45px 50px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #eef2f7;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1d6f9c;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #5e6f8c;
+            margin-top: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            background: #dce5f2;
+            color: #1d3a66;
+            margin-top: 10px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d6f9c;
+            border-left: 6px solid #1d6f9c;
+            padding-left: 16px;
+            margin-bottom: 16px;
+        }
+
+        .section-title.orange {
+            border-left-color: #d48a3a;
+            color: #b85a2a;
+        }
+        .section-title.green {
+            border-left-color: #1a8a5a;
+            color: #1a6a4a;
+        }
+        .section-title.red {
+            border-left-color: #c0392b;
+            color: #a03226;
+        }
+        .section-title.purple {
+            border-left-color: #7c3aed;
+            color: #5a2a9a;
+        }
+
+        .card {
+            background: #f8faff;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            border: 1px solid #e6edf6;
+        }
+
+        .card .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #1d6f9c;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .card .label.orange {
+            color: #d48a3a;
+        }
+        .card .label.green {
+            color: #1a8a5a;
+        }
+        .card .label.red {
+            color: #c0392b;
+        }
+        .card .label.purple {
+            color: #7c3aed;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #1e2f3e;
+        }
+
+        .card .example {
+            background: #e6f0ff;
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            color: #0b2a44;
+        }
+
+        .card .example .hl {
+            color: #1d6f9c;
+            font-weight: 700;
+        }
+
+        .card .example.orange-bg {
+            background: #fee2d6;
+        }
+        .card .example.green-bg {
+            background: #d5f2e3;
+        }
+        .card .example.red-bg {
+            background: #fadbd6;
+        }
+        .card .example.purple-bg {
+            background: #e8dff5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: #5e6f8c;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📐 Теория · Алгебра</h1>
+            <div class="subtitle">Рациональные числа, множества, сравнение, модуль</div>
+            <span class="tag">6 класс · Повторение</span>
+        </header>
+
+        <!-- ===== 1. Множества чисел ===== -->
+        <div class="section">
+            <div class="section-title">1. Множества чисел</div>
+
+            <div class="card">
+                <div class="label">Натуральные числа (N)</div>
+                <p>Числа, которые используют при счёте предметов.</p>
+                <div class="example">
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Целые числа (Z)</div>
+                <p>Натуральные числа, противоположные им (отрицательные) и нуль.</p>
+                <div class="example orange-bg">
+                    ..., –5, –4, –3, –2, –1, 0, 1, 2, 3, 4, 5, ...
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label green">Рациональные числа (Q)</div>
+                <p>Целые и дробные числа (положительные и отрицательные).</p>
+                <div class="example green-bg">
+                    –5; 0; 3; –2/3; 7/8; 0.25; –1.5
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label purple">Важно!</div>
+                <p>Все натуральные числа — целые. Все целые числа — рациональные.</p>
+                <div class="example purple-bg">
+                    \( \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \)
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 2. Сравнение чисел ===== -->
+        <div class="section">
+            <div class="section-title orange">2. Сравнение чисел</div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="label orange">Правило 1</div>
+                    <p>Из двух чисел <strong>больше</strong> то, которое на координатной прямой находится <strong>правее</strong>.</p>
+                </div>
+                <div class="card">
+                    <div class="label orange">Правило 2</div>
+                    <p>Из двух отрицательных чисел <strong>больше</strong> то, у которого <strong>модуль меньше</strong>.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Примеры</div>
+                <div class="example orange-bg">
+                    –5 &lt; –3 &nbsp;&nbsp;(–5 левее, чем –3)<br>
+                    0 &gt; –7 &nbsp;&nbsp;(0 правее, чем –7)<br>
+                    –2 &lt; 4 &nbsp;&nbsp;(–2 левее, чем 4)
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 3. Модуль числа ===== -->
+        <div class="section">
+            <div class="section-title red">3. Модуль числа</div>
+
+            <div class="card">
+                <div class="label red">Определение</div>
+                <p><strong>Модуль числа</strong> — это расстояние от нуля до этого числа на координатной прямой. Модуль всегда неотрицателен.</p>
+                <div class="example red-bg">
+                    \(|5| = 5\) &nbsp;&nbsp; \(|–5| = 5\) &nbsp;&nbsp; \(|0| = 0\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label red">Как раскрывать модуль</div>
+                <p>Если \(a \ge 0\), то \(|a| = a\)<br>
+                   Если \(a < 0\), то \(|a| = -a\)</p>
+                <div class="example red-bg">
+                    \(|7| = 7\) &nbsp;&nbsp; \(|–7| = 7\)<br>
+                    \(|x - 3| = 5\) → \(x - 3 = 5\) или \(x - 3 = -5\) → \(x = 8\) или \(x = -2\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label red">Уравнения с модулем</div>
+                <p>\(|x| = a\), где \(a > 0\) → \(x = a\) или \(x = -a\)</p>
+                <div class="example red-bg">
+                    \(|x| = 6\) → \(x = 6\) или \(x = -6\)<br>
+                    \(|2x| = 10\) → \(2x = 10\) или \(2x = -10\) → \(x = 5\) или \(x = -5\)
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 4. Сравнение дробей ===== -->
+        <div class="section">
+            <div class="section-title green">4. Сравнение дробей</div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="label green">С одинаковым знаменателем</div>
+                    <p>Больше та дробь, у которой <strong>числитель больше</strong>.</p>
+                    <div class="example green-bg">
+                        \(\frac{5}{8} > \frac{3}{8}\)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="label green">С разными знаменателями</div>
+                    <p>Приведи к <strong>общему знаменателю</strong>, затем сравни.</p>
+                    <div class="example green-bg">
+                        \(\frac{2}{3}\) и \(\frac{3}{4}\) → \(\frac{8}{12} < \frac{9}{12}\)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            📌 Сохрани эту шпаргалку перед выполнением домашнего задания
+        </div>
+
+    </div>
+
+</body>
+</html>
