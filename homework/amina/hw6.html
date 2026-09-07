@@ -89,51 +89,6 @@
         .tag.green { background: #d5f2e3; color: var(--accent-green); }
         .tag.purple { background: #e8dff5; color: #7c3aed; }
 
-        .theory-block {
-            background: #f8faff;
-            border-radius: 20px;
-            padding: 20px 24px;
-            margin-bottom: 30px;
-            border-left: 6px solid var(--accent-blue);
-        }
-        .theory-block h2 {
-            font-size: 18px;
-            color: var(--accent-blue);
-            margin-bottom: 12px;
-        }
-        .theory-block ul {
-            list-style: none;
-            padding: 0;
-        }
-        .theory-block ul li {
-            padding: 6px 0 6px 24px;
-            position: relative;
-            font-size: 15px;
-        }
-        .theory-block ul li::before {
-            content: "•";
-            color: var(--accent-blue);
-            font-weight: 700;
-            position: absolute;
-            left: 0;
-        }
-        .theory-block .example {
-            background: #e6f0ff;
-            padding: 8px 16px;
-            border-radius: 12px;
-            margin-top: 10px;
-            font-family: monospace;
-            font-size: 15px;
-        }
-        .theory-block .hint {
-            background: #fef9e7;
-            border-left: 4px solid #f39c12;
-            padding: 10px 16px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
         .progress-wrap {
             background: #f4f8fd;
             border: 1px solid #e2ebf5;
@@ -339,24 +294,14 @@
         }
 
         .result-area {
-            background: #f0f9ff;
+            background: #f8faff;
             border-radius: 20px;
             padding: 20px 24px;
             margin-top: 20px;
             font-size: 0.95rem;
-            border: 1px solid #bfdbfe;
-            min-height: 80px;
-        }
-        .result-area .big-score {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        .result-area ul {
-            margin: 10px 0 0 20px;
-        }
-        .result-area li {
-            margin-bottom: 4px;
+            border: 1px solid #dce5ef;
+            min-height: 60px;
+            color: var(--text-secondary);
         }
 
         .modal-overlay {
@@ -377,7 +322,7 @@
         .modal-card {
             background: white;
             border-radius: 28px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             padding: 28px 30px;
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
@@ -481,7 +426,7 @@
 
         <header>
             <h1>🏠 Домашнее задание</h1>
-            <div class="subtitle">по теме «Рациональные числа» · Вводное занятие</div>
+            <div class="subtitle">по теме «Рациональные числа»</div>
             <div class="info-line">
                 <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
                 <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
@@ -493,25 +438,6 @@
                 <span class="tag green">Начальный уровень</span>
             </div>
         </header>
-
-        <!-- ТЕОРИЯ -->
-        <div class="theory-block">
-            <h2>📖 Напоминание</h2>
-            <ul>
-                <li><strong>Натуральные числа (N)</strong> — числа для счёта: 1, 2, 3, 4, ...</li>
-                <li><strong>Целые числа (Z)</strong> — натуральные, противоположные им и нуль: ..., –3, –2, –1, 0, 1, 2, 3, ...</li>
-                <li><strong>Рациональные числа (Q)</strong> — целые и дробные числа (положительные и отрицательные).</li>
-                <li><strong>Модуль числа</strong> — расстояние от нуля до числа: \(|a| = a\) если \(a \ge 0\), и \(-a\) если \(a < 0\).</li>
-            </ul>
-            <div class="example">
-                Примеры: 5 ∈ N, –7 ∈ Z, 3/4 ∈ Q, |–5| = 5, |3| = 3
-            </div>
-            <div class="hint">
-                <strong>💡 Как раскрывать модуль:</strong><br>
-                Если \(a < 4\), то \(a - 4 < 0\), значит \(|a-4| = -(a-4) = -a + 4\)<br>
-                Если \(a \ge 4\), то \(a - 4 \ge 0\), значит \(|a-4| = a-4\)
-            </div>
-        </div>
 
         <!-- Прогресс -->
         <div class="progress-wrap">
@@ -533,34 +459,22 @@
                 <div class="task-card">
                     <div class="task-label">Множества</div>
                     <div class="task-condition">\(-15\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q1">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q1"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label">Множества</div>
                     <div class="task-condition">\(7\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q2">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q2"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label">Множества</div>
                     <div class="task-condition">\(\frac{3}{8}\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q3">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label">Множества</div>
                     <div class="task-condition">\(0\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q4">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q4"></div>
                 </div>
             </div>
         </div>
@@ -574,36 +488,24 @@
             </div>
             <div class="task-grid">
                 <div class="task-card">
-                    <div class="task-label orange">Истина / Ложь</div>
+                    <div class="task-label orange">И / Л</div>
                     <div class="task-condition">Любое натуральное число является целым. <span class="format-hint orange-bg">напиши: И / Л</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q5">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q5"></div>
                 </div>
                 <div class="task-card">
-                    <div class="task-label orange">Истина / Ложь</div>
+                    <div class="task-label orange">И / Л</div>
                     <div class="task-condition">Любое целое число является натуральным. <span class="format-hint orange-bg">напиши: И / Л</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q6">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q6"></div>
                 </div>
                 <div class="task-card">
-                    <div class="task-label orange">Истина / Ложь</div>
+                    <div class="task-label orange">И / Л</div>
                     <div class="task-condition">Любое рациональное число является целым. <span class="format-hint orange-bg">напиши: И / Л</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q7">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q7"></div>
                 </div>
                 <div class="task-card">
-                    <div class="task-label orange">Истина / Ложь</div>
+                    <div class="task-label orange">И / Л</div>
                     <div class="task-condition">Число \(-2\) не является натуральным. <span class="format-hint orange-bg">напиши: И / Л</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q8">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q8"></div>
                 </div>
             </div>
         </div>
@@ -619,34 +521,22 @@
                 <div class="task-card">
                     <div class="task-label purple">Пример</div>
                     <div class="task-condition">Напиши любое натуральное число</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q9">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q9"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label purple">Пример</div>
                     <div class="task-condition">Напиши любое целое отрицательное число</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q10">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q10"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label purple">Пример</div>
                     <div class="task-condition">Напиши любое рациональное число, которое не является целым</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q11">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q11"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label purple">Пример</div>
                     <div class="task-condition">Напиши число, которое одновременно целое и рациональное</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q12">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q12"></div>
                 </div>
             </div>
         </div>
@@ -662,34 +552,22 @@
                 <div class="task-card">
                     <div class="task-label green">Сравни</div>
                     <div class="task-condition">\(-8\) и \(-5\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q13">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q13"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label green">Сравни</div>
                     <div class="task-condition">\(0\) и \(-3\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q14">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q14"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label green">Сравни</div>
                     <div class="task-condition">\(\frac{3}{4}\) и \(\frac{5}{8}\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q15">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q15"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label green">Сравни</div>
                     <div class="task-condition">\(-1\) и \(-1\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q16">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q16"></div>
                 </div>
             </div>
         </div>
@@ -705,34 +583,22 @@
                 <div class="task-card">
                     <div class="task-label red">Модуль</div>
                     <div class="task-condition">\(|a| = 6\). Чему равен \(a\)? <span class="format-hint">напиши два корня через ;</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q17">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q17"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label red">Модуль</div>
                     <div class="task-condition">\(|x - 3| = 5\). Чему равен \(x\)? <span class="format-hint">напиши два корня через ;</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q18">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q18"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label red">Модуль</div>
                     <div class="task-condition">\(|2x| = 14\). Чему равен \(x\)? <span class="format-hint">напиши два корня через ;</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q19">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q19"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label red">Модуль</div>
                     <div class="task-condition">\(|a + 2| = 9\). Чему равен \(a\)? <span class="format-hint">напиши два корня через ;</span></div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="q20">
-                    </div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q20"></div>
                 </div>
             </div>
         </div>
@@ -748,7 +614,7 @@
         </div>
 
         <div class="footer-note">
-            <span>📌 Рациональные числа · Вводное занятие</span>
+            <span>📌 Рациональные числа</span>
             <span class="tag">20 заданий</span>
         </div>
 
@@ -769,10 +635,12 @@
     </div>
 
     <script>
+        try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
+
         (function() {
 
             // ============================================================
-            //  ПРАВИЛЬНЫЕ ОТВЕТЫ
+            //  ПРАВИЛЬНЫЕ ОТВЕТЫ (для отправки, ученик их не видит)
             // ============================================================
             const answers = {
                 q1: "Z",
@@ -821,7 +689,7 @@
             document.getElementById('lessonTopic').textContent = topic;
 
             // ============================================================
-            //  НОРМАЛИЗАЦИЯ
+            //  НОРМАЛИЗАЦИЯ (для проверки при отправке)
             // ============================================================
             function normalize(str) {
                 return str.trim().replace(/\s/g, '').toLowerCase();
@@ -854,36 +722,21 @@
                 return s.split(/[,;]\s*/).map(p => p.trim()).filter(p => p !== "");
             }
 
-            function multiAnswerCorrect(userVal, rightVal) {
-                let uParts = parseMultiple(userVal);
-                let rParts = parseMultiple(rightVal);
-                if (uParts.length !== rParts.length) return false;
-
-                let uNums = uParts.map(toNumber);
-                let rNums = rParts.map(toNumber);
-
-                if (uNums.every(v => v !== null) && rNums.every(v => v !== null)) {
-                    uNums.sort((a, b) => a - b);
-                    rNums.sort((a, b) => a - b);
-                    return uNums.every((v, i) => numsEqual(v, rNums[i]));
-                }
-
-                let uStr = uParts.map(normalize).sort();
-                let rStr = rParts.map(normalize).sort();
-                return uStr.every((v, i) => v === rStr[i]);
-            }
-
             function isAnswerCorrect(id, userVal) {
                 const right = answers[id];
                 if (!right) return false;
 
-                // Для заданий с примерами (q9-q12) — проверяем только что не пусто
                 if (id === 'q9' || id === 'q10' || id === 'q11' || id === 'q12') {
                     return userVal.trim() !== '';
                 }
 
                 if (right.includes(';') || right.includes(',')) {
-                    return multiAnswerCorrect(userVal, right);
+                    let uParts = parseMultiple(userVal);
+                    let rParts = parseMultiple(right);
+                    if (uParts.length !== rParts.length) return false;
+                    let uStr = uParts.map(normalize).sort();
+                    let rStr = rParts.map(normalize).sort();
+                    return uStr.every((v, i) => v === rStr[i]);
                 }
 
                 let uNum = toNumber(userVal);
@@ -932,7 +785,7 @@
             });
 
             // ============================================================
-            //  ОТПРАВКА ОТЧЁТА
+            //  ОТПРАВКА ОТЧЁТА (без показа результата ученику!)
             // ============================================================
             sendReportBtn.addEventListener('click', async function() {
                 const comment = reportComment.value.trim();
@@ -942,6 +795,7 @@
                     return;
                 }
 
+                // Собираем ответы
                 let answersText = '';
                 let correct = 0;
                 let total = 0;
@@ -958,7 +812,7 @@
                     } else {
                         const card = input?.closest('.task-card');
                         const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
-                        mistakes.push(`❌ ${cond} → ваш ответ: ${userAnswer}`);
+                        mistakes.push(`❌ ${cond} → ${userAnswer}`);
                     }
 
                     answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
@@ -966,22 +820,29 @@
 
                 const percent = Math.round((correct / total) * 100);
 
-                let resultHtml = `<div class="big-score">📊 Результат: ${correct} из ${total} (${percent}%)</div>`;
-                if (mistakes.length === 0) {
-                    resultHtml += '🎉 Отлично! Все задания выполнены верно!';
-                } else {
-                    resultHtml += '<div>⚠️ Ошибки:</div><ul>' +
-                        mistakes.map(m => `<li>${m}</li>`).join('') + '</ul>';
+                // Формируем отчёт для преподавателя
+                let reportBody = `**Ученик:** ${student}\n`;
+                reportBody += `**Дата:** ${date}\n`;
+                reportBody += `**Тема:** ${topic}\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
+
+                if (mistakes.length > 0) {
+                    reportBody += `**❌ Ошибки:**\n\n`;
+                    reportBody += `| № | Задание | Ответ ученика | Правильно |\n`;
+                    reportBody += `|---|---------|---------------|------------|\n`;
+                    mistakes.forEach(m => {
+                        const parts = m.replace('❌ ', '').split(' → ');
+                        reportBody += `| ${parts[0]} | ${parts[1] || ''} | ${parts[2] || ''} |\n`;
+                    });
+                    reportBody += `\n`;
                 }
-                resultArea.innerHTML = resultHtml;
+
+                reportBody += `**📋 Все ответы:**\n\`\`\`\n${answersText}\`\`\``;
+                reportBody += `\n\n**💬 Комментарий:**\n${comment}`;
 
                 const title = `Домашнее задание: ${student} — ${topic} (${date})`;
-                const body =
-                    `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n` +
-                    `**Результат:** ${correct} из ${total} (${percent}%)\n\n` +
-                    `**Результаты (задание | ответ ученика | правильный ответ | статус):**\n\`\`\`\n${answersText}\`\`\`\n\n` +
-                    `**Комментарий:**\n${comment}`;
 
+                // Отправка
                 const btn = this;
                 btn.disabled = true;
                 btn.textContent = '⏳ Отправка...';
@@ -990,15 +851,19 @@
 
                 try {
                     if (typeof createGitHubIssue === 'function') {
-                        const issueUrl = await createGitHubIssue(title, body);
+                        const issueUrl = await createGitHubIssue(title, reportBody);
                         modalStatus.innerHTML =
                             `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Посмотреть</a>`;
                         modalStatus.style.color = '#16a34a';
                     } else {
-                        console.log('📤 Отправка отчёта:', title, '\n', body);
+                        console.log('📤 Отправка отчёта:', title, '\n', reportBody);
                         modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим)';
                         modalStatus.style.color = '#16a34a';
                     }
+
+                    // Показываем ученику только сообщение об отправке (без результата!)
+                    resultArea.innerHTML = '📤 Отчёт успешно отправлен преподавателю!';
+
                     setTimeout(() => reportModal.classList.remove('active'), 3000);
                 } catch (error) {
                     modalStatus.textContent = `❌ Ошибка: ${error.message}`;
