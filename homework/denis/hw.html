@@ -120,7 +120,6 @@
         }
         .task-condition mjx-container { font-size: 110% !important; }
 
-        /* Плейсхолдер для картинки из демоверсии */
         .img-placeholder {
             display: block;
             margin: 12px auto;
@@ -136,12 +135,6 @@
             height: auto;
             display: block;
             margin: 0 auto;
-        }
-        .img-placeholder .hint {
-            padding: 20px;
-            color: var(--text-sec);
-            font-size: 13px;
-            font-style: italic;
         }
 
         .data-table {
@@ -173,7 +166,7 @@
 
         .part2-textarea {
             width: 100%;
-            min-height: 120px;
+            min-height: 150px;
             padding: 12px;
             border: 2px solid #e6edf6;
             border-radius: 10px;
@@ -181,44 +174,9 @@
             font-size: 14px;
             resize: vertical;
             outline: none;
-            margin-bottom: 10px;
+            margin-top: 10px;
         }
         .part2-textarea:focus { border-color: var(--blue); }
-        
-        .file-upload-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .file-upload-btn {
-            padding: 8px 16px;
-            background: #f0f4f8;
-            border: 2px dashed #b0c4de;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            color: var(--blue);
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .file-upload-btn:hover { background: #e1eaf3; border-color: var(--blue); }
-        .file-upload-btn input { display: none; }
-        
-        .image-preview {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .image-preview img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 2px solid var(--border);
-            cursor: pointer;
-        }
 
         .action-bar {
             display: flex; flex-wrap: wrap; gap: 14px;
@@ -291,7 +249,7 @@
 
 <div class="container">
     <header>
-        <h1>📝 Пробный ЕГЭ 2027</h1>
+        <h1> Пробный ЕГЭ 2027</h1>
         <div class="subtitle">Математика, профильный уровень</div>
         <div class="info-line">
             <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
@@ -325,9 +283,8 @@
             <div class="task-condition">
                 В четырёхугольник \(ABCD\), периметр которого равен 22, вписана окружность, \(AB = 8\). Найдите длину стороны \(CD\).
             </div>
-            <!-- ВСТАВЬТЕ КАРТИНКУ ИЗ ДЕМО: src="img1.png" -->
             <div class="img-placeholder">
-                <img src="img1.png" alt="Рисунок к заданию 1 — четырёхугольник с вписанной окружностью">
+                <img src="img1.png" alt="Рисунок к заданию 1">
             </div>
             <div class="answer-row"><span>Ответ:</span><input class="answer-input part1-input" id="q1" placeholder="Число"></div>
         </div>
@@ -335,11 +292,10 @@
         <div class="task-card">
             <div class="task-label">Задание 2</div>
             <div class="task-condition">
-                На координатной плоскости изображены векторы \(\vec{a}\) и \(\vec{b}\). Найдите скалярное произведение \(\vec{a} \cdot \vec{b}\).
+                Даны векторы \(\vec{a} = (2; 2)\) и \(\vec{b} = (-2; 2)\). Найдите длину вектора \(7\vec{a} + \vec{b}\).
             </div>
-            <!-- ВСТАВЬТЕ КАРТИНКУ ИЗ ДЕМО: src="img2.png" -->
             <div class="img-placeholder">
-                <img src="img2.png" alt="Рисунок к заданию 2 — векторы на координатной плоскости">
+                <img src="img2.png" alt="Рисунок к заданию 2">
             </div>
             <div class="answer-row"><span>Ответ:</span><input class="answer-input part1-input" id="q2"></div>
         </div>
@@ -416,9 +372,8 @@
             <div class="task-condition">
                 На рисунке изображён график \(y = f'(x)\) — производной функции \(f(x)\), определённой на интервале \((-10; 7)\). Найдите количество точек минимума функции \(f(x)\), принадлежащих отрезку \([-2; 6]\).
             </div>
-            <!-- ВСТАВЬТЕ КАРТИНКУ ИЗ ДЕМО: src="img9.png" -->
             <div class="img-placeholder">
-                <img src="img3.png" alt="Рисунок к заданию 9 — график производной">
+                <img src="img3.png" alt="Рисунок к заданию 9">
             </div>
             <div class="answer-row"><span>Ответ:</span><input class="answer-input part1-input" id="q9"></div>
         </div>
@@ -444,9 +399,8 @@
             <div class="task-condition">
                 На рисунке изображён график функции вида \(f(x) = \dfrac{k}{x}\). Найдите значение \(f(10)\).
             </div>
-            <!-- ВСТАВЬТЕ КАРТИНКУ ИЗ ДЕМО: src="img12.png" -->
             <div class="img-placeholder">
-                <img src="img4.png" alt="Рисунок к заданию 12 — график гиперболы">
+                <img src="img4.png" alt="Рисунок к заданию 12">
             </div>
             <div class="answer-row"><span>Ответ:</span><input class="answer-input part1-input" id="q12"></div>
         </div>
@@ -468,7 +422,7 @@
         <div class="section-header">
             <div class="section-num">2</div>
             <div class="section-title">Часть 2 (Задания 14–20)</div>
-            <div class="section-desc">Развёрнутый ответ + фото решения</div>
+            <div class="section-desc">Развёрнутый ответ (текстом)</div>
         </div>
 
         <div class="task-card">
@@ -477,15 +431,7 @@
                 а) Решите уравнение \(\cos 2x + 2\cos(x + \pi) + 1 = 0\).<br>
                 б) Укажите корни этого уравнения, принадлежащие отрезку \(\left[-4\pi; -\dfrac{5\pi}{2}\right]\).
             </div>
-            <textarea class="part2-textarea" id="sol14" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '14')">
-                </label>
-                <span style="font-size: 12px; color: var(--text-sec);">Можно выбрать несколько файлов</span>
-            </div>
-            <div class="image-preview" id="preview14"></div>
+            <textarea class="part2-textarea" id="sol14" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -495,14 +441,7 @@
                 а) Докажите, что прямые \(BC\) и \(MK\) параллельны.<br>
                 б) Найдите объём пирамиды \(MABF\), если \(AB = 12\), а угол между плоскостью \(BMC\) и плоскостью основания пирамиды \(SABCDEF\) равен \(30^\circ\).
             </div>
-            <textarea class="part2-textarea" id="sol15" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '15')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview15"></div>
+            <textarea class="part2-textarea" id="sol15" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -511,14 +450,7 @@
                 Решите неравенство<br>
                 \(\dfrac{\log_2(\log_2 x)}{2\log_2 x + 4} - 3 \leq 0\).
             </div>
-            <textarea class="part2-textarea" id="sol16" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '16')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview16"></div>
+            <textarea class="part2-textarea" id="sol16" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -526,14 +458,7 @@
             <div class="task-condition">
                 На заводе имеется генератор с ЭДС \(\varepsilon = 50\) В и внутренним сопротивлением \(r = 1\) Ом. Инженер подключает к генератору нагрузку, используя реостат, чтобы установить сопротивление нагрузки \(R\) (в омах). Сила тока в цепи (в амперах) определяется законом Ома: \(I = \dfrac{\varepsilon}{r + R}\). Тепловая мощность (в ваттах), выделяемая в нагрузке, может быть рассчитана по формуле Джоуля — Ленца: \(P = I^2 R\). Какова максимальная тепловая мощность \(P\), которая может быть выделена нагрузкой?
             </div>
-            <textarea class="part2-textarea" id="sol17" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '17')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview17"></div>
+            <textarea class="part2-textarea" id="sol17" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -543,14 +468,7 @@
                 а) Докажите, что \(\angle OAC = 45^\circ\).<br>
                 б) Найдите длину отрезка \(BC\), если \(BO = 1\) и \(AC = 6\).
             </div>
-            <textarea class="part2-textarea" id="sol18" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '18')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview18"></div>
+            <textarea class="part2-textarea" id="sol18" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -560,14 +478,7 @@
                 \(\begin{cases} x - y + a = 0, \\ y - x^2 + 4x = 0 \end{cases}\)<br>
                 имеет ровно два различных решения.
             </div>
-            <textarea class="part2-textarea" id="sol19" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '19')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview19"></div>
+            <textarea class="part2-textarea" id="sol19" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
 
         <div class="task-card">
@@ -580,14 +491,7 @@
                 б) Может ли число красных карточек на столе быть на 90 больше числа синих карточек на столе?<br>
                 в) Какое наибольшее количество карточек может лежать на столе?
             </div>
-            <textarea class="part2-textarea" id="sol20" placeholder="Введите текстовое решение (необязательно, можно только фото)..."></textarea>
-            <div class="file-upload-wrapper">
-                <label class="file-upload-btn">
-                    📷 Прикрепить фото решения
-                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event, '20')">
-                </label>
-            </div>
-            <div class="image-preview" id="preview20"></div>
+            <textarea class="part2-textarea" id="sol20" placeholder="Скиньте фото мне в тг с номером задания или введите полное решение..."></textarea>
         </div>
     </section>
 
@@ -597,7 +501,7 @@
     </div>
 
     <div id="resultArea" class="result-area">
-        📌 Заполните все поля. Нажмите «Проверить заполнение», чтобы убедиться, что ничего не пропущено.
+         Заполните все поля. Нажмите «Проверить заполнение», чтобы убедиться, что ничего не пропущено.
     </div>
 
     <div class="footer-note">
@@ -608,7 +512,7 @@
 
 <div class="modal-overlay" id="reportModal">
     <div class="modal-card">
-        <h3>📤 Отправить отчёт</h3>
+        <h3> Отправить отчёт</h3>
         <p>Добавьте комментарий для учителя (необязательно)</p>
         <textarea id="reportComment" rows="4" placeholder="Что вызвало трудности? На каких заданиях застряли?"></textarea>
         <div class="modal-buttons">
@@ -625,8 +529,6 @@
 </script>
 
 <script>
-    const uploadedImages = [];
-
     const params = new URLSearchParams(window.location.search);
     const student = params.get('student') || localStorage.getItem('studentName') || 'Ученик';
     const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
@@ -653,49 +555,11 @@
     function updateProgress() {
         let filled = 0;
         part1Inputs.forEach(i => { if (i.value.trim() !== '') filled++; });
-        ['14', '15', '16', '17', '18', '19', '20'].forEach(id => {
-            const hasText = document.getElementById('sol' + id).value.trim() !== '';
-            const hasImage = uploadedImages.some(img => img.task === id);
-            if (hasText || hasImage) filled++;
-        });
+        part2Textareas.forEach(t => { if (t.value.trim() !== '') filled++; });
         
         const pct = Math.round((filled / 20) * 100);
         progressFill.style.width = pct + '%';
         progressText.textContent = `${filled} / 20`;
-    }
-
-    function handleFileSelect(event, taskId) {
-        const files = event.target.files;
-        const previewContainer = document.getElementById('preview' + taskId);
-        
-        Array.from(files).forEach(file => {
-            if (file.size > 2 * 1024 * 1024) {
-                alert(`Файл ${file.name} слишком большой (макс. 2 МБ). Пожалуйста, сожмите изображение.`);
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64String = e.target.result;
-                uploadedImages.push({ task: taskId, src: base64String, name: file.name });
-                
-                const img = document.createElement('img');
-                img.src = base64String;
-                img.title = file.name;
-                img.onclick = () => {
-                    const idx = uploadedImages.findIndex(i => i.src === base64String);
-                    if (idx !== -1) {
-                        uploadedImages.splice(idx, 1);
-                        img.remove();
-                        updateProgress();
-                    }
-                };
-                previewContainer.appendChild(img);
-                updateProgress();
-            };
-            reader.readAsDataURL(file);
-        });
-        event.target.value = '';
     }
 
     validateBtn.addEventListener('click', () => {
@@ -712,15 +576,13 @@
             }
         });
 
-        ['14', '15', '16', '17', '18', '19', '20'].forEach(id => {
-            const hasText = document.getElementById('sol' + id).value.trim() !== '';
-            const hasImage = uploadedImages.some(img => img.task === id);
-            if (!hasText && !hasImage) {
+        part2Textareas.forEach(t => {
+            if (t.value.trim() === '') {
                 allFilled = false;
-                document.getElementById('sol' + id).closest('.task-card').classList.add('empty-field');
-                emptyFields.push(id);
+                t.closest('.task-card').classList.add('empty-field');
+                emptyFields.push(t.id.replace('sol', ''));
             } else {
-                document.getElementById('sol' + id).closest('.task-card').classList.remove('empty-field');
+                t.closest('.task-card').classList.remove('empty-field');
             }
         });
 
@@ -758,23 +620,11 @@
                 part1Body += `| ${inp.id.replace('q', '')} | ${inp.value.trim() || '—'} |\n`;
             });
 
-            let part2TextBody = '';
-            ['14', '15', '16', '17', '18', '19', '20'].forEach(id => {
-                const text = document.getElementById('sol' + id).value.trim();
+            let part2Body = '';
+            part2Textareas.forEach(t => {
+                const text = t.value.trim();
                 if (text) {
-                    part2TextBody += `\n### Задание ${id}\n\`\`\`\n${text}\n\`\`\`\n`;
-                }
-            });
-
-            let part2ImagesBody = '';
-            const tasksWithImages = ['14', '15', '16', '17', '18', '19', '20'];
-            tasksWithImages.forEach(id => {
-                const imagesForTask = uploadedImages.filter(img => img.task === id);
-                if (imagesForTask.length > 0) {
-                    part2ImagesBody += `\n### 📸 Фото решения: Задание ${id}\n`;
-                    imagesForTask.forEach(img => {
-                        part2ImagesBody += `![${img.name}](${img.src})\n\n`;
-                    });
+                    part2Body += `\n### Задание ${t.id.replace('sol', '')}\n\`\`\`\n${text}\n\`\`\`\n`;
                 }
             });
 
@@ -782,10 +632,8 @@
             let body = `**Ученик:** ${student}\n**Дата:** ${date}\n\n`;
             body += `## 📋 Часть 1 (Краткий ответ)\n${part1Body}\n`;
             
-            if (part2TextBody || part2ImagesBody) {
-                body += `## 📝 Часть 2 (Развёрнутый ответ)\n`;
-                body += part2TextBody;
-                body += part2ImagesBody;
+            if (part2Body) {
+                body += `## 📝 Часть 2 (Развёрнутый ответ)\n${part2Body}`;
             } else {
                 body += `> ⚠️ Ученик не предоставил решений для Части 2.\n`;
             }
