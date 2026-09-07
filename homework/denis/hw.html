@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пробник ЕГЭ 2027 | Профильная математика</title>
+
+    <!-- MathJax для красивых формул -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+        
+        .info-line {
+            font-size: 14px; color: var(--text-secondary); margin-top: 12px;
+            padding: 8px 16px; background: #f8faff; border-radius: 8px; display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags { display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+        .tag {
+            font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 40px;
+            text-transform: uppercase; letter-spacing: 0.5px; background: #dce5f2; color: #1d3a66;
+        }
+
+        .section { margin-bottom: 40px; }
+        .section-header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+            padding-bottom: 10px; border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue); color: white; width: 32px; height: 32px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px; flex-shrink: 0;
+        }
+        .section-title { font-size: 20px; font-weight: 700; color: var(--text-main); }
+        .section-desc { font-size: 14px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+
+        .task-card {
+            background: #fafcff; border-radius: 12px; padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); border: 1px solid #e6edf6;
+            margin-bottom: 20px; transition: transform 0.2s;
+        }
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); }
+
+        .task-label {
+            font-size: 11px; font-weight: 700; color: var(--accent-blue);
+            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;
+        }
+        .task-label.part2 { color: var(--accent-purple); }
+
+        .task-condition { font-size: 17px; margin-bottom: 16px; color: var(--text-main); }
+        .task-note { font-size: 13px; color: var(--text-secondary); display: block; margin-top: 6px; font-style: italic; }
+
+        .answer-row {
+            display: flex; align-items: center; gap: 10px; margin-top: 6px;
+            padding-top: 10px; border-top: 1px solid #eef2f7; font-size: 14px; font-weight: 600; color: var(--text-secondary);
+        }
+        .answer-input {
+            flex: 1; border: none; border-bottom: 2px solid var(--border-light); outline: none;
+            font-size: 16px; font-weight: 600; padding: 4px 6px; background: transparent;
+            color: var(--text-main); transition: border-color 0.2s; font-family: inherit;
+        }
+        .answer-input:focus { border-bottom-color: var(--accent-blue); }
+
+        /* Стили для части 2 (фото и текст) */
+        .part2-input {
+            width: 100%; border: 2px solid var(--border-light); border-radius: 8px;
+            padding: 12px; font-size: 15px; font-family: inherit; resize: vertical;
+            outline: none; transition: border-color 0.2s; margin-bottom: 12px;
+        }
+        .part2-input:focus { border-color: var(--accent-blue); }
+
+        .file-upload-wrapper {
+            position: relative; overflow: hidden; display: inline-block;
+        }
+        .file-upload-btn {
+            border: 2px dashed var(--border-light); color: var(--text-secondary);
+            background: #f8faff; padding: 10px 20px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center;
+        }
+        .file-upload-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: #eef4ff; }
+        .file-upload-wrapper input[type=file] {
+            position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+        }
+
+        .img-preview {
+            max-width: 100%; max-height: 300px; border-radius: 8px; margin-top: 12px;
+            border: 1px solid #eef2f7; display: none; object-fit: contain;
+        }
+
+        .action-bar {
+            display: flex; flex-wrap: wrap; gap: 14px; margin: 30px 0 24px; justify-content: center;
+        }
+        .btn {
+            padding: 12px 32px; border: none; border-radius: 40px; font-size: 15px;
+            font-weight: 600; cursor: pointer; transition: 0.2s; background: var(--accent-blue); color: white;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
+        .btn-outline:hover { background: #f0f4fa; border-color: #a0b4cc; box-shadow: none; }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 25, 45, 0.35); backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; border-radius: 24px; max-width: 500px; width: 100%;
+            padding: 28px 30px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card textarea {
+            width: 100%; padding: 12px 16px; border: 2px solid #dce5ef; border-radius: 12px;
+            font-size: 0.95rem; font-family: inherit; resize: vertical; outline: none; transition: 0.2s;
+        }
+        .modal-card textarea:focus { border-color: var(--accent-blue); }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .modal-buttons .btn { flex: 1; }
+        #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; text-align: center; }
+
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; border-radius: 18px; }
+            h1 { font-size: 22px; }
+            .task-condition { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📝 Пробник ЕГЭ 2027</h1>
+            <div class="subtitle">Профильная математика · Демонстрационный вариант</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName">Загрузка...</span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span>
+            </div>
+            <div class="tags">
+                <span class="tag">19 заданий</span>
+                <span class="tag">⏱ 235 минут</span>
+                <span class="tag">Профильный уровень</span>
+            </div>
+        </header>
+
+        <!-- ЧАСТЬ 1: КРАТКИЙ ОТВЕТ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Задания с кратким ответом</div>
+                <div class="section-desc">Впишите число или десятичную дробь</div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 1 · Планиметрия</div>
+                <div class="task-condition">В четырёхугольник \(ABCD\), периметр которого равен 22, вписана окружность, \(AB = 8\). Найдите длину стороны \(CD\).</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t1" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 2 · Векторы</div>
+                <div class="task-condition">Даны векторы \(\vec{a}(5; 3)\) и \(\vec{b}(-4; 6)\). Найдите скалярное произведение \(\vec{a} \cdot \vec{b}\).</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t2" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 3 · Стереометрия</div>
+                <div class="task-condition">Через среднюю линию основания треугольной призмы проведена плоскость, параллельная боковому ребру. Площадь боковой поверхности отсечённой треугольной призмы равна 18. Найдите площадь боковой поверхности исходной призмы.</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t3" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 4 · Теория вероятностей</div>
+                <div class="task-condition">В сборнике билетов по химии всего 80 билетов, в 56 из них встречается вопрос по теме «Углеводороды». Найдите вероятность того, что в случайно выбранном билете школьнику <strong>не</strong> достанется вопрос по этой теме.</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t4" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 5 · Теория вероятностей</div>
+                <div class="task-condition">Стрелок стреляет по одному разу в каждую из четырёх мишеней. Вероятность попадания при каждом выстреле равна 0,9. Найдите вероятность того, что стрелок попадёт в две первые мишени и не попадёт в две последние.</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t5" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 6 · Уравнения</div>
+                <div class="task-condition">Найдите корень уравнения: \[ 4^{x-4} = 64 \]</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t6" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 7 · Вычисления</div>
+                <div class="task-condition">Найдите значение выражения: \[ \frac{3\sin 164^\circ}{\sin 82^\circ \cdot \sin 8^\circ} \]</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t7" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 8 · Производная</div>
+                <div class="task-condition">На рисунке изображён график \(y = f'(x)\) — производной функции \(f(x)\), определённой на интервале \((-10; 7)\). Найдите количество точек минимума функции \(f(x)\), принадлежащих отрезку \([-2; 6]\). <span class="task-note">(См. оригинал демоверсии для графика)</span></div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t8" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 9 · Прикладная задача</div>
+                <div class="task-condition">Автомобиль, движущийся со скоростью \(v_0 = 15\) м/с, начал торможение с постоянным ускорением \(a = 2\) м/с². За \(t\) секунд он прошёл путь \(S = v_0 t - \frac{at^2}{2}\). Определите время, если известно, что за это время автомобиль проехал 36 метров.</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t9" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 10 · Текстовая задача</div>
+                <div class="task-condition">Два велосипедиста отправились в 90-километровый пробег. Первый ехал со скоростью, на 5 км/ч большей, чем скорость второго, и прибыл к финишу на 3 часа раньше. Найдите скорость велосипедиста, пришедшего к финишу первым.</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t10" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 11 · Графики функций</div>
+                <div class="task-condition">На рисунке изображён график функции вида \(f(x) = \frac{k}{x}\), проходящий через точку \((5; 1)\). Найдите значение \(f(10)\).</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t11" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 12 · Графики функций</div>
+                <div class="task-condition">На рисунке изображены графики функций \(f(x) = ax^2+bx+c\) и \(g(x) = kx\), пересекающиеся в точках A и B. Найдите абсциссу точки B. <span class="task-note">(См. оригинал демоверсии для графика)</span></div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t12" placeholder="Ваш ответ"></div>
+            </div>
+
+            <div class="task-card">
+                <div class="task-label">Задание 13 · Финансовая математика</div>
+                <div class="task-condition">В июле 2030 года планируется взять кредит 182 000 рублей в банке на три года. Каждый январь долг увеличивается на 20%. Кредит будет полностью погашен тремя равными платежами. Сколько рублей составит общая сумма платежей после полного погашения кредита?</div>
+                <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t13" placeholder="Ваш ответ"></div>
+            </div>
+        </div>
+
+        <!-- ЧАСТЬ 2: РАЗВЁРНУТЫЙ ОТВЕТ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <div class="section-title">Задания с развёрнутым ответом</div>
+                <div class="section-desc">Впишите решение или прикрепите фото</div>
+            </div>
+
+            <!-- Генерация заданий 14-19 -->
+            <div id="part2-container"></div>
+        </div>
+
+        <!-- КНОПКИ -->
+        <div class="action-bar">
+            <button class="btn" id="submitBtn">📤 Сформировать и отправить отчёт</button>
+            <button class="btn btn-outline" id="resetBtn">🔄 Очистить всё</button>
+        </div>
+
+        <div class="footer-note" style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-top: 30px; padding-top: 16px; border-top: 2px solid #eef2f7;">
+            📌 Все данные будут отправлены преподавателю через GitHub. Убедитесь, что фото чёткие и читаемые.
+        </div>
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправка отчёта</h3>
+            <p>Есть вопросы или комментарии к работе? Напишите их здесь:</p>
+            <textarea id="reportComment" rows="4" placeholder="Например: 'В 15 задании не уверен в ОДЗ...'"></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить в GitHub</button>
+                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        (function () {
+            // Данные заданий части 2 для генерации HTML
+            const part2Tasks = [
+                { id: 14, title: "Уравнение", text: "а) Решите уравнение: \\[ \\cos 2x + 2\\cos x + 1 = 0 \\] б) Укажите корни, принадлежащие отрезку \\( \\left[-\\frac{5\\pi}{2}; -2\\pi\\right] \\)." },
+                { id: 15, title: "Неравенство", text: "Решите неравенство: \\[ \\log_2(\\log_2(4x^2 - 2x + 4)) \\le 2 \\] <span class='task-note'>(Текст может незначительно отличаться от оригинала демоверсии из-за распознавания)</span>" },
+                { id: 16, title: "Планиметрия", text: "Окружность с центром O касается боковых сторон AB и BC равнобедренного остроугольного треугольника ABC и его высоты CH. а) Докажите, что \\( \\angle OAC = 45^\\circ \\). б) Найдите длину отрезка BC, если BO = 1 и AC = 6." },
+                { id: 17, title: "Стереометрия / Оптимизация", text: "На заводе имеется генератор с ЭДС \\( \\varepsilon = 50 \\) В и внутренним сопротивлением \\( r = 1 \\) Ом. Нагрузка подключается через реостат R. Сила тока \\( I = \\frac{\\varepsilon}{r + R} \\). Мощность \\( P = I^2 R \\). Какова максимальная тепловая мощность P, которая может быть выделена нагрузкой?" },
+                { id: 18, title: "Параметр", text: "Найдите все значения \\( a \\), при каждом из которых система уравнений \\[ \\begin{cases} x - y + a = 0 \\\\ y - x^2 + 2x - 4 = 0 \\end{cases} \\] имеет ровно два различных решения." },
+                { id: 19, title: "Теория чисел", text: "На столе лежит некоторое количество карточек (синие и красные). На синих написаны различные числа, делящиеся на 5, на красных — различные чётные числа. Все числа > -120. Наибольшее число на красной карточке равно удвоенному количеству синих карточек, а наибольшее на синей равно количеству красных. а) Может ли быть ровно 6 карточек? б) Может ли красных быть на 90 больше, чем синих? в) Какое наибольшее количество карточек может быть на столе?" }
+            ];
+
+            // Генерация HTML для части 2
+            const part2Container = document.getElementById('part2-container');
+            part2Tasks.forEach(task => {
+                const div = document.createElement('div');
+                div.className = 'task-card';
+                div.innerHTML = `
+                    <div class="task-label part2">Задание ${task.id} · ${task.title}</div>
+                    <div class="task-condition">${task.text}</div>
+                    <textarea class="part2-input" id="t${task.id}_text" rows="4" placeholder="Введите текстовое решение (если удобно)..."></textarea>
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload-btn">
+                            📷 Прикрепить фото решения
+                            <input type="file" id="t${task.id}_file" accept="image/*" data-task="${task.id}">
+                        </label>
+                    </div>
+                    <img id="t${task.id}_preview" class="img-preview" alt="Предпросмотр фото">
+                `;
+                part2Container.appendChild(div);
+            });
+
+            // Обработка предпросмотра фото и сжатия
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const taskId = this.dataset.task;
+                    const preview = document.getElementById(`t${taskId}_preview`);
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            // Сжатие изображения для экономии места в GitHub Issue
+                            const canvas = document.createElement('canvas');
+                            const MAX_WIDTH = 800;
+                            const scaleSize = MAX_WIDTH / img.width;
+                            canvas.width = MAX_WIDTH;
+                            canvas.height = img.height * scaleSize;
+                            
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            
+                            // Сохраняем сжатое Base64 в data-атрибут для последующей отправки
+                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                            preview.src = compressedBase64;
+                            preview.style.display = 'block';
+                            preview.dataset.base64 = compressedBase64;
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            // Данные ученика
+            const params = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+            document.getElementById('studentName').textContent = student;
+            document.getElementById('lessonDate').textContent = date;
+
+            // Модальное окно
+            const reportModal = document.getElementById('reportModal');
+            const submitBtn = document.getElementById('submitBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const sendReportBtn = document.getElementById('sendReportBtn');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const reportComment = document.getElementById('reportComment');
+            const modalStatus = document.getElementById('modalStatus');
+
+            submitBtn.addEventListener('click', () => {
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', (e) => { if (e.target === reportModal) reportModal.classList.remove('active'); });
+
+            // Сбор данных и отправка
+            sendReportBtn.addEventListener('click', async function () {
+                const comment = reportComment.value.trim();
+                
+                let reportBody = `**Ученик:** ${student}\n**Дата:** ${date}\n**Работа:** Пробник ЕГЭ 2027 (Профиль)\n\n`;
+                if (comment) {
+                    reportBody += `💬 **Комментарий ученика:**\n${comment}\n\n`;
+                }
+                reportBody += `---\n### 📝 Ответы и решения:\n\n`;
+
+                // Часть 1
+                reportBody += `**Задания с кратким ответом:**\n`;
+                for (let i = 1; i <= 13; i++) {
+                    const val = document.getElementById(`t${i}`).value.trim() || '_пусто_';
+                    reportBody += `- **Задание ${i}:** ${val}\n`;
+                }
+                reportBody += `\n---\n**Задания с развёрнутым ответом:**\n\n`;
+
+                // Часть 2
+                for (let i = 14; i <= 19; i++) {
+                    const textSol = document.getElementById(`t${i}_text`).value.trim();
+                    const previewImg = document.getElementById(`t${i}_preview`);
+                    const hasImage = previewImg && previewImg.dataset.base64;
+                    
+                    reportBody += `### Задание ${i}\n`;
+                    if (textSol) {
+                        reportBody += `**Текстовое решение:**\n${textSol}\n\n`;
+                    }
+                    if (hasImage) {
+                        // GitHub поддерживает Base64 изображения в Markdown!
+                        reportBody += `**Фото решения:**\n![Решение задания ${i}](${previewImg.dataset.base64})\n\n`;
+                    }
+                    if (!textSol && !hasImage) {
+                        reportBody += `_Решение не предоставлено_\n\n`;
+                    }
+                }
+
+                const title = `Пробник ЕГЭ 2027: ${student} (${date})`;
+                
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳ Отправка...';
+                modalStatus.textContent = 'Преобразуем фото и отправляем в GitHub...';
+                modalStatus.style.color = '#4a627a';
+
+                try {
+                    // Вызываем функцию из config.js или используем заглушку
+                    const issueUrl = await (typeof createGitHubIssue === 'function' 
+                        ? createGitHubIssue(title, reportBody) 
+                        : mockGitHubIssue(title, reportBody));
+                    
+                    modalStatus.innerHTML = `✅ Отчёт успешно отправлен!<br><a href="${issueUrl}" target="_blank" style="color: #1d6f9c; font-weight: 600;">Посмотреть Issue в GitHub</a>`;
+                    modalStatus.style.color = '#1a8a5a';
+                    
+                    setTimeout(() => {
+                        reportModal.classList.remove('active');
+                    }, 4000);
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка отправки: ${error.message}`;
+                    modalStatus.style.color = '#c0392b';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = '📤 Сформировать и отправить отчёт';
+                }
+            });
+
+            // Очистка
+            resetBtn.addEventListener('click', () => {
+                if(confirm('Вы уверены, что хотите очистить все поля?')) {
+                    document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = '');
+                    document.querySelectorAll('input[type="file"]').forEach(el => el.value = '');
+                    document.querySelectorAll('.img-preview').forEach(el => {
+                        el.style.display = 'none';
+                        el.dataset.base64 = '';
+                    });
+                }
+            });
+
+            // Заглушка для тестирования, если config.js не подключен
+            async function mockGitHubIssue(title, body) {
+                console.log('=== ИМИТАЦИЯ ОТПРАВКИ В GITHUB ===');
+                console.log('Title:', title);
+                console.log('Body:', body);
+                await new Promise(r => setTimeout(r, 1500)); // Имитация задержки сети
+                return 'https://github.com/your-username/homework-repo/issues/new (тестовая ссылка)';
+            }
+
+        })();
+    </script>
+</body>
+</html>
