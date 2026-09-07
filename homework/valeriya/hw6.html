@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Домашнее задание | Алгебра + Геометрия</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .info-line {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #f8faff;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dce5f2;
+            color: #1d3a66;
+        }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+        .tag.purple { background: #e8dff5; color: #7c3aed; }
+
+        .progress-wrap {
+            background: #f4f8fd;
+            border: 1px solid #e2ebf5;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 32px;
+        }
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e3ecf5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .section {
+            margin-bottom: 38px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .section-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-left: auto;
+            font-style: italic;
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 18px;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 18px 20px 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .task-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .task-label.orange { color: #d48a3a; }
+        .task-label.purple { color: #7c3aed; }
+        .task-label.green { color: var(--accent-green); }
+        .task-label.red { color: var(--accent-red); }
+
+        .task-condition {
+            font-size: 17px;
+            margin-bottom: 14px;
+            padding: 4px 0;
+            color: var(--text-main);
+            flex: 1;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            line-height: 1.6;
+            flex-wrap: wrap;
+        }
+        .task-condition .format-hint {
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: #f0f4fa;
+            padding: 2px 12px;
+            border-radius: 20px;
+            margin-left: 8px;
+            font-weight: 400;
+            font-family: monospace;
+        }
+        .task-condition .format-hint.orange-bg { background: #fee2d6; color: #b85a3a; }
+        .task-condition .format-hint.green-bg { background: #d5f2e3; color: #1a6a4a; }
+        .task-condition .format-hint.purple-bg { background: #e8dff5; color: #5a2a9a; }
+
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+            padding-top: 10px;
+            border-top: 1px solid #eef2f7;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .answer-input {
+            flex: 1;
+            border: none;
+            border-bottom: 2px solid var(--border-light);
+            outline: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 6px;
+            background: transparent;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+            min-width: 60px;
+            font-family: inherit;
+        }
+        .answer-input:focus {
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .test-options {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .test-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .test-options label:hover {
+            background: #eef3fa;
+        }
+        .test-options input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent-blue);
+        }
+
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 20px 0 24px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            background: var(--accent-blue);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3);
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-success {
+            background: var(--accent-green);
+        }
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(26, 138, 90, 0.3);
+        }
+        .btn-danger {
+            background: var(--accent-red);
+        }
+        .btn-danger:hover {
+            box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+        }
+        .btn-outline {
+            background: none;
+            border: 2px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            background: #f0f4fa;
+            border-color: #a0b4cc;
+            box-shadow: none;
+        }
+
+        .result-area {
+            background: #f0f9ff;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            border: 1px solid #bfdbfe;
+            min-height: 80px;
+        }
+        .result-area .big-score {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .result-area ul {
+            margin: 10px 0 0 20px;
+        }
+        .result-area li {
+            margin-bottom: 4px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% {
+                opacity: 0;
+                transform: translateY(16px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-card h3 {
+            font-size: 1.3rem;
+            color: #0b2a44;
+            margin-bottom: 10px;
+        }
+        .modal-card p {
+            color: #4a627a;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .modal-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #dce5ef;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-card textarea:focus {
+            border-color: #3b82f6;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .modal-buttons .btn {
+            flex: 1;
+        }
+        #modalStatus {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4a627a;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+            .task-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .section-desc {
+                margin-left: 0;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .task-condition {
+                font-size: 15px;
+            }
+            .action-bar .btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+            .test-options {
+                gap: 10px;
+            }
+            .test-options label {
+                font-size: 14px;
+                padding: 2px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>🏠 Домашнее задание</h1>
+            <div class="subtitle">Алгебра + Геометрия · 6 класс</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span> &nbsp;|&nbsp;
+                <strong>Тема:</strong> <span id="lessonTopic"></span>
+            </div>
+            <div class="tags">
+                <span class="tag">38 заданий</span>
+                <span class="tag orange">⏱ 45–60 минут</span>
+                <span class="tag green">Алгебра</span>
+                <span class="tag purple">Геометрия</span>
+            </div>
+        </header>
+
+        <!-- Прогресс -->
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span>📈 Прогресс выполнения</span>
+                <span id="progressText">Заполнено: 0 / 38</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <!-- ===== АЛГЕБРА: Множества ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">А1</div>
+                <div class="section-title">К какому множеству относится число?</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label">Множества</div>
+                    <div class="task-condition">\(-25\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q1"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Множества</div>
+                    <div class="task-condition">\(12\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q2"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Множества</div>
+                    <div class="task-condition">\(\frac{5}{9}\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Множества</div>
+                    <div class="task-condition">\(-1\) — это ... <span class="format-hint purple-bg">напиши: N / Z / Q</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== АЛГЕБРА: Верно ли? ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">А2</div>
+                <div class="section-title">Верно ли утверждение?</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label orange">И / Л</div>
+                    <div class="task-condition">Любое натуральное число является целым. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q5"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">И / Л</div>
+                    <div class="task-condition">Любое целое число является натуральным. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q6"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">И / Л</div>
+                    <div class="task-condition">Любое рациональное число является целым. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q7"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">И / Л</div>
+                    <div class="task-condition">Число \(-3\) является рациональным. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q8"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== АЛГЕБРА: Приведи пример ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">А3</div>
+                <div class="section-title">Приведи пример</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label purple">Пример</div>
+                    <div class="task-condition">Напиши любое натуральное число</div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q9"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Пример</div>
+                    <div class="task-condition">Напиши любое целое отрицательное число</div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q10"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Пример</div>
+                    <div class="task-condition">Напиши любое рациональное число, которое не является целым</div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q11"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Пример</div>
+                    <div class="task-condition">Напиши число, которое одновременно целое и рациональное</div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q12"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== АЛГЕБРА: Сравнение ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">А4</div>
+                <div class="section-title">Сравнение чисел</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label green">Сравни</div>
+                    <div class="task-condition">\(-10\) и \(-6\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q13"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Сравни</div>
+                    <div class="task-condition">\(0\) и \(-5\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q14"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Сравни</div>
+                    <div class="task-condition">\(\frac{2}{3}\) и \(\frac{3}{4}\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q15"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Сравни</div>
+                    <div class="task-condition">\(-2\) и \(-2\) <span class="format-hint green-bg">напиши: &lt; / &gt; / =</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q16"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== АЛГЕБРА: Модуль ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">А5</div>
+                <div class="section-title">Модуль числа</div>
+                <div class="section-desc">4 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label red">Модуль</div>
+                    <div class="task-condition">\(|a| = 8\). Чему равен \(a\)? <span class="format-hint">напиши два корня через ;</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q17"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label red">Модуль</div>
+                    <div class="task-condition">\(|x - 4| = 6\). Чему равен \(x\)? <span class="format-hint">напиши два корня через ;</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q18"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label red">Модуль</div>
+                    <div class="task-condition">\(|3x| = 15\). Чему равен \(x\)? <span class="format-hint">напиши два корня через ;</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q19"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label red">Модуль</div>
+                    <div class="task-condition">\(|a + 3| = 7\). Чему равен \(a\)? <span class="format-hint">напиши два корня через ;</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q20"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ГЕОМЕТРИЯ ==================== -->
+
+        <!-- ===== ГЕОМЕТРИЯ: Тест ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">Г1</div>
+                <div class="section-title">Тест. Выбери правильный ответ (может быть несколько)</div>
+                <div class="section-desc">6 заданий</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Что не имеет ни начала, ни конца?</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test1" value="A"> Отрезок</label>
+                        <label><input type="radio" name="test1" value="B"> Прямая</label>
+                        <label><input type="radio" name="test1" value="C"> Луч</label>
+                        <label><input type="radio" name="test1" value="D"> Ломаная</label>
+                    </div>
+                    <input type="hidden" id="q21" value="">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Что имеет начало, но не имеет конца?</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test2" value="A"> Отрезок</label>
+                        <label><input type="radio" name="test2" value="B"> Прямая</label>
+                        <label><input type="radio" name="test2" value="C"> Луч</label>
+                        <label><input type="radio" name="test2" value="D"> Угол</label>
+                    </div>
+                    <input type="hidden" id="q22" value="">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Сколько прямых можно провести через две точки?</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test3" value="A"> Ни одной</label>
+                        <label><input type="radio" name="test3" value="B"> Одну</label>
+                        <label><input type="radio" name="test3" value="C"> Две</label>
+                        <label><input type="radio" name="test3" value="D"> Бесконечно много</label>
+                    </div>
+                    <input type="hidden" id="q23" value="">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Как называется угол, стороны которого лежат на одной прямой?</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test4" value="A"> Острый</label>
+                        <label><input type="radio" name="test4" value="B"> Тупой</label>
+                        <label><input type="radio" name="test4" value="C"> Прямой</label>
+                        <label><input type="radio" name="test4" value="D"> Развёрнутый</label>
+                    </div>
+                    <input type="hidden" id="q24" value="">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Как можно обозначить угол с вершиной \(O\) и сторонами \(OA\) и \(OB\)?</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test5" value="A"> \(\angle OAB\)</label>
+                        <label><input type="radio" name="test5" value="B"> \(\angle AOB\)</label>
+                        <label><input type="radio" name="test5" value="C"> \(\angle ABO\)</label>
+                        <label><input type="radio" name="test5" value="D"> \(\angle BOA\)</label>
+                    </div>
+                    <input type="hidden" id="q25" value="">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label">Тест</div>
+                    <div class="task-condition">Ломаная, у которой концы совпадают, называется...</div>
+                    <div class="test-options">
+                        <label><input type="radio" name="test6" value="A"> Открытой</label>
+                        <label><input type="radio" name="test6" value="B"> Замкнутой</label>
+                        <label><input type="radio" name="test6" value="C"> Прямой</label>
+                        <label><input type="radio" name="test6" value="D"> Кривой</label>
+                    </div>
+                    <input type="hidden" id="q26" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ГЕОМЕТРИЯ: Задания с вводом ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">Г2</div>
+                <div class="section-title">Задания с кратким ответом</div>
+                <div class="section-desc">6 заданий</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label orange">Впиши</div>
+                    <div class="task-condition">Часть прямой, ограниченная двумя точками, называется ... <span class="format-hint orange-bg">напиши слово</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q27"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Впиши</div>
+                    <div class="task-condition">Общее начало двух лучей, образующих угол, называется ... <span class="format-hint orange-bg">напиши слово</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q28"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Впиши</div>
+                    <div class="task-condition">Сколько градусов содержит развёрнутый угол? <span class="format-hint orange-bg">напиши число</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q29"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Луч</div>
+                    <div class="task-condition">Луч \(OK\) — начало луча находится в точке ... <span class="format-hint purple-bg">напиши букву</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q30"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Ломаная</div>
+                    <div class="task-condition">Отрезки, из которых состоит ломаная, называются ... <span class="format-hint purple-bg">напиши слово</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q31"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Угол</div>
+                    <div class="task-condition">Если луч \(OC\) делит угол \(AOB\), то \(\angle AOC + \angle COB = \angle ...\) <span class="format-hint purple-bg">напиши три буквы</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q32"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ГЕОМЕТРИЯ: Верно / Неверно ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">Г3</div>
+                <div class="section-title">Верно или неверно?</div>
+                <div class="section-desc">6 заданий</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">Через любые две точки можно провести две прямые. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q33"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">У прямой есть начало и конец. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q34"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">Луч имеет начало, но не имеет конца. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q35"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">Развёрнутый угол равен 90°. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q36"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">Соседние отрезки ломаной могут лежать на одной прямой. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q37"></div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label red">И / Л</div>
+                    <div class="task-condition">Две прямые либо пересекаются, либо не пересекаются. <span class="format-hint orange-bg">напиши: И / Л</span></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q38"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- КНОПКИ -->
+        <div class="action-bar">
+            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт преподавателю</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+        </div>
+
+        <div id="resultArea" class="result-area">
+            📌 Заполните все поля и нажмите «Отправить отчёт преподавателю».
+        </div>
+
+        <div class="footer-note">
+            <span>📌 Алгебра + Геометрия · 6 класс</span>
+            <span class="tag">38 заданий</span>
+        </div>
+
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправить отчёт преподавателю</h3>
+            <p>Напишите, что было сложно, или задайте вопрос.</p>
+            <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
+                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+
+            // ============================================================
+            //  ПРАВИЛЬНЫЕ ОТВЕТЫ
+            // ============================================================
+            const answers = {
+                // Алгебра
+                q1: "Z",
+                q2: "N",
+                q3: "Q",
+                q4: "Z",
+                q5: "И",
+                q6: "Л",
+                q7: "Л",
+                q8: "И",
+                q9: "1",
+                q10: "-1",
+                q11: "1/2",
+                q12: "3",
+                q13: "<",
+                q14: ">",
+                q15: "<",
+                q16: "=",
+                q17: "8; -8",
+                q18: "10; -2",
+                q19: "5; -5",
+                q20: "4; -10",
+                // Геометрия — тест (несколько правильных вариантов!)
+                q21: "B",
+                q22: "C",
+                q23: "B",
+                q24: "D",
+                q25: "B;D",  // два правильных варианта: ∠AOB и ∠BOA
+                q26: "B",
+                // Геометрия — ввод
+                q27: "отрезок",
+                q28: "вершина",
+                q29: "180",
+                q30: "O",
+                q31: "звенья",
+                q32: "AOB",
+                // Геометрия — И/Л
+                q33: "Л",
+                q34: "Л",
+                q35: "И",
+                q36: "Л",
+                q37: "Л",
+                q38: "И"
+            };
+
+            // Радио-группы
+            const radioGroups = [
+                { name: 'test1', id: 'q21' },
+                { name: 'test2', id: 'q22' },
+                { name: 'test3', id: 'q23' },
+                { name: 'test4', id: 'q24' },
+                { name: 'test5', id: 'q25' },
+                { name: 'test6', id: 'q26' }
+            ];
+
+            const answerInputs = document.querySelectorAll('.answer-input');
+            const resetBtn = document.getElementById('resetBtn');
+            const reportBtn = document.getElementById('reportBtn');
+            const resultArea = document.getElementById('resultArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+
+            const reportModal = document.getElementById('reportModal');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const sendReportBtn = document.getElementById('sendReportBtn');
+            const reportComment = document.getElementById('reportComment');
+            const modalStatus = document.getElementById('modalStatus');
+
+            // Информация об ученике
+            const params = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+            const topic = params.get('topic') || 'Алгебра + Геометрия';
+
+            document.getElementById('studentName').textContent = student;
+            document.getElementById('lessonDate').textContent = date;
+            document.getElementById('lessonTopic').textContent = topic;
+
+            // ============================================================
+            //  РАДИО
+            // ============================================================
+            function getRadioValue(name) {
+                const el = document.querySelector(`input[name="${name}"]:checked`);
+                return el ? el.value : '';
+            }
+
+            function setRadioHidden() {
+                radioGroups.forEach(group => {
+                    document.getElementById(group.id).value = getRadioValue(group.name);
+                });
+            }
+
+            radioGroups.forEach(group => {
+                document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        document.getElementById(group.id).value = this.value;
+                        updateProgress();
+                    });
+                });
+            });
+
+            // ============================================================
+            //  НОРМАЛИЗАЦИЯ
+            // ============================================================
+            function normalize(str) {
+                return str.trim().replace(/\s/g, '').toLowerCase();
+            }
+
+            function parseMultiple(str) {
+                let s = str.trim().replace(/\s+/g, ' ');
+                if (s === "") return [];
+                return s.split(/[,;]\s*/).map(p => p.trim()).filter(p => p !== "");
+            }
+
+            function isAnswerCorrect(id, userVal) {
+                const right = answers[id];
+                if (!right) return false;
+
+                // Для примеров (q9-q12) — лишь бы не пусто
+                if (['q9','q10','q11','q12'].includes(id)) {
+                    return userVal.trim() !== '';
+                }
+
+                // Для радио
+                if (['q21','q22','q23','q24','q25','q26'].includes(id)) {
+                    // Для q25 (угол) — два правильных варианта: B или D
+                    if (id === 'q25') {
+                        const valid = ['B', 'D'];
+                        return valid.includes(userVal);
+                    }
+                    return userVal === right;
+                }
+
+                // Для модуля (с ;)
+                if (right.includes(';') || right.includes(',')) {
+                    let uParts = parseMultiple(userVal);
+                    let rParts = parseMultiple(right);
+                    if (uParts.length !== rParts.length) return false;
+                    let uStr = uParts.map(normalize).sort();
+                    let rStr = rParts.map(normalize).sort();
+                    return uStr.every((v, i) => v === rStr[i]);
+                }
+
+                return normalize(userVal) === normalize(right);
+            }
+
+            // ============================================================
+            //  ПРОГРЕСС
+            // ============================================================
+            function updateProgress() {
+                let filled = 0;
+                const allInputs = [];
+
+                radioGroups.forEach(group => {
+                    const hidden = document.getElementById(group.id);
+                    if (hidden) allInputs.push(hidden);
+                });
+                answerInputs.forEach(inp => allInputs.push(inp));
+
+                allInputs.forEach(el => {
+                    if (el.value && el.value.trim() !== '') filled++;
+                });
+
+                const total = allInputs.length;
+                const pct = Math.round((filled / total) * 100);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = `Заполнено: ${filled} / ${total}`;
+            }
+
+            // ============================================================
+            //  СБРОС
+            // ============================================================
+            function resetAll() {
+                radioGroups.forEach(group => {
+                    const checked = document.querySelector(`input[name="${group.name}"]:checked`);
+                    if (checked) checked.checked = false;
+                    document.getElementById(group.id).value = '';
+                });
+                answerInputs.forEach(input => input.value = '');
+                resultArea.innerHTML = '🧹 Поля очищены. Заполните задания и отправьте отчёт.';
+                progressFill.style.width = '0%';
+                const total = radioGroups.length + answerInputs.length;
+                progressText.textContent = `Заполнено: 0 / ${total}`;
+            }
+
+            // ============================================================
+            //  МОДАЛКА
+            // ============================================================
+            reportBtn.addEventListener('click', function() {
+                setRadioHidden();
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            });
+
+            // ============================================================
+            //  ОТПРАВКА
+            // ============================================================
+            sendReportBtn.addEventListener('click', async function() {
+                setRadioHidden();
+
+                const comment = reportComment.value.trim();
+                if (!comment) {
+                    modalStatus.textContent = '⚠️ Напишите комментарий.';
+                    modalStatus.style.color = '#dc2626';
+                    return;
+                }
+
+                let answersText = '';
+                let correct = 0;
+                let total = 0;
+                let mistakes = [];
+                const allIds = Object.keys(answers);
+
+                for (let id of allIds) {
+                    let userAnswer = '';
+                    if (['q21','q22','q23','q24','q25','q26'].includes(id)) {
+                        const hidden = document.getElementById(id);
+                        userAnswer = hidden ? hidden.value || '(не выбрано)' : '(не выбрано)';
+                    } else {
+                        const input = document.getElementById(id);
+                        userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
+                    }
+
+                    const right = answers[id];
+                    const isCorrect = isAnswerCorrect(id, userAnswer);
+
+                    total++;
+                    if (isCorrect) correct++;
+                    else {
+                        let cond = id;
+                        const input = document.getElementById(id);
+                        const card = input?.closest('.task-card');
+                        if (card) {
+                            const textEl = card.querySelector('.task-condition');
+                            if (textEl) cond = textEl.textContent.trim().replace(/\s+/g, ' ').substring(0, 50) + '...';
+                        }
+                        mistakes.push(`❌ ${cond} → ваш ответ: ${userAnswer}`);
+                    }
+                    answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
+                }
+
+                const percent = Math.round((correct / total) * 100);
+
+                let resultHtml = `<div class="big-score">📊 Результат: ${correct} из ${total} (${percent}%)</div>`;
+                if (mistakes.length === 0) {
+                    resultHtml += '🎉 Отлично! Все задания выполнены верно!';
+                } else {
+                    resultHtml += '<div>⚠️ Ошибки:</div><ul>' + mistakes.map(m => `<li>${m}</li>`).join('') + '</ul>';
+                }
+                resultArea.innerHTML = resultHtml;
+
+                const title = `Домашнее задание: ${student} — ${topic} (${date})`;
+                const body =
+                    `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** ${topic}\n\n` +
+                    `**Результат:** ${correct} из ${total} (${percent}%)\n\n` +
+                    `**Результаты:**\n\`\`\`\n${answersText}\`\`\`\n\n**Комментарий:**\n${comment}`;
+
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳ Отправка...';
+                modalStatus.textContent = '';
+
+                try {
+                    if (typeof createGitHubIssue === 'function') {
+                        const url = await createGitHubIssue(title, body);
+                        modalStatus.innerHTML = `✅ Отправлено! <a href="${url}" target="_blank">Ссылка</a>`;
+                        modalStatus.style.color = '#16a34a';
+                    } else {
+                        console.log('📤', title, '\n', body);
+                        modalStatus.textContent = '✅ Отчёт отправлен (демо)';
+                        modalStatus.style.color = '#16a34a';
+                    }
+                    setTimeout(() => reportModal.classList.remove('active'), 3000);
+                } catch (e) {
+                    modalStatus.textContent = `❌ Ошибка: ${e.message}`;
+                    modalStatus.style.color = '#dc2626';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = '✅ Отправить';
+                }
+            });
+
+            // ============================================================
+            //  СОБЫТИЯ
+            // ============================================================
+            resetBtn.addEventListener('click', resetAll);
+            answerInputs.forEach(input => input.addEventListener('input', updateProgress));
+
+            updateProgress();
+
+        })();
+    </script>
+
+</body>
+</html>
