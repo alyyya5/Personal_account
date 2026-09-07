@@ -7,14 +7,14 @@
     },
     {
         "name": "",
-        "score": 72,
+        "score": null,
         "max": 100,
-        "description": "Логарифмы, свойства логарифмов"
+        "description": ""
     },
     {
         "name": "",
         "score": null,
         "max": 100,
-        "description": "Тригонометрия"
+        "description": ""
     }
 ]
