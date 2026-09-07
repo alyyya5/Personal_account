@@ -93,7 +93,7 @@
             60%, 100% { transform: rotate(0deg); }
         }
 
-        /* ---------- ОГНЕННЫЙ СЧЁТЧИК (исправленный) ---------- */
+        /* ---------- ОГНЕННЫЙ СЧЁТЧИК ---------- */
         .streak-container {
             display: inline-flex;
             align-items: center;
@@ -459,7 +459,7 @@
                     <div class="progress-stats" id="progressStats"></div>
                     <div class="charts-container" id="chartsContainer"></div>
                     <div class="tests-table-wrapper" id="testsTableWrapper">
-                        <h3 id="testsTableTitle">📋 Результаты контрольных точек</h3>
+                        <h3 id="testsTableTitle">📋 Результаты контрольных точек и ДЗ</h3>
                         <div id="testsTableContainer"></div>
                     </div>
                 </div>
@@ -513,7 +513,7 @@
         }
 
         // ============================================================
-        //  🔥  ОГНЕННЫЙ СЧЁТЧИК (ПРАВИЛЬНАЯ ЛОГИКА)
+        //  🔥  ОГНЕННЫЙ СЧЁТЧИК
         // ============================================================
         function calculateStreak() {
             const today = new Date();
@@ -662,7 +662,7 @@
         }
 
         // ============================================================
-        //  СТРАНИЦА ПРОГРЕССА
+        //  СТРАНИЦА ПРОГРЕССА (объединение ДЗ и контрольных точек)
         // ============================================================
         async function renderProgressPage() {
             if (!lessonsData.length) {
@@ -680,23 +680,80 @@
             const pastLessons = lessonsData.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
             const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
 
-            let completedHw = 0;
-            hwLessons.forEach(l => {
-                const status = (l.hwStatus || 'pending').toLowerCase();
-                if (status.includes('проверен') || status === 'checked' || status === 'done') {
-                    completedHw++;
+            // 1. Собираем все домашние задания с баллами
+            const hwTasks = hwLessons
+                .filter(l => l.hwScore !== undefined && l.hwScore !== null && l.hwScore !== '')
+                .map(l => ({
+                    name: l.topic || 'Домашнее задание',
+                    score: parseFloat(String(l.hwScore).replace('%', '')) || 0,
+                    max: 100,
+                    description: `ДЗ от ${l.date}`,
+                    date: l.date,
+                    source: 'homework'
+                }));
+
+            // 2. Собираем контрольные точки
+            const testTasks = (testsData || [])
+                .filter(t => t.name && t.name.trim() !== '')
+                .map(t => ({
+                    name: t.name,
+                    score: t.score !== undefined && t.score !== null ? t.score : null,
+                    max: t.max || 100,
+                    description: t.description || '',
+                    date: t.date || null,
+                    source: 'test'
+                }));
+
+            // 3. Объединяем и убираем дубли (по совпадению баллов и названия)
+            const allTasks = [];
+            const usedKeys = new Set();
+
+            // Сначала добавляем контрольные точки (они приоритетнее)
+            testTasks.forEach(t => {
+                const key = `${t.score}_${t.name.trim()}`;
+                if (!usedKeys.has(key)) {
+                    usedKeys.add(key);
+                    allTasks.push(t);
                 }
             });
+
+            // Потом добавляем домашние задания, которых ещё нет
+            hwTasks.forEach(t => {
+                const key = `${t.score}_${t.name.trim()}`;
+                const exists = allTasks.some(existing => {
+                    const existingKey = `${existing.score}_${existing.name.trim()}`;
+                    return existingKey === key || (existing.score === t.score && existing.name.trim() === t.name.trim());
+                });
+                if (!exists && !usedKeys.has(key)) {
+                    usedKeys.add(key);
+                    allTasks.push(t);
+                }
+            });
+
+            // Сортируем по дате
+            allTasks.sort((a, b) => {
+                if (a.date && b.date) return a.date.localeCompare(b.date);
+                if (a.date) return -1;
+                if (b.date) return 1;
+                return 0;
+            });
+
+            // 4. Статистика
+            const completedHw = hwLessons.filter(l => {
+                const status = (l.hwStatus || 'pending').toLowerCase();
+                return status.includes('проверен') || status === 'checked' || status === 'done';
+            }).length;
 
             const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
             const currentYearStr = String(currentYear);
             const monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length;
 
+            const validTasks = allTasks.filter(t => t.score !== null && t.score !== undefined);
+            const tasksTotal = allTasks.length;
+            const tasksCompleted = validTasks.length;
+            const avgScore = tasksTotal > 0 ? Math.round(validTasks.reduce((sum, t) => sum + t.score, 0) / tasksTotal) : 0;
+
             const isDenis = currentStudentId === 'denis';
-            const validTests = testsData.filter(t => t.name && t.name.trim() !== '');
-            const testsTotal = validTests.length;
-            const testsCompleted = validTests.filter(t => t.score !== undefined && t.score !== null).length;
-            const avgScore = testsTotal > 0 ? Math.round(validTests.reduce((sum, t) => sum + (t.score || 0), 0) / testsTotal) : 0;
 
             let statsHTML = `
                 <div class="stat-card">
@@ -710,21 +767,22 @@
                     <div class="stat-sublabel">из ${hwLessons.length} всего</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${testsCompleted} / ${testsTotal}</div>
-                    <div class="stat-label">${isDenis ? 'Пробников' : 'Контрольных точек'}</div>
+                    <div class="stat-value">${tasksCompleted} / ${tasksTotal}</div>
+                    <div class="stat-label">${isDenis ? 'Пробников' : 'Контрольных точек и ДЗ'}</div>
                     <div class="stat-sublabel">средний балл: ${avgScore}</div>
                 </div>
             `;
 
             progressStats.innerHTML = statsHTML;
 
+            // 5. Графики
             chartsContainer.innerHTML = `
                 <div class="chart-card">
                     <h3>Выполнение домашних заданий</h3>
                     <canvas id="hwChart"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>${isDenis ? 'Результаты пробников' : 'Результаты контрольных точек'}</h3>
+                    <h3>${isDenis ? 'Результаты пробников' : 'Результаты контрольных точек и ДЗ'}</h3>
                     <canvas id="testsChart"></canvas>
                 </div>
             `;
@@ -734,6 +792,7 @@
             const textSecondary = styles.getPropertyValue('--text-secondary').trim();
             const borderColor = styles.getPropertyValue('--border-color').trim();
 
+            // График домашек
             const hwCtx = document.getElementById('hwChart').getContext('2d');
             if (charts.hw) charts.hw.destroy();
             charts.hw = new Chart(hwCtx, {
@@ -763,16 +822,18 @@
                 }
             });
 
+            // График контрольных точек + ДЗ
             const testCtx = document.getElementById('testsChart').getContext('2d');
             if (charts.tests) charts.tests.destroy();
 
-            const validTestsForChart = validTests.filter(t => t.score !== undefined && t.score !== null);
-            const testLabels = validTestsForChart.map((t, index) => t.name || (isDenis ? `Пробник ${index + 1}` : `КТ ${index + 1}`));
-            const testScores = validTestsForChart.map(t => t.score || 0);
-            const testColors = validTestsForChart.map(t => {
-                const score = t.score || 0;
-                const max = t.max || 100;
-                const percent = score / max;
+            const validForChart = allTasks.filter(t => t.score !== null && t.score !== undefined);
+            const testLabels = validForChart.map((t, index) => {
+                const label = t.name || `${isDenis ? 'Пробник' : 'Задание'} ${index + 1}`;
+                return label.length > 20 ? label.substring(0, 18) + '…' : label;
+            });
+            const testScores = validForChart.map(t => t.score || 0);
+            const testColors = validForChart.map(t => {
+                const percent = (t.score || 0) / (t.max || 100);
                 if (percent >= 0.8) return 'rgba(47, 157, 104, 0.70)';
                 if (percent >= 0.6) return 'rgba(217, 138, 38, 0.70)';
                 return 'rgba(216, 92, 92, 0.70)';
@@ -798,9 +859,9 @@
                         tooltip: {
                             callbacks: {
                                 afterLabel: function(context) {
-                                    const test = validTestsForChart[context.dataIndex];
-                                    if (test && test.description) {
-                                        return '📌 ' + test.description;
+                                    const task = validForChart[context.dataIndex];
+                                    if (task && task.description) {
+                                        return '📌 ' + task.description;
                                     }
                                     return '';
                                 }
@@ -831,25 +892,26 @@
                 }
             });
 
-            renderTestsTable(isDenis);
+            // 6. Таблица
+            renderTestsTableForAll(allTasks, isDenis);
         }
 
         // ============================================================
-        //  ТАБЛИЦА КОНТРОЛЬНЫХ ТОЧЕК / ПРОБНИКОВ
+        //  ТАБЛИЦА ДЛЯ ОБЪЕДИНЁННЫХ ЗАДАНИЙ
         // ============================================================
-        function renderTestsTable(isDenis) {
+        function renderTestsTableForAll(allTasks, isDenis) {
             const container = testsTableContainer;
             const title = testsTableTitle;
 
-            const validTests = testsData.filter(t => t.name && t.name.trim() !== '');
+            const validTasks = allTasks.filter(t => t.name && t.name.trim() !== '');
 
-            if (!validTests || validTests.length === 0) {
+            if (!validTasks || validTasks.length === 0) {
                 container.innerHTML = '<p style="color: var(--text-secondary); padding: 12px 0;">Нет данных</p>';
                 testsTableWrapper.style.display = 'block';
                 return;
             }
 
-            title.textContent = isDenis ? '📋 Результаты пробников' : '📋 Результаты контрольных точек';
+            title.textContent = isDenis ? '📋 Результаты пробников' : '📋 Контрольные точки и домашние задания';
             testsTableWrapper.style.display = 'block';
 
             let html = `
@@ -865,10 +927,10 @@
                     <tbody>
             `;
 
-            validTests.forEach(t => {
-                const score = t.score !== undefined && t.score !== null ? t.score : '—';
+            validTasks.forEach(t => {
+                const score = t.score !== null && t.score !== undefined ? t.score : '—';
                 const max = t.max || 100;
-                const isCompleted = t.score !== undefined && t.score !== null;
+                const isCompleted = t.score !== null && t.score !== undefined;
                 const percent = isCompleted ? Math.round((t.score / max) * 100) : 0;
                 let statusText, statusClass;
 
@@ -886,9 +948,11 @@
                     statusClass = 'poor';
                 }
 
+                const sourceLabel = t.source === 'homework' ? ' (ДЗ)' : '';
+
                 html += `
                     <tr>
-                        <td style="font-weight: 600;">${t.name || 'Без названия'}</td>
+                        <td style="font-weight: 600;">${t.name || 'Без названия'}${sourceLabel}</td>
                         <td style="text-align: center; font-weight: 700;">${isCompleted ? `${score} / ${max}` : '—'}</td>
                         <td style="text-align: center;">
                             <span class="status-badge ${statusClass}">${statusText}</span>
@@ -898,7 +962,7 @@
                 `;
             });
 
-            const completedTests = validTests.filter(t => t.score !== undefined && t.score !== null);
+            const completedTests = validTasks.filter(t => t.score !== null && t.score !== undefined);
             const avg = completedTests.length > 0 ? Math.round(completedTests.reduce((sum, t) => sum + t.score, 0) / completedTests.length) : 0;
 
             html += `
