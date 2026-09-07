@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Пробник ЕГЭ 2027 | Профильная математика</title>
 
-    <!-- MathJax для красивых формул -->
     <script>
         MathJax = {
             tex: {
@@ -23,7 +22,6 @@
             --text-main: #0b1e33;
             --text-secondary: #5e6f8c;
             --accent-blue: #1d6f9c;
-            --accent-orange: #d48a3a;
             --accent-purple: #7c3aed;
             --border-light: #d0ddea;
         }
@@ -49,13 +47,7 @@
             padding: 40px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 36px;
-            padding-bottom: 24px;
-            border-bottom: 2px solid #eef2f7;
-        }
-
+        header { text-align: center; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 2px solid #eef2f7; }
         h1 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
         .subtitle { font-size: 15px; color: var(--text-secondary); }
         
@@ -111,7 +103,6 @@
         }
         .answer-input:focus { border-bottom-color: var(--accent-blue); }
 
-        /* Стили для части 2 (фото и текст) */
         .part2-input {
             width: 100%; border: 2px solid var(--border-light); border-radius: 8px;
             padding: 12px; font-size: 15px; font-family: inherit; resize: vertical;
@@ -119,9 +110,7 @@
         }
         .part2-input:focus { border-color: var(--accent-blue); }
 
-        .file-upload-wrapper {
-            position: relative; overflow: hidden; display: inline-block;
-        }
+        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; }
         .file-upload-btn {
             border: 2px dashed var(--border-light); color: var(--text-secondary);
             background: #f8faff; padding: 10px 20px; border-radius: 8px;
@@ -150,7 +139,6 @@
         .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
         .btn-outline:hover { background: #f0f4fa; border-color: #a0b4cc; box-shadow: none; }
 
-        /* Модальное окно */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 25, 45, 0.35); backdrop-filter: blur(6px);
@@ -194,7 +182,7 @@
                 <strong>Дата:</strong> <span id="lessonDate"></span>
             </div>
             <div class="tags">
-                <span class="tag">19 заданий</span>
+                <span class="tag">20 заданий</span>
                 <span class="tag">⏱ 235 минут</span>
                 <span class="tag">Профильный уровень</span>
             </div>
@@ -228,49 +216,49 @@
 
             <div class="task-card">
                 <div class="task-label">Задание 4 · Теория вероятностей</div>
-                <div class="task-condition">В сборнике билетов по химии всего 80 билетов, в 56 из них встречается вопрос по теме «Углеводороды». Найдите вероятность того, что в случайно выбранном билете школьнику <strong>не</strong> достанется вопрос по этой теме.</div>
+                <div class="task-condition">В сборнике билетов по химии всего 80 билетов, в 56 из них встречается вопрос по теме «Углеводороды». Найдите вероятность того, что в случайно выбранном на экзамене билете школьнику <strong>не</strong> достанется вопрос по этой теме.</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t4" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
                 <div class="task-label">Задание 5 · Теория вероятностей</div>
-                <div class="task-condition">Стрелок стреляет по одному разу в каждую из четырёх мишеней. Вероятность попадания при каждом выстреле равна 0,9. Найдите вероятность того, что стрелок попадёт в две первые мишени и не попадёт в две последние.</div>
+                <div class="task-condition">Стрелок стреляет по одному разу в каждую из четырёх мишеней. Вероятность попадания в мишень при каждом отдельном выстреле равна 0,9. Найдите вероятность того, что стрелок попадёт в две первые мишени и не попадёт в две последние.</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t5" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 6 · Уравнения</div>
-                <div class="task-condition">Найдите корень уравнения: \[ 4^{x-4} = 64 \]</div>
+                <div class="task-label">Задание 6 · Статистика</div>
+                <div class="task-condition">Организаторы лотереи выпустили 10 000 билетов. Выигрыши распределены следующим образом: 100 руб. (500 шт.), 1000 руб. (100 шт.), 5000 руб. (50 шт.), 10 000 руб. (10 шт.), 50 000 руб. (1 шт.). Найдите математическое ожидание величины «выигрыш на один билет». Ответ дайте в рублях.</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t6" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 7 · Вычисления</div>
-                <div class="task-condition">Найдите значение выражения: \[ \frac{3\sin 164^\circ}{\sin 82^\circ \cdot \sin 8^\circ} \]</div>
+                <div class="task-label">Задание 7 · Уравнения</div>
+                <div class="task-condition">Найдите корень уравнения: \[ 4^{x-4} = 64 \]</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t7" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 8 · Производная</div>
-                <div class="task-condition">На рисунке изображён график \(y = f'(x)\) — производной функции \(f(x)\), определённой на интервале \((-10; 7)\). Найдите количество точек минимума функции \(f(x)\), принадлежащих отрезку \([-2; 6]\). <span class="task-note">(См. оригинал демоверсии для графика)</span></div>
+                <div class="task-label">Задание 8 · Вычисления</div>
+                <div class="task-condition">Найдите значение выражения: \[ \frac{3\sin 164^\circ}{\sin 82^\circ \cdot \sin 8^\circ} \]</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t8" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 9 · Прикладная задача</div>
-                <div class="task-condition">Автомобиль, движущийся со скоростью \(v_0 = 15\) м/с, начал торможение с постоянным ускорением \(a = 2\) м/с². За \(t\) секунд он прошёл путь \(S = v_0 t - \frac{at^2}{2}\). Определите время, если известно, что за это время автомобиль проехал 36 метров.</div>
+                <div class="task-label">Задание 9 · Производная</div>
+                <div class="task-condition">На рисунке изображён график \(y = f'(x)\) — производной функции \(f(x)\), определённой на интервале \((-10; 7)\). Найдите количество точек минимума функции \(f(x)\), принадлежащих отрезку \([-2; 6]\). <span class="task-note">(См. оригинал демоверсии для графика)</span></div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t9" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 10 · Текстовая задача</div>
-                <div class="task-condition">Два велосипедиста отправились в 90-километровый пробег. Первый ехал со скоростью, на 5 км/ч большей, чем скорость второго, и прибыл к финишу на 3 часа раньше. Найдите скорость велосипедиста, пришедшего к финишу первым.</div>
+                <div class="task-label">Задание 10 · Прикладная задача</div>
+                <div class="task-condition">Автомобиль, движущийся со скоростью \(v_0 = 15\) м/с, начал торможение с постоянным ускорением \(a = 2\) м/с². За \(t\) секунд он прошёл путь \(S = v_0 t - \frac{at^2}{2}\). Определите время, если известно, что за это время автомобиль проехал 36 метров.</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t10" placeholder="Ваш ответ"></div>
             </div>
 
             <div class="task-card">
-                <div class="task-label">Задание 11 · Графики функций</div>
-                <div class="task-condition">На рисунке изображён график функции вида \(f(x) = \frac{k}{x}\), проходящий через точку \((5; 1)\). Найдите значение \(f(10)\).</div>
+                <div class="task-label">Задание 11 · Текстовая задача</div>
+                <div class="task-condition">Два велосипедиста одновременно отправились в 90-километровый пробег. Первый ехал со скоростью, на 5 км/ч большей, чем скорость второго, и прибыл к финишу на 3 часа раньше. Найдите скорость велосипедиста, пришедшего к финишу первым.</div>
                 <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="t11" placeholder="Ваш ответ"></div>
             </div>
 
@@ -295,7 +283,6 @@
                 <div class="section-desc">Впишите решение или прикрепите фото</div>
             </div>
 
-            <!-- Генерация заданий 14-19 -->
             <div id="part2-container"></div>
         </div>
 
@@ -305,8 +292,8 @@
             <button class="btn btn-outline" id="resetBtn">🔄 Очистить всё</button>
         </div>
 
-        <div class="footer-note" style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-top: 30px; padding-top: 16px; border-top: 2px solid #eef2f7;">
-            📌 Все данные будут отправлены преподавателю через GitHub. Убедитесь, что фото чёткие и читаемые.
+        <div style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-top: 30px; padding-top: 16px; border-top: 2px solid #eef2f7;">
+            📌 Все данные будут отправлены преподавателю через GitHub API. Убедитесь, что фото чёткие и читаемые.
         </div>
     </div>
 
@@ -324,17 +311,19 @@
         </div>
     </div>
 
+    <!-- Подключение реального конфига -->
     <script src="config.js"></script>
     <script>
         (function () {
-            // Данные заданий части 2 для генерации HTML
+            // Данные заданий части 2 для генерации HTML (строго по демоверсии 2027)
             const part2Tasks = [
-                { id: 14, title: "Уравнение", text: "а) Решите уравнение: \\[ \\cos 2x + 2\\cos x + 1 = 0 \\] б) Укажите корни, принадлежащие отрезку \\( \\left[-\\frac{5\\pi}{2}; -2\\pi\\right] \\)." },
-                { id: 15, title: "Неравенство", text: "Решите неравенство: \\[ \\log_2(\\log_2(4x^2 - 2x + 4)) \\le 2 \\] <span class='task-note'>(Текст может незначительно отличаться от оригинала демоверсии из-за распознавания)</span>" },
-                { id: 16, title: "Планиметрия", text: "Окружность с центром O касается боковых сторон AB и BC равнобедренного остроугольного треугольника ABC и его высоты CH. а) Докажите, что \\( \\angle OAC = 45^\\circ \\). б) Найдите длину отрезка BC, если BO = 1 и AC = 6." },
-                { id: 17, title: "Стереометрия / Оптимизация", text: "На заводе имеется генератор с ЭДС \\( \\varepsilon = 50 \\) В и внутренним сопротивлением \\( r = 1 \\) Ом. Нагрузка подключается через реостат R. Сила тока \\( I = \\frac{\\varepsilon}{r + R} \\). Мощность \\( P = I^2 R \\). Какова максимальная тепловая мощность P, которая может быть выделена нагрузкой?" },
+                { id: 14, title: "Уравнение", text: "а) Решите уравнение: \\[ \\cos 2x + 2\\cos(x + \\pi) + 1 = 0 \\] <br> б) Укажите корни этого уравнения, принадлежащие отрезку \\( \\left[-\\frac{5\\pi}{2}; -4\\pi\\right] \\)." },
+                { id: 15, title: "Неравенство", text: "Решите неравенство: \\[ \\log_2(\\log_2(4x^2 - 2x + 4)) \\le 2 \\]" },
+                { id: 16, title: "Стереометрия", text: "В правильной шестиугольной пирамиде SABCDEF точки M и K — середины боковых рёбер SA и SD соответственно. <br> а) Докажите, что прямые BC и MK параллельны. <br> б) Найдите объём пирамиды MABF, если AB = 12, а угол между плоскостью BMC и плоскостью основания равен 30°." },
+                { id: 17, title: "Прикладная задача", text: "На заводе имеется генератор с ЭДС \\(\\varepsilon = 50\\) В и внутренним сопротивлением \\(r = 1\\) Ом. Инженер подключает к генератору нагрузку, используя реостат, чтобы установить сопротивление нагрузки R. Сила тока \\( I = \\frac{\\varepsilon}{r + R} \\). Тепловая мощность \\( P = I^2 R \\). Какова максимальная тепловая мощность P, которая может быть выделена нагрузкой?" },
                 { id: 18, title: "Параметр", text: "Найдите все значения \\( a \\), при каждом из которых система уравнений \\[ \\begin{cases} x - y + a = 0 \\\\ y - x^2 + 2x - 4 = 0 \\end{cases} \\] имеет ровно два различных решения." },
-                { id: 19, title: "Теория чисел", text: "На столе лежит некоторое количество карточек (синие и красные). На синих написаны различные числа, делящиеся на 5, на красных — различные чётные числа. Все числа > -120. Наибольшее число на красной карточке равно удвоенному количеству синих карточек, а наибольшее на синей равно количеству красных. а) Может ли быть ровно 6 карточек? б) Может ли красных быть на 90 больше, чем синих? в) Какое наибольшее количество карточек может быть на столе?" }
+                { id: 19, title: "Планиметрия / Стереометрия", text: "Окружность с центром O касается боковых сторон AB и BC равнобедренного остроугольного треугольника ABC и его высоты CH. <br> а) Докажите, что \\( \\angle OAC = 45^\\circ \\). <br> б) Найдите длину отрезка BC, если BO = 1 и AC = 6." },
+                { id: 20, title: "Теория чисел", text: "На столе лежит некоторое количество карточек, часть из которых синего цвета, а остальные красного. На синих написаны различные числа, делящиеся на 5, а на красных — различные чётные числа. Все числа больше -120. Наибольшее число на красной карточке равно удвоенному количеству синих карточек, а наибольшее на синей равно количеству красных. <br> а) Может ли быть ровно 6 карточек? <br> б) Может ли красных быть на 90 больше, чем синих? <br> в) Какое наибольшее количество карточек может быть на столе?" }
             ];
 
             // Генерация HTML для части 2
@@ -370,7 +359,6 @@
                     reader.onload = function(event) {
                         const img = new Image();
                         img.onload = function() {
-                            // Сжатие изображения для экономии места в GitHub Issue
                             const canvas = document.createElement('canvas');
                             const MAX_WIDTH = 800;
                             const scaleSize = MAX_WIDTH / img.width;
@@ -380,7 +368,6 @@
                             const ctx = canvas.getContext('2d');
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                             
-                            // Сохраняем сжатое Base64 в data-атрибут для последующей отправки
                             const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
                             preview.src = compressedBase64;
                             preview.style.display = 'block';
@@ -417,7 +404,7 @@
             cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
             reportModal.addEventListener('click', (e) => { if (e.target === reportModal) reportModal.classList.remove('active'); });
 
-            // Сбор данных и отправка
+            // Сбор данных и реальная отправка
             sendReportBtn.addEventListener('click', async function () {
                 const comment = reportComment.value.trim();
                 
@@ -436,7 +423,7 @@
                 reportBody += `\n---\n**Задания с развёрнутым ответом:**\n\n`;
 
                 // Часть 2
-                for (let i = 14; i <= 19; i++) {
+                for (let i = 14; i <= 20; i++) {
                     const textSol = document.getElementById(`t${i}_text`).value.trim();
                     const previewImg = document.getElementById(`t${i}_preview`);
                     const hasImage = previewImg && previewImg.dataset.base64;
@@ -446,7 +433,7 @@
                         reportBody += `**Текстовое решение:**\n${textSol}\n\n`;
                     }
                     if (hasImage) {
-                        // GitHub поддерживает Base64 изображения в Markdown!
+                        // GitHub полностью поддерживает Base64 изображения в Markdown!
                         reportBody += `**Фото решения:**\n![Решение задания ${i}](${previewImg.dataset.base64})\n\n`;
                     }
                     if (!textSol && !hasImage) {
@@ -458,15 +445,17 @@
                 
                 const btn = this;
                 btn.disabled = true;
-                btn.textContent = '⏳ Отправка...';
-                modalStatus.textContent = 'Преобразуем фото и отправляем в GitHub...';
+                btn.textContent = '⏳ Отправка в GitHub...';
+                modalStatus.textContent = 'Преобразуем фото и отправляем запрос...';
                 modalStatus.style.color = '#4a627a';
 
                 try {
-                    // Вызываем функцию из config.js или используем заглушку
-                    const issueUrl = await (typeof createGitHubIssue === 'function' 
-                        ? createGitHubIssue(title, reportBody) 
-                        : mockGitHubIssue(title, reportBody));
+                    // Вызываем РЕАЛЬНУЮ функцию из config.js
+                    if (typeof createGitHubIssue !== 'function') {
+                        throw new Error('Функция createGitHubIssue не найдена. Проверьте файл config.js');
+                    }
+                    
+                    const issueUrl = await createGitHubIssue(title, reportBody);
                     
                     modalStatus.innerHTML = `✅ Отчёт успешно отправлен!<br><a href="${issueUrl}" target="_blank" style="color: #1d6f9c; font-weight: 600;">Посмотреть Issue в GitHub</a>`;
                     modalStatus.style.color = '#1a8a5a';
@@ -494,15 +483,6 @@
                     });
                 }
             });
-
-            // Заглушка для тестирования, если config.js не подключен
-            async function mockGitHubIssue(title, body) {
-                console.log('=== ИМИТАЦИЯ ОТПРАВКИ В GITHUB ===');
-                console.log('Title:', title);
-                console.log('Body:', body);
-                await new Promise(r => setTimeout(r, 1500)); // Имитация задержки сети
-                return 'https://github.com/your-username/homework-repo/issues/new (тестовая ссылка)';
-            }
 
         })();
     </script>
