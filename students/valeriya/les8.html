@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Алгебра + Геометрия</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.algebra {
+            background: linear-gradient(135deg, #d5f2e3, #b8e6cc);
+        }
+
+        .section-icon.geometry {
+            background: linear-gradient(135deg, #e8dff5, #d4c4f0);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #d0ddea;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #e6edf6;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3);
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📚 Теоретический справочник</h1>
+            <div class="subtitle">Алгебра + Геометрия — всё, что нужно знать</div>
+            <div class="tags">
+                <span class="tag green">Алгебра</span>
+                <span class="tag purple">Геометрия</span>
+            </div>
+        </header>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon algebra">🧮</div>
+                <div class="section-title">Алгебра</div>
+            </div>
+
+            <!-- Тема 1: Десятичные дроби -->
+            <div class="topic-card">
+                <div class="topic-title">1. Действия с десятичными дробями</div>
+                <div class="topic-content">
+
+                    <div class="rule-box">
+                        <div class="rule-title"> Сложение и вычитание</div>
+                        <p>Главное правило: <span class="highlight">выравнивай запятые</span> друг под другом. Если в дробной части разное количество цифр — допиши нули.</p>
+                        <div class="formula">
+                            \(34{,}70 + 18{,}25 = 52{,}95\)
+                        </div>
+                        <p>При вычитании из меньшего числа большего — результат будет отрицательным:</p>
+                        <div class="formula">
+                            \(6{,}4 - 9 = -(9{,}0 - 6{,}4) = -2{,}6\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Умножение</div>
+                        <p>Умножай числа, как будто запятых нет. Потом отсчитай справа налево столько цифр, сколько их было после запятой в <strong>обоих множителях вместе</strong>.</p>
+                        <div class="formula">
+                            \(5{,}6 \cdot 3{,}05\): 1 цифра + 2 цифры = 3 цифры после запятой
+                        </div>
+                        <div class="formula">
+                            \(56 \cdot 305 = 17080 \rightarrow 17{,}080 = 17{,}08\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title"> Деление</div>
+                        <p>Если делитель десятичный — перенеси запятую вправо и в делимом, и в делителе на одинаковое количество знаков, чтобы делитель стал целым.</p>
+                        <div class="formula">
+                            \(48{,}6 : 12 = 4{,}05\)
+                        </div>
+                        <p>Делим 48 на 12 → получаем 4, ставим запятую, делим 6 на 12 → получаем 0,5.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 2: Отрицательные числа -->
+            <div class="topic-card">
+                <div class="topic-title">2. Отрицательные числа</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">️ Правила знаков</div>
+                        <ul>
+                            <li><strong>Плюс на плюс</strong> = плюс: \( (+) \cdot (+) = + \)</li>
+                            <li><strong>Минус на минус</strong> = плюс: \( (-) \cdot (-) = + \)</li>
+                            <li><strong>Плюс на минус</strong> = минус: \( (+) \cdot (-) = - \)</li>
+                            <li><strong>Минус на плюс</strong> = минус: \( (-) \cdot (+) = - \)</li>
+                        </ul>
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Сложение чисел с разными знаками</div>
+                        <p>Из большего модуля вычитаем меньший и ставим знак того числа, модуль которого больше.</p>
+                        <div class="formula">
+                            \(-3{,}7 + 8{,}2 = +(8{,}2 - 3{,}7) = 4{,}5\)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 3: Обыкновенные дроби в десятичные -->
+            <div class="topic-card">
+                <div class="topic-title">3. Перевод обыкновенных дробей в десятичные</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        Чтобы перевести обыкновенную дробь в десятичную, нужно <strong>разделить числитель на знаменатель</strong>.
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Конечные десятичные дроби</div>
+                        <p>Если знаменатель содержит только множители 2 и 5 — дробь будет конечной.</p>
+                        <div class="formula">
+                            \(\frac{1}{4} = 1 : 4 = 0{,}25\)
+                        </div>
+                        <div class="formula">
+                            \(\frac{2}{5} = 2 : 5 = 0{,}4\)
+                        </div>
+                        <div class="formula">
+                            \(\frac{7}{8} = 7 : 8 = 0{,}875\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Бесконечные периодические дроби</div>
+                        <p>Если знаменатель содержит другие множители (3, 7, 9, 11...) — дробь будет бесконечной периодической. Повторяющаяся группа цифр называется <span class="key-term">периодом</span>.</p>
+                        <div class="formula">
+                            \(\frac{2}{3} = 2 : 3 = 0{,}666... = 0{,}(6)\)
+                        </div>
+                        <div class="formula">
+                            \(\frac{5}{9} = 5 : 9 = 0{,}555... = 0{,}(5)\)
+                        </div>
+                        <div class="formula">
+                            \(\frac{7}{11} = 7 : 11 = 0{,}636363... = 0{,}(63)\)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 4: Числовые множества и промежутки -->
+            <div class="topic-card">
+                <div class="topic-title">4. Числовые множества и промежутки</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">️ Запомни значение скобок!</div>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Скобка</th>
+                                <th>Название</th>
+                                <th>Смысл</th>
+                                <th>Пример</th>
+                            </tr>
+                            <tr>
+                                <td><strong>[ ]</strong></td>
+                                <td>Квадратная</td>
+                                <td>Граница <strong>включена</strong> (≤ или ≥)</td>
+                                <td>\([-1; 5]\) — от -1 до 5, включая -1 и 5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>( )</strong></td>
+                                <td>Круглая</td>
+                                <td>Граница <strong>не включена</strong> (< или >)</td>
+                                <td>\((-5; -1)\) — строго между -5 и -1</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="definition">
+                        <div class="definition-title">Основные виды промежутков</div>
+                        <ul>
+                            <li><strong>Отрезок \([a; b]\)</strong> — все числа от \(a\) до \(b\), включая границы.</li>
+                            <li><strong>Интервал \((a; b)\)</strong> — все числа строго между \(a\) и \(b\).</li>
+                            <li><strong>Луч \((-\infty; a)\)</strong> — все числа, меньшие \(a\) (само \(a\) не входит!).</li>
+                            <li><strong>Числовая прямая \((-\infty; +\infty)\)</strong> — все действительные числа.</li>
+                        </ul>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Натуральные числа \(\mathbb{N}\)</div>
+                        <p>Это числа, которые мы используем при счёте предметов:</p>
+                        <div class="formula">
+                            \(\mathbb{N} = \{1, 2, 3, 4, 5, ...\}\)
+                        </div>
+                        <p><strong>Важно:</strong> ноль и отрицательные числа <span class="highlight">не являются</span> натуральными!</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ГЕОМЕТРИЯ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon geometry">📐</div>
+                <div class="section-title">Геометрия</div>
+            </div>
+
+            <!-- Тема 5: Отрезки -->
+            <div class="topic-card">
+                <div class="topic-title">5. Отрезки и их свойства</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение отрезка</div>
+                        <strong>Отрезок</strong> — часть прямой, ограниченная двумя точками (концами отрезка). Обозначается двумя буквами: \(AB\).
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Середина отрезка</div>
+                        <p><span class="key-term">Середина отрезка</span> — точка, которая делит отрезок на <strong>две равные части</strong>.</p>
+                        <div class="formula">
+                            Если \(C\) — середина \(AB\), то \(AC = CB = \dfrac{AB}{2}\)
+                        </div>
+                        <p><strong>Пример:</strong> если \(AB = 22\) см, то \(AC = CB = 11\) см.</p>
+                        <p>Если известна половина (\(CM = 4{,}5\) см), то весь отрезок:</p>
+                        <div class="formula">
+                            \(CD = 2 \cdot CM = 2 \cdot 4{,}5 = 9\) см
+                        </div>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Свойство сложения отрезков</div>
+                        <p>Если точка \(K\) лежит между точками \(M\) и \(N\), то:</p>
+                        <div class="formula">
+                            \(MN = MK + KN\)
+                        </div>
+                        <p><strong>Пример:</strong> если \(MK = 3{,}8\) и \(KN = 6{,}2\), то \(MN = 3{,}8 + 6{,}2 = 10\).</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 6: Углы -->
+            <div class="topic-card">
+                <div class="topic-title">6. Углы и биссектриса</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение угла</div>
+                        <strong>Угол</strong> — геометрическая фигура, образованная двумя лучами, выходящими из одной точки (вершины угла). Обозначается тремя буквами: \(\angle AOB\).
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">️ Биссектриса угла</div>
+                        <p><span class="key-term">Биссектриса</span> — это луч, который выходит из вершины угла и делит его на <strong>два равных угла</strong>.</p>
+                        <div class="formula">
+                            Если \(OC\) — биссектриса \(\angle AOB\), то \(\angle AOC = \angle COB = \dfrac{\angle AOB}{2}\)
+                        </div>
+                        <p><strong>Пример:</strong> если \(\angle AOB = 124°\), то \(\angle AOC = \angle COB = 62°\).</p>
+                        <p>Если известна половина угла (\(\angle MOK = 33°\)), то весь угол:</p>
+                        <div class="formula">
+                            \(\angle MON = 2 \cdot \angle MOK = 2 \cdot 33° = 66°\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Свойство сложения углов</div>
+                        <p>Если луч \(OD\) проходит внутри угла \(\angle COE\), то:</p>
+                        <div class="formula">
+                            \(\angle COE = \angle COD + \angle DOE\)
+                        </div>
+                        <p><strong>Пример:</strong> если \(\angle COD = 28°\) и \(\angle DOE = 47°\), то \(\angle COE = 28° + 47° = 75°\).</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 7: Основные утверждения -->
+            <div class="topic-card">
+                <div class="topic-title">7. Важные утверждения (Верно / Неверно)</div>
+                <div class="topic-content">
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Утверждение 1</div>
+                        <p><strong>«Если точка лежит на отрезке, то она принадлежит этому отрезку»</strong></p>
+                        <p>Это <span class="highlight">ВЕРНО</span>. Это буквально определение принадлежности точки отрезку.</p>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Утверждение 2</div>
+                        <p><strong>«Биссектриса угла делит его на два равных угла»</strong></p>
+                        <p>Это <span class="highlight">ВЕРНО</span>. Это главное свойство и определение биссектрисы.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <a href="hw.html" class="back-link">← Вернуться к домашнему заданию</a>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Алгебра + Геометрия
+        </div>
+
+    </div>
+
+</body>
+</html>
