@@ -30,7 +30,6 @@
             --accent-blue: #1d6f9c;
             --accent-orange: #d48a3a;
             --accent-green: #1a8a5a;
-            --accent-purple: #7c3aed;
             --accent-red: #a8431a;
             --border-light: #d0ddea;
             --correct-bg: #f0faf5;
@@ -94,9 +93,9 @@
             display: inline-block;
         }
 
-            .info-line strong {
-                color: var(--text-main);
-            }
+        .info-line strong {
+            color: var(--text-main);
+        }
 
         .tags {
             display: flex;
@@ -189,10 +188,10 @@
             flex-direction: column;
         }
 
-            .task-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
 
         .task-label {
             font-size: 11px;
@@ -203,21 +202,13 @@
             letter-spacing: 0.5px;
         }
 
-            .task-label.orange {
-                color: var(--accent-orange);
-            }
+        .task-label.orange {
+            color: var(--accent-orange);
+        }
 
-            .task-label.purple {
-                color: var(--accent-purple);
-            }
-
-            .task-label.green {
-                color: var(--accent-green);
-            }
-
-            .task-label.red {
-                color: var(--accent-red);
-            }
+        .task-label.red {
+            color: var(--accent-red);
+        }
 
         .task-condition {
             font-size: 19px;
@@ -262,21 +253,21 @@
             font-family: inherit;
         }
 
-            .answer-input:focus {
-                border-bottom-color: var(--accent-blue);
-            }
+        .answer-input:focus {
+            border-bottom-color: var(--accent-blue);
+        }
 
-            .answer-input.correct {
-                border-bottom-color: var(--correct-border);
-                background: var(--correct-bg);
-                border-radius: 4px 4px 0 0;
-            }
+        .answer-input.correct {
+            border-bottom-color: var(--correct-border);
+            background: var(--correct-bg);
+            border-radius: 4px 4px 0 0;
+        }
 
-            .answer-input.wrong {
-                border-bottom-color: var(--wrong-border);
-                background: var(--wrong-bg);
-                border-radius: 4px 4px 0 0;
-            }
+        .answer-input.wrong {
+            border-bottom-color: var(--wrong-border);
+            background: var(--wrong-bg);
+            border-radius: 4px 4px 0 0;
+        }
 
         /* BUTTONS */
         .action-bar {
@@ -299,30 +290,30 @@
             color: white;
         }
 
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3);
-            }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3);
+        }
 
-            .btn:active {
-                transform: scale(0.97);
-            }
+        .btn:active {
+            transform: scale(0.97);
+        }
 
         .btn-success {
             background: var(--accent-green);
         }
 
-            .btn-success:hover {
-                box-shadow: 0 4px 12px rgba(26, 138, 90, 0.3);
-            }
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(26, 138, 90, 0.3);
+        }
 
         .btn-danger {
             background: var(--accent-red);
         }
 
-            .btn-danger:hover {
-                box-shadow: 0 4px 12px rgba(168, 67, 26, 0.3);
-            }
+        .btn-danger:hover {
+            box-shadow: 0 4px 12px rgba(168, 67, 26, 0.3);
+        }
 
         .btn-outline {
             background: none;
@@ -330,11 +321,11 @@
             color: var(--text-secondary);
         }
 
-            .btn-outline:hover {
-                background: #f0f4fa;
-                border-color: #a0b4cc;
-                box-shadow: none;
-            }
+        .btn-outline:hover {
+            background: #f0f4fa;
+            border-color: #a0b4cc;
+            box-shadow: none;
+        }
 
         /* RESULT */
         .result-area {
@@ -366,9 +357,9 @@
             padding: 20px;
         }
 
-            .modal-overlay.active {
-                display: flex;
-            }
+        .modal-overlay.active {
+            display: flex;
+        }
 
         .modal-card {
             background: white;
@@ -385,7 +376,6 @@
                 opacity: 0;
                 transform: translateY(16px) scale(0.96);
             }
-
             100% {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -416,9 +406,9 @@
             transition: 0.2s;
         }
 
-            .modal-card textarea:focus {
-                border-color: #3b82f6;
-            }
+        .modal-card textarea:focus {
+            border-color: #3b82f6;
+        }
 
         .modal-card .modal-buttons {
             display: flex;
@@ -427,9 +417,9 @@
             flex-wrap: wrap;
         }
 
-            .modal-card .modal-buttons .btn {
-                flex: 1;
-            }
+        .modal-card .modal-buttons .btn {
+            flex: 1;
+        }
 
         #modalStatus {
             margin-top: 10px;
@@ -455,29 +445,23 @@
                 padding: 22px 18px;
                 border-radius: 18px;
             }
-
             .task-grid {
                 grid-template-columns: 1fr;
             }
-
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
             }
-
             .section-desc {
                 margin-left: 0;
             }
-
             h1 {
                 font-size: 22px;
             }
-
             .task-condition {
                 font-size: 17px;
             }
-
             .action-bar .btn {
                 flex: 1;
                 min-width: 120px;
@@ -499,13 +483,14 @@
                 <strong>Тема:</strong> <span id="lessonTopic"></span>
             </div>
             <div class="tags">
-                <span class="tag tag-ege">Задания 1, 5, 18</span>
-                <span class="tag tag-time">⏱ 60–90 минут</span>
+                <span class="tag tag-ege">Задания 1, 5</span>
+                <span class="tag tag-time">⏱ 30–45 минут</span>
                 <span class="tag tag-level">Профильный уровень</span>
             </div>
         </header>
 
         <!-- ====== ЗАДАНИЯ ====== -->
+
         <!-- БЛОК 1: ЛИНЕЙНЫЕ УРАВНЕНИЯ (1–4) -->
         <div class="section">
             <div class="section-header">
@@ -655,123 +640,11 @@
                 </div>
 
                 <div class="task-card">
-                    <div class="task-label red">Радикал в знаменателе</div>
-                    <div class="task-condition">\[ \sqrt{x - 2} = \frac{1}{\sqrt{x - 2}} \]</div>
+                    <div class="task-label red">Ловушка №4</div>
+                    <div class="task-condition">\[ \frac{x^2 - 1}{x + 1} = 0 \]</div>
                     <div class="answer-row">
                         <span>Ответ:</span>
                         <input class="answer-input" type="text" id="o4" placeholder="x =">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- БЛОК 4: МОДУЛЬ (15–19) -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-num">4</div>
-                <div class="section-title">Уравнения с модулем</div>
-                <div class="section-desc">5 заданий</div>
-            </div>
-
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label purple">Простой модуль</div>
-                    <div class="task-condition">\[ |3x - 7| = 5 \]</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="m1" placeholder="x =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label purple">Модуль = отрицательное</div>
-                    <div class="task-condition">\[ |2x + 1| = -3 \]</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="m2" placeholder="x =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label purple">Два модуля</div>
-                    <div class="task-condition">\[ |2x - 1| = |x + 4| \]</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="m3" placeholder="x =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label purple">Модуль + число</div>
-                    <div class="task-condition">\[ |x - 2| + 3 = 7 \]</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="m4" placeholder="x =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label purple">Модуль с ОДЗ</div>
-                    <div class="task-condition">\[ |x^2 - 4| = x - 2 \]</div>
-                    <div class="answer-row">
-                        <span>Ответ:</span>
-                        <input class="answer-input" type="text" id="m5" placeholder="x =">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- БЛОК 5: ПАРАМЕТРЫ (20–24) -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-num">5</div>
-                <div class="section-title">Уравнения с параметром</div>
-                <div class="section-desc">5 заданий</div>
-            </div>
-
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label green">Бесконечно много решений</div>
-                    <div class="task-condition">\[ (a - 3)x = a^2 - 9 \]<span class="task-note">При каких \(a\) бесконечно много решений?</span></div>
-                    <div class="answer-row">
-                        <span>Ответ: a =</span>
-                        <input class="answer-input" type="text" id="p1" placeholder="a =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label green">Нет корней</div>
-                    <div class="task-condition">\[ (p + 1)x = 2p + 2 \]<span class="task-note">При каких \(p\) уравнение <strong>не имеет</strong> корней?</span></div>
-                    <div class="answer-row">
-                        <span>Ответ: p =</span>
-                        <input class="answer-input" type="text" id="p2" placeholder="p =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label green">Квадратное с параметром</div>
-                    <div class="task-condition">\[ x^2 - 4x + a = 0 \]<span class="task-note">При каких \(a\) уравнение имеет ровно один корень?</span></div>
-                    <div class="answer-row">
-                        <span>Ответ: a =</span>
-                        <input class="answer-input" type="text" id="p3" placeholder="a =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label green">Параметр + ОДЗ</div>
-                    <div class="task-condition">\[ \frac{x - a}{x - 2} = 0 \]<span class="task-note">При каком \(a\) уравнение не имеет корней?</span></div>
-                    <div class="answer-row">
-                        <span>Ответ: a =</span>
-                        <input class="answer-input" type="text" id="p4" placeholder="a =">
-                    </div>
-                </div>
-
-                <div class="task-card">
-                    <div class="task-label green">Параметр в знаменателе</div>
-                    <div class="task-condition">\[ \frac{a}{x - 3} = 2 \]<span class="task-note">При каком \(a\) уравнение не имеет корней?</span></div>
-                    <div class="answer-row">
-                        <span>Ответ: a =</span>
-                        <input class="answer-input" type="text" id="p5" placeholder="a =">
                     </div>
                 </div>
             </div>
@@ -791,7 +664,7 @@
         </div>
 
         <div class="footer-note">
-            <span>📌 Подготовка к ЕГЭ по математике (профиль) · Домашнее задание · 24 задания</span>
+            <span>📌 Подготовка к ЕГЭ по математике (профиль) · Домашнее задание · 14 заданий</span>
             <span class="tag tag-ege">Уравнения и ОДЗ</span>
         </div>
 
@@ -832,17 +705,7 @@
                 o1: 'нет',
                 o2: '3',
                 o3: 'нет',
-                o4: '3',
-                m1: '4',
-                m2: 'нет',
-                m3: '5',
-                m4: '6',
-                m5: '2',
-                p1: '3',
-                p2: '-1',
-                p3: '4',
-                p4: '2',
-                p5: '0'
+                o4: '1'
             };
 
             const answerInputs = document.querySelectorAll('.answer-input');
@@ -983,8 +846,7 @@
                     const userAnswer = input ? input.value.trim() : '(пусто)';
                     const isCorrect = input && input.classList.contains('correct');
                     const statusIcon = isCorrect ? '✅' : '❌';
-                    const questionNum = id;
-                    answersText += `${questionNum} | ${userAnswer} | ${right} | ${statusIcon}\n`;
+                    answersText += `${id} | ${userAnswer} | ${right} | ${statusIcon}\n`;
                 }
 
                 const title = `Отчёт: ${student} — ${topic} (${date})`;
@@ -1029,8 +891,6 @@
             // ============================================================
             //  ФУНКЦИЯ ДЛЯ СОЗДАНИЯ ISSUE (реальная реализация из config.js)
             // ============================================================
-            // Функция createGitHubIssue подгружается из config.js
-            // Если config.js не загружен, используем заглушку
             if (typeof createGitHubIssue !== 'function') {
                 window.createGitHubIssue = async function (title, body) {
                     console.log('📤 Отправка отчёта:', title, body);
