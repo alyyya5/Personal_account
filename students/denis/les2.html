@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уравнения с модулем · теория</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #e8b84b;
+        }
+        .card.blue { border-left-color: #2a6fdb; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #8b5cf6; }
+        .card h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .card h2 .badge {
+            background: #e8b84b;
+            color: #0b1a33;
+            font-size: 1rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.blue { background: #2a6fdb; color: white; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #8b5cf6; color: white; }
+        .card p, .card li { line-height: 1.7; color: #2c3e5a; font-size: 1.05rem; }
+        .card ul { margin: 14px 0 10px 24px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin: 18px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .example-box strong { color: #b47d2a; }
+        .example-box .solution {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #e8b84b;
+        }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .note-box strong { color: #059669; }
+        .warning-box {
+            background: #fef3c7;
+            border-left: 6px solid #f59e0b;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .warning-box strong { color: #d97706; }
+
+        .step-box {
+            background: #fff;
+            border: 2px solid #2a6fdb;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 8px 0;
+        }
+        .step-box strong {
+            color: #2a6fdb;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 10px 0 20px;
+            letter-spacing: 8px;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 18px; }
+            .card h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ УРАВНЕНИЯ С МОДУЛЕМ · ТЕОРИЯ ✦</div>
+
+    <!-- ===== §1. ПОНЯТИЕ МОДУЛЯ ===== -->
+    <div class="card">
+        <h2><span class="badge">§1</span> Что такое модуль?</h2>
+
+        <p><strong>Модуль числа</strong> — это расстояние от этого числа до нуля на числовой прямой. Модуль всегда неотрицателен!</p>
+
+        <div class="formula-box">
+            \(|x| = \begin{cases} x, & \text{если } x \ge 0 \\ -x, & \text{если } x < 0 \end{cases}\)
+        </div>
+
+        <div class="example-box">
+            <strong>Примеры:</strong><br>
+            \(|5| = 5\) (так как 5 ≥ 0)<br>
+            \(|-3| = -(-3) = 3\) (так как -3 < 0)<br>
+            \(|0| = 0\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно помнить:</strong>
+            <ul style="margin-top:8px;">
+                <li>\(|x| \ge 0\) для любого x (модуль не может быть отрицательным!)</li>
+                <li>\(|x| = |-x|\) (модули противоположных чисел равны)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== §2. ПРОСТЕЙШИЕ УРАВНЕНИЯ |f(x)| = a ===== -->
+    <div class="card blue">
+        <h2><span class="badge blue">§2</span> Простейшие уравнения |f(x)| = a</h2>
+
+        <p>Рассмотрим уравнение \(|f(x)| = a\), где a — некоторое число.</p>
+
+        <div class="warning-box">
+            <strong>⚠️ Важно:</strong> Так как модуль всегда ≥ 0, то:
+            <ul style="margin-top:8px;">
+                <li>Если <strong>a < 0</strong>, уравнение <strong>не имеет решений</strong></li>
+                <li>Если <strong>a = 0</strong>, то f(x) = 0</li>
+                <li>Если <strong>a > 0</strong>, получаем два уравнения: f(x) = a или f(x) = -a</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решите уравнение \(|2x + 1| = -3\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                Так как -3 < 0, а модуль не может быть отрицательным, уравнение <strong>не имеет решений</strong>.
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решите уравнение \(|x - 2| + 3 = 7\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                Шаг 1: Перенесём 3 вправо: \(|x - 2| = 7 - 3\)<br>
+                \(|x - 2| = 4\)<br><br>
+                Шаг 2: Так как 4 > 0, получаем два уравнения:<br>
+                \(\begin{cases} x - 2 = 4 \\ x - 2 = -4 \end{cases}\)<br><br>
+                Шаг 3: Решаем каждое:<br>
+                x - 2 = 4 ⟹ x = 6<br>
+                x - 2 = -4 ⟹ x = -2<br><br>
+                <strong>Ответ:</strong> x = 6; x = -2
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> Решите уравнение \(|3x - 7| = 5\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                Так как 5 > 0, получаем:<br>
+                \(\begin{cases} 3x - 7 = 5 \\ 3x - 7 = -5 \end{cases}\)<br><br>
+                3x - 7 = 5 ⟹ 3x = 12 ⟹ x = 4<br>
+                3x - 7 = -5  3x = 2 ⟹ x = \(\frac{2}{3}\)<br><br>
+                <strong>Ответ:</strong> x = 4; x = \(\frac{2}{3}\)
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §3. МОДУЛЬ С ОБЕИХ СТОРОН |f(x)| = |g(x)| ===== -->
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Уравнения |f(x)| = |g(x)|</h2>
+
+        <p>Когда модули стоят с обеих сторон, используем простое правило:</p>
+
+        <div class="formula-box">
+            \(|f(x)| = |g(x)|\) ⟹ \(\begin{cases} f(x) = g(x) \\ f(x) = -g(x) \end{cases}\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решите уравнение \(|2x - 3| = |x + 1|\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                Получаем два уравнения:<br><br>
+                <strong>1)</strong> 2x - 3 = x + 1<br>
+                2x - x = 1 + 3<br>
+                x = 4<br><br>
+                <strong>2)</strong> 2x - 3 = -(x + 1)<br>
+                2x - 3 = -x - 1<br>
+                2x + x = -1 + 3<br>
+                3x = 2<br>
+                x = \(\frac{2}{3}\)<br><br>
+                <strong>Ответ:</strong> x = 4; x = \(\frac{2}{3}\)
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решите уравнение \(|x - 5| = |3 - x|\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                <strong>1)</strong> x - 5 = 3 - x<br>
+                x + x = 3 + 5<br>
+                2x = 8<br>
+                x = 4<br><br>
+                <strong>2)</strong> x - 5 = -(3 - x)<br>
+                x - 5 = -3 + x<br>
+                x - x = -3 + 5<br>
+                0 = 2 — неверно!<br><br>
+                <strong>Ответ:</strong> x = 4
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §4. МОДУЛЬ РАВЕН ВЫРАЖЕНИЮ |f(x)| = g(x) ===== -->
+    <div class="card green">
+        <h2><span class="badge green">§4</span> Уравнения |f(x)| = g(x)</h2>
+
+        <p>Когда справа стоит выражение с переменной, <strong>обязательно нужно ограничение</strong>!</p>
+
+        <div class="warning-box">
+            <strong>⚠️ Алгоритм решения:</strong>
+            <div class="step-box">
+                <strong>Шаг 1:</strong> Записать ограничение: g(x) ≥ 0<br>
+                <em>(потому что слева модуль, а он ≥ 0)</em>
+            </div>
+            <div class="step-box">
+                <strong>Шаг 2:</strong> Решить совокупность:<br>
+                \(\begin{cases} f(x) = g(x) \\ f(x) = -g(x) \end{cases}\)
+            </div>
+            <div class="step-box">
+                <strong>Шаг 3:</strong> Проверить найденные корни на соответствие ограничению
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решите уравнение \(|x^2 - 4| = x - 2\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br><br>
+                <strong>Шаг 1:</strong> Ограничение: x - 2 ≥ 0  x ≥ 2<br><br>
+                <strong>Шаг 2:</strong> Решаем два уравнения:<br><br>
+                <strong>1)</strong> x² - 4 = x - 2<br>
+                x² - x - 2 = 0<br>
+                D = 1 + 8 = 9<br>
+                x₁ = \(\frac{1+3}{2}\) = 2; x₂ = \(\frac{1-3}{2}\) = -1<br><br>
+                <strong>2)</strong> x² - 4 = -(x - 2)<br>
+                x² - 4 = -x + 2<br>
+                x² + x - 6 = 0<br>
+                D = 1 + 24 = 25<br>
+                x₁ = \(\frac{-1+5}{2}\) = 2; x₂ = \(\frac{-1-5}{2}\) = -3<br><br>
+                <strong>Шаг 3:</strong> Проверка ограничения x ≥ 2:<br>
+                x = 2 ✓ (подходит)<br>
+                x = -1 ✗ (не подходит)<br>
+                x = -3 ✗ (не подходит)<br><br>
+                <strong>Ответ:</strong> x = 2
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решите уравнение \(|2x + 1| = x + 4\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br><br>
+                <strong>Шаг 1:</strong> Ограничение: x + 4 ≥ 0  x ≥ -4<br><br>
+                <strong>Шаг 2:</strong> Решаем:<br><br>
+                <strong>1)</strong> 2x + 1 = x + 4<br>
+                2x - x = 4 - 1<br>
+                x = 3<br><br>
+                <strong>2)</strong> 2x + 1 = -(x + 4)<br>
+                2x + 1 = -x - 4<br>
+                2x + x = -4 - 1<br>
+                3x = -5<br>
+                x = \(-\frac{5}{3}\) ≈ -1,67<br><br>
+                <strong>Шаг 3:</strong> Проверка x ≥ -4:<br>
+                x = 3 ≥ -4 ✓<br>
+                x = -5/3 ≥ -4 ✓<br><br>
+                <strong>Ответ:</strong> x = 3; x = \(-\frac{5}{3}\)
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §5. КВАДРАТНЫЙ ТРЁХЧЛЕН ПОД МОДУЛЕМ ===== -->
+    <div class="card">
+        <h2><span class="badge">§5</span> Квадратный трёхчлен под модулем</h2>
+
+        <p>Когда под модулем стоит квадратный трёхчлен, используем <strong>метод интервалов</strong>.</p>
+
+        <div class="warning-box">
+            <strong>📋 Алгоритм:</strong>
+            <div class="step-box">
+                <strong>Шаг 1:</strong> Найти корни квадратного трёхчлена ax² + bx + c = 0
+            </div>
+            <div class="step-box">
+                <strong>Шаг 2:</strong> Отметить их на числовой прямой и определить знаки
+            </div>
+            <div class="step-box">
+                <strong>Шаг 3:</strong> Раскрыть модуль на каждом интервале:
+                <ul style="margin-top:6px; margin-left:20px;">
+                    <li>Если трёхчлен ≥ 0, то |ax² + bx + c| = ax² + bx + c</li>
+                    <li>Если трёхчлен < 0, то |ax² + bx + c| = -(ax² + bx + c)</li>
+                </ul>
+            </div>
+            <div class="step-box">
+                <strong>Шаг 4:</strong> Решить уравнение на каждом интервале и проверить принадлежность
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Решите уравнение \(|x^2 - 5x + 6| = 2\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br><br>
+                <strong>Шаг 1:</strong> Находим корни x² - 5x + 6 = 0<br>
+                D = 25 - 24 = 1<br>
+                x₁ = \(\frac{5+1}{2}\) = 3; x₂ = \(\frac{5-1}{2}\) = 2<br><br>
+                <strong>Шаг 2:</strong> Определяем знаки:<br>
+                • При x < 2: трёхчлен > 0 (плюс)<br>
+                • При 2 < x < 3: трёхчлен < 0 (минус)<br>
+                • При x > 3: трёхчлен > 0 (плюс)<br><br>
+                <strong>Шаг 3:</strong> Решаем на каждом промежутке:<br><br>
+                <strong>1)</strong> x ≤ 2 или x ≥ 3 (где трёхчлен ≥ 0):<br>
+                x² - 5x + 6 = 2<br>
+                x² - 5x + 4 = 0<br>
+                D = 25 - 16 = 9<br>
+                x₁ = \(\frac{5+3}{2}\) = 4; x₂ = \(\frac{5-3}{2}\) = 1<br>
+                Проверка: 1 ≤ 2 ✓; 4 ≥ 3 ✓<br><br>
+                <strong>2)</strong> 2 < x < 3 (где трёхчлен < 0):<br>
+                -(x² - 5x + 6) = 2<br>
+                -x² + 5x - 6 = 2<br>
+                x² - 5x + 8 = 0<br>
+                D = 25 - 32 = -7 < 0<br>
+                Корней нет<br><br>
+                <strong>Ответ:</strong> x = 1; x = 4
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решите уравнение \(|x^2 - 4x + 3| = 0\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br><br>
+                Модуль равен 0 только когда выражение под модулем равно 0:<br><br>
+                x² - 4x + 3 = 0<br>
+                D = 16 - 12 = 4<br>
+                x₁ = \(\frac{4+2}{2}\) = 3; x₂ = \(\frac{4-2}{2}\) = 1<br><br>
+                <strong>Ответ:</strong> x = 1; x = 3
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §6. ОСОБЫЕ СЛУЧАИ ===== -->
+    <div class="card blue">
+        <h2><span class="badge blue">§6</span> Особые случаи</h2>
+
+        <div class="example-box">
+            <strong>Случай 1: Сумма модулей равна нулю</strong><br>
+            Если \(|f(x)| + |g(x)| = 0\), то оба модуля должны быть равны нулю:<br>
+            \(\begin{cases} f(x) = 0 \\ g(x) = 0 \end{cases}\)<br><br>
+            <strong>Пример:</strong> \(|x - 2| + |x + 3| = 0\)<br>
+            <div class="solution">
+                \(\begin{cases} x - 2 = 0 \\ x + 3 = 0 \end{cases}\) ⟹ \(\begin{cases} x = 2 \\ x = -3 \end{cases}\)<br>
+                Эти значения не совпадают, значит <strong>решений нет</strong>.
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Случай 2: Модуль в модуле</strong><br>
+            \(||f(x)|| = |f(x)|\) — внешний модуль можно убрать!<br><br>
+            <strong>Пример:</strong> \(||x - 3|| = 5\)<br>
+            <div class="solution">
+                |x - 3| = 5<br>
+                \(\begin{cases} x - 3 = 5 \\ x - 3 = -5 \end{cases}\)<br>
+                x = 8; x = -2<br><br>
+                <strong>Ответ:</strong> x = 8; x = -2
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Частые ошибки:</strong>
+            <ul style="margin-top:8px;">
+                <li><strong>Забыли проверить ограничение</strong> в уравнениях вида |f(x)| = g(x)</li>
+                <li><strong>Потеряли корни</strong> — не рассмотрели оба случая</li>
+                <li><strong>Неверно раскрыли модуль</strong>: |-x| = x (неверно!), правильно: |-x| = |x|</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== §7. СВОДКА АЛГОРИТМОВ ===== -->
+    <div class="card green">
+        <h2><span class="badge green">§7</span> Сводка алгоритмов</h2>
+
+        <div class="formula-box">
+            <strong>1. |f(x)| = a:</strong><br>
+            Если a < 0 — нет решений<br>
+            Если a = 0 — f(x) = 0<br>
+            Если a > 0 — \(\begin{cases} f(x) = a \\ f(x) = -a \end{cases}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>2. |f(x)| = |g(x)|:</strong><br>
+            \(\begin{cases} f(x) = g(x) \\ f(x) = -g(x) \end{cases}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>3. |f(x)| = g(x):</strong><br>
+            \(\begin{cases} g(x) \ge 0 \\ \begin{cases} f(x) = g(x) \\ f(x) = -g(x) \end{cases} \end{cases}\)
+        </div>
+
+        <div class="note-box">
+            <strong> Совет:</strong> Всегда проверяйте свои ответы подстановкой в исходное уравнение!
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
