@@ -33,7 +33,7 @@
             background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 30px 16px;
+            padding: 80px 16px 30px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -71,7 +71,6 @@
             border-radius: 28px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
             padding: 40px;
-            margin-top: 50px; /* Отступ под таймер */
         }
 
         header {
@@ -203,23 +202,22 @@
         .task-label.green { color: var(--accent-green); }
         .task-label.orange { color: var(--accent-orange); }
 
+        /* ИСПРАВЛЕНО: убрано flex-центрирование и min-height,
+           из-за которых «слетал» текст и пропадали пробелы */
         .task-condition {
             font-size: 16px;
             margin-bottom: 14px;
             padding: 4px 0;
             color: var(--text-main);
-            flex: 1;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            line-height: 1.6;
+            line-height: 1.7;
         }
+        .task-condition p { margin: 0; }
 
         .answer-row {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 6px;
+            margin-top: auto;
             padding-top: 10px;
             border-top: 1px solid #eef2f7;
             font-size: 14px;
@@ -246,6 +244,7 @@
             display: flex;
             gap: 20px;
             margin-top: 4px;
+            flex-wrap: wrap;
         }
         .yesno-options label {
             display: flex;
@@ -308,7 +307,7 @@
             background: rgba(10, 25, 45, 0.35);
             backdrop-filter: blur(6px);
             display: none; align-items: center; justify-content: center;
-            z-index: 1000; padding: 20px;
+            z-index: 1100; padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
@@ -322,6 +321,7 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card p { margin-bottom: 12px; font-size: 0.95rem; color: #4a627a; }
         .modal-card textarea {
             width: 100%; padding: 12px 16px;
             border: 2px solid #dce5ef; border-radius: 18px;
@@ -341,11 +341,13 @@
         }
 
         @media (max-width: 700px) {
-            .container { padding: 22px 18px; margin-top: 60px; }
+            body { padding-top: 70px; }
+            .container { padding: 22px 18px; }
             .task-grid { grid-template-columns: 1fr; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
             .section-desc { margin-left: 0; }
             h1 { font-size: 22px; }
+            .info-line { display: block; }
         }
     </style>
 </head>
@@ -389,12 +391,12 @@
             <div class="task-grid">
                 <div class="task-card">
                     <div class="task-label">Переведи в десятичную дробь</div>
-                    <div class="task-condition">\(45\%\)</div>
+                    <div class="task-condition"><p>\(45\%\)</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q1"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label green">Переведи в проценты</div>
-                    <div class="task-condition">\(0{,}82\)</div>
+                    <div class="task-condition"><p>\(0{,}82\)</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q2"></div>
                 </div>
             </div>
@@ -410,17 +412,17 @@
             <div class="task-grid">
                 <div class="task-card">
                     <div class="task-label">Найди процент от числа</div>
-                    <div class="task-condition">Найди \(12\%\) от \(350\)</div>
+                    <div class="task-condition"><p>Найди \(12\%\) от \(350\)</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label orange">Найди число по проценту</div>
-                    <div class="task-condition">\(8\%\) числа равны \(24\). Найди число.</div>
+                    <div class="task-condition"><p>\(8\%\) числа равны \(24\). Найди число.</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q4"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label green">Процентное отношение</div>
-                    <div class="task-condition">Сколько процентов составляет \(15\) от \(60\)?</div>
+                    <div class="task-condition"><p>Сколько процентов составляет \(15\) от \(60\)?</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q5"></div>
                 </div>
             </div>
@@ -436,12 +438,12 @@
             <div class="task-grid">
                 <div class="task-card">
                     <div class="task-label">Увеличение</div>
-                    <div class="task-condition">Товар стоил \(1200\) руб. Цену увеличили на \(15\%\). Новая цена?</div>
+                    <div class="task-condition"><p>Товар стоил \(1200\) руб. Цену увеличили на \(15\%\). Новая цена?</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q6"></div>
                 </div>
                 <div class="task-card">
                     <div class="task-label orange">Уменьшение</div>
-                    <div class="task-condition">Масса арбуза была \(50\) кг. После усушки она уменьшилась на \(10\%\). Новая масса?</div>
+                    <div class="task-condition"><p>Масса арбуза была \(50\) кг. После усушки она уменьшилась на \(10\%\). Новая масса?</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q7"></div>
                 </div>
             </div>
@@ -457,7 +459,7 @@
             <div class="task-grid">
                 <div class="task-card">
                     <div class="task-label">И / Л</div>
-                    <div class="task-condition">Если число увеличили на \(10\%\), а затем уменьшили на \(10\%\), оно вернётся к исходному значению.</div>
+                    <div class="task-condition"><p>Если число увеличили на \(10\%\), а затем уменьшили на \(10\%\), оно вернётся к исходному значению.</p></div>
                     <div class="yesno-options">
                         <label><input type="radio" name="tf1" value="Верно"> Верно</label>
                         <label><input type="radio" name="tf1" value="Неверно"> Неверно</label>
@@ -466,7 +468,7 @@
                 </div>
                 <div class="task-card">
                     <div class="task-label">И / Л</div>
-                    <div class="task-condition">\(1\%\) равен \(0{,}01\).</div>
+                    <div class="task-condition"><p>\(1\%\) равен \(0{,}01\).</p></div>
                     <div class="yesno-options">
                         <label><input type="radio" name="tf2" value="Верно"> Верно</label>
                         <label><input type="radio" name="tf2" value="Неверно"> Неверно</label>
@@ -509,9 +511,9 @@
 
         (function() {
             // ============================================================
-            //  ТАЙМЕР
+            //  ТАЙМЕР — 15 минут
             // ============================================================
-            let timeLeft = 1 * 60; // 15 минут в секундах
+            let timeLeft = 15 * 60;
             const timerDisplay = document.getElementById('timerDisplay');
             const stickyTimer = document.getElementById('stickyTimer');
             let timerInterval;
@@ -523,11 +525,12 @@
             }
 
             function startTimer() {
+                timerDisplay.textContent = formatTime(timeLeft);
                 timerInterval = setInterval(() => {
                     timeLeft--;
                     timerDisplay.textContent = formatTime(timeLeft);
-                    
-                    if (timeLeft <= 120) { // Меньше 2 минут
+
+                    if (timeLeft <= 120) {
                         stickyTimer.classList.add('urgent');
                     }
 
@@ -635,18 +638,19 @@
                     document.getElementById(group.id).value = '';
                 });
                 answerInputs.forEach(input => input.value = '');
+                document.querySelectorAll('.task-card.empty-field').forEach(c => c.classList.remove('empty-field'));
                 resultArea.innerHTML = '🧹 Поля очищены.';
                 progressFill.style.width = '0%';
                 updateProgress();
             }
 
             // ============================================================
-            //  ЛОГИКА ОТПРАВКИ (вынесена в функцию для автоотправки)
+            //  ЛОГИКА ОТПРАВКИ
             // ============================================================
             async function executeSubmission(isAuto = false) {
                 setRadioHidden();
                 const comment = isAuto ? "Автоматическая отправка: время вышло." : reportComment.value.trim();
-                
+
                 if (!isAuto && !comment) {
                     modalStatus.textContent = '⚠️ Напишите комментарий.';
                     modalStatus.style.color = '#dc2626';
@@ -714,7 +718,7 @@
                             modalStatus.style.color = '#16a34a';
                             setTimeout(() => reportModal.classList.remove('active'), 3000);
                         }
-                        resultArea.innerHTML = isAuto 
+                        resultArea.innerHTML = isAuto
                             ? `<div style="color: var(--accent-red); font-weight: 700;">⏰ Время вышло! Отчёт автоматически отправлен учителю.</div>`
                             : `<div style="color: var(--accent-green); font-weight: 700;">✅ Отчёт успешно отправлен!</div>`;
                     } else {
@@ -735,9 +739,7 @@
                 }
             }
 
-            // Обработчики кнопок
             reportBtn.addEventListener('click', function() {
-                // Проверка на пустые поля перед открытием модалки
                 let emptyFields = [];
                 answerInputs.forEach(inp => { if (!inp.value.trim()) emptyFields.push(inp.id.replace('q', '')); });
                 radioGroups.forEach(g => { if (!document.getElementById(g.id).value) emptyFields.push(g.id.replace('q', '')); });
@@ -746,7 +748,7 @@
                     resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены задания: № ${emptyFields.join(', ')}. Заполните их перед отправкой!</div>`;
                     emptyFields.forEach(id => {
                         const el = document.getElementById('q' + id);
-                        if(el) el.closest('.task-card').classList.add('empty-field');
+                        if (el) el.closest('.task-card').classList.add('empty-field');
                     });
                     return;
                 }
@@ -776,14 +778,12 @@
                 updateProgress();
             }));
 
-            // Автоотправка
             async function autoSubmitHomework() {
                 reportBtn.disabled = true;
                 reportBtn.textContent = '⏰ Время вышло';
                 await executeSubmission(true);
             }
 
-            // Запуск
             updateProgress();
             startTimer();
 
