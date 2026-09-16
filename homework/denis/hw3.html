@@ -375,44 +375,74 @@
 
         <div class="progress-wrap">
             <div class="progress-top">
-                <span>📈 Прогресс выполнения</span>
+                <span> Прогресс выполнения</span>
                 <span id="progressText">Заполнено: 0 / 25</span>
             </div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
 
-        <!-- ===== 1. ФСУ ===== -->
+        <!-- ===== 1. ФСУ (ТЕСТЫ) ===== -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">1</div>
-                <div class="section-title">Формулы сокращённого умножения</div>
+                <div class="section-title">Формулы сокращённого умножения (тесты)</div>
                 <div class="section-desc">5 заданий</div>
             </div>
             <div class="task-grid">
                 <div class="task-card">
-                    <div class="task-label">Раскройте скобки</div>
-                    <div class="task-condition"><p>\((x + 5)^2\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q1" placeholder="в стандартном виде"></div>
+                    <div class="task-label purple">Выберите правильный ответ</div>
+                    <div class="task-condition"><p>\((x + 5)^2\) равно:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="f1" value="x^2+25"> \(x^2 + 25\)</label>
+                        <label><input type="radio" name="f1" value="x^2+10x+25"> \(x^2 + 10x + 25\)</label>
+                        <label><input type="radio" name="f1" value="x^2+5x+25"> \(x^2 + 5x + 25\)</label>
+                        <label><input type="radio" name="f1" value="x^2-10x+25"> \(x^2 - 10x + 25\)</label>
+                    </div>
+                    <input type="hidden" id="q1" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label">Раскройте скобки</div>
-                    <div class="task-condition"><p>\((3a - 4)^2\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q2"></div>
+                    <div class="task-label purple">Выберите правильный ответ</div>
+                    <div class="task-condition"><p>\((3a - 4)^2\) равно:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="f2" value="9a^2-16"> \(9a^2 - 16\)</label>
+                        <label><input type="radio" name="f2" value="9a^2-24a+16"> \(9a^2 - 24a + 16\)</label>
+                        <label><input type="radio" name="f2" value="9a^2-12a+16"> \(9a^2 - 12a + 16\)</label>
+                        <label><input type="radio" name="f2" value="9a^2+24a+16"> \(9a^2 + 24a + 16\)</label>
+                    </div>
+                    <input type="hidden" id="q2" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label">Разложите на множители</div>
-                    <div class="task-condition"><p>\(x^2 - 49\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
+                    <div class="task-label purple">Выберите правильный ответ</div>
+                    <div class="task-condition"><p>\(x^2 - 49\) разлагается на множители:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="f3" value="(x-7)(x+7)"> \((x - 7)(x + 7)\)</label>
+                        <label><input type="radio" name="f3" value="(x-7)^2"> \((x - 7)^2\)</label>
+                        <label><input type="radio" name="f3" value="(x+7)^2"> \((x + 7)^2\)</label>
+                        <label><input type="radio" name="f3" value="(x-49)(x+1)"> \((x - 49)(x + 1)\)</label>
+                    </div>
+                    <input type="hidden" id="q3" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label">Раскройте скобки</div>
-                    <div class="task-condition"><p>\((2x + 3y)(2x - 3y)\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q4"></div>
+                    <div class="task-label purple">Выберите правильный ответ</div>
+                    <div class="task-condition"><p>\((2x + 3y)(2x - 3y)\) равно:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="f4" value="4x^2-9y^2"> \(4x^2 - 9y^2\)</label>
+                        <label><input type="radio" name="f4" value="4x^2+9y^2"> \(4x^2 + 9y^2\)</label>
+                        <label><input type="radio" name="f4" value="4x^2-6xy+9y^2"> \(4x^2 - 6xy + 9y^2\)</label>
+                        <label><input type="radio" name="f4" value="4x^2-12xy+9y^2"> \(4x^2 - 12xy + 9y^2\)</label>
+                    </div>
+                    <input type="hidden" id="q4" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label">Упростите</div>
-                    <div class="task-condition"><p>\((a + 2)^2 - (a - 2)^2\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q5"></div>
+                    <div class="task-label purple">Выберите правильный ответ</div>
+                    <div class="task-condition"><p>\((a + 2)^2 - (a - 2)^2\) упрощается до:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="f5" value="0"> \(0\)</label>
+                        <label><input type="radio" name="f5" value="4a"> \(4a\)</label>
+                        <label><input type="radio" name="f5" value="8a"> \(8a\)</label>
+                        <label><input type="radio" name="f5" value="2a"> \(2a\)</label>
+                    </div>
+                    <input type="hidden" id="q5" value="">
                 </div>
             </div>
         </div>
@@ -592,7 +622,7 @@
         </div>
 
         <div class="action-bar">
-            <button class="btn btn-success" id="reportBtn"> Отправить отчёт</button>
+            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
             <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
         </div>
 
@@ -608,7 +638,7 @@
     <!-- МОДАЛКА -->
     <div class="modal-overlay" id="reportModal">
         <div class="modal-card">
-            <h3>📤 Отправить отчёт</h3>
+            <h3> Отправить отчёт</h3>
             <p>Напишите, что было сложно, или задайте вопрос (обязательно).</p>
             <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
             <div class="modal-buttons">
@@ -659,7 +689,7 @@
             //  ПРАВИЛЬНЫЕ ОТВЕТЫ
             // ============================================================
             const answers = {
-                // ФСУ
+                // ФСУ (тесты)
                 q1: "x^2+10x+25",
                 q2: "9a^2-24a+16",
                 q3: "(x-7)(x+7)",
@@ -695,7 +725,13 @@
                 q25: "6"
             };
 
+            // Все радио-группы (ФСУ + степени)
             const radioGroups = [
+                { name: 'f1', id: 'q1' },
+                { name: 'f2', id: 'q2' },
+                { name: 'f3', id: 'q3' },
+                { name: 'f4', id: 'q4' },
+                { name: 'f5', id: 'q5' },
                 { name: 't1', id: 'q16' },
                 { name: 't2', id: 'q17' },
                 { name: 't3', id: 'q18' },
@@ -781,7 +817,7 @@
                 }
 
                 // Для тестовых вопросов
-                if (['q16','q17','q18','q19','q20'].includes(id)) {
+                if (['q1','q2','q3','q4','q5','q16','q17','q18','q19','q20'].includes(id)) {
                     return normUser === normRight;
                 }
 
@@ -835,7 +871,7 @@
                 radioGroups.forEach(g => { if (!document.getElementById(g.id).value) emptyFields.push(g.id.replace('q', '')); });
 
                 if (emptyFields.length > 0) {
-                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">️ Не заполнены задания: № ${emptyFields.join(', ')}. Заполните их перед отправкой!</div>`;
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены задания: № ${emptyFields.join(', ')}. Заполните их перед отправкой!</div>`;
                     emptyFields.forEach(id => {
                         const el = document.getElementById('q' + id);
                         if (el) el.closest('.task-card').classList.add('empty-field');
@@ -934,7 +970,7 @@
                         modalStatus.style.color = '#16a34a';
                         setTimeout(() => reportModal.classList.remove('active'), 3000);
                     } else {
-                        console.log('📤 Отправка отчёта:', title, '\n', reportBody);
+                        console.log(' Отправка отчёта:', title, '\n', reportBody);
                         modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим, см. консоль)';
                         modalStatus.style.color = '#16a34a';
                         setTimeout(() => reportModal.classList.remove('active'), 3000);
@@ -959,7 +995,7 @@
 
             async function autoSubmitHomework() {
                 reportBtn.disabled = true;
-                reportBtn.textContent = '⏰ Время вышло';
+                reportBtn.textContent = ' Время вышло';
                 // Автоотправка без комментария (системный)
                 reportComment.value = "Автоматическая отправка: время вышло.";
                 const btn = sendReportBtn;
@@ -993,7 +1029,7 @@
                     else {
                         const card = document.getElementById(id)?.closest('.task-card');
                         const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
-                        mistakes.push(`❌ ${cond} → ${userAnswer}`);
+                        mistakes.push(` ${cond} → ${userAnswer}`);
                     }
                     answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
                 }
@@ -1025,9 +1061,9 @@
                 try {
                     if (typeof createGitHubIssue === 'function') {
                         const issueUrl = await createGitHubIssue(title, reportBody);
-                        resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;"> Время вышло! Отчёт автоматически отправлен учителю.</div>`;
+                        resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⏰ Время вышло! Отчёт автоматически отправлен учителю.</div>`;
                     } else {
-                        console.log('📤 Автоотправка отчёта:', title, '\n', reportBody);
+                        console.log(' Автоотправка отчёта:', title, '\n', reportBody);
                         resultArea.innerHTML = '✅ Отчёт успешно отправлен! (демо)';
                     }
                 } catch (error) {
