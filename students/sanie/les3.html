@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Алгебра 7-8 класс</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dce5f2;
+            color: #1d3a66;
+        }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+        .tag.purple { background: #e8dff5; color: #7c3aed; }
+        .tag.blue { background: #dce9f5; color: var(--accent-blue); }
+
+        .section { margin-bottom: 38px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .section-title { font-size: 20px; font-weight: 700; }
+
+        .theory-card {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e6edf6;
+            border-left: 5px solid var(--accent-blue);
+        }
+        .theory-card.green { border-left-color: var(--accent-green); }
+        .theory-card.orange { border-left-color: var(--accent-orange); }
+        .theory-card.purple { border-left-color: var(--accent-purple); }
+
+        .theory-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .theory-card p, .theory-card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+        .theory-card ul { margin: 10px 0 10px 24px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1d4a9e;
+        }
+        .formula-box.green { background: #f0f7f0; border-color: var(--accent-green); color: #059669; }
+        .formula-box.orange { background: #fff7ed; border-color: var(--accent-orange); color: #c2410c; }
+        .formula-box.purple { background: #f5f3ff; border-color: var(--accent-purple); color: #6d28d9; }
+
+        .example-box {
+            background: #fcf3e0;
+            border-left: 5px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .example-box strong { color: #b47d2a; }
+
+        .note-box {
+            background: #f0f7f0;
+            border-left: 5px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .note-box strong { color: #059669; }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 5px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .warning-box strong { color: #d97706; }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            h1 { font-size: 22px; }
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .theory-card { break-inside: avoid; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📚 Теоретический справочник</h1>
+            <div class="subtitle">Алгебра 7-8 класс · Основные правила и формулы</div>
+            <div class="tags">
+                <span class="tag blue">Вычисления</span>
+                <span class="tag green">Упрощение</span>
+                <span class="tag orange">Проценты</span>
+                <span class="tag purple">Дроби</span>
+            </div>
+        </header>
+
+        <!-- ===== 1. ВЫЧИСЛЕНИЕ ЗНАЧЕНИЙ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Вычисление значений выражений</div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Правило подстановки</h3>
+                <p>Чтобы найти значение выражения с переменными, нужно подставить вместо букв заданные числа и выполнить арифметические действия в правильном порядке:</p>
+                <ul>
+                    <li>Сначала умножение/деление;</li>
+                    <li>Потом сложение/вычитание.</li>
+                </ul>
+                
+                <div class="example-box">
+                    <strong>Пример:</strong> Найти \(3a + 2b\), если \(a = -4\), \(b = 5\).<br><br>
+                    <strong>Решение:</strong><br>
+                    \(3 \cdot (-4) + 2 \cdot 5 = -12 + 10 = -2\)
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 2. УПРОЩЕНИЕ ВЫРАЖЕНИЙ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num" style="background: var(--accent-green);">2</div>
+                <div class="section-title">Упрощение выражений (Раскрытие скобок)</div>
+            </div>
+
+            <div class="theory-card green">
+                <h3>Правила раскрытия скобок</h3>
+                <ul>
+                    <li>Если перед скобкой стоит <strong>«+»</strong>, скобки просто убираются, знаки внутри не меняются.</li>
+                    <li>Если перед скобкой стоит <strong>«–»</strong>, скобки убираются, а все знаки внутри меняются на противоположные.</li>
+                    <li>Число перед скобкой <strong>умножается</strong> на каждое слагаемое внутри скобок.</li>
+                </ul>
+                <div class="note-box">
+                    <strong>Важно:</strong> После раскрытия скобок обязательно приводим подобные слагаемые (складываем коэффициенты при одинаковых буквах).
+                </div>
+
+                <div class="example-box">
+                    <strong>Пример:</strong> \(2(x - 3) - (x + 1)\)<br><br>
+                    1) Раскрываем скобки:<br>
+                    \(= 2x - 6 - x - 1\)<br><br>
+                    2) Группируем подобные:<br>
+                    \(= (2x - x) + (-6 - 1)\)<br><br>
+                    3) Ответ:<br>
+                    \(= x - 7\)
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 3. ПРОЦЕНТЫ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num" style="background: var(--accent-orange);">3</div>
+                <div class="section-title">Проценты</div>
+            </div>
+
+            <div class="theory-card orange">
+                <h3>Основные задачи на проценты</h3>
+                
+                <div class="formula-box orange">
+                    Найти процент от числа:<br>
+                    Умножить число на процент и разделить на 100<br>
+                    (или умножить на десятичную дробь).
+                </div>
+                <p>Например, \(15\%\) от \(x\) — это \(0{,}15x\).</p>
+
+                <div class="formula-box orange">
+                    Увеличение на \(p\%\):<br>
+                    Умножить исходное число на \(\left(1 + \frac{p}{100}\right)\)
+                </div>
+                <p>Например, цена выросла на 15% → новая цена: \(x \cdot 1{,}15\).</p>
+
+                <div class="formula-box orange">
+                    Концентрация раствора:<br>
+                    Это отношение массы вещества к общей массе раствора.
+                </div>
+                <div class="formula-box">
+                    \[\frac{\text{масса вещества}}{\text{масса всего раствора}}\]
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Важно:</strong> При добавлении вещества меняется и числитель (добавили соль), и знаменатель (увеличилась общая масса).
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 4. ДЕЙСТВИЯ С ДРОБЯМИ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num" style="background: var(--accent-purple);">4</div>
+                <div class="section-title">Действия с дробями</div>
+            </div>
+
+            <div class="theory-card purple">
+                <h3>Сложение и вычитание дробей</h3>
+                <p>При разных знаменателях сначала приводим к общему знаменателю, затем складываем/вычитаем только числители.</p>
+                
+                <div class="formula-box purple">
+                    \[\frac{1}{x} - \frac{1}{y} = \frac{y}{xy} - \frac{x}{xy} = \frac{y-x}{xy}\]
+                </div>
+
+                <h3>Дробь как деление</h3>
+                <p>Черта дроби заменяет знак деления.</p>
+                
+                <div class="note-box">
+                    <strong>Совет:</strong> Подставляя значения, не забывайте ставить скобки вокруг числителя и знаменателя, если они состоят из нескольких действий.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>📌 Данный справочник содержит краткую теорию для подготовки к выполнению домашних заданий.</p>
+        </div>
+    </div>
+
+</body>
+</html>
