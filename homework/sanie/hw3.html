@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Домашнее задание | Алгебра 7-8 класс</title>
+    <title>Домашнее задание | Алгебра 7 класс</title>
 
     <script>
         window.MathJax = {
@@ -64,22 +64,22 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
             background: var(--card-bg);
             border-radius: 28px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-            padding: 40px;
+            padding: 35px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
             border-bottom: 2px solid #eef2f7;
         }
 
-        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
         .subtitle { font-size: 15px; color: var(--text-secondary); }
 
         .info-line {
@@ -117,8 +117,8 @@
             background: #f4f8fd;
             border: 1px solid #e2ebf5;
             border-radius: 16px;
-            padding: 14px 18px;
-            margin-bottom: 32px;
+            padding: 12px 16px;
+            margin-bottom: 28px;
         }
         .progress-top {
             display: flex;
@@ -143,41 +143,41 @@
             transition: width 0.5s ease;
         }
 
-        .section { margin-bottom: 38px; }
+        .section { margin-bottom: 32px; }
         .section-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
             border-bottom: 2px solid #eef2f7;
         }
         .section-num {
             background: var(--accent-blue);
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             flex-shrink: 0;
         }
-        .section-title { font-size: 20px; font-weight: 700; }
-        .section-desc { font-size: 14px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+        .section-title { font-size: 18px; font-weight: 700; }
+        .section-desc { font-size: 13px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
 
         .task-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
         }
 
         .task-card {
             background: #fafcff;
             border-radius: 14px;
-            padding: 18px 20px 16px;
+            padding: 16px 18px 14px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             border: 2px solid #e6edf6;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -203,11 +203,11 @@
         .task-label.purple { color: #7c3aed; }
 
         .task-condition {
-            font-size: 16px;
-            margin-bottom: 14px;
+            font-size: 15px;
+            margin-bottom: 12px;
             padding: 4px 0;
             color: var(--text-main);
-            line-height: 1.7;
+            line-height: 1.6;
         }
         .task-condition p { margin: 0; }
 
@@ -240,7 +240,7 @@
 
         .test-options {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
             margin-top: 4px;
         }
@@ -248,11 +248,11 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             color: var(--text-main);
             cursor: pointer;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             transition: background 0.2s;
         }
@@ -265,12 +265,12 @@
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
-            margin: 20px 0 24px;
+            margin: 20px 0 20px;
             justify-content: center;
         }
 
         .btn {
-            padding: 10px 32px;
+            padding: 10px 28px;
             border: none;
             border-radius: 40px;
             font-size: 15px;
@@ -291,11 +291,11 @@
         .result-area {
             background: #f8faff;
             border-radius: 20px;
-            padding: 20px 24px;
-            margin-top: 20px;
+            padding: 18px 22px;
+            margin-top: 18px;
             font-size: 0.95rem;
             border: 1px solid #dce5ef;
-            min-height: 60px;
+            min-height: 55px;
             color: var(--text-secondary);
             text-align: center;
         }
@@ -332,7 +332,7 @@
         #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; text-align: center; }
 
         .footer-note {
-            margin-top: 30px; padding-top: 16px;
+            margin-top: 25px; padding-top: 14px;
             border-top: 2px solid #eef2f7;
             font-size: 13px; color: var(--text-secondary);
             text-align: center;
@@ -340,7 +340,7 @@
 
         @media (max-width: 700px) {
             body { padding-top: 70px; }
-            .container { padding: 22px 18px; }
+            .container { padding: 20px 16px; }
             .task-grid { grid-template-columns: 1fr; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
             .section-desc { margin-left: 0; }
@@ -352,38 +352,38 @@
 <body>
 
     <div id="stickyTimer" class="sticky-timer">
-        ⏱ Осталось времени: <span id="timerDisplay">45:00</span>
+        ⏱ Осталось времени: <span id="timerDisplay">25:00</span>
     </div>
 
     <div class="container">
         <header>
             <h1>📝 Домашнее задание</h1>
-            <div class="subtitle">Алгебра 7-8 класс · Выражения и уравнения</div>
+            <div class="subtitle">Алгебра 7 класс</div>
             <div class="info-line">
                 <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
                 <strong>Дата:</strong> <span id="lessonDate"></span>
             </div>
             <div class="tags">
-                <span class="tag">25 заданий</span>
-                <span class="tag orange">⏱ 45 минут</span>
+                <span class="tag">12 заданий</span>
+                <span class="tag orange">⏱ 25 минут</span>
                 <span class="tag green">Автоотправка</span>
             </div>
         </header>
 
         <div class="progress-wrap">
             <div class="progress-top">
-                <span>📈 Прогресс выполнения</span>
-                <span id="progressText">Заполнено: 0 / 25</span>
+                <span>📈 Прогресс</span>
+                <span id="progressText">0 / 12</span>
             </div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
 
-        <!-- ===== 1. Вычисление значений выражений ===== -->
+        <!-- ===== 1. Вычисления ===== -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">1</div>
-                <div class="section-title">Вычисление значений выражений</div>
-                <div class="section-desc">6 заданий</div>
+                <div class="section-title">Вычисления</div>
+                <div class="section-desc">3 задания</div>
             </div>
             <div class="task-grid">
                 <div class="task-card">
@@ -401,226 +401,120 @@
                     <div class="task-condition"><p>\(2m - 3n\), если \(m = 4.7\), \(n = -2.1\)</p></div>
                     <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
                 </div>
-                <div class="task-card">
-                    <div class="task-label">Вычислите</div>
-                    <div class="task-condition"><p>\(6p + q\), если \(p = -1.3\), \(y = 5.8\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q4"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Вычислите</div>
-                    <div class="task-condition"><p>\(4x - 5y\), если \(x = 2.4\), \(y = -0.8\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q5"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Вычислите</div>
-                    <div class="task-condition"><p>\(7a + 2b\), если \(a = -1.6\), \(b = 3.5\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q6"></div>
-                </div>
             </div>
         </div>
 
-        <!-- ===== 2. Упрощение выражений (тесты) ===== -->
+        <!-- ===== 2. Упрощение (тесты) ===== -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">2</div>
                 <div class="section-title">Упрощение выражений</div>
-                <div class="section-desc">5 заданий</div>
+                <div class="section-desc">3 задания</div>
             </div>
             <div class="task-grid">
                 <div class="task-card">
-                    <div class="task-label purple">Выберите ответ</div>
-                    <div class="task-condition"><p>Упростите: \(3(x - y) - 2(x + y)\)</p></div>
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(3(x - y) - 2(x + y)\)</p></div>
                     <div class="test-options">
                         <label><input type="radio" name="t1" value="x-5y"> \(x - 5y\)</label>
                         <label><input type="radio" name="t1" value="x-y"> \(x - y\)</label>
                         <label><input type="radio" name="t1" value="5x-y"> \(5x - y\)</label>
-                        <label><input type="radio" name="t1" value="x+5y"> \(x + 5y\)</label>
                     </div>
-                    <input type="hidden" id="q7" value="">
+                    <input type="hidden" id="q4" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label purple">Выберите ответ</div>
-                    <div class="task-condition"><p>Упростите: \(4(a + b) - 3(a - b)\)</p></div>
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(4(a + b) - 3(a - b)\)</p></div>
                     <div class="test-options">
                         <label><input type="radio" name="t2" value="a+7b"> \(a + 7b\)</label>
                         <label><input type="radio" name="t2" value="a+b"> \(a + b\)</label>
                         <label><input type="radio" name="t2" value="7a+b"> \(7a + b\)</label>
-                        <label><input type="radio" name="t2" value="a-7b"> \(a - 7b\)</label>
                     </div>
-                    <input type="hidden" id="q8" value="">
+                    <input type="hidden" id="q5" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label purple">Выберите ответ</div>
-                    <div class="task-condition"><p>Упростите: \(2(3x - 4) + 5(x + 2)\)</p></div>
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(2(3x - 4) + 5(x + 2)\)</p></div>
                     <div class="test-options">
                         <label><input type="radio" name="t3" value="11x+2"> \(11x + 2\)</label>
                         <label><input type="radio" name="t3" value="11x-2"> \(11x - 2\)</label>
                         <label><input type="radio" name="t3" value="8x+2"> \(8x + 2\)</label>
-                        <label><input type="radio" name="t3" value="11x+18"> \(11x + 18\)</label>
                     </div>
-                    <input type="hidden" id="q9" value="">
-                </div>
-                <div class="task-card">
-                    <div class="task-label purple">Выберите ответ</div>
-                    <div class="task-condition"><p>Упростите: \(5(2m - 3) - 3(m + 4)\)</p></div>
-                    <div class="test-options">
-                        <label><input type="radio" name="t4" value="7m-27"> \(7m - 27\)</label>
-                        <label><input type="radio" name="t4" value="7m-3"> \(7m - 3\)</label>
-                        <label><input type="radio" name="t4" value="13m-27"> \(13m - 27\)</label>
-                        <label><input type="radio" name="t4" value="7m+27"> \(7m + 27\)</label>
-                    </div>
-                    <input type="hidden" id="q10" value="">
-                </div>
-                <div class="task-card">
-                    <div class="task-label purple">Выберите ответ</div>
-                    <div class="task-condition"><p>Упростите: \(6(p - 2q) + 4(3p + q)\)</p></div>
-                    <div class="test-options">
-                        <label><input type="radio" name="t5" value="18p-8q"> \(18p - 8q\)</label>
-                        <label><input type="radio" name="t5" value="18p+8q"> \(18p + 8q\)</label>
-                        <label><input type="radio" name="t5" value="10p-8q"> \(10p - 8q\)</label>
-                        <label><input type="radio" name="t5" value="18p-16q"> \(18p - 16q\)</label>
-                    </div>
-                    <input type="hidden" id="q11" value="">
+                    <input type="hidden" id="q6" value="">
                 </div>
             </div>
         </div>
 
-        <!-- ===== 3. Задачи на проценты и концентрации (тесты) ===== -->
+        <!-- ===== 3. Проценты (тесты) ===== -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">3</div>
-                <div class="section-title">Задачи на проценты и концентрации</div>
-                <div class="section-desc">5 заданий</div>
+                <div class="section-title">Проценты</div>
+                <div class="section-desc">3 задания</div>
             </div>
             <div class="task-grid">
                 <div class="task-card">
-                    <div class="task-label orange">Выберите ответ</div>
-                    <div class="task-condition"><p>В 300 г раствора содержится x г соли. После добавления 10 г соли концентрация стала:</p></div>
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>В 300 г раствора x г соли. После добавления 10 г соли концентрация:</p></div>
                     <div class="test-options">
-                        <label><input type="radio" name="c1" value="(x+10)/310"> \(\frac{x+10}{310} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c1" value="x/310"> \(\frac{x}{310} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c1" value="(x+10)/300"> \(\frac{x+10}{300} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c1" value="x/300"> \(\frac{x}{300} \cdot 100\%\)</label>
+                        <label><input type="radio" name="c1" value="(x+10)/310"> \(\frac{x+10}{310}\)</label>
+                        <label><input type="radio" name="c1" value="x/310"> \(\frac{x}{310}\)</label>
+                        <label><input type="radio" name="c1" value="(x+10)/300"> \(\frac{x+10}{300}\)</label>
                     </div>
-                    <input type="hidden" id="q12" value="">
+                    <input type="hidden" id="q7" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label orange">Выберите ответ</div>
-                    <div class="task-condition"><p>В сплаве массой 25 кг содержится a кг меди. После добавления 3 кг меди концентрация стала:</p></div>
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>В 200 г раствора 12% соли. Сколько граммов соли?</p></div>
                     <div class="test-options">
-                        <label><input type="radio" name="c2" value="(a+3)/28"> \(\frac{a+3}{28} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c2" value="a/28"> \(\frac{a}{28} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c2" value="(a+3)/25"> \(\frac{a+3}{25} \cdot 100\%\)</label>
-                        <label><input type="radio" name="c2" value="a/25"> \(\frac{a}{25} \cdot 100\%\)</label>
+                        <label><input type="radio" name="c2" value="24"> 24 г</label>
+                        <label><input type="radio" name="c2" value="12"> 12 г</label>
+                        <label><input type="radio" name="c2" value="20"> 20 г</label>
                     </div>
-                    <input type="hidden" id="q13" value="">
+                    <input type="hidden" id="q8" value="">
                 </div>
                 <div class="task-card">
-                    <div class="task-label orange">Выберите ответ</div>
-                    <div class="task-condition"><p>Цена товара x рублей. После повышения на 15% новая цена:</p></div>
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>Цена x руб. После повышения на 15%:</p></div>
                     <div class="test-options">
                         <label><input type="radio" name="c3" value="1.15x"> \(1.15x\)</label>
                         <label><input type="radio" name="c3" value="x+15"> \(x + 15\)</label>
                         <label><input type="radio" name="c3" value="0.15x"> \(0.15x\)</label>
-                        <label><input type="radio" name="c3" value="x-15"> \(x - 15\)</label>
                     </div>
-                    <input type="hidden" id="q14" value="">
-                </div>
-                <div class="task-card">
-                    <div class="task-label orange">Выберите ответ</div>
-                    <div class="task-condition"><p>В 200 г раствора 12% соли. Сколько граммов соли в растворе?</p></div>
-                    <div class="test-options">
-                        <label><input type="radio" name="c4" value="24"> 24 г</label>
-                        <label><input type="radio" name="c4" value="12"> 12 г</label>
-                        <label><input type="radio" name="c4" value="20"> 20 г</label>
-                        <label><input type="radio" name="c4" value="240"> 240 г</label>
-                    </div>
-                    <input type="hidden" id="q15" value="">
-                </div>
-                <div class="task-card">
-                    <div class="task-label orange">Выберите ответ</div>
-                    <div class="task-condition"><p>Сплав массой 40 кг содержит 20% меди. Сколько кг меди в сплаве?</p></div>
-                    <div class="test-options">
-                        <label><input type="radio" name="c5" value="8"> 8 кг</label>
-                        <label><input type="radio" name="c5" value="20"> 20 кг</label>
-                        <label><input type="radio" name="c5" value="40"> 40 кг</label>
-                        <label><input type="radio" name="c5" value="4"> 4 кг</label>
-                    </div>
-                    <input type="hidden" id="q16" value="">
+                    <input type="hidden" id="q9" value="">
                 </div>
             </div>
         </div>
 
-        <!-- ===== 4. Упрощение дробных выражений ===== -->
+        <!-- ===== 4. Дроби ===== -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">4</div>
-                <div class="section-title">Упрощение дробных выражений</div>
-                <div class="section-desc">5 заданий</div>
+                <div class="section-title">Дробные выражения</div>
+                <div class="section-desc">3 задания</div>
             </div>
             <div class="task-grid">
                 <div class="task-card">
-                    <div class="task-label green">Упростите</div>
+                    <div class="task-label green">Вычислите</div>
                     <div class="task-condition"><p>\(\frac{1}{x} - \frac{1}{y}\), если \(x = 4\), \(y = 6\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q17" placeholder="дробь"></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q10"></div>
                 </div>
                 <div class="task-card">
-                    <div class="task-label green">Упростите</div>
-                    <div class="task-condition"><p>\(\frac{2}{a} + \frac{3}{b}\), если \(a = 5\), \(b = 10\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q18"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label green">Упростите</div>
+                    <div class="task-label green">Вычислите</div>
                     <div class="task-condition"><p>\(\frac{x-y}{x+y}\), если \(x = 8\), \(y = 2\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q19"></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q11"></div>
                 </div>
                 <div class="task-card">
-                    <div class="task-label green">Упростите</div>
-                    <div class="task-condition"><p>\(\frac{3m+2n}{m-n}\), если \(m = 6\), \(n = 2\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q20"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label green">Упростите</div>
+                    <div class="task-label green">Вычислите</div>
                     <div class="task-condition"><p>\(\frac{a+b}{a-b}\), если \(a = 7\), \(b = 3\)</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q21"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== 5. Задачи на сплавы (краткий ответ) ===== -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-num">5</div>
-                <div class="section-title">Задачи на сплавы</div>
-                <div class="section-desc">4 задания</div>
-            </div>
-            <div class="task-grid">
-                <div class="task-card">
-                    <div class="task-label">Задача</div>
-                    <div class="task-condition"><p>В сплаве 30 кг содержится 6 кг меди. Сколько кг меди нужно добавить, чтобы концентрация стала 30%?</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q22"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Задача</div>
-                    <div class="task-condition"><p>В растворе 200 г содержится 20 г соли. Сколько г воды нужно добавить, чтобы концентрация стала 5%?</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q23"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Задача</div>
-                    <div class="task-condition"><p>Сплав массой 50 кг содержит 10 кг цинка. Сколько кг цинка нужно добавить, чтобы концентрация стала 30%?</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q24"></div>
-                </div>
-                <div class="task-card">
-                    <div class="task-label">Задача</div>
-                    <div class="task-condition"><p>В 400 г раствора 8% сахара. Сколько г сахара нужно добавить, чтобы концентрация стала 20%?</p></div>
-                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q25"></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q12"></div>
                 </div>
             </div>
         </div>
 
         <div class="action-bar">
-            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
-            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+            <button class="btn btn-success" id="reportBtn">📤 Отправить</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить</button>
         </div>
 
         <div id="resultArea" class="result-area">
@@ -628,7 +522,7 @@
         </div>
 
         <div class="footer-note">
-            <span> Тема: Выражения, уравнения, задачи на проценты</span>
+            <span> Тема: Выражения и задачи</span>
         </div>
     </div>
 
@@ -636,7 +530,7 @@
     <div class="modal-overlay" id="reportModal">
         <div class="modal-card">
             <h3>📤 Отправить отчёт</h3>
-            <p>Напишите, что было сложно, или задайте вопрос (обязательно).</p>
+            <p>Напишите комментарий (обязательно).</p>
             <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
             <div class="modal-buttons">
                 <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
@@ -650,10 +544,7 @@
         try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
 
         (function() {
-            // ============================================================
-            //  ТАЙМЕР — 45 минут
-            // ============================================================
-            let timeLeft = 45 * 60;
+            let timeLeft = 25 * 60;
             const timerDisplay = document.getElementById('timerDisplay');
             const stickyTimer = document.getElementById('stickyTimer');
             let timerInterval;
@@ -669,70 +560,25 @@
                 timerInterval = setInterval(() => {
                     timeLeft--;
                     timerDisplay.textContent = formatTime(timeLeft);
-
-                    if (timeLeft <= 120) {
-                        stickyTimer.classList.add('urgent');
-                    }
-
+                    if (timeLeft <= 120) stickyTimer.classList.add('urgent');
                     if (timeLeft <= 0) {
                         clearInterval(timerInterval);
-                        stickyTimer.textContent = "⏰ Время вышло! Отправка...";
+                        stickyTimer.textContent = "⏰ Время вышло!";
                         autoSubmitHomework();
                     }
                 }, 1000);
             }
 
-            // ============================================================
-            //  ПРАВИЛЬНЫЕ ОТВЕТЫ
-            // ============================================================
             const answers = {
-                // Вычисления
-                q1: "19",      // 5*3.2 - 2*(-1.5) = 16 + 3 = 19
-                q2: "-0.3",    // 3*(-2.5) + 4*1.8 = -7.5 + 7.2 = -0.3
-                q3: "15.7",    // 2*4.7 - 3*(-2.1) = 9.4 + 6.3 = 15.7
-                q4: "-2",      // 6*(-1.3) + 5.8 = -7.8 + 5.8 = -2
-                q5: "13.6",    // 4*2.4 - 5*(-0.8) = 9.6 + 4 = 13.6
-                q6: "-4.2",    // 7*(-1.6) + 2*3.5 = -11.2 + 7 = -4.2
-                
-                // Упрощение (тесты)
-                q7: "x-5y",
-                q8: "a+7b",
-                q9: "11x+2",
-                q10: "7m-27",
-                q11: "18p-8q",
-                
-                // Проценты (тесты)
-                q12: "(x+10)/310",
-                q13: "(a+3)/28",
-                q14: "1.15x",
-                q15: "24",
-                q16: "8",
-                
-                // Дробные выражения
-                q17: "1/12",   // 1/4 - 1/6 = 3/12 - 2/12 = 1/12
-                q18: "0.7",    // 2/5 + 3/10 = 0.4 + 0.3 = 0.7
-                q19: "0.6",    // (8-2)/(8+2) = 6/10 = 0.6
-                q20: "5.5",    // (18+4)/(6-2) = 22/4 = 5.5
-                q21: "2.5",    // (7+3)/(7-3) = 10/4 = 2.5
-                
-                // Задачи на сплавы
-                q22: "3.75",   // (6+x)/(30+x) = 0.3 → x = 3.75
-                q23: "200",    // 20/(200+x) = 0.05 → x = 200
-                q24: "14.29",  // (10+x)/(50+x) = 0.3 → x ≈ 14.29
-                q25: "60"      // (32+x)/(400+x) = 0.2 → x = 60
+                q1: "19", q2: "-0.3", q3: "15.7",
+                q4: "x-5y", q5: "a+7b", q6: "11x+2",
+                q7: "(x+10)/310", q8: "24", q9: "1.15x",
+                q10: "1/12", q11: "0.6", q12: "2.5"
             };
 
             const radioGroups = [
-                { name: 't1', id: 'q7' },
-                { name: 't2', id: 'q8' },
-                { name: 't3', id: 'q9' },
-                { name: 't4', id: 'q10' },
-                { name: 't5', id: 'q11' },
-                { name: 'c1', id: 'q12' },
-                { name: 'c2', id: 'q13' },
-                { name: 'c3', id: 'q14' },
-                { name: 'c4', id: 'q15' },
-                { name: 'c5', id: 'q16' }
+                { name: 't1', id: 'q4' }, { name: 't2', id: 'q5' }, { name: 't3', id: 'q6' },
+                { name: 'c1', id: 'q7' }, { name: 'c2', id: 'q8' }, { name: 'c3', id: 'q9' }
             ];
 
             const answerInputs = document.querySelectorAll('.answer-input');
@@ -741,7 +587,6 @@
             const resultArea = document.getElementById('resultArea');
             const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
-
             const reportModal = document.getElementById('reportModal');
             const cancelReportBtn = document.getElementById('cancelReportBtn');
             const sendReportBtn = document.getElementById('sendReportBtn');
@@ -779,32 +624,15 @@
                 return str.trim().replace(/\s+/g, '').toLowerCase().replace(',', '.');
             }
 
-            function parseMultiple(str) {
-                let s = str.trim().replace(/\s+/g, '');
-                if (s === "") return [];
-                return s.split(/[,;]/).map(p => p.trim()).filter(p => p !== "");
-            }
-
             function isAnswerCorrect(id, userVal) {
                 const right = answers[id];
                 if (!right) return false;
-                
                 const normUser = normalize(userVal);
                 const normRight = normalize(right);
-
-                // Для тестовых вопросов
-                if (['q7','q8','q9','q10','q11','q12','q13','q14','q15','q16'].includes(id)) {
-                    return normUser === normRight;
-                }
-
-                // Для числовых ответов (с погрешностью 0.01)
+                if (['q4','q5','q6','q7','q8','q9'].includes(id)) return normUser === normRight;
                 let uNum = parseFloat(normUser);
                 let rNum = parseFloat(normRight);
-                
-                if (!isNaN(uNum) && !isNaN(rNum)) {
-                    return Math.abs(uNum - rNum) < 0.01;
-                }
-                
+                if (!isNaN(uNum) && !isNaN(rNum)) return Math.abs(uNum - rNum) < 0.01;
                 return normUser === normRight;
             }
 
@@ -816,15 +644,11 @@
                     if (hidden) allInputs.push(hidden);
                 });
                 answerInputs.forEach(inp => allInputs.push(inp));
-
-                allInputs.forEach(el => {
-                    if (el.value && el.value.trim() !== '') filled++;
-                });
-
+                allInputs.forEach(el => { if (el.value && el.value.trim() !== '') filled++; });
                 const total = allInputs.length;
                 const pct = Math.round((filled / total) * 100);
                 progressFill.style.width = pct + '%';
-                progressText.textContent = `Заполнено: ${filled} / ${total}`;
+                progressText.textContent = `${filled} / ${total}`;
             }
 
             function resetAll() {
@@ -844,9 +668,8 @@
                 let emptyFields = [];
                 answerInputs.forEach(inp => { if (!inp.value.trim()) emptyFields.push(inp.id.replace('q', '')); });
                 radioGroups.forEach(g => { if (!document.getElementById(g.id).value) emptyFields.push(g.id.replace('q', '')); });
-
                 if (emptyFields.length > 0) {
-                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">️ Не заполнены задания: № ${emptyFields.join(', ')}. Заполните их перед отправкой!</div>`;
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены: № ${emptyFields.join(', ')}</div>`;
                     emptyFields.forEach(id => {
                         const el = document.getElementById('q' + id);
                         if (el) el.closest('.task-card').classList.add('empty-field');
@@ -868,11 +691,10 @@
                 if (e.target === this) this.classList.remove('active');
             });
 
-            sendReportBtn.addEventListener('click', async function() {
+            async function executeSubmission(isAuto = false) {
                 setRadioHidden();
-                const comment = reportComment.value.trim();
-                
-                if (!comment) {
+                const comment = isAuto ? "Автоотправка: время вышло." : reportComment.value.trim();
+                if (!isAuto && !comment) {
                     modalStatus.textContent = '⚠️ Напишите комментарий.';
                     modalStatus.style.color = '#dc2626';
                     return;
@@ -893,10 +715,8 @@
                         const input = document.getElementById(id);
                         userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
                     }
-
                     const right = answers[id];
                     const isCorrect = isAnswerCorrect(id, userAnswer);
-
                     total++;
                     if (isCorrect) correct++;
                     else {
@@ -908,56 +728,52 @@
                 }
 
                 const percent = Math.round((correct / total) * 100);
-
-                let reportBody = `**Ученик:** ${student}\n`;
-                reportBody += `**Дата:** ${date}\n`;
-                reportBody += `**Тема:** Выражения и уравнения\n\n`;
-                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
-
+                const autoTag = isAuto ? "\n\n⚠️ **Автоотправка: время вышло.**" : "";
+                let reportBody = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** Алгебра\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)${autoTag}\n\n`;
                 if (mistakes.length > 0) {
-                    reportBody += `** Ошибки:**\n\n`;
-                    reportBody += `| № | Задание | Ответ ученика |\n`;
-                    reportBody += `|---|---------|---------------|\n`;
+                    reportBody += `**❌ Ошибки:**\n\n| № | Задание | Ответ |\n|---|---------|-------|\n`;
                     mistakes.forEach(m => {
                         const parts = m.replace('❌ ', '').split(' → ');
                         reportBody += `| ${parts[0]} | ${parts[1] || ''} | ${parts[2] || ''} |\n`;
                     });
                     reportBody += `\n`;
                 }
-
                 reportBody += `**📋 Все ответы:**\n\`\`\`\n${answersText}\`\`\``;
                 reportBody += `\n\n**💬 Комментарий:**\n${comment}`;
-
                 const title = `ДЗ Алгебра: ${student} (${date})`;
-
-                const btn = this;
-                btn.disabled = true;
-                btn.textContent = '⏳ Отправка...';
-                modalStatus.textContent = '';
-                modalStatus.style.color = '#4a627a';
 
                 try {
                     if (typeof createGitHubIssue === 'function') {
                         const issueUrl = await createGitHubIssue(title, reportBody);
-                        modalStatus.innerHTML = `✅ Отчёт отправлен! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Посмотреть</a>`;
-                        modalStatus.style.color = '#16a34a';
-                        setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        if (!isAuto) {
+                            modalStatus.innerHTML = `✅ Отправлено! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;">Посмотреть</a>`;
+                            modalStatus.style.color = '#16a34a';
+                            setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        }
+                        resultArea.innerHTML = isAuto ? '<div style="color: var(--accent-red); font-weight: 700;"> Время вышло! Отправлено.</div>' : '<div style="color: var(--accent-green); font-weight: 700;">✅ Отправлено!</div>';
                     } else {
-                        console.log('📤 Отправка отчёта:', title, '\n', reportBody);
-                        modalStatus.innerHTML = '✅ Отчёт отправлен! (демо-режим, см. консоль)';
-                        modalStatus.style.color = '#16a34a';
-                        setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        console.log('📤 Отправка:', title, '\n', reportBody);
+                        if (!isAuto) {
+                            modalStatus.innerHTML = '✅ Отправлено! (демо)';
+                            modalStatus.style.color = '#16a34a';
+                            setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        }
+                        resultArea.innerHTML = '✅ Отправлено! (демо)';
                     }
-
-                    resultArea.innerHTML = `<div style="color: var(--accent-green); font-weight: 700;">✅ Отчёт успешно отправлен!</div>`;
-
                 } catch (error) {
                     modalStatus.textContent = `❌ Ошибка: ${error.message}`;
                     modalStatus.style.color = '#dc2626';
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = '✅ Отправить';
                 }
+            }
+
+            sendReportBtn.addEventListener('click', async function() {
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳...';
+                await executeSubmission(false);
+                btn.disabled = false;
+                btn.textContent = '✅ Отправить';
             });
 
             resetBtn.addEventListener('click', resetAll);
@@ -969,87 +785,11 @@
             async function autoSubmitHomework() {
                 reportBtn.disabled = true;
                 reportBtn.textContent = '⏰ Время вышло';
-                reportComment.value = "Автоматическая отправка: время вышло.";
-                const btn = sendReportBtn;
-                btn.disabled = true;
-                btn.textContent = '⏳ Отправка...';
-                
-                setRadioHidden();
-                const comment = "Автоматическая отправка: время вышло.";
-
-                let answersText = '';
-                let correct = 0;
-                let total = 0;
-                let mistakes = [];
-                const allIds = Object.keys(answers);
-
-                for (let id of allIds) {
-                    let userAnswer = '';
-                    if (radioGroups.some(g => g.id === id)) {
-                        const hidden = document.getElementById(id);
-                        userAnswer = hidden ? hidden.value || '(не выбрано)' : '(не выбрано)';
-                    } else {
-                        const input = document.getElementById(id);
-                        userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
-                    }
-
-                    const right = answers[id];
-                    const isCorrect = isAnswerCorrect(id, userAnswer);
-
-                    total++;
-                    if (isCorrect) correct++;
-                    else {
-                        const card = document.getElementById(id)?.closest('.task-card');
-                        const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
-                        mistakes.push(`❌ ${cond} → ${userAnswer}`);
-                    }
-                    answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
-                }
-
-                const percent = Math.round((correct / total) * 100);
-                const autoTag = "\n\n⚠️ **ВНИМАНИЕ:** Работа отправлена автоматически по истечении времени.";
-
-                let reportBody = `**Ученик:** ${student}\n`;
-                reportBody += `**Дата:** ${date}\n`;
-                reportBody += `**Тема:** Выражения и уравнения\n\n`;
-                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)${autoTag}\n\n`;
-
-                if (mistakes.length > 0) {
-                    reportBody += `** Ошибки:**\n\n`;
-                    reportBody += `| № | Задание | Ответ ученика |\n`;
-                    reportBody += `|---|---------|---------------|\n`;
-                    mistakes.forEach(m => {
-                        const parts = m.replace('❌ ', '').split(' → ');
-                        reportBody += `| ${parts[0]} | ${parts[1] || ''} | ${parts[2] || ''} |\n`;
-                    });
-                    reportBody += `\n`;
-                }
-
-                reportBody += `**📋 Все ответы:**\n\`\`\`\n${answersText}\`\`\``;
-                reportBody += `\n\n**💬 Комментарий:**\n${comment}`;
-
-                const title = `ДЗ Алгебра: ${student} (${date})`;
-
-                try {
-                    if (typeof createGitHubIssue === 'function') {
-                        const issueUrl = await createGitHubIssue(title, reportBody);
-                        resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⏰ Время вышло! Отчёт автоматически отправлен учителю.</div>`;
-                    } else {
-                        console.log('📤 Автоотправка отчёта:', title, '\n', reportBody);
-                        resultArea.innerHTML = '✅ Отчёт успешно отправлен! (демо)';
-                    }
-                } catch (error) {
-                    console.error(error);
-                    resultArea.innerHTML = '❌ Ошибка автоотправки';
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = '✅ Отправить';
-                }
+                await executeSubmission(true);
             }
 
             updateProgress();
             startTimer();
-
         })();
     </script>
 </body>
