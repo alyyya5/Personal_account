@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Справочник по алгебре · 7 класс</title>
+    <title>Теория · Алгебра 7 класс</title>
 
     <script>
         window.MathJax = {
@@ -23,7 +23,6 @@
             --accent-green: #1a8a5a;
             --accent-red: #c0392b;
             --accent-orange: #d48a3a;
-            --accent-purple: #7c3aed;
             --border-light: #d0ddea;
         }
 
@@ -33,15 +32,15 @@
             font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
             background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
             color: var(--text-main);
-            line-height: 1.7;
-            padding: 40px 16px;
+            line-height: 1.6;
+            padding: 30px 16px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background: var(--card-bg);
             border-radius: 28px;
@@ -51,90 +50,97 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             padding-bottom: 24px;
             border-bottom: 2px solid #eef2f7;
         }
 
-        h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); }
-        .subtitle { font-size: 16px; color: var(--text-secondary); font-weight: 500; }
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
 
         .tags {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 16px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
         .tag {
             font-size: 12px;
-            font-weight: 700;
-            padding: 6px 16px;
+            font-weight: 600;
+            padding: 4px 14px;
             border-radius: 40px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             background: #dce5f2;
             color: #1d3a66;
         }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
         .tag.green { background: #d5f2e3; color: var(--accent-green); }
-        .tag.orange { background: #fee2d6; color: var(--accent-orange); }
-        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.purple { background: #e8dff5; color: #7c3aed; }
 
-        .section { margin-bottom: 48px; }
+        .section { margin-bottom: 38px; }
         .section-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
             border-bottom: 2px solid #eef2f7;
         }
         .section-num {
             background: var(--accent-blue);
             color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 14px;
             flex-shrink: 0;
         }
-        .section-title { font-size: 22px; font-weight: 800; color: var(--text-main); }
+        .section-title { font-size: 20px; font-weight: 700; }
 
-        .card {
+        .theory-card {
             background: #fafcff;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid #e6edf6;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6;
         }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-        }
-        .card.green-border { border-left: 5px solid var(--accent-green); }
-        .card.orange-border { border-left: 5px solid var(--accent-orange); }
-        .card.purple-border { border-left: 5px solid var(--accent-purple); }
+        .theory-card.green-border { border-left: 5px solid var(--accent-green); }
+        .theory-card.orange-border { border-left: 5px solid var(--accent-orange); }
+        .theory-card.purple-border { border-left: 5px solid #7c3aed; }
 
-        .card h3 {
-            font-size: 18px;
+        .theory-card h3 {
+            font-size: 17px;
             font-weight: 700;
             margin-bottom: 12px;
             color: var(--text-main);
         }
 
+        .theory-card p, .theory-card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .theory-card ul {
+            margin: 10px 0 10px 24px;
+        }
+
         .formula-box {
             background: #eef4ff;
             border: 2px solid var(--accent-blue);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin: 16px 0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 14px 0;
             text-align: center;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #1d4a9e;
         }
@@ -143,8 +149,8 @@
             background: #fcf3e0;
             border-left: 5px solid var(--accent-orange);
             border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
+            padding: 14px 18px;
+            margin: 14px 0;
         }
         .example-box strong { color: #b47d2a; }
 
@@ -152,8 +158,8 @@
             background: #f0f7f0;
             border-left: 5px solid var(--accent-green);
             border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
+            padding: 14px 18px;
+            margin: 14px 0;
         }
         .note-box strong { color: #059669; }
 
@@ -161,34 +167,30 @@
             background: #fef3c7;
             border-left: 5px solid var(--accent-red);
             border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
+            padding: 14px 18px;
+            margin: 14px 0;
         }
         .warning-box strong { color: #d97706; }
 
-        ul { margin: 12px 0 12px 24px; }
-        li { margin-bottom: 8px; color: var(--text-main); }
-
         .footer-note {
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 30px;
+            padding-top: 16px;
             border-top: 2px solid #eef2f7;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-align: center;
         }
 
-        @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; padding: 0; max-width: 100%; }
-            .card { break-inside: avoid; border: 1px solid #ccc; }
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            h1 { font-size: 22px; }
         }
 
-        @media (max-width: 700px) {
-            body { padding: 20px 12px; }
-            .container { padding: 24px 18px; }
-            h1 { font-size: 24px; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .theory-card { break-inside: avoid; }
         }
     </style>
 </head>
@@ -196,84 +198,236 @@
 
     <div class="container">
         <header>
-            <h1>📚 Справочник по алгебре</h1>
-            <div class="subtitle">7 класс · Базовый уровень (по учебнику Ю.Н. Макарычева)</div>
+            <h1>📚 Теория по алгебре</h1>
+            <div class="subtitle">7 класс · Основные темы</div>
             <div class="tags">
-                <span class="tag">Основные определения</span>
-                <span class="tag green">Формулы</span>
-                <span class="tag orange">Свойства</span>
-                <span class="tag purple">Алгоритмы</span>
+                <span class="tag">Степени</span>
+                <span class="tag green">Многочлены</span>
+                <span class="tag orange">ФСУ</span>
+                <span class="tag purple">Функции</span>
             </div>
         </header>
 
-        <!-- ТЕМА 1: ВЫРАЖЕНИЯ И ТОЖДЕСТВА -->
+        <!-- СТЕПЕНЬ С НАТУРАЛЬНЫМ ПОКАЗАТЕЛЕМ -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num">1</div>
-                <div class="section-title">Числовые множества и тождества</div>
+                <div class="section-title">Степень с натуральным показателем</div>
             </div>
-            
-            <div class="card green-border">
-                <h3>Числовые множества</h3>
-                <ul>
-                    <li><strong>\(\mathbb{N}\)</strong> — натуральные числа (числа, используемые при счёте: 1, 2, 3, ...)</li>
-                <li><strong>\(\mathbb{Z}\)</strong> — целые числа (натуральные, противоположные им и нуль)</li>
-                <li><strong>\(\mathbb{Q}\)</strong> — рациональные числа (целые и дробные числа)</li>
-                </ul>
+
+            <div class="theory-card">
+                <h3>Определение</h3>
+                <p><strong>Степенью числа \(a\) с натуральным показателем \(n\)</strong> называется произведение \(n\) множителей, каждый из которых равен \(a\):</p>
                 <div class="formula-box">
-                    \(\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q}\)
+                    \(a^n = \underbrace{a \cdot a \cdot ... \cdot a}_{n \text{ раз}}\)
                 </div>
+                <p>Здесь \(a\) — <strong>основание степени</strong>, \(n\) — <strong>показатель степени</strong>.</p>
+            </div>
+
+            <div class="theory-card green-border">
+                <h3>Свойства степеней</h3>
+                <p>Для любых \(a \neq 0\), \(b \neq 0\) и натуральных \(m, n\) верны свойства:</p>
+                
+                <div class="formula-box">
+                    <strong>Умножение степеней:</strong> \(a^m \cdot a^n = a^{m+n}\)
+                </div>
+                <div class="formula-box">
+                    <strong>Деление степеней:</strong> \(a^m : a^n = a^{m-n}\) (при \(m > n\))
+                </div>
+                <div class="formula-box">
+                    <strong>Возведение степени в степень:</strong> \((a^m)^n = a^{m \cdot n}\)
+                </div>
+                <div class="formula-box">
+                    <strong>Возведение произведения в степень:</strong> \((ab)^n = a^n b^n\)
+                </div>
+                <div class="formula-box">
+                    <strong>Возведение дроби в степень:</strong> \(\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}\)
+                </div>
+
                 <div class="note-box">
-                    <strong>Важно:</strong> Любое рациональное число можно представить в виде дроби \(\frac{m}{n}\), где \(m\) — целое, а \(n\) — натуральное число.
+                    <strong>Степень с нулевым показателем:</strong> \(a^0 = 1\) (при \(a \neq 0\)). Выражение \(0^0\) не имеет смысла.
                 </div>
             </div>
 
-            <div class="card purple-border">
-                <h3>Тождества и тождественные преобразования</h3>
-                <p>Два выражения, значения которых равны при любых значениях переменных, называются <strong>тождественно равными</strong>.</p>
-                <p>Равенство, верное при любых значениях переменных, называется <strong>тождеством</strong>.</p>
+            <div class="theory-card">
+                <h3>Примеры</h3>
                 <div class="example-box">
-                    <strong>Примеры тождеств:</strong><br>
-                    \(a + b = b + a\) (переместительное)<br>
-                    \(a(b + c) = ab + ac\) (распределительное)<br>
-                    \(a + 0 = a\), \(a \cdot 1 = a\)
+                    <strong>Пример 1.</strong> Упростите \(x^3 \cdot x^5\)<br>
+                    Решение: \(x^3 \cdot x^5 = x^{3+5} = x^8\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример 2.</strong> Упростите \((a^2)^4\)<br>
+                    Решение: \((a^2)^4 = a^{2 \cdot 4} = a^8\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример 3.</strong> Упростите \((2xy)^3\)<br>
+                    Решение: \((2xy)^3 = 2^3 \cdot x^3 \cdot y^3 = 8x^3y^3\)
                 </div>
             </div>
         </div>
 
-        <!-- ТЕМА 2: УРАВНЕНИЯ -->
+        <!-- МНОГОЧЛЕНЫ -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num" style="background: var(--accent-green);">2</div>
-                <div class="section-title">Линейные уравнения с одной переменной</div>
+                <div class="section-title">Многочлены</div>
             </div>
 
-            <div class="card green-border">
-                <h3>Определение и виды</h3>
-                <p><strong>Корнем уравнения</strong> называется такое значение переменной, при котором уравнение обращается в верное числовое равенство.</p>
-                <p><strong>Линейное уравнение</strong> имеет вид:</p>
+            <div class="theory-card green-border">
+                <h3>Определения</h3>
+                <p><strong>Одночлен</strong> — произведение чисел, переменных и их степеней. Например: \(3a^2b\), \(-5x^3\), \(7\).</p>
+                <p><strong>Многочлен</strong> — сумма одночленов. Например: \(3x^2 + 2x - 5\).</p>
+                <p><strong>Степень многочлена</strong> стандартного вида — это наибольшая из степеней входящих в него одночленов.</p>
+            </div>
+
+            <div class="theory-card">
+                <h3>Действия с многочленами</h3>
+                
                 <div class="formula-box">
-                    \(ax = b\)
+                    <strong>Сложение и вычитание:</strong> раскрываем скобки и приводим подобные слагаемые
                 </div>
-                <div class="warning-box">
-                    <strong>Количество корней зависит от коэффициентов:</strong>
-                    <ul style="margin-top: 8px;">
-                        <li>Если \(a \neq 0\), уравнение имеет <strong>один корень</strong>: \(x = \frac{b}{a}\).</li>
-                        <li>Если \(a = 0\) и \(b \neq 0\), уравнение <strong>не имеет корней</strong> (например, \(0 \cdot x = 5\)).</li>
-                        <li>Если \(a = 0\) и \(b = 0\), корнем является <strong>любое число</strong> (например, \(0 \cdot x = 0\)).</li>
-                    </ul>
+                <div class="example-box">
+                    <strong>Пример:</strong> \((3x^2 + 2x - 5) + (x^2 - 4x + 3) = 4x^2 - 2x - 2\)
+                </div>
+
+                <div class="formula-box">
+                    <strong>Умножение одночлена на многочлен:</strong> \(a(b + c) = ab + ac\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример:</strong> \(2x(3x^2 - 4x + 1) = 6x^3 - 8x^2 + 2x\)
+                </div>
+
+                <div class="formula-box">
+                    <strong>Умножение многочлена на многочлен:</strong> каждый член первого многочлена умножаем на каждый член второго
+                </div>
+                <div class="example-box">
+                    <strong>Пример:</strong> \((x + 2)(x - 3) = x^2 - 3x + 2x - 6 = x^2 - x - 6\)
                 </div>
             </div>
         </div>
 
-        <!-- ТЕМА 3: ФУНКЦИИ -->
+        <!-- ФОРМУЛЫ СОКРАЩЁННОГО УМНОЖЕНИЯ -->
         <div class="section">
             <div class="section-header">
-                <div class="section-num" style="background: var(--accent-purple);">3</div>
-                <div class="section-title">Функции и их графики</div>
+                <div class="section-num" style="background: var(--accent-orange);">3</div>
+                <div class="section-title">Формулы сокращённого умножения (ФСУ)</div>
             </div>
 
-            <div class="card purple-border">
+            <div class="theory-card orange-border">
+                <h3>Основные формулы</h3>
+                <p>Эти формулы позволяют быстрее выполнять преобразования:</p>
+                
+                <div class="formula-box">
+                    <strong>Квадрат суммы:</strong> \((a + b)^2 = a^2 + 2ab + b^2\)
+                </div>
+                <div class="formula-box">
+                    <strong>Квадрат разности:</strong> \((a - b)^2 = a^2 - 2ab + b^2\)
+                </div>
+                <div class="formula-box">
+                    <strong>Разность квадратов:</strong> \(a^2 - b^2 = (a - b)(a + b)\)
+                </div>
+                <div class="formula-box">
+                    <strong>Куб суммы:</strong> \((a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)
+                </div>
+                <div class="formula-box">
+                    <strong>Куб разности:</strong> \((a - b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\)
+                </div>
+                <div class="formula-box">
+                    <strong>Сумма кубов:</strong> \(a^3 + b^3 = (a + b)(a^2 - ab + b^2)\)
+                </div>
+                <div class="formula-box">
+                    <strong>Разность кубов:</strong> \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Примеры применения</h3>
+                <div class="example-box">
+                    <strong>Пример 1.</strong> Раскройте скобки: \((x + 5)^2\)<br>
+                    Решение: \((x + 5)^2 = x^2 + 2 \cdot x \cdot 5 + 5^2 = x^2 + 10x + 25\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример 2.</strong> Разложите на множители: \(x^2 - 49\)<br>
+                    Решение: \(x^2 - 49 = x^2 - 7^2 = (x - 7)(x + 7)\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример 3.</strong> Упростите: \((a + 2)^2 - (a - 2)^2\)<br>
+                    Решение: \((a^2 + 4a + 4) - (a^2 - 4a + 4) = 8a\)
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Разложение квадратного трёхчлена</h3>
+                <p>Если квадратный трёхчлен \(x^2 + px + q\) имеет корни \(x_1\) и \(x_2\), то:</p>
+                <div class="formula-box">
+                    \(x^2 + px + q = (x - x_1)(x - x_2)\)
+                </div>
+                <div class="example-box">
+                    <strong>Пример:</strong> \(x^2 - 7x + 12 = 0\)<br>
+                    Корни: \(x_1 = 3\), \(x_2 = 4\)<br>
+                    Разложение: \(x^2 - 7x + 12 = (x - 3)(x - 4)\)
+                </div>
+            </div>
+        </div>
+
+        <!-- ЛИНЕЙНЫЕ УРАВНЕНИЯ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num" style="background: var(--accent-red);">4</div>
+                <div class="section-title">Линейные уравнения</div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Определение</h3>
+                <p><strong>Корнем уравнения</strong> называется такое значение переменной, при котором уравнение обращается в верное числовое равенство.</p>
+                <p><strong>Линейное уравнение</strong> с одной переменной имеет вид:</p>
+                <div class="formula-box">
+                    \(ax = b\)
+                </div>
+            </div>
+
+            <div class="theory-card purple-border">
+                <h3>Количество корней</h3>
+                <div class="warning-box">
+                    <strong>Важно:</strong>
+                    <ul style="margin-top: 8px;">
+                        <li>Если \(a \neq 0\), уравнение имеет <strong>один корень</strong>: \(x = \frac{b}{a}\)</li>
+                        <li>Если \(a = 0\) и \(b \neq 0\), уравнение <strong>не имеет корней</strong> (например, \(0 \cdot x = 5\))</li>
+                        <li>Если \(a = 0\) и \(b = 0\), корнем является <strong>любое число</strong> (например, \(0 \cdot x = 0\))</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Алгоритм решения уравнений</h3>
+                <div class="note-box">
+                    <strong>Шаги решения:</strong>
+                    <ol style="margin-top: 8px; padding-left: 20px;">
+                        <li>Раскрыть скобки (если есть)</li>
+                        <li>Перенести слагаемые с переменной в одну часть, числа — в другую</li>
+                        <li>Привести подобные слагаемые</li>
+                        <li>Разделить обе части на коэффициент при переменной</li>
+                    </ol>
+                </div>
+                <div class="example-box">
+                    <strong>Пример:</strong> Решите уравнение \(3(x - 2) + 4 = 2x + 5\)<br><br>
+                    Решение:<br>
+                    \(3x - 6 + 4 = 2x + 5\)<br>
+                    \(3x - 2 = 2x + 5\)<br>
+                    \(3x - 2x = 5 + 2\)<br>
+                    \(x = 7\)
+                </div>
+            </div>
+        </div>
+
+        <!-- ФУНКЦИИ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num" style="background: #7c3aed;">5</div>
+                <div class="section-title">Функции и графики</div>
+            </div>
+
+            <div class="theory-card purple-border">
                 <h3>Основные понятия</h3>
                 <ul>
                     <li><strong>Функция</strong> — зависимость одной переменной от другой, при которой каждому значению независимой переменной (аргумента) соответствует единственное значение зависимой переменной.</li>
@@ -282,140 +436,106 @@
                 </ul>
             </div>
 
-            <div class="card green-border">
+            <div class="theory-card">
                 <h3>Линейная функция</h3>
                 <p>Задаётся формулой:</p>
                 <div class="formula-box">
                     \(y = kx + b\)
                 </div>
                 <ul>
-                    <li><strong>График</strong> — прямая линия.</li>
-                    <li><strong>\(k\)</strong> — угловой коэффициент (определяет угол наклона прямой к оси \(x\)).</li>
-                    <li><strong>\(b\)</strong> — ордината точки пересечения графика с осью \(y\) (точка \((0; b)\)).</li>
+                    <li><strong>График</strong> — прямая линия</li>
+                    <li><strong>\(k\)</strong> — угловой коэффициент (определяет угол наклона прямой к оси \(x\))</li>
+                    <li><strong>\(b\)</strong> — ордината точки пересечения графика с осью \(y\) (точка \((0; b)\))</li>
                 </ul>
                 <div class="note-box">
                     <strong>Частный случай:</strong> При \(b = 0\) получаем <strong>прямую пропорциональность</strong> \(y = kx\). Её график — прямая, проходящая через начало координат \((0; 0)\).
                 </div>
             </div>
-        </div>
 
-        <!-- ТЕМА 4: СТЕПЕНИ И ОДНОЧЛЕНЫ -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-num" style="background: var(--accent-orange);">4</div>
-                <div class="section-title">Степень с натуральным показателем</div>
-            </div>
-
-            <div class="card orange-border">
-                <h3>Определение и свойства</h3>
-                <p>Степенью числа \(a\) с натуральным показателем \(n > 1\) называется произведение \(n\) множителей, каждый из которых равен \(a\):</p>
-                <div class="formula-box">
-                    \(a^n = \underbrace{a \cdot a \cdot ... \cdot a}_{n \text{ раз}}\)
-                </div>
-                <p>Для любых \(a \neq 0\), \(b \neq 0\) и натуральных \(m, n\) верны свойства:</p>
+            <div class="theory-card">
+                <h3>Функция \(y = x^2\)</h3>
+                <p>График функции \(y = x^2\) называется <strong>параболой</strong>.</p>
                 <ul>
-                    <li>Умножение степеней: \(a^m \cdot a^n = a^{m+n}\)</li>
-                    <li>Деление степеней: \(a^m : a^n = a^{m-n}\) (при \(m > n\))</li>
-                    <li>Возведение степени в степень: \((a^m)^n = a^{m \cdot n}\)</li>
-                    <li>Возведение произведения в степень: \((ab)^n = a^n b^n\)</li>
-                    <li>Возведение дроби в степень: \(\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}\)</li>
+                    <li>Вершина параболы находится в точке \((0; 0)\)</li>
+                    <li>Ветви параболы направлены вверх</li>
+                    <li>Ось симметрии — ось \(y\)</li>
                 </ul>
-                <div class="note-box">
-                    <strong>Степень с нулевым показателем:</strong> \(a^0 = 1\) (при \(a \neq 0\)). Выражение \(0^0\) не имеет смысла.
-                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Функция \(y = x^3\)</h3>
+                <p>График функции \(y = x^3\) называется <strong>кубической параболой</strong>.</p>
+                <ul>
+                    <li>Проходит через начало координат \((0; 0)\)</li>
+                    <li>Возрастает на всей числовой прямой</li>
+                    <li>Симметрична относительно начала координат</li>
+                </ul>
             </div>
         </div>
 
-        <!-- ТЕМА 5: МНОГОЧЛЕНЫ И ФСУ -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-num" style="background: var(--accent-red);">5</div>
-                <div class="section-title">Многочлены и ФСУ</div>
-            </div>
-
-            <div class="card">
-                <h3>Понятие многочлена</h3>
-                <p><strong>Многочлен</strong> — это сумма одночленов. Одночлены, из которых он составлен, называются его членами.</p>
-                <p><strong>Степень многочлена</strong> стандартного вида — это наибольшая из степеней входящих в него одночленов.</p>
-            </div>
-
-            <div class="card orange-border">
-                <h3>Формулы сокращённого умножения (ФСУ)</h3>
-                <p>Эти формулы позволяют быстрее выполнять преобразования:</p>
-                
-                <div class="formula-box">
-                    Квадрат суммы: \((a + b)^2 = a^2 + 2ab + b^2\)
-                </div>
-                <div class="formula-box">
-                    Квадрат разности: \((a - b)^2 = a^2 - 2ab + b^2\)
-                </div>
-                <div class="formula-box">
-                    Разность квадратов: \(a^2 - b^2 = (a - b)(a + b)\)
-                </div>
-                <div class="formula-box">
-                    Куб суммы: \((a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)
-                </div>
-                <div class="formula-box">
-                    Куб разности: \((a - b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\)
-                </div>
-                <div class="formula-box">
-                    Сумма кубов: \(a^3 + b^3 = (a + b)(a^2 - ab + b^2)\)
-                </div>
-                <div class="formula-box">
-                    Разность кубов: \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)
-                </div>
-
-                <div class="example-box">
-                    <strong>Пример разложения на множители:</strong><br>
-                    \(x^2 - 10x + 25 = x^2 - 2 \cdot x \cdot 5 + 5^2 = (x - 5)^2\)
-                </div>
-            </div>
-        </div>
-
-        <!-- ТЕМА 6: СИСТЕМЫ УРАВНЕНИЙ -->
+        <!-- СИСТЕМЫ УРАВНЕНИЙ -->
         <div class="section">
             <div class="section-header">
                 <div class="section-num" style="background: #0b1e33;">6</div>
                 <div class="section-title">Системы линейных уравнений</div>
             </div>
 
-            <div class="card">
+            <div class="theory-card">
                 <h3>Определение</h3>
                 <p><strong>Решением системы</strong> с двумя переменными называется пара значений, обращающая <em>каждое</em> уравнение системы в верное числовое равенство.</p>
                 <p>Система вида \(\begin{cases} a_1x + b_1y = c_1 \\ a_2x + b_2y = c_2 \end{cases}\) может иметь:</p>
                 <ul>
-                    <li><strong>Одно решение</strong> (прямые пересекаются, \(\frac{a_1}{a_2} \neq \frac{b_1}{b_2}\))</li>
-                    <li><strong>Нет решений</strong> (прямые параллельны, \(\frac{a_1}{a_2} = \frac{b_1}{b_2} \neq \frac{c_1}{c_2}\))</li>
-                    <li><strong>Бесконечно много решений</strong> (прямые совпадают, \(\frac{a_1}{a_2} = \frac{b_1}{b_2} = \frac{c_1}{c_2}\))</li>
+                    <li><strong>Одно решение</strong> (прямые пересекаются)</li>
+                    <li><strong>Нет решений</strong> (прямые параллельны)</li>
+                    <li><strong>Бесконечно много решений</strong> (прямые совпадают)</li>
                 </ul>
             </div>
 
-            <div class="card green-border">
-                <h3>Способы решения</h3>
+            <div class="theory-card green-border">
+                <h3>Способ подстановки</h3>
                 <div class="note-box">
-                    <strong>1. Способ подстановки:</strong>
+                    <strong>Алгоритм:</strong>
                     <ol style="margin-top: 8px; padding-left: 20px;">
-                        <li>Выразить одну переменную через другую из любого уравнения.</li>
-                        <li>Подставить полученное выражение в другое уравнение.</li>
-                        <li>Решить полученное уравнение с одной переменной.</li>
-                        <li>Найти вторую переменную.</li>
+                        <li>Выразить одну переменную через другую из любого уравнения</li>
+                        <li>Подставить полученное выражение в другое уравнение</li>
+                        <li>Решить полученное уравнение с одной переменной</li>
+                        <li>Найти вторую переменную</li>
                     </ol>
                 </div>
+            </div>
+
+            <div class="theory-card green-border">
+                <h3>Способ сложения</h3>
                 <div class="note-box">
-                    <strong>2. Способ сложения:</strong>
+                    <strong>Алгоритм:</strong>
                     <ol style="margin-top: 8px; padding-left: 20px;">
-                        <li>Умножить уравнения на такие числа, чтобы коэффициенты при одной из переменных стали противоположными.</li>
-                        <li>Почленно сложить левые и правые части уравнений.</li>
-                        <li>Решить полученное уравнение с одной переменной.</li>
-                        <li>Найти вторую переменную.</li>
+                        <li>Умножить уравнения на такие числа, чтобы коэффициенты при одной из переменных стали противоположными</li>
+                        <li>Почленно сложить левые и правые части уравнений</li>
+                        <li>Решить полученное уравнение с одной переменной</li>
+                        <li>Найти вторую переменную</li>
                     </ol>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>Пример</h3>
+                <div class="example-box">
+                    <strong>Решите систему:</strong> \(\begin{cases} x + y = 6 \\ 3x - 5y = 10 \end{cases}\)<br><br>
+                    <strong>Способ подстановки:</strong><br>
+                    Из первого уравнения: \(x = 6 - y\)<br>
+                    Подставляем во второе: \(3(6 - y) - 5y = 10\)<br>
+                    \(18 - 3y - 5y = 10\)<br>
+                    \(-8y = -8\)<br>
+                    \(y = 1\)<br>
+                    \(x = 6 - 1 = 5\)<br><br>
+                    <strong>Ответ:</strong> \(x = 5\), \(y = 1\)
                 </div>
             </div>
         </div>
 
         <div class="footer-note">
-            <p>📌 Данный справочник составлен на основе материалов учебника «Алгебра. 7 класс» (Ю.Н. Макарычев и др.).</p>
-            <p>Рекомендуется использовать для повторения перед контрольными работами и экзаменами.</p>
+            <p>📌 Теория составлена на основе учебника «Алгебра. 7 класс» (Ю.Н. Макарычев и др.)</p>
+            <p>Используйте этот материал для подготовки к урокам и контрольным работам.</p>
         </div>
     </div>
 
