@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Домашнее задание | Алгебра 7-8 класс</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 80px 16px 30px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .sticky-timer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--accent-blue);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background 0.3s;
+        }
+        .sticky-timer.urgent {
+            background: var(--accent-red);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 35px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .info-line {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #f8faff;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dce5f2;
+            color: #1d3a66;
+        }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+
+        .progress-wrap {
+            background: #f4f8fd;
+            border: 1px solid #e2ebf5;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 28px;
+        }
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e3ecf5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .section { margin-bottom: 32px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .section-title { font-size: 18px; font-weight: 700; }
+        .section-desc { font-size: 13px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 16px 18px 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+        .task-card.empty-field { border-color: var(--accent-red); background: #fdf0ee; }
+
+        .task-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .task-label.green { color: var(--accent-green); }
+        .task-label.orange { color: var(--accent-orange); }
+        .task-label.purple { color: #7c3aed; }
+
+        .task-condition {
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding: 4px 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        .task-condition p { margin: 0; }
+
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #eef2f7;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .answer-input {
+            flex: 1;
+            border: none;
+            border-bottom: 2px solid var(--border-light);
+            outline: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 6px;
+            background: transparent;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+        .answer-input:focus { border-bottom-color: var(--accent-blue); }
+
+        .test-options {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .test-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .test-options label:hover { background: #eef3fa; }
+        .test-options input[type="radio"] {
+            width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent-blue);
+        }
+
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 20px 0 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            background: var(--accent-blue);
+            color: white;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3); }
+        .btn:active { transform: scale(0.97); }
+        .btn-success { background: var(--accent-green); }
+        .btn-success:hover { box-shadow: 0 4px 12px rgba(26, 138, 90, 0.3); }
+        .btn-danger { background: var(--accent-red); }
+        .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
+        .btn-outline:hover { background: #f0f4fa; border-color: #a0b4cc; box-shadow: none; }
+
+        .result-area {
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin-top: 18px;
+            font-size: 0.95rem;
+            border: 1px solid #dce5ef;
+            min-height: 55px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1100; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; border-radius: 28px;
+            max-width: 600px; width: 100%; padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card p { margin-bottom: 12px; font-size: 0.95rem; color: #4a627a; }
+        .modal-card textarea {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid #dce5ef; border-radius: 18px;
+            font-size: 0.95rem; font-family: inherit;
+            resize: vertical; outline: none;
+        }
+        .modal-card textarea:focus { border-color: #3b82f6; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .modal-buttons .btn { flex: 1; }
+        #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; text-align: center; }
+
+        .footer-note {
+            margin-top: 25px; padding-top: 14px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px; color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            body { padding-top: 70px; }
+            .container { padding: 20px 16px; }
+            .task-grid { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .section-desc { margin-left: 0; }
+            h1 { font-size: 22px; }
+            .info-line { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stickyTimer" class="sticky-timer">
+        ⏱ Осталось времени: <span id="timerDisplay">25:00</span>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📝 Домашнее задание</h1>
+            <div class="subtitle">Алгебра 7-8 класс</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span>
+            </div>
+            <div class="tags">
+                <span class="tag">12 заданий</span>
+                <span class="tag orange">⏱ 25 минут</span>
+                <span class="tag green">Автоотправка</span>
+            </div>
+        </header>
+
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span>📈 Прогресс</span>
+                <span id="progressText">0 / 12</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <!-- ===== 1. Вычисления ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Вычисления</div>
+                <div class="section-desc">3 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label">Вычислите</div>
+                    <div class="task-condition"><p>\(5x - 2y\), если \(x = 3.2\), \(y = -1.5\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q1"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Вычислите</div>
+                    <div class="task-condition"><p>\(3a + 4b\), если \(a = -2.5\), \(b = 1.8\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q2"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Вычислите</div>
+                    <div class="task-condition"><p>\(2m - 3n\), если \(m = 4.7\), \(n = -2.1\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 2. Упрощение (тесты) ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <div class="section-title">Упрощение выражений</div>
+                <div class="section-desc">3 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(3(x - y) - 2(x + y)\)</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t1" value="x-5y"> \(x - 5y\)</label>
+                        <label><input type="radio" name="t1" value="x-y"> \(x - y\)</label>
+                        <label><input type="radio" name="t1" value="5x-y"> \(5x - y\)</label>
+                    </div>
+                    <input type="hidden" id="q4" value="">
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(4(a + b) - 3(a - b)\)</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t2" value="a+7b"> \(a + 7b\)</label>
+                        <label><input type="radio" name="t2" value="a+b"> \(a + b\)</label>
+                        <label><input type="radio" name="t2" value="7a+b"> \(7a + b\)</label>
+                    </div>
+                    <input type="hidden" id="q5" value="">
+                </div>
+                <div class="task-card">
+                    <div class="task-label purple">Выберите</div>
+                    <div class="task-condition"><p>\(2(3x - 4) + 5(x + 2)\)</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t3" value="11x+2"> \(11x + 2\)</label>
+                        <label><input type="radio" name="t3" value="11x-2"> \(11x - 2\)</label>
+                        <label><input type="radio" name="t3" value="8x+2"> \(8x + 2\)</label>
+                    </div>
+                    <input type="hidden" id="q6" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 3. Проценты (тесты) ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">3</div>
+                <div class="section-title">Проценты</div>
+                <div class="section-desc">3 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>В 300 г раствора x г соли. После добавления 10 г соли концентрация:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="c1" value="(x+10)/310"> \(\frac{x+10}{310}\)</label>
+                        <label><input type="radio" name="c1" value="x/310"> \(\frac{x}{310}\)</label>
+                        <label><input type="radio" name="c1" value="(x+10)/300"> \(\frac{x+10}{300}\)</label>
+                    </div>
+                    <input type="hidden" id="q7" value="">
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>В 200 г раствора 12% соли. Сколько граммов соли?</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="c2" value="24"> 24 г</label>
+                        <label><input type="radio" name="c2" value="12"> 12 г</label>
+                        <label><input type="radio" name="c2" value="20"> 20 г</label>
+                    </div>
+                    <input type="hidden" id="q8" value="">
+                </div>
+                <div class="task-card">
+                    <div class="task-label orange">Выберите</div>
+                    <div class="task-condition"><p>Цена x руб. После повышения на 15%:</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="c3" value="1.15x"> \(1.15x\)</label>
+                        <label><input type="radio" name="c3" value="x+15"> \(x + 15\)</label>
+                        <label><input type="radio" name="c3" value="0.15x"> \(0.15x\)</label>
+                    </div>
+                    <input type="hidden" id="q9" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 4. Дроби ===== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">4</div>
+                <div class="section-title">Дробные выражения</div>
+                <div class="section-desc">3 задания</div>
+            </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label green">Вычислите</div>
+                    <div class="task-condition"><p>\(\frac{1}{x} - \frac{1}{y}\), если \(x = 4\), \(y = 6\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q10"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Вычислите</div>
+                    <div class="task-condition"><p>\(\frac{x-y}{x+y}\), если \(x = 8\), \(y = 2\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q11"></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-label green">Вычислите</div>
+                    <div class="task-condition"><p>\(\frac{a+b}{a-b}\), если \(a = 7\), \(b = 3\)</p></div>
+                    <div class="answer-row"><span>Ответ:</span><input class="answer-input" type="text" id="q12"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="btn btn-success" id="reportBtn">📤 Отправить</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить</button>
+        </div>
+
+        <div id="resultArea" class="result-area">
+             Заполните все поля. Таймер запущен!
+        </div>
+
+        <div class="footer-note">
+            <span> Тема: Выражения и задачи</span>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправить отчёт</h3>
+            <p>Напишите комментарий (обязательно).</p>
+            <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
+                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
+
+        (function() {
+            let timeLeft = 25 * 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            const stickyTimer = document.getElementById('stickyTimer');
+            let timerInterval;
+
+            function formatTime(seconds) {
+                const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+                const s = (seconds % 60).toString().padStart(2, '0');
+                return `${m}:${s}`;
+            }
+
+            function startTimer() {
+                timerDisplay.textContent = formatTime(timeLeft);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = formatTime(timeLeft);
+                    if (timeLeft <= 120) stickyTimer.classList.add('urgent');
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        stickyTimer.textContent = "⏰ Время вышло!";
+                        autoSubmitHomework();
+                    }
+                }, 1000);
+            }
+
+            const answers = {
+                q1: "19", q2: "-0.3", q3: "15.7",
+                q4: "x-5y", q5: "a+7b", q6: "11x+2",
+                q7: "(x+10)/310", q8: "24", q9: "1.15x",
+                q10: "1/12", q11: "0.6", q12: "2.5"
+            };
+
+            const radioGroups = [
+                { name: 't1', id: 'q4' }, { name: 't2', id: 'q5' }, { name: 't3', id: 'q6' },
+                { name: 'c1', id: 'q7' }, { name: 'c2', id: 'q8' }, { name: 'c3', id: 'q9' }
+            ];
+
+            const answerInputs = document.querySelectorAll('.answer-input');
+            const resetBtn = document.getElementById('resetBtn');
+            const reportBtn = document.getElementById('reportBtn');
+            const resultArea = document.getElementById('resultArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const reportModal = document.getElementById('reportModal');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const sendReportBtn = document.getElementById('sendReportBtn');
+            const reportComment = document.getElementById('reportComment');
+            const modalStatus = document.getElementById('modalStatus');
+
+            const params = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+
+            document.getElementById('studentName').textContent = student;
+            document.getElementById('lessonDate').textContent = date;
+
+            function getRadioValue(name) {
+                const el = document.querySelector(`input[name="${name}"]:checked`);
+                return el ? el.value : '';
+            }
+
+            function setRadioHidden() {
+                radioGroups.forEach(group => {
+                    document.getElementById(group.id).value = getRadioValue(group.name);
+                });
+            }
+
+            radioGroups.forEach(group => {
+                document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        document.getElementById(group.id).value = this.value;
+                        updateProgress();
+                    });
+                });
+            });
+
+            function normalize(str) {
+                return str.trim().replace(/\s+/g, '').toLowerCase().replace(',', '.');
+            }
+
+            function isAnswerCorrect(id, userVal) {
+                const right = answers[id];
+                if (!right) return false;
+                const normUser = normalize(userVal);
+                const normRight = normalize(right);
+                if (['q4','q5','q6','q7','q8','q9'].includes(id)) return normUser === normRight;
+                let uNum = parseFloat(normUser);
+                let rNum = parseFloat(normRight);
+                if (!isNaN(uNum) && !isNaN(rNum)) return Math.abs(uNum - rNum) < 0.01;
+                return normUser === normRight;
+            }
+
+            function updateProgress() {
+                let filled = 0;
+                const allInputs = [];
+                radioGroups.forEach(group => {
+                    const hidden = document.getElementById(group.id);
+                    if (hidden) allInputs.push(hidden);
+                });
+                answerInputs.forEach(inp => allInputs.push(inp));
+                allInputs.forEach(el => { if (el.value && el.value.trim() !== '') filled++; });
+                const total = allInputs.length;
+                const pct = Math.round((filled / total) * 100);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = `${filled} / ${total}`;
+            }
+
+            function resetAll() {
+                radioGroups.forEach(group => {
+                    const checked = document.querySelector(`input[name="${group.name}"]:checked`);
+                    if (checked) checked.checked = false;
+                    document.getElementById(group.id).value = '';
+                });
+                answerInputs.forEach(input => input.value = '');
+                document.querySelectorAll('.task-card.empty-field').forEach(c => c.classList.remove('empty-field'));
+                resultArea.innerHTML = '🧹 Поля очищены.';
+                progressFill.style.width = '0%';
+                updateProgress();
+            }
+
+            function validateBeforeSubmit() {
+                let emptyFields = [];
+                answerInputs.forEach(inp => { if (!inp.value.trim()) emptyFields.push(inp.id.replace('q', '')); });
+                radioGroups.forEach(g => { if (!document.getElementById(g.id).value) emptyFields.push(g.id.replace('q', '')); });
+                if (emptyFields.length > 0) {
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены: № ${emptyFields.join(', ')}</div>`;
+                    emptyFields.forEach(id => {
+                        const el = document.getElementById('q' + id);
+                        if (el) el.closest('.task-card').classList.add('empty-field');
+                    });
+                    return false;
+                }
+                return true;
+            }
+
+            reportBtn.addEventListener('click', function() {
+                if (!validateBeforeSubmit()) return;
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            });
+
+            async function executeSubmission(isAuto = false) {
+                setRadioHidden();
+                const comment = isAuto ? "Автоотправка: время вышло." : reportComment.value.trim();
+                if (!isAuto && !comment) {
+                    modalStatus.textContent = '⚠️ Напишите комментарий.';
+                    modalStatus.style.color = '#dc2626';
+                    return;
+                }
+
+                let answersText = '';
+                let correct = 0;
+                let total = 0;
+                let mistakes = [];
+                const allIds = Object.keys(answers);
+
+                for (let id of allIds) {
+                    let userAnswer = '';
+                    if (radioGroups.some(g => g.id === id)) {
+                        const hidden = document.getElementById(id);
+                        userAnswer = hidden ? hidden.value || '(не выбрано)' : '(не выбрано)';
+                    } else {
+                        const input = document.getElementById(id);
+                        userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
+                    }
+                    const right = answers[id];
+                    const isCorrect = isAnswerCorrect(id, userAnswer);
+                    total++;
+                    if (isCorrect) correct++;
+                    else {
+                        const card = document.getElementById(id)?.closest('.task-card');
+                        const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
+                        mistakes.push(`❌ ${cond} → ${userAnswer}`);
+                    }
+                    answersText += `${id} | ${userAnswer} | ${right} | ${isCorrect ? '✅' : '❌'}\n`;
+                }
+
+                const percent = Math.round((correct / total) * 100);
+                const autoTag = isAuto ? "\n\n⚠️ **Автоотправка: время вышло.**" : "";
+                let reportBody = `**Ученик:** ${student}\n**Дата:** ${date}\n**Тема:** Алгебра\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)${autoTag}\n\n`;
+                if (mistakes.length > 0) {
+                    reportBody += `**❌ Ошибки:**\n\n| № | Задание | Ответ |\n|---|---------|-------|\n`;
+                    mistakes.forEach(m => {
+                        const parts = m.replace('❌ ', '').split(' → ');
+                        reportBody += `| ${parts[0]} | ${parts[1] || ''} | ${parts[2] || ''} |\n`;
+                    });
+                    reportBody += `\n`;
+                }
+                reportBody += `**📋 Все ответы:**\n\`\`\`\n${answersText}\`\`\``;
+                reportBody += `\n\n**💬 Комментарий:**\n${comment}`;
+                const title = `ДЗ Алгебра: ${student} (${date})`;
+
+                try {
+                    if (typeof createGitHubIssue === 'function') {
+                        const issueUrl = await createGitHubIssue(title, reportBody);
+                        if (!isAuto) {
+                            modalStatus.innerHTML = `✅ Отправлено! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;">Посмотреть</a>`;
+                            modalStatus.style.color = '#16a34a';
+                            setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        }
+                        resultArea.innerHTML = isAuto ? '<div style="color: var(--accent-red); font-weight: 700;"> Время вышло! Отправлено.</div>' : '<div style="color: var(--accent-green); font-weight: 700;">✅ Отправлено!</div>';
+                    } else {
+                        console.log('📤 Отправка:', title, '\n', reportBody);
+                        if (!isAuto) {
+                            modalStatus.innerHTML = '✅ Отправлено! (демо)';
+                            modalStatus.style.color = '#16a34a';
+                            setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        }
+                        resultArea.innerHTML = '✅ Отправлено! (демо)';
+                    }
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
+                    modalStatus.style.color = '#dc2626';
+                }
+            }
+
+            sendReportBtn.addEventListener('click', async function() {
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳...';
+                await executeSubmission(false);
+                btn.disabled = false;
+                btn.textContent = '✅ Отправить';
+            });
+
+            resetBtn.addEventListener('click', resetAll);
+            answerInputs.forEach(input => input.addEventListener('input', () => {
+                input.closest('.task-card').classList.remove('empty-field');
+                updateProgress();
+            }));
+
+            async function autoSubmitHomework() {
+                reportBtn.disabled = true;
+                reportBtn.textContent = '⏰ Время вышло';
+                await executeSubmission(true);
+            }
+
+            updateProgress();
+            startTimer();
+        })();
+    </script>
+</body>
+</html>
