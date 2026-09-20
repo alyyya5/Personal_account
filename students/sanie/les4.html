@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сравнение чисел · Теория 7 класс</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #e8b84b;
+        }
+        .card.blue { border-left-color: #2a6fdb; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #8b5cf6; }
+        .card h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .card h2 .badge {
+            background: #e8b84b;
+            color: #0b1a33;
+            font-size: 1rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.blue { background: #2a6fdb; color: white; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #8b5cf6; color: white; }
+        .card p, .card li { line-height: 1.7; color: #2c3e5a; font-size: 1.05rem; }
+        .card ul { margin: 14px 0 10px 24px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin: 18px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .example-box strong { color: #b47d2a; }
+        .example-box .solution {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #e8b84b;
+        }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .note-box strong { color: #059669; }
+        .warning-box {
+            background: #fef3c7;
+            border-left: 6px solid #f59e0b;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .warning-box strong { color: #d97706; }
+
+        .step-box {
+            background: #fff;
+            border: 2px solid #2a6fdb;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 8px 0;
+        }
+        .step-box strong {
+            color: #2a6fdb;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 10px 0 20px;
+            letter-spacing: 8px;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 18px; }
+            .card h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ СРАВНЕНИЕ ЧИСЕЛ И ВЫРАЖЕНИЙ ✦</div>
+
+    <!-- ===== §1. ОБЫКНОВЕННЫЕ ДРОБИ ===== -->
+    <div class="card">
+        <h2><span class="badge">§1</span> Сравнение обыкновенных дробей</h2>
+
+        <p>Чтобы сравнить две дроби, нужно привести их к <strong>общему знаменателю</strong>.</p>
+
+        <div class="formula-box">
+            Если знаменатели одинаковы, то больше та дробь, у которой <strong>числитель больше</strong>.<br>
+            \(\frac{a}{c} > \frac{b}{c}\), если \(a > b\) (при \(c > 0\))
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Сравните \(\frac{3}{4}\) и \(\frac{5}{6}\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                1. Находим общий знаменатель для 4 и 6. Это 12.<br>
+                2. Приводим дроби:<br>
+                \(\frac{3}{4} = \frac{3 \cdot 3}{4 \cdot 3} = \frac{9}{12}\)<br>
+                \(\frac{5}{6} = \frac{5 \cdot 2}{6 \cdot 2} = \frac{10}{12}\)<br>
+                3. Сравниваем числители: \(9 < 10\), значит \(\frac{9}{12} < \frac{10}{12}\).<br><br>
+                <strong>Ответ:</strong> \(\frac{3}{4} < \frac{5}{6}\)
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>💡 Лайфхак («Метод бабочки»):</strong><br>
+            Чтобы сравнить \(\frac{a}{b}\) и \(\frac{c}{d}\), умножьте крест-накрест:<br>
+            Если \(a \cdot d > b \cdot c\), то первая дробь больше.<br>
+            <em>Пример выше:</em> \(3 \cdot 6 = 18\), а \(5 \cdot 4 = 20\). Так как \(18 < 20\), то первая дробь меньше.
+        </div>
+    </div>
+
+    <!-- ===== §2. СМЕШАННЫЕ ЧИСЛА ===== -->
+    <div class="card blue">
+        <h2><span class="badge blue">§2</span> Смешанные числа</h2>
+
+        <p>Смешанное число состоит из целой и дробной части: \(2\frac{1}{3}\).</p>
+
+        <div class="warning-box">
+            <strong>⚠️ Алгоритм сравнения:</strong>
+            <div class="step-box">
+                <strong>Шаг 1:</strong> Сравниваем целые части.<br>
+                Если они разные, то больше то число, где целая часть больше. Дробную часть можно не смотреть!
+            </div>
+            <div class="step-box">
+                <strong>Шаг 2:</strong> Если целые части равны, сравниваем дробные части (как в §1).
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Сравните \(5\frac{2}{7}\) и \(3\frac{6}{7}\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                Целая часть первого числа: 5.<br>
+                Целая часть второго числа: 3.<br>
+                Так как \(5 > 3\), то первое число больше, независимо от дробей.<br>
+                <strong>Ответ:</strong> \(5\frac{2}{7} > 3\frac{6}{7}\)
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Сравните \(4\frac{3}{8}\) и \(4\frac{5}{12}\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                1. Целые части равны (4 = 4). Переходим к дробям.<br>
+                2. Сравниваем \(\frac{3}{8}\) и \(\frac{5}{12}\).<br>
+                Общий знаменатель для 8 и 12 — это 24.<br>
+                \(\frac{3}{8} = \frac{9}{24}\)<br>
+                \(\frac{5}{12} = \frac{10}{24}\)<br>
+                3. Так как \(\frac{9}{24} < \frac{10}{24}\), то и второе число больше.<br>
+                <strong>Ответ:</strong> \(4\frac{3}{8} < 4\frac{5}{12}\)
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §3. ДЕСЯТИЧНЫЕ ДРОБИ ===== -->
+    <div class="card green">
+        <h2><span class="badge green">§3</span> Десятичные дроби</h2>
+
+        <p>Десятичные дроби сравниваются поразрядно, слева направо.</p>
+
+        <div class="formula-box">
+            <strong>Главное правило:</strong><br>
+            Уравняйте количество знаков после запятой, приписав нули справа, затем сравните полученные натуральные числа.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Сравните \(0,5\) и \(0,48\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                У первой дроби 1 знак после запятой, у второй — 2.<br>
+                Допишем ноль к первой: \(0,50\).<br>
+                Теперь сравниваем 50 и 48.<br>
+                Так как \(50 > 48\), то \(0,5 > 0,48\).
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Сравните \(12,305\) и \(12,35\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                1. Целые части равны (12 = 12).<br>
+                2. Десятые равны (3 = 3).<br>
+                3. Сотые: у первого числа 0, у второго 5.<br>
+                Так как \(0 < 5\), то первое число меньше.<br>
+                <em>(Или уравняем знаки: 12,305 и 12,350. 305 < 350)</em><br>
+                <strong>Ответ:</strong> \(12,305 < 12,35\)
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>🔍 Важно:</strong><br>
+            Не путайте десятичные дроби с обыкновенными!<br>
+            \(0,2\) (две десятых) больше, чем \(0,19\) (девятнадцать сотых), хотя 19 больше 2.
+        </div>
+    </div>
+
+    <!-- ===== §4. ОТРИЦАТЕЛЬНЫЕ ЧИСЛА ===== -->
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Отрицательные числа</h2>
+
+        <p>На координатной прямой отрицательные числа находятся левее нуля. Чем «больше» модуль отрицательного числа, тем само число <strong>меньше</strong>.</p>
+
+        <div class="warning-box">
+            <strong>⚠️ Правило:</strong><br>
+            Из двух отрицательных чисел больше то, модуль которого <strong>меньше</strong>.<br>
+            Или проще: то, которое находится правее на числовой прямой.
+        </div>
+
+        <div class="formula-box">
+            \(-5 > -10\) (так как \(|-5| < |-10|\))<br>
+            \(-0,1 > -0,5\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Расположите в порядке возрастания: \(-3,5;\; -2;\; -3,51\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br>
+                1. Все числа отрицательные.<br>
+                2. Сравним модули: \(|-3,5| = 3,5\); \(|-2| = 2\); \(|-3,51| = 3,51\).<br>
+                3. Чем больше модуль, тем меньше само число.<br>
+                Самый большой модуль у 3,51, значит \(-3,51\) — самое маленькое число.<br>
+                Самый маленький модуль у 2, значит \(-2\) — самое большое.<br>
+                Порядок возрастания (от меньшего к большему):<br>
+                <strong>Ответ:</strong> \(-3,51 < -3,5 < -2\)
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §5. СРАВНЕНИЕ ВЫРАЖЕНИЙ ===== -->
+    <div class="card">
+        <h2><span class="badge">§5</span> Сравнение выражений</h2>
+
+        <p>Чтобы сравнить два сложных выражения, нужно сначала <strong>вычислить их значения</strong>, а затем сравнить полученные числа.</p>
+
+        <div class="step-box">
+            <strong>Алгоритм:</strong>
+            1. Вычислить значение левого выражения.<br>
+            2. Вычислить значение правого выражения.<br>
+            3. Сравнить результаты.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Сравните \((-2)^3 + 5\) и \(-10 : 2 + 1\)<br>
+            <div class="solution">
+                <strong>Решение:</strong><br><br>
+                <strong>Левая часть:</strong><br>
+                \((-2)^3 = -8\)<br>
+                \(-8 + 5 = -3\)<br><br>
+                <strong>Правая часть:</strong><br>
+                \(-10 : 2 = -5\)<br>
+                \(-5 + 1 = -4\)<br><br>
+                <strong>Сравнение:</strong><br>
+                Сравниваем \(-3\) и \(-4\).<br>
+                Так как \(-3\) находится правее на числовой прямой (или \(|-3| < |-4|\)), то \(-3 > -4\).<br><br>
+                <strong>Ответ:</strong> \((-2)^3 + 5 > -10 : 2 + 1\)
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== §6. СВОДНАЯ ТАБЛИЦА ===== -->
+    <div class="card blue">
+        <h2><span class="badge blue">§6</span> Шпаргалка</h2>
+
+        <div class="formula-box" style="text-align: left;">
+            <strong>1. Обыкновенные дроби:</strong> Привести к общему знаменателю.<br>
+            <strong>2. Смешанные:</strong> Сначала целые, потом дробные.<br>
+            <strong>3. Десятичные:</strong> Уравнять кол-во цифр после запятой.<br>
+            <strong>4. Отрицательные:</strong> Больше то, у которого модуль меньше.<br>
+            <strong>5. Выражения:</strong> Посчитать и сравнить числа.
+        </div>
+
+        <div class="note-box">
+            <strong>🧠 Запомни:</strong><br>
+            Любое положительное число больше любого отрицательного.<br>
+            Ноль больше любого отрицательного числа, но меньше любого положительного.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
