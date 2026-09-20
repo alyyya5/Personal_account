@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Математика: Знаки чисел</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            touch-action: manipulation;
+            user-select: none;
+            overflow: hidden; /* Prevent scroll during game */
+        }
+
+        /* ===== GAME WRAPPER ===== */
+        .game-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 95vh;
+            max-height: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .title { font-size: 18px; font-weight: 700; color: #94a3b8; }
+        .stats { display: flex; gap: 15px; font-size: 16px; font-weight: 600; }
+        .stat-correct { color: #4ade80; }
+        .stat-wrong { color: #f87171; }
+        .question-counter { 
+            background: rgba(255,255,255,0.1); 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            font-size: 14px; 
+        }
+
+        /* ===== ARENA (Falling Area) ===== */
+        .arena {
+            flex-grow: 1;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* The falling card */
+        .card {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            padding: 20px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            top: 0; /* Will be animated via JS */
+            will-change: top;
+            z-index: 10;
+        }
+
+        .problem-text {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        .negative { color: #fca5a5; } /* Highlight negative numbers slightly */
+
+        /* Floor line indicator */
+        .floor-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #f87171);
+            opacity: 0.5;
+        }
+
+        /* Timer Bar inside Card or Arena? Let's put it in Arena bottom */
+        .timer-bar-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+        }
+        .timer-bar-fill {
+            height: 100%;
+            width: 100%;
+            background: #4ade80;
+            transition: width 0.1s linear;
+        }
+
+        /* Feedback Overlay */
+        .feedback-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 20;
+            border-radius: 16px;
+        }
+        .feedback-overlay.show { opacity: 1; pointer-events: auto; }
+        .feedback-icon { font-size: 48px; margin-bottom: 10px; }
+        .feedback-msg { font-size: 20px; font-weight: bold; }
+        .correct-answer-display { color: #fbbf24; margin-top: 5px; font-size: 18px; }
+
+        /* ===== CONTROLS (Buttons) ===== */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding-bottom: 5px;
+        }
+
+        .btn-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.1s;
+            touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-option:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.2); }
+        
+        /* Button Colors for visual distinction */
+        .btn-option:nth-child(1) { border-color: rgba(59, 130, 246, 0.3); }
+        .btn-option:nth-child(2) { border-color: rgba(168, 85, 247, 0.3); }
+        .btn-option:nth-child(3) { border-color: rgba(236, 72, 153, 0.3); }
+        .btn-option:nth-child(4) { border-color: rgba(34, 197, 94, 0.3); }
+
+        .btn-option.correct-highlight { background: #22c55e !important; border-color: #22c55e !important; }
+        .btn-option.wrong-highlight { background: #ef4444 !important; border-color: #ef4444 !important; opacity: 0.6; }
+
+        /* ===== RESULTS SCREEN ===== */
+        .results-screen {
+            position: absolute;
+            inset: 0;
+            background: #0f172a;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .results-screen.visible { display: flex; }
+
+        .res-title { font-size: 32px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .res-score { font-size: 64px; font-weight: 900; color: #4ade80; margin: 20px 0; }
+        .res-detail { font-size: 18px; color: #94a3b8; margin-bottom: 30px; }
+        
+        .btn-restart {
+            padding: 16px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            background: #3b82f6;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+        }
+        .btn-restart:active { transform: scale(0.95); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Mobile adjustments */
+        @media (max-height: 600px) {
+            .card { padding: 15px; width: 90%; }
+            .problem-text { font-size: 28px; }
+            .btn-option { padding: 15px 10px; font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="title">Знаки чисел</div>
+            <div class="stats">
+                <span class="stat-correct">✅ <span id="scoreCorrect">0</span></span>
+                <span class="stat-wrong">❌ <span id="scoreWrong">0</span></span>
+            </div>
+            <div class="question-counter" id="qCounter">1 / 20</div>
+        </header>
+
+        <!-- Arena -->
+        <div class="arena" id="arena">
+            <div class="floor-line"></div>
+            <div class="timer-bar-container">
+                <div class="timer-bar-fill" id="timerBar"></div>
+            </div>
+            
+            <!-- Falling Card -->
+            <div class="card" id="fallingCard">
+                <div class="problem-text" id="problemText">Loading...</div>
+            </div>
+
+            <!-- Feedback Overlay -->
+            <div class="feedback-overlay" id="feedbackOverlay">
+                <div class="feedback-icon" id="fbIcon">✅</div>
+                <div class="feedback-msg" id="fbMsg">Верно!</div>
+                <div class="correct-answer-display" id="fbAnswer"></div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls" id="controlsArea">
+            <button class="btn-option" onclick="checkAnswer(0)">-</button>
+            <button class="btn-option" onclick="checkAnswer(1)">-</button>
+            <button class="btn-option" onclick="checkAnswer(2)">-</button>
+            <button class="btn-option" onclick="checkAnswer(3)">-</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="res-title" id="resTitle">Игра окончена!</div>
+            <div class="res-score" id="resFinalScore">18/20</div>
+            <div class="res-detail" id="resDetail">Отличный результат</div>
+            <button class="btn-restart" onclick="restartGame()">Играть снова</button>
+        </div>
+    </div>
+
+    <script>
+        // ================= CONFIGURATION =================
+        const TOTAL_QUESTIONS = 20;
+        const FALL_DURATION_MS = 8000; // 8 seconds to answer
+        
+        // ================= STATE =================
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isGameActive = false;
+        let currentProblem = {};
+        let startTime = 0;
+        let animationFrameId;
+        let options = []; // Stores the 4 answer values
+
+        // ================= DOM ELEMENTS =================
+        const elCard = document.getElementById('fallingCard');
+        const elProblem = document.getElementById('problemText');
+        const elTimerBar = document.getElementById('timerBar');
+        const elScoreC = document.getElementById('scoreCorrect');
+        const elScoreW = document.getElementById('scoreWrong');
+        const elQCounter = document.getElementById('qCounter');
+        const elFeedback = document.getElementById('feedbackOverlay');
+        const elFbIcon = document.getElementById('fbIcon');
+        const elFbMsg = document.getElementById('fbMsg');
+        const elFbAns = document.getElementById('fbAnswer');
+        const btnOptions = document.querySelectorAll('.btn-option');
+        const elResults = document.getElementById('resultsScreen');
+
+        // ================= GENERATOR LOGIC =================
+        
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateProblem() {
+            // Logic to create problems with positive/negative numbers
+            // Operations: +, -, *, /
+            
+            const ops = ['+', '-', '*', '/'];
+            const op = ops[randInt(0, 3)];
+            let a, b, ans;
+            
+            // Generate numbers between -12 and 12, excluding 0 for division/mult sometimes
+            a = randInt(-12, 12);
+            b = randInt(-12, 12);
+            
+            // Avoid trivial zeros occasionally, but keep them sometimes
+            if (a === 0 && Math.random() > 0.3) a = randInt(1, 9) * (Math.random() > 0.5 ? 1 : -1);
+            if (b === 0 && Math.random() > 0.3) b = randInt(1, 9) * (Math.random() > 0.5 ? 1 : -1);
+
+            // Special handling for Division to ensure integer result
+            if (op === '/') {
+                if (b === 0) b = 1; // prevent div by zero
+                // Make 'a' a multiple of 'b'
+                // Let's pick b first, then ans, then calc a
+                b = randInt(-10, 10);
+                if (b === 0) b = 2;
+                ans = randInt(-10, 10);
+                a = b * ans;
+            }
+
+            // Calculate Answer
+            switch(op) {
+                case '+': ans = a + b; break;
+                case '-': ans = a - b; break;
+                case '*': ans = a * b; break;
+                case '/': ans = a / b; break;
+            }
+
+            // Formatting: Add parentheses for negative numbers for clarity
+            // e.g., "-5 + -3" looks bad. "-5 + (-3)" is better.
+            const fmtA = (a < 0) ? `(${a})` : `${a}`;
+            const fmtB = (b < 0) ? `(${b})` : `${b}`;
+            
+            // Display string
+            let displayStr = `${fmtA} ${op} ${fmtB}`;
+
+            return {
+                display: displayStr,
+                answer: ans,
+                op: op
+            };
+        }
+
+        function generateOptions(correctAnswer) {
+            let opts = new Set();
+            opts.add(correctAnswer);
+
+            while(opts.size < 4) {
+                // Generate distractors close to the answer
+                let offset = randInt(-5, 5);
+                if (offset === 0) offset = 1;
+                
+                // Sometimes flip the sign (common mistake)
+                if (Math.random() > 0.7) {
+                    opts.add(-correctAnswer);
+                } else {
+                    opts.add(correctAnswer + offset);
+                }
+            }
+            
+            // Convert Set to Array and Shuffle
+            let arr = Array.from(opts);
+            // Shuffle array
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ================= GAME LOOP =================
+
+        function startGame() {
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            isGameActive = true;
+            updateStats();
+            elResults.classList.remove('visible');
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex >= TOTAL_QUESTIONS) {
+                endGame();
+                return;
+            }
+
+            // Reset UI
+            elFeedback.classList.remove('show');
+            btnOptions.forEach(btn => {
+                btn.className = 'btn-option'; // remove highlights
+                btn.disabled = false;
+            });
+            
+            // Generate Data
+            currentProblem = generateProblem();
+            options = generateOptions(currentProblem.answer);
+            
+            // Render Problem
+            elProblem.innerHTML = currentProblem.display;
+            
+            // Render Buttons
+            btnOptions.forEach((btn, idx) => {
+                btn.textContent = options[idx];
+            });
+
+            // Update Counter
+            elQCounter.textContent = `${currentQuestionIndex + 1} / ${TOTAL_QUESTIONS}`;
+
+            // Start Animation
+            startFallAnimation();
+        }
+
+        function startFallAnimation() {
+            startTime = performance.now();
+            elCard.style.top = '-100px'; // Start above
+            
+            function step(now) {
+                if (!isGameActive) return;
+
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / FALL_DURATION_MS, 1);
+                
+                // Move card down (Arena height approx 100%, card starts at -10%, ends at 90%)
+                // We map 0..1 to Top%
+                const topPercent = -10 + (progress * 100); 
+                elCard.style.top = `${topPercent}%`;
+
+                // Update Timer Bar
+                elTimerBar.style.width = `${(1 - progress) * 100}%`;
+                // Color change for urgency
+                if (progress < 0.5) elTimerBar.style.background = '#4ade80'; // green
+                else if (progress < 0.8) elTimerBar.style.background = '#facc15'; // yellow
+                else elTimerBar.style.background = '#ef4444'; // red
+
+                // Check collision (Time out)
+                if (progress >= 1) {
+                    handleTimeout();
+                } else {
+                    animationFrameId = requestAnimationFrame(step);
+                }
+            }
+            
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(step);
+        }
+
+        function stopAnimation() {
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        // ================= INTERACTION =================
+
+        window.checkAnswer = function(btnIndex) {
+            if (!isGameActive) return;
+            
+            const selectedValue = options[btnIndex];
+            const isCorrect = (selectedValue === currentProblem.answer);
+            
+            stopAnimation();
+            
+            // Visual feedback on buttons
+            btnOptions.forEach(b => b.disabled = true); // Lock buttons
+            
+            if (isCorrect) {
+                btnOptions[btnIndex].classList.add('correct-highlight');
+                processResult(true);
+            } else {
+                btnOptions[btnIndex].classList.add('wrong-highlight');
+                // Highlight the correct one too so they learn
+                const correctIdx = options.indexOf(currentProblem.answer);
+                if(correctIdx !== -1) btnOptions[correctIdx].classList.add('correct-highlight');
+                
+                processResult(false);
+            }
+        };
+
+        function handleTimeout() {
+            stopAnimation();
+            btnOptions.forEach(b => b.disabled = true);
+            processResult(false, true); // false = wrong, true = timeout
+        }
+
+        function processResult(isCorrect, isTimeout = false) {
+            if (isCorrect) correctCount++;
+            else wrongCount++;
+            
+            updateStats();
+
+            // Show Overlay
+            elFbIcon.textContent = isCorrect ? '✅' : (isTimeout ? '⏰' : '❌');
+            elFbMsg.textContent = isCorrect ? 'Верно!' : (isTimeout ? 'Время вышло!' : 'Ошибка!');
+            elFbMsg.style.color = isCorrect ? '#4ade80' : '#f87171';
+            
+            if (!isCorrect) {
+                elFbAns.textContent = `Правильный ответ: ${currentProblem.answer}`;
+            } else {
+                elFbAns.textContent = '';
+            }
+
+            elFeedback.classList.add('show');
+
+            // Wait then next
+            setTimeout(() => {
+                currentQuestionIndex++;
+                nextQuestion();
+            }, isCorrect ? 800 : 2000); // Longer pause on error to read correct answer
+        }
+
+        function updateStats() {
+            elScoreC.textContent = correctCount;
+            elScoreW.textContent = wrongCount;
+        }
+
+        function endGame() {
+            isGameActive = false;
+            elResults.classList.add('visible');
+            
+            const finalScoreEl = document.getElementById('resFinalScore');
+            const finalTitleEl = document.getElementById('resTitle');
+            const finalDetailEl = document.getElementById('resDetail');
+
+            finalScoreEl.textContent = `${correctCount} / ${TOTAL_QUESTIONS}`;
+
+            const percentage = (correctCount / TOTAL_QUESTIONS) * 100;
+            
+            if (percentage === 100) {
+                finalTitleEl.textContent = "Идеально! 🏆";
+                finalDetailEl.textContent = "Вы мастер знаков и чисел!";
+            } else if (percentage >= 80) {
+                finalTitleEl.textContent = "Отлично! 🌟";
+                finalDetailEl.textContent = "Почти без ошибок.";
+            } else if (percentage >= 50) {
+                finalTitleEl.textContent = "Неплохо 👍";
+                finalDetailEl.textContent = "Но нужно повторить правила знаков.";
+            } else {
+                finalTitleEl.textContent = "Тренируйтесь! 📚";
+                finalDetailEl.textContent = "Обратите внимание на минусы.";
+            }
+        }
+
+        window.restartGame = function() {
+            startGame();
+        };
+
+        // Init
+        startGame();
+
+    </script>
+</body>
+</html>
