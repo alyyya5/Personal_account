@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Алгебра + Геометрия 7 класс</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 40px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 45px 50px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 24px;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dce5f2;
+            color: #1d3a66;
+        }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+
+        /* ===== СЕКЦИИ ===== */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            border-left: 6px solid var(--accent-blue);
+            padding-left: 16px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .section-title .badge {
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--accent-blue);
+            color: white;
+            padding: 3px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-title.orange { border-left-color: var(--accent-orange); color: var(--accent-orange); }
+        .section-title.orange .badge { background: var(--accent-orange); }
+        .section-title.green { border-left-color: var(--accent-green); color: var(--accent-green); }
+        .section-title.green .badge { background: var(--accent-green); }
+        .section-title.red { border-left-color: var(--accent-red); color: var(--accent-red); }
+        .section-title.red .badge { background: var(--accent-red); }
+        .section-title.purple { border-left-color: var(--accent-purple); color: var(--accent-purple); }
+        .section-title.purple .badge { background: var(--accent-purple); }
+
+        /* ===== КАРТОЧКИ ===== */
+        .card {
+            background: #f8faff;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            border: 1px solid #e6edf6;
+        }
+
+        .card .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .card .label.orange { color: var(--accent-orange); }
+        .card .label.green { color: var(--accent-green); }
+        .card .label.red { color: var(--accent-red); }
+        .card .label.purple { color: var(--accent-purple); }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #1e2f3e;
+            margin-bottom: 6px;
+        }
+        .card p:last-child { margin-bottom: 0; }
+
+        .card ul {
+            margin: 8px 0 0 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #1e2f3e;
+        }
+
+        .card .example {
+            background: #e6f0ff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #0b2a44;
+            line-height: 1.8;
+        }
+        .card .example.orange-bg { background: #fee2d6; }
+        .card .example.green-bg { background: #d5f2e3; }
+        .card .example.red-bg { background: #fadbd6; }
+        .card .example.purple-bg { background: #e8dff5; }
+
+        .card .formula {
+            background: #ffffff;
+            border: 1px dashed var(--accent-blue);
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 17px;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+        .card .formula.orange-border { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .card .formula.green-border { border-color: var(--accent-green); color: var(--accent-green); }
+        .card .formula.red-border { border-color: var(--accent-red); color: var(--accent-red); }
+        .card .formula.purple-border { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+        /* ===== GRID ===== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        /* ===== РИСУНКИ ===== */
+        .figure {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 14px 0 8px;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e6edf6;
+        }
+        .figure svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .figure-caption {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        /* ===== РАЗДЕЛИТЕЛЬ ===== */
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            margin: 45px 0 35px;
+            opacity: 0.3;
+        }
+
+        /* ===== ПОДСКАЗКА ===== */
+        .hint {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 15px;
+            color: #7a5a1a;
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-note {
+            margin-top: 35px;
+            padding-top: 18px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 24px 18px; border-radius: 18px; }
+            h1 { font-size: 24px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .section-title { font-size: 19px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📐 Теория</h1>
+            <div class="subtitle">Алгебра + Геометрия · 7 класс</div>
+            <div class="tags">
+                <span class="tag">Шпаргалка</span>
+                <span class="tag orange">Выражения</span>
+                <span class="tag green">Углы</span>
+                <span class="tag purple">Отрезки</span>
+            </div>
+        </header>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <div class="section">
+            <div class="section-title">
+                Алгебра
+                <span class="badge">Значение выражения</span>
+            </div>
+
+            <div class="card">
+                <div class="label">Что значит «найти значение выражения»</div>
+                <p>Это значит подставить вместо букв данные числа и выполнить все действия.</p>
+                <div class="example">
+                    Найти значение \(3x + 2y\), если \(x = 4\), \(y = -1\)<br>
+                    Подставляем: \(3 \cdot 4 + 2 \cdot (-1) = 12 - 2 = 10\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Порядок действий</div>
+                <ul>
+                    <li>Сначала — действия в скобках</li>
+                    <li>Затем — умножение и деление</li>
+                    <li>Потом — сложение и вычитание</li>
+                </ul>
+                <div class="example orange-bg">
+                    \(5 + 3 \cdot 2 = 5 + 6 = 11\) &nbsp;&nbsp; (не \(8 \cdot 2\))
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label green">Важно!</div>
+                <p>При подстановке отрицательного числа — <strong>обязательно бери его в скобки</strong>.</p>
+                <div class="example green-bg">
+                    \(2a - b\), если \(a = 3\), \(b = -5\)<br>
+                    \(2 \cdot 3 - (-5) = 6 + 5 = 11\)
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ==================== ГЕОМЕТРИЯ: УГЛЫ ==================== -->
+
+        <div class="section">
+            <div class="section-title purple">
+                Геометрия: углы
+                <span class="badge purple">Биссектриса</span>
+            </div>
+
+            <div class="card">
+                <div class="label purple">Что такое угол</div>
+                <p><strong>Угол</strong> — это фигура, образованная двумя лучами с общим началом.</p>
+                <ul>
+                    <li>Лучи — <strong>стороны</strong> угла</li>
+                    <li>Общее начало — <strong>вершина</strong> угла</li>
+                </ul>
+
+                <div class="figure">
+                    <svg width="350" height="170" viewBox="0 0 350 170">
+                        <line x1="60" y1="150" x2="160" y2="20" stroke="#7c3aed" stroke-width="3" />
+                        <line x1="60" y1="150" x2="280" y2="150" stroke="#7c3aed" stroke-width="3" />
+                        <circle cx="60" cy="150" r="5" fill="#c0392b" />
+                        <text x="60" y="172" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">O</text>
+                        <text x="165" y="12" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <text x="285" y="165" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <text x="175" y="172" text-anchor="middle" font-size="13" fill="#5e6f8c">\(\angle AOB\)</text>
+                    </svg>
+                </div>
+                <div class="figure-caption">Угол AOB — вершина O, стороны OA и OB</div>
+            </div>
+
+            <div class="card">
+                <div class="label red">Развёрнутый угол</div>
+                <p>Угол, стороны которого лежат на одной прямой.</p>
+                <div class="formula red-border">
+                    \(\angle AOB = 180°\)
+                </div>
+
+                <div class="figure">
+                    <svg width="300" height="60" viewBox="0 0 300 60">
+                        <line x1="30" y1="30" x2="270" y2="30" stroke="#c0392b" stroke-width="3" />
+                        <circle cx="150" cy="30" r="4" fill="#1d6f9c" />
+                        <text x="150" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1d6f9c">O</text>
+                        <text x="30" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">A</text>
+                        <text x="270" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">B</text>
+                        <text x="150" y="50" text-anchor="middle" font-size="12" fill="#c0392b">∠AOB = 180°</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label purple">Биссектриса угла</div>
+                <p><strong>Биссектриса</strong> — это луч, который исходит из вершины угла и делит его <strong>пополам</strong> (на два равных угла).</p>
+                <div class="formula purple-border">
+                    \(\angle AOC = \angle COB = \dfrac{\angle AOB}{2}\)
+                </div>
+
+                <div class="figure">
+                    <svg width="350" height="180" viewBox="0 0 350 180">
+                        <line x1="60" y1="150" x2="160" y2="20" stroke="#7c3aed" stroke-width="2.5" />
+                        <line x1="60" y1="150" x2="280" y2="150" stroke="#7c3aed" stroke-width="2.5" />
+                        <line x1="60" y1="150" x2="230" y2="65" stroke="#1d6f9c" stroke-width="3" stroke-dasharray="7,4" />
+                        <circle cx="60" cy="150" r="5" fill="#c0392b" />
+                        <text x="60" y="172" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">O</text>
+                        <text x="165" y="12" text-anchor="middle" font-size="14" font-weight="700" fill="#7c3aed">A</text>
+                        <text x="285" y="165" text-anchor="middle" font-size="14" font-weight="700" fill="#7c3aed">B</text>
+                        <text x="235" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">C</text>
+                        <text x="120" y="95" text-anchor="middle" font-size="13" fill="#1d6f9c" font-weight="700">биссектриса</text>
+                    </svg>
+                </div>
+                <div class="figure-caption">Луч OC — биссектриса угла AOB</div>
+
+                <div class="example purple-bg">
+                    <strong>Пример:</strong> \(\angle AOB = 80°\), \(OC\) — биссектриса.<br>
+                    Тогда \(\angle AOC = \angle COB = 80° : 2 = 40°\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Свойство углов</div>
+                <p>Если луч \(OC\) делит угол \(AOB\) на два угла, то</p>
+                <div class="formula orange-border">
+                    \(\angle AOC + \angle COB = \angle AOB\)
+                </div>
+            </div>
+
+            <div class="hint">
+                💡 <strong>Запомни:</strong> биссектриса делит угол <strong>пополам</strong>, поэтому:
+                <ul style="margin: 6px 0 0 20px;">
+                    <li>Знаешь весь угол → раздели на 2 и получишь половину</li>
+                    <li>Знаешь половину → умножь на 2 и получишь весь угол</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ==================== ГЕОМЕТРИЯ: ОТРЕЗКИ ==================== -->
+
+        <div class="section">
+            <div class="section-title green">
+                Геометрия: отрезки
+                <span class="badge green">Точки на прямой</span>
+            </div>
+
+            <div class="card">
+                <div class="label green">Что такое отрезок</div>
+                <p><strong>Отрезок</strong> — часть прямой, ограниченная двумя точками (<strong>концами отрезка</strong>).</p>
+
+                <div class="figure">
+                    <svg width="400" height="60" viewBox="0 0 400 60">
+                        <line x1="60" y1="30" x2="340" y2="30" stroke="#1a8a5a" stroke-width="4" />
+                        <circle cx="60" cy="30" r="6" fill="#c0392b" />
+                        <text x="60" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <circle cx="340" cy="30" r="6" fill="#c0392b" />
+                        <text x="340" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <text x="200" y="52" text-anchor="middle" font-size="14" fill="#1a8a5a" font-weight="600">Отрезок AB</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Середина отрезка</div>
+                <p><strong>Середина отрезка</strong> — точка, которая делит его пополам.</p>
+                <div class="formula orange-border">
+                    \(AC = CB = \dfrac{AB}{2}\)
+                </div>
+
+                <div class="figure">
+                    <svg width="400" height="60" viewBox="0 0 400 60">
+                        <line x1="60" y1="30" x2="340" y2="30" stroke="#d48a3a" stroke-width="4" />
+                        <circle cx="60" cy="30" r="6" fill="#c0392b" />
+                        <text x="60" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <circle cx="200" cy="30" r="6" fill="#1d6f9c" />
+                        <text x="200" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">C</text>
+                        <circle cx="340" cy="30" r="6" fill="#c0392b" />
+                        <text x="340" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <text x="200" y="52" text-anchor="middle" font-size="13" fill="#d48a3a">C — середина</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label purple">Три точки на одной прямой</div>
+                <p>Если точки \(A\), \(B\), \(C\) лежат на одной прямой, то возможны <strong>два случая</strong>:</p>
+
+                <p style="margin-top: 12px; font-weight: 600; color: var(--accent-purple);">Случай 1. Точка B между A и C:</p>
+                <div class="figure">
+                    <svg width="400" height="50" viewBox="0 0 400 50">
+                        <line x1="60" y1="25" x2="340" y2="25" stroke="#7c3aed" stroke-width="3" />
+                        <circle cx="60" cy="25" r="6" fill="#c0392b" />
+                        <text x="60" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">A</text>
+                        <circle cx="200" cy="25" r="6" fill="#1d6f9c" />
+                        <text x="200" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">B</text>
+                        <circle cx="340" cy="25" r="6" fill="#c0392b" />
+                        <text x="340" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">C</text>
+                    </svg>
+                </div>
+                <div class="formula purple-border">
+                    \(AC = AB + BC\)
+                </div>
+
+                <p style="margin-top: 14px; font-weight: 600; color: var(--accent-purple);">Случай 2. Точка A между B и C:</p>
+                <div class="figure">
+                    <svg width="400" height="50" viewBox="0 0 400 50">
+                        <line x1="60" y1="25" x2="340" y2="25" stroke="#7c3aed" stroke-width="3" />
+                        <circle cx="60" cy="25" r="6" fill="#c0392b" />
+                        <text x="60" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">B</text>
+                        <circle cx="200" cy="25" r="6" fill="#1d6f9c" />
+                        <text x="200" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#1d6f9c">A</text>
+                        <circle cx="340" cy="25" r="6" fill="#c0392b" />
+                        <text x="340" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#c0392b">C</text>
+                    </svg>
+                </div>
+                <div class="formula purple-border">
+                    \(BC = BA + AC\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label red">Задача на расстояние</div>
+                <p>Если две точки лежат на одной прямой, а третья — <strong>между</strong> ними, то расстояние между крайними точками равно <strong>сумме</strong> расстояний от средней до крайних.</p>
+
+                <div class="example red-bg">
+                    <strong>Пример:</strong> Точки \(A\), \(B\), \(C\) на одной прямой. \(AB = 8\) см, \(BC = 12\) см.<br>
+                    Если \(B\) между \(A\) и \(C\): \(AC = 8 + 12 = 20\) см<br>
+                    Если \(A\) между \(B\) и \(C\): \(AC = 12 - 8 = 4\) см
+                </div>
+            </div>
+
+            <div class="hint">
+                💡 <strong>Совет:</strong> если в задаче про три точки на прямой не указано, какая из них лежит между двумя другими, — рассмотри <strong>оба случая</strong>. Ответов может быть два!
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ==================== ПРИМЕРЫ РЕШЕНИЙ ==================== -->
+
+        <div class="section">
+            <div class="section-title orange">
+                Примеры решения задач
+                <span class="badge orange">Разбор</span>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Задача 1. Биссектриса</div>
+                <p>Луч \(OC\) — биссектриса угла \(AOB\). \(\angle AOB = 74°\). Найти \(\angle AOC\).</p>
+                <div class="example orange-bg">
+                    <strong>Решение:</strong><br>
+                    Биссектриса делит угол пополам:<br>
+                    \(\angle AOC = 74° : 2 = 37°\)<br>
+                    <strong>Ответ:</strong> \(37°\)
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Задача 2. Середина отрезка</div>
+                <p>Точка \(C\) — середина отрезка \(AB = 72\) см. На луче \(CA\) отмечена точка \(D\), \(CD = 18\) см. Найти \(BD\) и \(DA\).</p>
+                <div class="example orange-bg">
+                    <strong>Решение:</strong><br>
+                    \(AC = CB = 72 : 2 = 36\) см<br>
+                    Точка \(D\) лежит на луче \(CA\), значит: \(DA = AC - CD = 36 - 18 = 18\) см<br>
+                    \(BD = BC + CD = 36 + 18 = 54\) см<br>
+                    <strong>Ответ:</strong> \(BD = 54\) см, \(DA = 18\) см
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label orange">Задача 3. Три точки на прямой</div>
+                <p>Точки \(K\), \(P\), \(T\) на одной прямой. \(KP = 9\) см, \(PT = 14\) см. Каким может быть \(KT\)?</p>
+                <div class="example orange-bg">
+                    <strong>Решение:</strong> возможно два случая:<br>
+                    1) \(P\) между \(K\) и \(T\): \(KT = KP + PT = 9 + 14 = 23\) см<br>
+                    2) \(K\) между \(P\) и \(T\): \(KT = PT - KP = 14 - 9 = 5\) см<br>
+                    <strong>Ответ:</strong> \(5\) см или \(23\) см
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            📌 Сохрани эту шпаргалку перед выполнением домашнего задания
+        </div>
+
+    </div>
+
+</body>
+</html>
