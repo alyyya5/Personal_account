@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория: свойства действий и углы</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 1rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card p, .card li { line-height: 1.7; color: #2c3e5a; font-size: 1.05rem; }
+        .card ul { margin: 14px 0 10px 24px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin: 18px 0;
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 500;
+            line-height: 1.9;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 14px;
+            padding: 16px 22px;
+            margin: 16px 0;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin: 16px 0;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 18px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 10px 0 20px;
+            letter-spacing: 8px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2a6fdb;
+            padding: 6px 0 10px;
+            letter-spacing: 3px;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 18px; }
+            .card h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. СВОЙСТВА ДЕЙСТВИЙ НАД ЧИСЛАМИ                    -->
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <h2><span class="badge">5</span> Свойства действий над числами</h2>
+
+        <p>Напомним основные свойства сложения и умножения чисел — они работают для любых чисел \(a\), \(b\) и \(c\).</p>
+
+        <div class="formula-box">
+            <strong>1) Переместительное свойство:</strong><br>
+            \(a + b = b + a\) &nbsp;&nbsp;&nbsp; \(ab = ba\)
+        </div>
+
+        <div class="formula-box">
+            <strong>2) Сочетательное свойство:</strong><br>
+            \((a + b) + c = a + (b + c)\) &nbsp;&nbsp;&nbsp; \((ab)c = a(bc)\)
+        </div>
+
+        <div class="formula-box">
+            <strong>3) Распределительное свойство:</strong><br>
+            \(a(b + c) = ab + ac\)
+        </div>
+
+        <div class="note-box">
+            <strong>Из переместительного и сочетательного свойств сложения следует:</strong><br>
+            в любой сумме можно как угодно переставлять слагаемые и произвольным образом объединять их в группы.
+        </div>
+
+        <div class="note-box">
+            <strong>Из переместительного и сочетательного свойств умножения следует:</strong><br>
+            в любом произведении можно как угодно переставлять множители и произвольным образом объединять их в группы.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (упрощение вычислений):</strong><br>
+            \(25 \cdot 7 \cdot 4 = (25 \cdot 4) \cdot 7 = 100 \cdot 7 = 700\)<br>
+            \(17 + 38 + 3 + 12 = (17 + 3) + (38 + 12) = 20 + 50 = 70\)
+        </div>
+
+        <p>Свойства действий над числами лежат в основе <strong>тождественных преобразований</strong> выражений: приведения подобных слагаемых, раскрытия скобок и других.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. СМЕЖНЫЕ УГЛЫ                                     -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">11</span> Смежные углы</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Два угла называются <em>смежными</em>, если у них:
+            <ul style="margin-top:8px;">
+                <li>одна сторона <strong>общая</strong>;</li>
+                <li>две другие стороны являются <strong>продолжениями одна другой</strong>.</li>
+            </ul>
+        </div>
+
+        <p>Проще говоря, смежные углы — это два угла, которые «сидят» рядом на одной прямой и вместе образуют развёрнутый угол.</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                <line x1="30" y1="110" x2="370" y2="110" stroke="#1d4a9e" stroke-width="3"/>
+                <line x1="200" y1="110" x2="270" y2="30" stroke="#1d4a9e" stroke-width="3"/>
+                <circle cx="200" cy="110" r="5" fill="#ec4899"/>
+                <text x="190" y="132" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+                <text x="18" y="132" font-size="14" fill="#2c3e5a" font-weight="600">A</text>
+                <text x="362" y="132" font-size="14" fill="#2c3e5a" font-weight="600">C</text>
+                <text x="268" y="22" font-size="14" fill="#2c3e5a" font-weight="600">B</text>
+            </svg>
+            <div class="fig-caption">\(\angle AOB\) и \(\angle BOC\) — смежные</div>
+        </div>
+
+        <div class="formula-box">
+            📐 <strong>Свойство смежных углов:</strong><br>
+            сумма смежных углов равна \(180^\circ\)<br>
+            \(\angle AOB + \angle BOC = 180^\circ\)
+        </div>
+
+        <div class="note-box">
+            <strong>Почему это так?</strong> Вместе смежные углы образуют развёрнутый угол, а развёрнутый угол равен \(180^\circ\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Один из смежных углов равен \(45^\circ\). Тогда второй:<br>
+            \(180^\circ - 45^\circ = 135^\circ\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Один из смежных углов в \(3\) раза больше другого.<br>
+            Пусть меньший \(= x\), тогда больший \(= 3x\).<br>
+            Уравнение: \(x + 3x = 180\) &rArr; \(4x = 180\) &rArr; \(x = 45\).<br>
+            <strong>Ответ:</strong> \(45^\circ\) и \(135^\circ\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ВЕРТИКАЛЬНЫЕ УГЛЫ                                -->
+    <!-- ============================================================ -->
+
+    <div class="card green">
+        <h2><span class="badge green">12</span> Вертикальные углы</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> Два угла называются <em>вертикальными</em>, если стороны одного угла являются продолжениями сторон другого.
+        </div>
+
+        <p>Вертикальные углы образуются при пересечении двух прямых. Они всегда расположены «напротив» друг друга.</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- Прямая AC -->
+                <line x1="40" y1="40" x2="420" y2="200" stroke="#1d4a9e" stroke-width="3"/>
+                <!-- Прямая BD -->
+                <line x1="40" y1="200" x2="420" y2="40" stroke="#1d4a9e" stroke-width="3"/>
+                <circle cx="230" cy="120" r="5" fill="#06d6a0"/>
+                <text x="240" y="140" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+
+                <!-- Буквы на концах лучей -->
+                <text x="28" y="35" font-size="15" fill="#059669" font-weight="700">A</text>
+                <text x="425" y="35" font-size="15" fill="#059669" font-weight="700">B</text>
+                <text x="425" y="220" font-size="15" fill="#059669" font-weight="700">C</text>
+                <text x="28" y="220" font-size="15" fill="#059669" font-weight="700">D</text>
+            </svg>
+            <div class="fig-caption">
+                \(\angle AOB\) и \(\angle COD\) — вертикальные; \(\angle BOC\) и \(\angle DOA\) — вертикальные
+            </div>
+        </div>
+
+        <p>На рисунке:</p>
+        <ul>
+            <li>\(\angle AOB\) и \(\angle COD\) — <strong>вертикальные</strong>;</li>
+            <li>\(\angle BOC\) и \(\angle DOA\) — <strong>вертикальные</strong>;</li>
+            <li>\(\angle AOB\) и \(\angle BOC\), \(\angle BOC\) и \(\angle COD\), \(\angle COD\) и \(\angle DOA\), \(\angle DOA\) и \(\angle AOB\) — <strong>смежные</strong>.</li>
+        </ul>
+
+        <div class="formula-box">
+            📐 <strong>Свойство вертикальных углов:</strong><br>
+            вертикальные углы равны<br>
+            \(\angle AOB = \angle COD\) &nbsp;&nbsp;&nbsp; \(\angle BOC = \angle DOA\)
+        </div>
+
+        <div class="note-box">
+            <strong>Доказательство.</strong> Углы \(\angle AOB\) и \(\angle BOC\) — смежные, значит \(\angle AOB + \angle BOC = 180^\circ\).<br>
+            Углы \(\angle BOC\) и \(\angle COD\) — тоже смежные, значит \(\angle BOC + \angle COD = 180^\circ\).<br>
+            Из этих двух равенств следует, что \(\angle AOB = \angle COD\). Аналогично \(\angle BOC = \angle DOA\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Один из вертикальных углов равен \(70^\circ\).<br>
+            Тогда противоположный ему тоже \(70^\circ\), а два других (смежных с ними) — по \(180^\circ - 70^\circ = 110^\circ\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    СВОДКА                                                    -->
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <h2><span class="badge">§</span> Сводка основных фактов</h2>
+
+        <div class="formula-box">
+            \(\angle AOB + \angle BOC = 180^\circ\) — сумма смежных углов
+        </div>
+
+        <div class="formula-box">
+            \(\angle AOB = \angle COD\) — вертикальные углы равны
+        </div>
+
+        <div class="formula-box">
+            \(a + b = b + a\) &nbsp;&nbsp; \(ab = ba\) — переместительное свойство
+        </div>
+
+        <div class="formula-box">
+            \((a + b) + c = a + (b + c)\) &nbsp;&nbsp; \((ab)c = a(bc)\) — сочетательное свойство
+        </div>
+
+        <div class="formula-box">
+            \(a(b + c) = ab + ac\) — распределительное свойство
+        </div>
+
+        <div class="note-box">
+            <strong>Всё вместе:</strong> свойства действий над числами помогают упрощать вычисления, а свойства смежных и вертикальных углов — решать геометрические задачи.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
