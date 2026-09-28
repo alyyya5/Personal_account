@@ -891,7 +891,7 @@
 
         function renderHomeworkCards() {
             if (!lessonsData.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(a.date) - new Date(b.date)), items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
+            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(b.date) - new Date(a.date)), items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
             if (!items.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
             showAllHomeworkBtn.style.display = sorted.length > 6 ? 'block' : 'none';
             showAllHomeworkBtn.textContent = showAllHomework ? 'Скрыть' : 'Показать все';
