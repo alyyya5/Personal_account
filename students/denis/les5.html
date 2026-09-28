@@ -1,1 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Теория | Логарифмы и показательные уравнения</title>
 
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-purple: #7c3aed;
+            --accent-red: #c0392b;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-color);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 25px;
+            color: #1e2f3e;
+            line-height: 1.7;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 45px 50px 55px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            border-left: 5px solid #3b6a8c;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a6f84;
+            padding-left: 25px;
+            margin-bottom: 35px;
+        }
+
+        /* Заголовки секций */
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a3a5a;
+            margin: 32px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eef2f7;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .section-title .num {
+            background: #1a4b6e;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Основная таблица */
+        .rules-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .rules-table thead th {
+            background: #1a4b6e;
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .rules-table thead th:first-child {
+            width: 42px;
+            text-align: center;
+        }
+
+        .rules-table thead th:nth-child(2) {
+            width: 42%;
+        }
+
+        .rules-table tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eef2f7;
+            vertical-align: middle;
+            background: white;
+            color: #2a3f52;
+        }
+
+        .rules-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rules-table tbody tr:nth-child(even) td {
+            background: #fafcff;
+        }
+
+        .rules-table tbody td:first-child {
+            font-weight: 700;
+            color: #1a4b6e;
+            text-align: center;
+            background: #f0f6fb;
+        }
+
+        .rules-table tbody tr:nth-child(even) td:first-child {
+            background: #e9f1f8;
+        }
+
+        .rules-table .formula-cell {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .rules-table .note-cell {
+            font-size: 14px;
+            color: #5e6f8c;
+        }
+
+        /* Блок ОДЗ */
+        .odz-block {
+            background: #fef8f0;
+            border-left: 4px solid var(--accent-red);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin: 14px 0 4px;
+        }
+
+        .odz-block .title {
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 6px;
+        }
+
+        .odz-block ul {
+            margin-left: 20px;
+            font-size: 14px;
+            color: #2a3f52;
+        }
+
+        .odz-block li {
+            margin-bottom: 2px;
+        }
+
+        /* Блок "Главное" */
+        .main-rule {
+            background: #e6f7ec;
+            border-left: 4px solid var(--accent-green);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: #1a4b3a;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 25px 18px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .rules-table {
+                font-size: 14px;
+            }
+            .rules-table thead th,
+            .rules-table tbody td {
+                padding: 8px 10px;
+            }
+            .rules-table thead th:nth-child(2) {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Логарифмы и показательные уравнения</h1>
+        <div class="subtitle">Теория · Задание №7 ЕГЭ Профиль</div>
+
+        <!-- ==================== 1. ОПРЕДЕЛЕНИЕ ==================== -->
+
+        <div class="section-title">
+            <span class="num">1</span> Определение логарифма
+        </div>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Правило</th>
+                    <th>Формула / Смысл</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.1</td>
+                    <td>Определение логарифма</td>
+                    <td class="formula-cell">\(\log_a b = c \iff a^c = b\)</td>
+                </tr>
+                <tr>
+                    <td>1.2</td>
+                    <td>Десятичный логарифм</td>
+                    <td class="formula-cell">\(\lg b = \log_{10} b\)</td>
+                </tr>
+                <tr>
+                    <td>1.3</td>
+                    <td>Натуральный логарифм</td>
+                    <td class="formula-cell">\(\ln b = \log_e b,\; e \approx 2{,}718\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="odz-block">
+            <div class="title">⚠️ ОДЗ логарифма</div>
+            <ul>
+                <li>Аргумент: \(b > 0\)</li>
+                <li>Основание: \(a > 0\), \(a \neq 1\)</li>
+            </ul>
+        </div>
+
+        <!-- ==================== 2. СВОЙСТВА ==================== -->
+
+        <div class="section-title">
+            <span class="num">2</span> Свойства логарифмов
+        </div>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Правило</th>
+                    <th>Формула</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2.1</td>
+                    <td>Логарифм основания</td>
+                    <td class="formula-cell">\(\log_a a = 1\)</td>
+                </tr>
+                <tr>
+                    <td>2.2</td>
+                    <td>Логарифм единицы</td>
+                    <td class="formula-cell">\(\log_a 1 = 0\)</td>
+                </tr>
+                <tr>
+                    <td>2.3</td>
+                    <td>Основное тождество</td>
+                    <td class="formula-cell">\(a^{\log_a b} = b\)</td>
+                </tr>
+                <tr>
+                    <td>2.4</td>
+                    <td>Логарифм произведения</td>
+                    <td class="formula-cell">\(\log_a (xy) = \log_a x + \log_a y\)</td>
+                </tr>
+                <tr>
+                    <td>2.5</td>
+                    <td>Логарифм частного</td>
+                    <td class="formula-cell">\(\log_a \dfrac{x}{y} = \log_a x - \log_a y\)</td>
+                </tr>
+                <tr>
+                    <td>2.6</td>
+                    <td>Логарифм степени</td>
+                    <td class="formula-cell">\(\log_a (x^n) = n \cdot \log_a x\)</td>
+                </tr>
+                <tr>
+                    <td>2.7</td>
+                    <td>Степень в основании</td>
+                    <td class="formula-cell">\(\log_{a^n} x = \dfrac{1}{n}\log_a x\)</td>
+                </tr>
+                <tr>
+                    <td>2.8</td>
+                    <td>Степень в основании и аргументе</td>
+                    <td class="formula-cell">\(\log_{a^n} x^m = \dfrac{m}{n}\log_a x\)</td>
+                </tr>
+                <tr>
+                    <td>2.9</td>
+                    <td>Переход к новому основанию</td>
+                    <td class="formula-cell">\(\log_a b = \dfrac{\log_c b}{\log_c a}\)</td>
+                </tr>
+                <tr>
+                    <td>2.10</td>
+                    <td>Обратный логарифм</td>
+                    <td class="formula-cell">\(\log_a b = \dfrac{1}{\log_b a}\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ==================== 3. ПОКАЗАТЕЛЬНЫЕ ==================== -->
+
+        <div class="section-title">
+            <span class="num">3</span> Показательные выражения
+        </div>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Правило</th>
+                    <th>Формула</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3.1</td>
+                    <td>Равенство степеней</td>
+                    <td class="formula-cell">\(a^{f(x)} = a^{g(x)} \iff f(x) = g(x)\)</td>
+                </tr>
+                <tr>
+                    <td>3.2</td>
+                    <td>Условие для замены</td>
+                    <td class="formula-cell">\(t = a^x > 0\)</td>
+                </tr>
+                <tr>
+                    <td>3.3</td>
+                    <td>Свойство степеней</td>
+                    <td class="formula-cell">\(a^{m+n} = a^m \cdot a^n\)</td>
+                </tr>
+                <tr>
+                    <td>3.4</td>
+                    <td>Свойство степеней</td>
+                    <td class="formula-cell">\((a^m)^n = a^{mn}\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ==================== 4. ФУНКЦИЯ ==================== -->
+
+        <div class="section-title">
+            <span class="num">4</span> Логарифмическая функция \(y = \log_a x\)
+        </div>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Свойство</th>
+                    <th>Значение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4.1</td>
+                    <td>Область определения</td>
+                    <td class="formula-cell">\(x > 0\)</td>
+                </tr>
+                <tr>
+                    <td>4.2</td>
+                    <td>Область значений</td>
+                    <td class="formula-cell">\(y \in \mathbb{R}\)</td>
+                </tr>
+                <tr>
+                    <td>4.3</td>
+                    <td>Нулевая точка</td>
+                    <td class="formula-cell">График проходит через \((1;\,0)\)</td>
+                </tr>
+                <tr>
+                    <td>4.4</td>
+                    <td>Асимптота</td>
+                    <td class="formula-cell">Вертикальная: \(x = 0\)</td>
+                </tr>
+                <tr>
+                    <td>4.5</td>
+                    <td>Поведение при \(a > 1\)</td>
+                    <td class="formula-cell">Возрастает</td>
+                </tr>
+                <tr>
+                    <td>4.6</td>
+                    <td>Поведение при \(0 < a < 1\)</td>
+                    <td class="formula-cell">Убывает</td>
+                </tr>
+                <tr>
+                    <td>4.7</td>
+                    <td>Связь с показательной</td>
+                    <td class="note-cell">Взаимно обратные функции; график симметричен \(y = a^x\) относительно \(y = x\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ==================== 5. СМЕШАННЫЕ ==================== -->
+
+        <div class="section-title">
+            <span class="num">5</span> Смешанные выражения
+        </div>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Правило</th>
+                    <th>Формула</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5.1</td>
+                    <td>Основное тождество</td>
+                    <td class="formula-cell">\(a^{\log_a b} = b\)</td>
+                </tr>
+                <tr>
+                    <td>5.2</td>
+                    <td>Степень с логарифмом</td>
+                    <td class="formula-cell">\(a^{n \log_a b} = b^n\)</td>
+                </tr>
+                <tr>
+                    <td>5.3</td>
+                    <td>Логарифм от степени</td>
+                    <td class="formula-cell">\(\log_a a^k = k\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="main-rule">
+            📌 Главное правило: в логарифмических выражениях ОДЗ — первым делом!
+        </div>
+
+    </div>
+
+</body>
+</html>
