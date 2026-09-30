@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Выражения с переменными и углы</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-purple: #7c3aed;
+            --accent-orange: #d48a3a;
+            --accent-pink: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.blue { background: #dbeafe; color: #1d4a7a; }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.pink { background: #fce7f3; color: #be185d; }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.tr {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .section-icon.geo {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-card.pink { border-color: #fbcfe8; }
+        .topic-card.pink:hover { box-shadow: 0 8px 24px rgba(236, 72, 153, 0.08); }
+        .topic-card.green { border-color: #bbf7d0; }
+        .topic-card.green:hover { box-shadow: 0 8px 24px rgba(26, 138, 90, 0.08); }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-card.pink .topic-title { color: var(--accent-pink); }
+        .topic-card.pink .topic-title::before { background: var(--accent-pink); }
+        .topic-card.green .topic-title { color: var(--accent-green); }
+        .topic-card.green .topic-title::before { background: var(--accent-green); }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-box.pink {
+            background: #fdf2f8;
+            border-color: #f9a8d4;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+        .rule-box.pink .rule-title { color: #be185d; }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .example {
+            background: #fcf3e0;
+            border-left: 4px solid #e8b84b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .example strong {
+            color: #b47d2a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 16px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 14px 0;
+        }
+
+        .fig-box svg { max-width: 100%; height: auto; }
+
+        .fig-caption {
+            margin-top: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            padding: 10px 0 24px;
+            letter-spacing: 6px;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📘 Теория · Выражения с переменными и углы</h1>
+            <div class="subtitle">Алгебра и геометрия — всё, что нужно для урока</div>
+            <div class="tags">
+                <span class="tag blue">Алгебра</span>
+                <span class="tag pink">Геометрия</span>
+                <span class="tag purple">7 класс</span>
+            </div>
+        </header>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📘</div>
+                <div class="section-title">Алгебра · Выражения с переменными</div>
+            </div>
+
+            <!-- Тема 1: Значение выражения -->
+            <div class="topic-card">
+                <div class="topic-title">1. Значение выражения с переменными</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        Если в выражение с переменными подставить вместо каждой переменной какое-либо её значение, то получится <strong>числовое выражение</strong>. Его значение называют <strong>значением выражения с переменными</strong> при выбранных значениях переменных.
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Порядок действий</div>
+                        <ol>
+                            <li>Подставить значения переменных в выражение.</li>
+                            <li>Выполнить действия, соблюдая их порядок.</li>
+                            <li>Записать полученный результат.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Найдём значение \(5x + 2y\) при \(x = 3\), \(y = -1\):<br>
+                        \(5 \cdot 3 + 2 \cdot (-1) = 15 - 2 = 13\)
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Внимание</div>
+                        <p>Если при подстановке получается деление на нуль — выражение <strong>не имеет смысла</strong> при таких значениях переменных.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 2: Сравнение значений -->
+            <div class="topic-card">
+                <div class="topic-title">2. Сравнение значений выражений</div>
+                <div class="topic-content">
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Как сравнивать</div>
+                        <ol>
+                            <li>Найти значения обоих выражений при данных значениях переменных.</li>
+                            <li>Сравнить полученные числа.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Сравним \(2a + 3\) и \(2a - 3\) при \(a = 5\).<br>
+                        Первое: \(2 \cdot 5 + 3 = 13\).<br>
+                        Второе: \(2 \cdot 5 - 3 = 7\).<br>
+                        Значит, \(2a + 3 > 2a - 3\).
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Важно помнить</div>
+                        <p>Результат сравнения зависит от значений переменных. При одних значениях одно выражение больше, при других — другое.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 3: Приведение подобных -->
+            <div class="topic-card">
+                <div class="topic-title">3. Приведение подобных слагаемых</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Подобные слагаемые</strong> — это слагаемые, у которых <strong>одинаковая буквенная часть</strong>.
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Алгоритм</div>
+                        <ol>
+                            <li>Сложить коэффициенты подобных слагаемых.</li>
+                            <li>Умножить полученное число на общую буквенную часть.</li>
+                        </ol>
+                        <div class="formula">
+                            \(3x + 5x = (3 + 5)x = 8x\)
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(7x + 4y - 3x - 8y = 4x - 4y\)
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Частая ошибка</div>
+                        <p>Нельзя складывать слагаемые с разной буквенной частью: \(3x + 5y \neq 8xy\).</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 4: Раскрытие скобок -->
+            <div class="topic-card">
+                <div class="topic-title">4. Раскрытие скобок</div>
+                <div class="topic-content">
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Плюс перед скобкой</div>
+                        <p>Знаки слагаемых <strong>не меняются</strong>:</p>
+                        <div class="formula">
+                            \(a + (b - c) = a + b - c\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Минус перед скобкой</div>
+                        <p>Знаки <strong>всех</strong> слагаемых меняются на противоположные:</p>
+                        <div class="formula">
+                            \(a - (b - c) = a - b + c\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Число перед скобкой</div>
+                        <p>Умножаем число на <strong>каждое</strong> слагаемое:</p>
+                        <div class="formula">
+                            \(k(b + c) = kb + kc\)
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(3(2a - 5) + 7 = 6a - 15 + 7 = 6a - 8\)
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 5: Вложенные скобки -->
+            <div class="topic-card">
+                <div class="topic-title">5. Вложенные скобки</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Порядок действий</div>
+                        <ol>
+                            <li>Раскрываем <strong>внутренние</strong> скобки.</li>
+                            <li>Приводим подобные внутри.</li>
+                            <li>Раскрываем <strong>внешние</strong> скобки.</li>
+                            <li>Снова приводим подобные.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(5a - (3a - (2a - 4))\)<br>
+                        Внутренние: \(2a - 4\).<br>
+                        Тогда \(3a - (2a - 4) = 3a - 2a + 4 = a + 4\).<br>
+                        Внешние: \(5a - (a + 4) = 5a - a - 4 = 4a - 4\).
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 6: Текстовые задачи -->
+            <div class="topic-card">
+                <div class="topic-title">6. Задачи на движение навстречу</div>
+                <div class="topic-content">
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Ключевая формула</div>
+                        <p>Если два объекта движутся навстречу друг другу, то сумма пройденных ими расстояний равна расстоянию между пунктами:</p>
+                        <div class="formula">
+                            \(u \cdot t + v \cdot t = p\)
+                        </div>
+                        <p>где \(u\) — скорость первого, \(v\) — скорость второго, \(t\) — время до встречи, \(p\) — расстояние между пунктами.</p>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Найдём скорость \(v\):<br>
+                        \(v = \dfrac{p - u \cdot t}{t}\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Подсказка</div>
+                        <p>Сначала выражаем неизвестную величину из формулы, потом подставляем числа.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ГЕОМЕТРИЯ ==================== -->
+
+        <div class="divider">✦ ГЕОМЕТРИЯ · УГЛЫ ✦</div>
+
+        <!-- Смежные углы -->
+        <div class="topic-card pink">
+            <div class="topic-title">7. Смежные углы</div>
+            <div class="topic-content">
+
+                <div class="rule-box pink">
+                    <div class="rule-title">Определение</div>
+                    <p>Два угла называются <strong>смежными</strong>, если у них одна сторона <strong>общая</strong>, а две другие являются <strong>продолжениями одна другой</strong>.</p>
+                </div>
+
+                <p>Смежные углы «сидят» рядом на одной прямой и вместе образуют развёрнутый угол.</p>
+
+                <div class="fig-box">
+                    <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="30" y1="110" x2="370" y2="110" stroke="#1d4a9e" stroke-width="3"/>
+                        <line x1="200" y1="110" x2="270" y2="30" stroke="#1d4a9e" stroke-width="3"/>
+                        <circle cx="200" cy="110" r="5" fill="#ec4899"/>
+                        <text x="190" y="132" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+                        <text x="18" y="132" font-size="14" fill="#2c3e5a" font-weight="600">A</text>
+                        <text x="362" y="132" font-size="14" fill="#2c3e5a" font-weight="600">C</text>
+                        <text x="268" y="22" font-size="14" fill="#2c3e5a" font-weight="600">B</text>
+                    </svg>
+                    <div class="fig-caption">\(\angle AOB\) и \(\angle BOC\) — смежные</div>
+                </div>
+
+                <div class="formula">
+                    📐 <strong>Свойство:</strong> сумма смежных углов равна \(180^\circ\)<br>
+                    \(\angle AOB + \angle BOC = 180^\circ\)
+                </div>
+
+                <div class="example">
+                    <strong>Пример.</strong> Один из смежных углов равен \(45^\circ\). Тогда второй:<br>
+                    \(180^\circ - 45^\circ = 135^\circ\).
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Вертикальные углы -->
+        <div class="topic-card green">
+            <div class="topic-title">8. Вертикальные углы</div>
+            <div class="topic-content">
+
+                <div class="rule-box success">
+                    <div class="rule-title">Определение</div>
+                    <p>Два угла называются <strong>вертикальными</strong>, если стороны одного угла являются продолжениями сторон другого.</p>
+                </div>
+
+                <p>Вертикальные углы образуются при пересечении двух прямых. Они расположены «напротив» друг друга.</p>
+
+                <div class="fig-box">
+                    <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="40" y1="40" x2="420" y2="200" stroke="#1d4a9e" stroke-width="3"/>
+                        <line x1="40" y1="200" x2="420" y2="40" stroke="#1d4a9e" stroke-width="3"/>
+                        <circle cx="230" cy="120" r="5" fill="#06d6a0"/>
+                        <text x="240" y="140" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+                        <text x="28" y="35" font-size="15" fill="#059669" font-weight="700">A</text>
+                        <text x="425" y="35" font-size="15" fill="#059669" font-weight="700">B</text>
+                        <text x="425" y="220" font-size="15" fill="#059669" font-weight="700">C</text>
+                        <text x="28" y="220" font-size="15" fill="#059669" font-weight="700">D</text>
+                    </svg>
+                    <div class="fig-caption">
+                        \(\angle AOB\) и \(\angle COD\) — вертикальные; \(\angle BOC\) и \(\angle DOA\) — вертикальные
+                    </div>
+                </div>
+
+                <div class="formula">
+                    📐 <strong>Свойство:</strong> вертикальные углы равны<br>
+                    \(\angle AOB = \angle COD\) &nbsp;&nbsp; \(\angle BOC = \angle DOA\)
+                </div>
+
+                <div class="example">
+                    <strong>Пример.</strong> Один из вертикальных углов равен \(70^\circ\).<br>
+                    Тогда противоположный ему тоже \(70^\circ\), а смежные с ними — по \(180^\circ - 70^\circ = 110^\circ\).
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Выражения с переменными и углы
+        </div>
+
+    </div>
+
+</body>
+</html>
