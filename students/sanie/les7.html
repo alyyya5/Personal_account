@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Раскрытие скобок и приведение подобных</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-purple: #7c3aed;
+            --accent-orange: #d48a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.blue { background: #dbeafe; color: #1d4a7a; }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.tr {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .example {
+            background: #fcf3e0;
+            border-left: 4px solid #e8b84b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .example strong {
+            color: #b47d2a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📦 Теория · Раскрытие скобок и подобные</h1>
+            <div class="subtitle">Всё, что нужно для заданий 118, 120, 121, 124, 125</div>
+            <div class="tags">
+                <span class="tag blue">Алгебра</span>
+                <span class="tag purple">7 класс</span>
+                <span class="tag orange">§ 9–10</span>
+            </div>
+        </header>
+
+        <!-- ==================== ОСНОВЫ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📘</div>
+                <div class="section-title">Раскрытие скобок</div>
+            </div>
+
+            <!-- Тема 1: Плюс перед скобкой -->
+            <div class="topic-card">
+                <div class="topic-title">1. Плюс перед скобкой</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Правило</div>
+                        Если перед скобкой стоит знак «+», скобки можно просто опустить — знаки слагаемых <strong>не меняются</strong>.
+                    </div>
+
+                    <div class="formula">
+                        \(a + (b - c + d) = a + b - c + d\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(x + (a + b - c) = x + a + b - c\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Как запомнить</div>
+                        <p>Плюс перед скобкой — «добрый знак». Все знаки внутри остаются такими же.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 2: Минус перед скобкой -->
+            <div class="topic-card">
+                <div class="topic-title">2. Минус перед скобкой</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Правило</div>
+                        Если перед скобкой стоит знак «−», при раскрытии скобок знаки <strong>всех</strong> слагаемых меняются на противоположные.
+                    </div>
+
+                    <div class="formula">
+                        \(a - (b - c + d) = a - b + c - d\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(m - (n - k - p) = m - n + k + p\)
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Частая ошибка</div>
+                        <p>Минус перед скобкой меняет знак <strong>каждого</strong> слагаемого внутри. Нельзя поменять только у первого!</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 3: Число перед скобкой -->
+            <div class="topic-card">
+                <div class="topic-title">3. Число перед скобкой</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Распределительное свойство</div>
+                        Чтобы умножить число на сумму, нужно умножить это число на <strong>каждое</strong> слагаемое и результаты сложить.
+                    </div>
+
+                    <div class="formula">
+                        \(k(b + c) = kb + kc\)
+                    </div>
+                    <div class="formula">
+                        \(k(b - c) = kb - kc\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(3(2x - 5) = 3 \cdot 2x - 3 \cdot 5 = 6x - 15\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ С минусом перед числом</div>
+                        <p>Если число отрицательное, умножаем на него каждое слагаемое, следя за знаками:</p>
+                        <div class="formula">
+                            \(-2(3 - x) = -2 \cdot 3 + 2 \cdot x = -6 + 2x\)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ПОДОБНЫЕ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📎</div>
+                <div class="section-title">Подобные слагаемые</div>
+            </div>
+
+            <!-- Тема 4: Определение -->
+            <div class="topic-card">
+                <div class="topic-title">4. Что такое подобные слагаемые</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Подобные слагаемые</strong> — это слагаемые, у которых <strong>одинаковая буквенная часть</strong>.
+                    </div>
+
+                    <p>Например, в выражении \(3x + 5x - 2y\) слагаемые \(3x\) и \(5x\) — подобные (буквенная часть \(x\)), а \(-2y\) — не подобно им.</p>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Коэффициент</div>
+                        <p>Число перед буквой называется <strong>коэффициентом</strong>. Если числа нет, коэффициент равен 1 или −1:</p>
+                        <div class="formula">
+                            \(x = 1x \qquad -x = -1x\)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 5: Как приводить -->
+            <div class="topic-card">
+                <div class="topic-title">5. Как приводить подобные</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Алгоритм</div>
+                        <ol>
+                            <li>Сложить коэффициенты подобных слагаемых.</li>
+                            <li>Умножить полученное число на общую буквенную часть.</li>
+                        </ol>
+                        <div class="formula">
+                            \(3x + 5x = (3 + 5)x = 8x\)
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Упростим \(7a - 2a + 4b - b\)<br>
+                        \(7a - 2a = 5a\) (подобные с буквой \(a\))<br>
+                        \(4b - b = 3b\) (подобные с буквой \(b\))<br>
+                        <strong>Ответ:</strong> \(5a + 3b\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Числа без буквы</div>
+                        <p>Слагаемые без буквенной части тоже приводятся между собой:</p>
+                        <div class="formula">
+                            \(3 + 5 - 2 = 6\)
+                        </div>
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Частая ошибка</div>
+                        <p>Нельзя складывать слагаемые с <strong>разной</strong> буквенной частью! \(3x + 5y \neq 8xy\)</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== СЛОЖНЫЕ СЛУЧАИ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🧩</div>
+                <div class="section-title">Сложные случаи</div>
+            </div>
+
+            <!-- Тема 6: Дробные коэффициенты -->
+            <div class="topic-card">
+                <div class="topic-title">6. Дробные коэффициенты</div>
+                <div class="topic-content">
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Как действовать</div>
+                        <p>Умножаем дробь на каждое слагаемое. Дробь умножается на число обычным способом:</p>
+                        <div class="formula">
+                            \(\frac{1}{2}(4x - 6) = \frac{1}{2} \cdot 4x - \frac{1}{2} \cdot 6 = 2x - 3\)
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(0{,}5(2y - 8) = 1y - 4 = y - 4\)
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 7: Несколько скобок -->
+            <div class="topic-card">
+                <div class="topic-title">7. Несколько скобок подряд</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Порядок действий</div>
+                        <ol>
+                            <li>Раскрываем первую скобку.</li>
+                            <li>Раскрываем вторую скобку.</li>
+                            <li>Приводим подобные.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> \(12 + 7x - (1 - 3x)\)<br>
+                        Раскрываем скобку с минусом: \(12 + 7x - 1 + 3x\)<br>
+                        Приводим подобные: \(7x + 3x + 12 - 1 = 10x + 11\)
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 8: Нахождение значения -->
+            <div class="topic-card">
+                <div class="topic-title">8. Нахождение значения выражения</div>
+                <div class="topic-content">
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Порядок действий</div>
+                        <ol>
+                            <li><strong>Упростить</strong> выражение.</li>
+                            <li><strong>Подставить</strong> значение переменной.</li>
+                            <li><strong>Вычислить</strong> результат.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Упростим и найдём значение \((2x - 3) - (5 - 4x)\) при \(x = 0{,}5\)<br>
+                        <strong>Упрощаем:</strong> \(2x - 3 - 5 + 4x = 6x - 8\)<br>
+                        <strong>Подставляем:</strong> \(6 \cdot 0{,}5 - 8 = 3 - 8 = -5\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">💡 Совет</div>
+                        <p>Сначала упрощай, потом подставляй — так вычислять проще и меньше ошибок.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== АЛГОРИТМ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📌</div>
+                <div class="section-title">Итоговый алгоритм</div>
+            </div>
+
+            <div class="topic-card" style="border-color: #1a7a4a;">
+                <div class="topic-title" style="color: #1a7a4a;">Как упрощать выражения</div>
+                <div class="topic-content">
+                    <ol>
+                        <li><strong>Раскрыть скобки</strong> — учитывая знак перед ними.</li>
+                        <li><strong>Перемножить числа</strong> — если есть произведение.</li>
+                        <li><strong>Привести подобные слагаемые</strong> — сложить коэффициенты с одинаковой буквенной частью.</li>
+                        <li><strong>Записать ответ</strong> — в стандартном виде.</li>
+                    </ol>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Запомни</div>
+                        <p>Тождественные преобразования не меняют значение выражения — они только упрощают его запись.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Раскрытие скобок и приведение подобных
+        </div>
+
+    </div>
+
+</body>
+</html>
