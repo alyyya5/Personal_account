@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Логарифмы и простейшие уравнения</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-purple: #7c3aed;
+            --accent-orange: #d48a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.blue { background: #dbeafe; color: #1d4a7a; }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.tr {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .example {
+            background: #fcf3e0;
+            border-left: 4px solid #e8b84b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .example strong {
+            color: #b47d2a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📐 Теория · Логарифмы</h1>
+            <div class="subtitle">Свойства, тождество и простейшие уравнения</div>
+            <div class="tags">
+                <span class="tag blue">Алгебра</span>
+                <span class="tag purple">10–11 класс</span>
+                <span class="tag orange">ЕГЭ</span>
+            </div>
+        </header>
+
+        <!-- ==================== ОПРЕДЕЛЕНИЕ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📘</div>
+                <div class="section-title">Определение логарифма</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">1. Что такое логарифм</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Логарифм</strong> числа \(b\) по основанию \(a\) — это показатель степени, в которую нужно возвести \(a\), чтобы получить \(b\).
+                    </div>
+
+                    <div class="formula">
+                        \(\log_a b = c \;\Longleftrightarrow\; a^c = b\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Примеры:</strong><br>
+                        \(\log_2 8 = 3\), потому что \(2^3 = 8\)<br>
+                        \(\log_3 \dfrac{1}{9} = -2\), потому что \(3^{-2} = \dfrac{1}{9}\)<br>
+                        \(\log_5 1 = 0\), потому что \(5^0 = 1\)
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ ОДЗ логарифма</div>
+                        <ul style="margin-top:4px;">
+                            <li>Аргумент: \(b > 0\)</li>
+                            <li>Основание: \(a > 0\), \(a \neq 1\)</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ОСНОВНЫЕ СВОЙСТВА ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">⚙️</div>
+                <div class="section-title">Основные свойства</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">2. Свойства логарифмов</div>
+                <div class="topic-content">
+
+                    <p>Пусть \(a > 0\), \(a \neq 1\), \(b > 0\), \(c > 0\). Тогда:</p>
+
+                    <div class="formula">
+                        <strong>2.1.</strong> \(\log_a (bc) = \log_a b + \log_a c\)<br>
+                        <strong>2.2.</strong> \(\log_a \dfrac{b}{c} = \log_a b - \log_a c\)<br>
+                        <strong>2.3.</strong> \(\log_a b^n = n \cdot \log_a b\)<br>
+                        <strong>2.4.</strong> \(\log_a a = 1\)<br>
+                        <strong>2.5.</strong> \(\log_a 1 = 0\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Примеры:</strong><br>
+                        \(\log_2 4 + \log_2 8 = \log_2 32 = 5\)<br>
+                        \(\log_3 54 - \log_3 2 = \log_3 27 = 3\)<br>
+                        \(\log_5 25^3 = 3 \cdot \log_5 25 = 3 \cdot 2 = 6\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Как читать</div>
+                        <p>Логарифм произведения = сумма логарифмов.<br>
+                        Логарифм частного = разность логарифмов.<br>
+                        Степень можно вынести вперёд как множитель.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ПЕРЕХОД К НОВОМУ ОСНОВАНИЮ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🔀</div>
+                <div class="section-title">Переход к новому основанию</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">3. Формула перехода</div>
+                <div class="topic-content">
+
+                    <div class="formula">
+                        \(\log_a b = \dfrac{\log_c b}{\log_c a}\)
+                    </div>
+
+                    <p>Частный случай — когда основание является степенью:</p>
+
+                    <div class="formula">
+                        \(\log_{a^k} b = \dfrac{1}{k} \cdot \log_a b\)
+                    </div>
+
+                    <div class="example">
+                        <strong>Примеры:</strong><br>
+                        \(\log_4 8 = \dfrac{\log_2 8}{\log_2 4} = \dfrac{3}{2} = 1{,}5\)<br>
+                        \(\log_8 2 = \dfrac{1}{3} \cdot \log_2 2 = \dfrac{1}{3}\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Зачем это нужно</div>
+                        <p>Когда основания разные — приводим их к одному, чаще всего к самому маленькому.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ОСНОВНОЕ ТОЖДЕСТВО ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🔥</div>
+                <div class="section-title">Основное тождество</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">4. Основное логарифмическое тождество</div>
+                <div class="topic-content">
+
+                    <div class="formula">
+                        \(a^{\log_a b} = b\)
+                    </div>
+
+                    <p>Если основание степени совпадает с основанием логарифма в показателе — они «сокращаются», и остаётся только аргумент.</p>
+
+                    <div class="example">
+                        <strong>Примеры:</strong><br>
+                        \(2^{\log_2 7} = 7\)<br>
+                        \(3^{\log_3 4 + 1} = 3^{\log_3 4} \cdot 3 = 4 \cdot 3 = 12\)<br>
+                        \(5^{2\log_5 3} = 5^{\log_5 9} = 9\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Полезные следствия</div>
+                        <div class="formula" style="margin-top:8px;">
+                            \(a^{n \log_a b} = b^n \qquad \log_a a^k = k\)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ЗАДАНИЯ ЕГЭ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🎯</div>
+                <div class="section-title">Задания в формате ЕГЭ</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">5. Комбинированные задачи</div>
+                <div class="topic-content">
+
+                    <p>В таких заданиях нужно использовать <strong>несколько</strong> свойств подряд.</p>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Стратегия решения</div>
+                        <ol style="margin-top:4px;">
+                            <li>Привести все логарифмы к одному основанию.</li>
+                            <li>Свернуть сумму или разность в один логарифм.</li>
+                            <li>Вынести степени, если они есть.</li>
+                            <li>Использовать определение или основное тождество.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 1.</strong> \(\log_6 3 + \log_6 12\)<br>
+                        Сворачиваем в один логарифм: \(\log_6 (3 \cdot 12) = \log_6 36 = 2\).
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 2.</strong> \(\log_5 100 - \log_5 4\)<br>
+                        Разность логарифмов: \(\log_5 \dfrac{100}{4} = \log_5 25 = 2\).
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 3.</strong> \(3^{\log_3 4 + 2}\)<br>
+                        Разбиваем степень: \(3^{\log_3 4} \cdot 3^2 = 4 \cdot 9 = 36\).
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== ПРОСТЕЙШИЕ УРАВНЕНИЯ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">✏️</div>
+                <div class="section-title">Простейшие уравнения</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">6. Простейшие логарифмические уравнения</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Логарифмическое уравнение</strong> — уравнение, в котором неизвестное стоит под знаком логарифма.
+                    </div>
+
+                    <div class="formula">
+                        \(\log_a x = c \;\Longleftrightarrow\; x = a^c\), &nbsp; при \(x > 0\)
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ План решения</div>
+                        <ol style="margin-top:4px;">
+                            <li>Найти <strong>ОДЗ</strong>: под логарифмом — положительное число.</li>
+                            <li>Использовать определение: \(\log_a x = c \Rightarrow x = a^c\).</li>
+                            <li>Проверить корень по ОДЗ.</li>
+                            <li>Записать ответ.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 1.</strong> \(\log_2 x = 5\).<br>
+                        ОДЗ: \(x > 0\). \(x = 2^5 = 32\). ✔<br>
+                        <strong>Ответ:</strong> \(32\).
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 2.</strong> \(\log_3 (x + 1) = 2\).<br>
+                        ОДЗ: \(x + 1 > 0 \Rightarrow x > -1\).<br>
+                        \(x + 1 = 3^2 = 9 \Rightarrow x = 8\). ✔<br>
+                        <strong>Ответ:</strong> \(8\).
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 3.</strong> \(\log_5 (2x - 3) = 1\).<br>
+                        ОДЗ: \(2x - 3 > 0 \Rightarrow x > 1{,}5\).<br>
+                        \(2x - 3 = 5 \Rightarrow x = 4\). ✔<br>
+                        <strong>Ответ:</strong> \(4\).
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Внимание</div>
+                        <p>Под логарифмом всегда должно быть \(> 0\). Если при решении корень не проходит ОДЗ — его отбрасывают.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Логарифмы и простейшие уравнения
+        </div>
+
+    </div>
+
+</body>
+</html>
