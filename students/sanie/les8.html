@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Уравнения с одной переменной</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-purple: #7c3aed;
+            --accent-orange: #d48a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.blue { background: #dbeafe; color: #1d4a7a; }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.tr {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Столбик решений */
+        .steps {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .steps .line {
+            display: block;
+            padding: 2px 0;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .example {
+            background: #fcf3e0;
+            border-left: 4px solid #e8b84b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .example strong {
+            color: #b47d2a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📐 Теория · Уравнения с одной переменной</h1>
+            <div class="subtitle">Что такое уравнение, корень и как его найти</div>
+            <div class="tags">
+                <span class="tag blue">Алгебра</span>
+                <span class="tag purple">7 класс</span>
+                <span class="tag orange">§ 3</span>
+            </div>
+        </header>
+
+        <!-- ==================== ОСНОВЫ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📘</div>
+                <div class="section-title">Основные понятия</div>
+            </div>
+
+            <!-- Тема 1: Что такое уравнение -->
+            <div class="topic-card">
+                <div class="topic-title">1. Что такое уравнение</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Уравнение</strong> — это равенство, содержащее переменную (неизвестное число).
+                    </div>
+
+                    <p>Переменную обычно обозначают буквами \(x\), \(y\), \(a\), \(b\) и другими.</p>
+
+                    <div class="example">
+                        <strong>Примеры уравнений:</strong><br>
+                        \(4x - 15 = x + 15\)<br>
+                        \(5x + 3 = 2x - 7\)<br>
+                        \(3(x - 2) = 12\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Важно</div>
+                        <p>Решить уравнение — значит найти <strong>все</strong> его корни или доказать, что корней нет.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 2: Корень уравнения -->
+            <div class="topic-card">
+                <div class="topic-title">2. Корень уравнения</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Корень уравнения</strong> — это такое значение переменной, при котором уравнение обращается в верное числовое равенство.
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> Уравнение \(4x - 15 = x + 15\)<br>
+                        Проверим \(x = 10\):<br>
+                        Левая часть: \(4 \cdot 10 - 15 = 25\)<br>
+                        Правая часть: \(10 + 15 = 25\)<br>
+                        \(25 = 25\) — верно. Значит \(x = 10\) — корень.
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Как проверить</div>
+                        <p>Подставь найденное число в уравнение. Если получилось верное равенство — это корень.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== КОЛИЧЕСТВО КОРНЕЙ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🔢</div>
+                <div class="section-title">Сколько корней может быть</div>
+            </div>
+
+            <!-- Тема 3: Три случая -->
+            <div class="topic-card">
+                <div class="topic-title">3. Три возможных случая</div>
+                <div class="topic-content">
+
+                    <div class="rule-box">
+                        <div class="rule-title">📌 Случай 1: один корень</div>
+                        <p>Уравнение имеет <strong>ровно один</strong> корень, если переменная входит в него с разными коэффициентами слева и справа.</p>
+                        <div class="steps">
+                            <span class="line">\(4x - 15 = x + 15\)</span>
+                            <span class="line">\(4x - x = 15 + 15\)</span>
+                            <span class="line">\(3x = 30\)</span>
+                            <span class="line">\(x = 10\)</span>
+                        </div>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Случай 2: много корней</div>
+                        <p>Уравнение имеет <strong>бесконечно много</strong> корней, если после упрощения получается верное равенство без переменной.</p>
+                        <div class="steps">
+                            <span class="line">\(2x + 6 = 2(x + 3)\)</span>
+                            <span class="line">\(2x + 6 = 2x + 6\)</span>
+                            <span class="line">\(0 = 0\)</span>
+                        </div>
+                        <p>Такое уравнение верно при <strong>любом</strong> значении \(x\).</p>
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">⚠️ Случай 3: корней нет</div>
+                        <p>Уравнение <strong>не имеет</strong> корней, если после упрощения получается неверное равенство без переменной.</p>
+                        <div class="steps">
+                            <span class="line">\(2x + 3 = 2x + 8\)</span>
+                            <span class="line">\(3 = 8\)</span>
+                        </div>
+                        <p>Такое равенство неверно ни при каком \(x\).</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 4: Уравнения с модулем -->
+            <div class="topic-card">
+                <div class="topic-title">4. Уравнения с модулем \(|x| = a\)</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Что такое модуль</div>
+                        <strong>Модуль числа</strong> — это расстояние от числа до нуля на координатной прямой. Расстояние не может быть отрицательным: \(|x| \geq 0\).
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Как определить число корней</div>
+                        <p>Всё зависит от числа \(a\) в правой части:</p>
+                    </div>
+
+                    <div class="formula">
+                        \(|x| = a\)
+                    </div>
+
+                    <ul>
+                        <li><strong>Если \(a > 0\)</strong> — <strong>два корня</strong>: \(x = a\) и \(x = -a\).</li>
+                        <li><strong>Если \(a = 0\)</strong> — <strong>один корень</strong>: \(x = 0\).</li>
+                        <li><strong>Если \(a < 0\)</strong> — <strong>корней нет</strong>, так как модуль не может быть отрицательным.</li>
+                    </ul>
+
+                    <div class="example">
+                        <strong>Примеры:</strong><br>
+                        \(|x| = 1\) — два корня: \(x = 1\) и \(x = -1\)<br>
+                        \(|x| = 0\) — один корень: \(x = 0\)<br>
+                        \(|x| = -5\) — корней нет (модуль не может быть отрицательным)<br>
+                        \(|x| = 1{,}3\) — два корня: \(x = 1{,}3\) и \(x = -1{,}3\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Как запомнить</div>
+                        <p>Модуль — это «расстояние», а расстояние всегда \(\geq 0\). Поэтому если справа отрицательное число — сразу корней нет.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== АЛГОРИТМ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📌</div>
+                <div class="section-title">Алгоритм решения</div>
+            </div>
+
+            <div class="topic-card" style="border-color: #1a7a4a;">
+                <div class="topic-title" style="color: #1a7a4a;">Как решать линейные уравнения</div>
+                <div class="topic-content">
+                    <ol>
+                        <li><strong>Раскрыть скобки</strong>, если они есть.</li>
+                        <li><strong>Перенести</strong> слагаемые с переменной в одну часть, а числа — в другую. При переносе <strong>знак меняется</strong> на противоположный.</li>
+                        <li><strong>Привести подобные</strong> слагаемые в каждой части.</li>
+                        <li><strong>Разделить</strong> обе части на коэффициент при переменной.</li>
+                        <li><strong>Записать ответ</strong> и проверить его подстановкой.</li>
+                    </ol>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Пример решения столбиком</div>
+                        <div class="steps">
+                            <span class="line">\(4x - 15 = x + 15\)</span>
+                            <span class="line">\(4x - x = 15 + 15\)</span>
+                            <span class="line">\(3x = 30\)</span>
+                            <span class="line">\(x = 10\)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic-card" style="border-color: #1d6f9c;">
+                <div class="topic-title" style="color: #1d6f9c;">Как решать уравнения с модулем</div>
+                <div class="topic-content">
+                    <ol>
+                        <li><strong>Посмотреть на правую часть</strong>: если там отрицательное число — сразу пишем «корней нет».</li>
+                        <li>Если справа \(0\) — корень один: \(x = 0\).</li>
+                        <li>Если справа положительное число \(a\) — записываем <strong>два</strong> уравнения: \(x = a\) и \(x = -a\).</li>
+                        <li><strong>Записать ответ</strong>.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== СВОЙСТВА ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">⚙️</div>
+                <div class="section-title">Свойства уравнений</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">5. Что можно делать с уравнениями</div>
+                <div class="topic-content">
+
+                    <p>При решении уравнений используют два свойства — они дают <strong>равносильные</strong> уравнения (с теми же корнями).</p>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Свойство 1. Перенос слагаемых</div>
+                        <p>Если перенести слагаемое из одной части уравнения в другую, изменив его знак, то получится уравнение, <strong>равносильное данному</strong>.</p>
+                        <div class="steps">
+                            <span class="line">\(5x = 2x + 7\)</span>
+                            <span class="line">\(5x - 2x = 7\)</span>
+                        </div>
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">⚠️ Свойство 2. Умножение и деление</div>
+                        <p>Если обе части уравнения умножить или разделить на одно и то же <strong>отличное от нуля</strong> число, то получится уравнение, <strong>равносильное данному</strong>.</p>
+                        <div class="steps">
+                            <span class="line">\(6x = 18\)</span>
+                            <span class="line">\(x = 3\)</span>
+                        </div>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">✅ Запомни</div>
+                        <p>Равносильные уравнения — это уравнения с одними и теми же корнями. Уравнения, не имеющие корней, тоже считаются равносильными.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Уравнения с одной переменной
+        </div>
+
+    </div>
+
+</body>
+</html>
