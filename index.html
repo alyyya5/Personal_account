@@ -175,6 +175,8 @@
         .card-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(65, 88, 180, 0.28); }
         .show-more-btn { display: block; width: 100%; max-width: 300px; margin: 24px auto 0; padding: 13px 20px; border: 1px solid rgba(53, 103, 201, 0.20); border-radius: 14px; background: rgba(255, 255, 255, 0.55); color: var(--accent-blue); font-weight: 750; cursor: pointer; box-shadow: var(--shadow-sm); transition: transform 0.2s, background 0.2s; }
         .show-more-btn:hover { transform: translateY(-2px); background: rgba(53, 103, 201, 0.08); }
+
+        /* ===== ПРОГРЕСС ===== */
         .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 22px; }
         .stat-card { position: relative; overflow: hidden; padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; }
         .stat-card::after { content: ""; position: absolute; width: 100px; height: 100px; border-radius: 50%; right: -35px; top: -45px; background: rgba(84, 106, 210, 0.06); }
@@ -182,11 +184,17 @@
         .stat-value { position: relative; z-index: 1; margin-bottom: 8px; color: var(--accent-blue); font-size: 2.45rem; font-weight: 850; line-height: 1; }
         .stat-label { position: relative; z-index: 1; margin-bottom: 5px; color: var(--text-primary); font-size: 1rem; font-weight: 750; }
         .stat-sublabel { position: relative; z-index: 1; color: var(--text-secondary); font-size: 0.84rem; }
+        .stat-trend { position: relative; z-index: 1; display: inline-block; font-size: 0.85rem; font-weight: 700; padding: 2px 10px; border-radius: 12px; margin-top: 4px; }
+        .stat-trend.up { background: rgba(47, 157, 104, 0.15); color: var(--accent-green); }
+        .stat-trend.down { background: rgba(216, 92, 92, 0.15); color: var(--accent-red); }
+        .stat-trend.flat { background: rgba(153, 163, 181, 0.15); color: var(--text-muted); }
+
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
 
-        .tests-table-wrapper {
+        /* ===== ТЕМЫ: СИЛЬНЫЕ / СЛАБЫЕ ===== */
+        .topics-wrapper {
             margin-top: 24px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -194,42 +202,68 @@
             padding: 20px;
             box-shadow: var(--shadow-sm);
         }
-        .tests-table-wrapper h3 {
+        .topics-wrapper h3 {
             font-size: 1rem;
             font-weight: 800;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             color: var(--text-primary);
         }
-        .tests-table-wrapper table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
+        .topic-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
         }
-        .tests-table-wrapper th {
-            text-align: left;
-            padding: 10px 8px;
-            color: var(--text-secondary);
-            font-weight: 700;
+        .topic-group {
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--border-color);
+        }
+        body.dark-mode .topic-group { background: rgba(255, 255, 255, 0.03); }
+        .topic-group .group-title {
             font-size: 0.85rem;
-            border-bottom: 2px solid var(--border-color);
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .tests-table-wrapper td {
-            padding: 10px 8px;
-            border-bottom: 1px solid var(--border-color);
+        .topic-group.excellent .group-title { color: var(--accent-green); }
+        .topic-group.good .group-title { color: var(--accent-orange); }
+        .topic-group.poor .group-title { color: var(--accent-red); }
+        .topic-group ul { list-style: none; padding: 0; margin: 0; }
+        .topic-group li {
+            font-size: 0.82rem;
             color: var(--text-primary);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            line-height: 1.35;
         }
-        .tests-table-wrapper tr:last-child td { border-bottom: none; }
-        .tests-table-wrapper .status-badge {
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 10px;
-            display: inline-block;
+        .topic-group li:last-child { border-bottom: none; }
+        .topic-group li .topic-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
-        .status-badge.excellent { background: rgba(47, 157, 104, 0.18); color: #2f9d68; }
-        .status-badge.good { background: rgba(217, 138, 38, 0.18); color: #d98a26; }
-        .status-badge.poor { background: rgba(216, 92, 92, 0.18); color: #d85c5c; }
-        .status-badge.pending { background: rgba(153, 163, 181, 0.18); color: #657087; }
-        .status-badge.avg-row { background: rgba(53, 103, 201, 0.08); font-weight: 800; }
+        .topic-group li .topic-score {
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .topic-group.excellent .topic-score { color: var(--accent-green); }
+        .topic-group.good .topic-score { color: var(--accent-orange); }
+        .topic-group.poor .topic-score { color: var(--accent-red); }
+        .topic-group .empty-group {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 4px 0;
+        }
 
         .modal-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(23, 30, 52, 0.45); backdrop-filter: blur(7px); z-index: 1000; }
         .modal-overlay.active { display: flex; }
@@ -265,8 +299,6 @@
             .calendar-grid { gap: 5px; }
             .weekday { font-size: 0.68rem; }
             .math-symbol { display: none; }
-            .tests-table-wrapper table { font-size: 0.78rem; }
-            .tests-table-wrapper th, .tests-table-wrapper td { padding: 6px 4px; }
         }
         @media (max-width: 500px) {
             .main-wrapper { padding-left: 10px; padding-right: 10px; }
@@ -276,9 +308,7 @@
             .calendar-icon { width: 36px; height: 36px; }
             .day { min-height: 45px; border-radius: 10px; font-size: 0.82rem; }
             .charts-container { grid-template-columns: 1fr; }
-            .tests-table-wrapper table { font-size: 0.7rem; }
-            .tests-table-wrapper th, .tests-table-wrapper td { padding: 4px 2px; }
-            .tests-table-wrapper .status-badge { font-size: 0.65rem; padding: 2px 8px; }
+            .stat-value { font-size: 2rem; }
         }
     </style>
 </head>
@@ -418,9 +448,9 @@
                 <div class="page" id="page-progress">
                     <div class="progress-stats" id="progressStats"></div>
                     <div class="charts-container" id="chartsContainer"></div>
-                    <div class="tests-table-wrapper" id="testsTableWrapper">
-                        <h3 id="testsTableTitle">📋 Результаты контрольных точек и ДЗ</h3>
-                        <div id="testsTableContainer"></div>
+                    <div class="topics-wrapper" id="topicsWrapper">
+                        <h3>🎯 Сильные и слабые темы</h3>
+                        <div class="topic-groups" id="topicGroups"></div>
                     </div>
                 </div>
             </div>
@@ -440,7 +470,7 @@
         const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'сание': 'sanie', 'ден': 'denis', 'алина': 'alina' };
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
-        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), testsTableWrapper = document.getElementById('testsTableWrapper'), testsTableTitle = document.getElementById('testsTableTitle'), testsTableContainer = document.getElementById('testsTableContainer');
+        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), topicGroups = document.getElementById('topicGroups'), topicsWrapper = document.getElementById('topicsWrapper');
 
         if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
 
@@ -579,14 +609,13 @@
         }
 
         // ============================================================
-        //  СТРАНИЦА ПРОГРЕССА (объединение ДЗ и контрольных точек)
+        //  ПРОГРЕСС: средний балл, тренд, линейный график, сильные/слабые темы
         // ============================================================
         async function renderProgressPage() {
             if (!lessonsData.length) {
                 progressStats.innerHTML = '<div class="empty-message">Нет данных об уроках</div>';
                 chartsContainer.innerHTML = '';
-                testsTableContainer.innerHTML = '';
-                testsTableWrapper.style.display = 'none';
+                topicsWrapper.style.display = 'none';
                 return;
             }
 
@@ -597,7 +626,7 @@
             const pastLessons = lessonsData.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
             const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
 
-            // 1. Собираем все домашние задания с баллами
+            // === Собираем все оценки (ДЗ + тесты) для среднего и тренда ===
             const hwTasks = hwLessons
                 .filter(l => l.hwScore !== undefined && l.hwScore !== null && l.hwScore !== '')
                 .map(l => ({
@@ -609,7 +638,6 @@
                     source: 'homework'
                 }));
 
-            // 2. Собираем контрольные точки
             const testTasks = (testsData || [])
                 .filter(t => t.name && t.name.trim() !== '')
                 .map(t => ({
@@ -621,7 +649,7 @@
                     source: 'test'
                 }));
 
-            // 3. Объединяем и убираем дубли
+            // Объединяем и убираем дубли
             const allTasks = [];
             const usedKeys = new Set();
 
@@ -645,6 +673,7 @@
                 }
             });
 
+            // Сортируем по дате (для графика и тренда)
             allTasks.sort((a, b) => {
                 if (a.date && b.date) return a.date.localeCompare(b.date);
                 if (a.date) return -1;
@@ -652,51 +681,62 @@
                 return 0;
             });
 
-            // 4. Статистика
+            const scoredTasks = allTasks.filter(t => t.score !== null && t.score !== undefined);
+
+            // === СРЕДНИЙ БАЛЛ ===
+            const avgScore = scoredTasks.length > 0
+                ? Math.round(scoredTasks.reduce((sum, t) => sum + t.score, 0) / scoredTasks.length)
+                : 0;
+
+            // === ТРЕНД ===
+            let trendHtml = '';
+            let trendClass = 'flat';
+            let trendText = '— нет данных';
+            if (scoredTasks.length >= 2) {
+                const mid = Math.floor(scoredTasks.length / 2);
+                const firstHalf = scoredTasks.slice(0, mid);
+                const secondHalf = scoredTasks.slice(mid);
+                const avgFirst = firstHalf.reduce((s, t) => s + t.score, 0) / firstHalf.length;
+                const avgSecond = secondHalf.reduce((s, t) => s + t.score, 0) / secondHalf.length;
+                const diff = Math.round(avgSecond - avgFirst);
+
+                if (diff > 0) { trendClass = 'up'; trendText = `↑ +${diff} за период`; }
+                else if (diff < 0) { trendClass = 'down'; trendText = `↓ ${diff} за период`; }
+                else { trendClass = 'flat'; trendText = `→ без изменений`; }
+            }
+
+            // === ДЗ ВЫПОЛНЕНО ===
             const completedHw = hwLessons.filter(l => {
                 const status = (l.hwStatus || 'pending').toLowerCase();
                 return status.includes('проверен') || status === 'checked' || status === 'done';
             }).length;
 
-            const currentMonthStr = String(currentMonth + 1).padStart(2, '0');
-            const currentYearStr = String(currentYear);
-            const monthCompleted = pastLessons.filter(l => l.date.startsWith(`${currentYearStr}-${currentMonthStr}`)).length;
-
-            const validTasks = allTasks.filter(t => t.score !== null && t.score !== undefined);
-            const tasksTotal = allTasks.length;
-            const tasksCompleted = validTasks.length;
-            const avgScore = tasksTotal > 0 ? Math.round(validTasks.reduce((sum, t) => sum + t.score, 0) / tasksTotal) : 0;
-
             const isDenis = currentStudentId === 'denis';
 
             let statsHTML = `
                 <div class="stat-card">
-                    <div class="stat-value">${pastLessons.length}</div>
-                    <div class="stat-label">Тем пройдено</div>
-                    <div class="stat-sublabel">из них ${monthCompleted} в этом месяце</div>
+                    <div class="stat-value">${avgScore}</div>
+                    <div class="stat-label">Средний балл</div>
+                    <div class="stat-sublabel">по ${scoredTasks.length} работам</div>
+                    <span class="stat-trend ${trendClass}">${trendText}</span>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${completedHw}</div>
+                    <div class="stat-value">${completedHw} / ${hwLessons.length}</div>
                     <div class="stat-label">ДЗ выполнено</div>
-                    <div class="stat-sublabel">из ${hwLessons.length} всего</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${tasksCompleted} / ${tasksTotal}</div>
-                    <div class="stat-label">${isDenis ? 'Пробников' : 'Контрольных точек и ДЗ'}</div>
-                    <div class="stat-sublabel">средний балл: ${avgScore}</div>
+                    <div class="stat-sublabel">${hwLessons.length ? Math.round(completedHw / hwLessons.length * 100) : 0}% от всех</div>
                 </div>
             `;
 
             progressStats.innerHTML = statsHTML;
 
-            // 5. Графики
+            // === ГРАФИКИ ===
             chartsContainer.innerHTML = `
                 <div class="chart-card">
                     <h3>Выполнение домашних заданий</h3>
                     <canvas id="hwChart"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>${isDenis ? 'Результаты пробников' : 'Результаты контрольных точек и ДЗ'}</h3>
+                    <h3>${isDenis ? 'Динамика по пробникам' : 'Динамика баллов'}</h3>
                     <canvas id="testsChart"></canvas>
                 </div>
             `;
@@ -706,6 +746,7 @@
             const textSecondary = styles.getPropertyValue('--text-secondary').trim();
             const borderColor = styles.getPropertyValue('--border-color').trim();
 
+            // Круговая диаграмма по ДЗ
             const hwCtx = document.getElementById('hwChart').getContext('2d');
             if (charts.hw) charts.hw.destroy();
             charts.hw = new Chart(hwCtx, {
@@ -725,43 +766,44 @@
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: {
-                                color: textPrimary,
-                                font: { size: 12, weight: '600' }
-                            }
+                            labels: { color: textPrimary, font: { size: 12, weight: '600' } }
                         }
                     },
                     cutout: '65%'
                 }
             });
 
+            // Линейный график по датам
             const testCtx = document.getElementById('testsChart').getContext('2d');
             if (charts.tests) charts.tests.destroy();
 
-            const validForChart = allTasks.filter(t => t.score !== null && t.score !== undefined);
-            const testLabels = validForChart.map((t, index) => {
-                const label = t.name || `${isDenis ? 'Пробник' : 'Задание'} ${index + 1}`;
-                return label.length > 20 ? label.substring(0, 18) + '…' : label;
+            const chartTasks = scoredTasks.slice();
+            const labels = chartTasks.map(t => {
+                if (t.date) {
+                    const parts = t.date.split('-');
+                    return `${parts[2]}.${parts[1]}`;
+                }
+                return '—';
             });
-            const testScores = validForChart.map(t => t.score || 0);
-            const testColors = validForChart.map(t => {
-                const percent = (t.score || 0) / (t.max || 100);
-                if (percent >= 0.8) return 'rgba(47, 157, 104, 0.70)';
-                if (percent >= 0.6) return 'rgba(217, 138, 38, 0.70)';
-                return 'rgba(216, 92, 92, 0.70)';
-            });
+            const dataPoints = chartTasks.map(t => t.score || 0);
 
             charts.tests = new Chart(testCtx, {
-                type: 'bar',
+                type: 'line',
                 data: {
-                    labels: testLabels,
+                    labels: labels,
                     datasets: [{
-                        label: isDenis ? 'Балл' : 'Балл',
-                        data: testScores,
-                        backgroundColor: testColors.length ? testColors : ['rgba(109, 84, 199, 0.70)'],
-                        borderColor: testColors.length ? testColors.map(c => c.replace('0.70', '1')) : ['#6d54c7'],
-                        borderWidth: 2,
-                        borderRadius: 8
+                        label: 'Балл',
+                        data: dataPoints,
+                        borderColor: '#3567c9',
+                        backgroundColor: 'rgba(53, 103, 201, 0.10)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.35,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#3567c9',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 7
                     }]
                 },
                 options: {
@@ -770,12 +812,13 @@
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                afterLabel: function(context) {
-                                    const task = validForChart[context.dataIndex];
-                                    if (task && task.description) {
-                                        return '📌 ' + task.description;
-                                    }
-                                    return '';
+                                title: function(context) {
+                                    const i = context[0].dataIndex;
+                                    const t = chartTasks[i];
+                                    return t.name || 'Работа';
+                                },
+                                label: function(context) {
+                                    return 'Балл: ' + context.parsed.y;
                                 }
                             }
                         }
@@ -784,109 +827,73 @@
                         y: {
                             beginAtZero: true,
                             max: 100,
-                            ticks: {
-                                stepSize: 20,
-                                color: textSecondary,
-                                font: { weight: '600' }
-                            },
+                            ticks: { stepSize: 20, color: textSecondary, font: { weight: '600' } },
                             grid: { color: borderColor }
                         },
                         x: {
-                            ticks: {
-                                color: textSecondary,
-                                font: { weight: '600' },
-                                maxRotation: 20,
-                                minRotation: 0
-                            },
+                            ticks: { color: textSecondary, font: { weight: '600' }, maxRotation: 0, minRotation: 0 },
                             grid: { display: false }
                         }
                     }
                 }
             });
 
-            renderTestsTableForAll(allTasks, isDenis);
+            // === СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ ===
+            renderTopicGroups(scoredTasks);
         }
 
         // ============================================================
-        //  ТАБЛИЦА ДЛЯ ОБЪЕДИНЁННЫХ ЗАДАНИЙ
+        //  СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ
         // ============================================================
-        function renderTestsTableForAll(allTasks, isDenis) {
-            const container = testsTableContainer;
-            const title = testsTableTitle;
-
-            const validTasks = allTasks.filter(t => t.name && t.name.trim() !== '');
-
-            if (!validTasks || validTasks.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-secondary); padding: 12px 0;">Нет данных</p>';
-                testsTableWrapper.style.display = 'block';
+        function renderTopicGroups(scoredTasks) {
+            if (!scoredTasks || scoredTasks.length === 0) {
+                topicsWrapper.style.display = 'none';
                 return;
             }
 
-            title.textContent = isDenis ? '📋 Результаты пробников' : '📋 Контрольные точки и домашние задания';
-            testsTableWrapper.style.display = 'block';
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th style="text-align: center;">Баллы</th>
-                            <th style="text-align: center;">Статус</th>
-                            ${!isDenis ? '<th>Описание</th>' : ''}
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            validTasks.forEach(t => {
-                const score = t.score !== null && t.score !== undefined ? t.score : '—';
-                const max = t.max || 100;
-                const isCompleted = t.score !== null && t.score !== undefined;
-                const percent = isCompleted ? Math.round((t.score / max) * 100) : 0;
-                let statusText, statusClass;
-
-                if (!isCompleted) {
-                    statusText = '⏳ Не выполнено';
-                    statusClass = 'pending';
-                } else if (percent >= 80) {
-                    statusText = '✅ Отлично';
-                    statusClass = 'excellent';
-                } else if (percent >= 60) {
-                    statusText = '📝 Хорошо';
-                    statusClass = 'good';
-                } else {
-                    statusText = '⚠️ Нужно повторить';
-                    statusClass = 'poor';
-                }
-
-                const sourceLabel = t.source === 'homework' ? ' (ДЗ)' : '';
-
-                html += `
-                    <tr>
-                        <td style="font-weight: 600;">${t.name || 'Без названия'}${sourceLabel}</td>
-                        <td style="text-align: center; font-weight: 700;">${isCompleted ? `${score} / ${max}` : '—'}</td>
-                        <td style="text-align: center;">
-                            <span class="status-badge ${statusClass}">${statusText}</span>
-                        </td>
-                        ${!isDenis ? `<td style="color: var(--text-secondary); font-size: 0.85rem;">${t.description || '—'}</td>` : ''}
-                    </tr>
-                `;
+            const byTopic = {};
+            scoredTasks.forEach(t => {
+                const key = (t.name || '').trim().toLowerCase();
+                if (!key) return;
+                if (!byTopic[key]) byTopic[key] = { name: t.name, score: t.score, max: t.max || 100 };
+                else if (t.score > byTopic[key].score) byTopic[key] = { name: t.name, score: t.score, max: t.max || 100 };
             });
 
-            const completedTests = validTasks.filter(t => t.score !== null && t.score !== undefined);
-            const avg = completedTests.length > 0 ? Math.round(completedTests.reduce((sum, t) => sum + t.score, 0) / completedTests.length) : 0;
+            const topics = Object.values(byTopic);
+            const excellent = topics.filter(t => (t.score / (t.max || 100)) >= 0.8);
+            const good = topics.filter(t => (t.score / (t.max || 100)) >= 0.6 && (t.score / (t.max || 100)) < 0.8);
+            const poor = topics.filter(t => (t.score / (t.max || 100)) < 0.6);
 
-            html += `
-                <tr class="avg-row">
-                    <td style="padding: 12px 8px; font-weight: 800; border-top: 2px solid var(--border-color);">Средний балл</td>
-                    <td style="text-align: center; padding: 12px 8px; font-weight: 800; color: var(--accent-blue); border-top: 2px solid var(--border-color);">${completedTests.length > 0 ? avg : '—'}</td>
-                    <td style="text-align: center; padding: 12px 8px; border-top: 2px solid var(--border-color);"></td>
-                    ${!isDenis ? '<td style="padding: 12px 8px; border-top: 2px solid var(--border-color);"></td>' : ''}
-                </tr>
+            function groupHtml(title, items, cls) {
+                if (!items.length) {
+                    return `
+                        <div class="topic-group ${cls}">
+                            <div class="group-title">${title}</div>
+                            <div class="empty-group">Пока нет тем</div>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="topic-group ${cls}">
+                        <div class="group-title">${title} (${items.length})</div>
+                        <ul>
+                            ${items.map(t => `
+                                <li>
+                                    <span class="topic-name">${t.name}</span>
+                                    <span class="topic-score">${t.score}%</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            topicGroups.innerHTML = `
+                ${groupHtml('🟢 Отлично (80–100%)', excellent, 'excellent')}
+                ${groupHtml('🟡 Хорошо (60–79%)', good, 'good')}
+                ${groupHtml('🔴 Нужно повторить (<60%)', poor, 'poor')}
             `;
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
+            topicsWrapper.style.display = 'block';
         }
 
         function renderHomeworkCards() {
