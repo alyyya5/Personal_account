@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Теория | Углы, выражения и уравнения</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-purple: #7c3aed;
+            --accent-orange: #d48a3a;
+            --accent-pink: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 16px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.blue { background: #dbeafe; color: #1d4a7a; }
+        .tag.purple { background: #e8dff5; color: var(--accent-purple); }
+        .tag.pink { background: #fce7f3; color: #be185d; }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #eef2f7;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.tr {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .section-icon.geo {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+        }
+
+        .section-title {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .topic-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .topic-card.pink { border-color: #fbcfe8; }
+        .topic-card.pink:hover { box-shadow: 0 8px 24px rgba(236, 72, 153, 0.08); }
+        .topic-card.green { border-color: #bbf7d0; }
+        .topic-card.green:hover { box-shadow: 0 8px 24px rgba(26, 138, 90, 0.08); }
+
+        .topic-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        .topic-card.pink .topic-title { color: var(--accent-pink); }
+        .topic-card.pink .topic-title::before { background: var(--accent-pink); }
+        .topic-card.green .topic-title { color: var(--accent-green); }
+        .topic-card.green .topic-title::before { background: var(--accent-green); }
+
+        .topic-content {
+            font-size: 15px;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .topic-content p {
+            margin-bottom: 10px;
+        }
+
+        .rule-box {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .rule-box.important {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .rule-box.warning {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .rule-box.success {
+            background: #d1fae5;
+            border-color: #34d399;
+        }
+
+        .rule-box.pink {
+            background: #fdf2f8;
+            border-color: #f9a8d4;
+        }
+
+        .rule-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+
+        .rule-box.important .rule-title { color: #92400e; }
+        .rule-box.warning .rule-title { color: var(--accent-red); }
+        .rule-box.success .rule-title { color: var(--accent-green); }
+        .rule-box.pink .rule-title { color: #be185d; }
+
+        .formula {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Столбик решений */
+        .steps {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .steps .line {
+            display: block;
+            padding: 2px 0;
+        }
+
+        .definition {
+            background: #f5f3ff;
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .example {
+            background: #fcf3e0;
+            border-left: 4px solid #e8b84b;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .example strong {
+            color: #b47d2a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 16px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 14px 0;
+        }
+
+        .fig-box svg { max-width: 100%; height: auto; }
+
+        .fig-caption {
+            margin-top: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            padding: 10px 0 24px;
+            letter-spacing: 6px;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 18px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .section-title {
+                font-size: 19px;
+            }
+
+            .topic-card {
+                padding: 16px 18px;
+            }
+
+            .topic-title {
+                font-size: 15px;
+            }
+
+            .topic-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📘 Теория · Углы, выражения и уравнения</h1>
+            <div class="subtitle">Всё, что нужно для урока — от углов до линейных уравнений</div>
+            <div class="tags">
+                <span class="tag blue">Алгебра</span>
+                <span class="tag pink">Геометрия</span>
+                <span class="tag purple">7 класс</span>
+            </div>
+        </header>
+
+        <!-- ==================== ГЕОМЕТРИЯ: УГЛЫ ==================== -->
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon geo">📐</div>
+                <div class="section-title">Геометрия · Углы</div>
+            </div>
+
+            <!-- Тема 1: Смежные углы -->
+            <div class="topic-card pink">
+                <div class="topic-title">1. Смежные углы</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        Два угла называются <strong>смежными</strong>, если у них одна сторона <strong>общая</strong>, а две другие являются <strong>продолжениями одна другой</strong>.
+                    </div>
+
+                    <p>Смежные углы «сидят» рядом на одной прямой и вместе образуют развёрнутый угол.</p>
+
+                    <div class="fig-box">
+                        <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="30" y1="110" x2="370" y2="110" stroke="#1d4a9e" stroke-width="3"/>
+                            <line x1="200" y1="110" x2="270" y2="30" stroke="#1d4a9e" stroke-width="3"/>
+                            <circle cx="200" cy="110" r="5" fill="#ec4899"/>
+                            <text x="190" y="132" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+                            <text x="18" y="132" font-size="14" fill="#2c3e5a" font-weight="600">A</text>
+                            <text x="362" y="132" font-size="14" fill="#2c3e5a" font-weight="600">C</text>
+                            <text x="268" y="22" font-size="14" fill="#2c3e5a" font-weight="600">B</text>
+                        </svg>
+                        <div class="fig-caption">\(\angle AOB\) и \(\angle BOC\) — смежные</div>
+                    </div>
+
+                    <div class="formula">
+                        📐 <strong>Свойство:</strong> сумма смежных углов равна \(180^\circ\)<br>
+                        \(\angle AOB + \angle BOC = 180^\circ\)
+                    </div>
+
+                    <div class="rule-box pink">
+                        <div class="rule-title">Как решать задачи</div>
+                        <ul>
+                            <li>Если один угол известен — второй находим как \(180^\circ\) минус первый.</li>
+                            <li>Если углы связаны (например, один больше другого) — составляем уравнение с суммой \(180^\circ\).</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 2: Вертикальные углы -->
+            <div class="topic-card green">
+                <div class="topic-title">2. Вертикальные углы</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        Два угла называются <strong>вертикальными</strong>, если стороны одного угла являются продолжениями сторон другого.
+                    </div>
+
+                    <p>Вертикальные углы образуются при пересечении двух прямых. Они расположены «напротив» друг друга.</p>
+
+                    <div class="fig-box">
+                        <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="40" y1="40" x2="420" y2="200" stroke="#1d4a9e" stroke-width="3"/>
+                            <line x1="40" y1="200" x2="420" y2="40" stroke="#1d4a9e" stroke-width="3"/>
+                            <circle cx="230" cy="120" r="5" fill="#06d6a0"/>
+                            <text x="240" y="140" font-size="14" fill="#0b1a33" font-weight="600">O</text>
+                            <text x="28" y="35" font-size="15" fill="#059669" font-weight="700">A</text>
+                            <text x="425" y="35" font-size="15" fill="#059669" font-weight="700">B</text>
+                            <text x="425" y="220" font-size="15" fill="#059669" font-weight="700">C</text>
+                            <text x="28" y="220" font-size="15" fill="#059669" font-weight="700">D</text>
+                        </svg>
+                        <div class="fig-caption">
+                            \(\angle AOB\) и \(\angle COD\) — вертикальные; \(\angle BOC\) и \(\angle DOA\) — вертикальные
+                        </div>
+                    </div>
+
+                    <div class="formula">
+                        📐 <strong>Свойство:</strong> вертикальные углы равны<br>
+                        \(\angle AOB = \angle COD\) &nbsp;&nbsp; \(\angle BOC = \angle DOA\)
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Ключевая идея</div>
+                        <p>При пересечении двух прямых образуются <strong>две пары вертикальных углов</strong> и <strong>четыре пары смежных</strong>. Смежные дают в сумме \(180^\circ\), вертикальные — равны.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 3: Три прямые через одну точку -->
+            <div class="topic-card">
+                <div class="topic-title">3. Три прямые через одну точку</div>
+                <div class="topic-content">
+
+                    <p>Если три прямые пересекаются в одной точке, образуется <strong>шесть углов</strong>. Их можно разбить на пары вертикальных и смежных.</p>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">Полезное свойство</div>
+                        <p>Сумма трёх углов, расположенных «через один» (по разные стороны от общих сторон), равна \(180^\circ\) — потому что вместе они образуют развёрнутый угол.</p>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> если три прямые пересекаются в точке \(O\) и даны три угла \(\angle 1\), \(\angle 2\), \(\angle 3\), идущие подряд, то:
+                        <div class="steps">
+                            <span class="line">\(\angle 1 + \angle 2 + \angle 3 = 180^\circ\)</span>
+                        </div>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Как искать углы</div>
+                        <ul>
+                            <li>Найди вертикальные углы — они равны.</li>
+                            <li>Используй смежные углы: сумма \(180^\circ\).</li>
+                            <li>Составь уравнение и найди неизвестные.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Тема 4: Угол между прямыми -->
+            <div class="topic-card">
+                <div class="topic-title">4. Угол между прямыми</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Углом между прямыми</strong> называется меньший из углов, образованных при их пересечении.
+                    </div>
+
+                    <div class="rule-box">
+                        <div class="rule-title">Как найти</div>
+                        <p>Если известны вертикальные углы (они равны) и смежные (в сумме \(180^\circ\)), то угол между прямыми — это тот, который меньше \(90^\circ\) (или равен ему).</p>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример:</strong> если при пересечении двух прямых один из углов равен \(50^\circ\), то:
+                        <div class="steps">
+                            <span class="line">вертикальный ему тоже \(50^\circ\)</span>
+                            <span class="line">смежные с ними — по \(130^\circ\)</span>
+                            <span class="line">угол между прямыми — \(50^\circ\)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== АЛГЕБРА ==================== -->
+
+        <div class="divider">✦ АЛГЕБРА · ВЫРАЖЕНИЯ И УРАВНЕНИЯ ✦</div>
+
+        <!-- Тема 5: Упрощение выражений -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📎</div>
+                <div class="section-title">Алгебра · Упрощение выражений</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">5. Как упрощать выражения</div>
+                <div class="topic-content">
+
+                    <div class="rule-box important">
+                        <div class="rule-title">Алгоритм</div>
+                        <ol>
+                            <li><strong>Раскрыть скобки</strong> — учитывая знак перед ними.</li>
+                            <li><strong>Перемножить числа</strong>, если есть произведение.</li>
+                            <li><strong>Привести подобные слагаемые</strong> — сложить коэффициенты с одинаковой буквенной частью.</li>
+                            <li><strong>Записать ответ</strong> в стандартном виде.</li>
+                        </ol>
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Как раскрывать скобки</div>
+                        <ul>
+                            <li>Перед скобкой «плюс» — знаки <strong>не меняются</strong>.</li>
+                            <li>Перед скобкой «минус» — знаки <strong>всех</strong> слагаемых меняются.</li>
+                            <li>Число перед скобкой — умножаем на <strong>каждое</strong> слагаемое.</li>
+                        </ul>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 1.</strong> \(0{,}4(7x - 2) - 1{,}6 + 1{,}7x\)
+                        <div class="steps">
+                            <span class="line">\(= 2{,}8x - 0{,}8 - 1{,}6 + 1{,}7x\)</span>
+                            <span class="line">\(= (2{,}8x + 1{,}7x) + (-0{,}8 - 1{,}6)\)</span>
+                            <span class="line">\(= 4{,}5x - 2{,}4\)</span>
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 2.</strong> \((14 - 3{,}6b) - (12 + 10{,}4b)\)
+                        <div class="steps">
+                            <span class="line">\(= 14 - 3{,}6b - 12 - 10{,}4b\)</span>
+                            <span class="line">\(= (14 - 12) + (-3{,}6b - 10{,}4b)\)</span>
+                            <span class="line">\(= 2 - 14b\)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Тема 6: Найти значение при x = ... -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">🔢</div>
+                <div class="section-title">Алгебра · Значение выражения</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">6. Как найти значение выражения</div>
+                <div class="topic-content">
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Порядок действий</div>
+                        <ol>
+                            <li><strong>Упростить</strong> выражение (раскрыть скобки, привести подобные).</li>
+                            <li><strong>Подставить</strong> данное значение переменной.</li>
+                            <li><strong>Вычислить</strong> результат.</li>
+                        </ol>
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">Почему сначала упрощать</div>
+                        <p>После упрощения выражение становится короче, и подставлять число проще. Меньше действий — меньше ошибок.</p>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример.</strong> Найти значение выражения
+                        \(2{,}5(4 - 3y) - y + 2{,}3\) при \(y = 0{,}5\)
+                        <div class="steps">
+                            <span class="line">\(= 10 - 7{,}5y - y + 2{,}3\)</span>
+                            <span class="line">\(= 12{,}3 - 8{,}5y\)</span>
+                            <span class="line">\(= 12{,}3 - 8{,}5 \cdot 0{,}5\)</span>
+                            <span class="line">\(= 12{,}3 - 4{,}25\)</span>
+                            <span class="line">\(= 8{,}05\)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Тема 7: Проверка корня -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">✅</div>
+                <div class="section-title">Алгебра · Проверка корня уравнения</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">7. Является ли число корнем</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Корень уравнения</strong> — значение переменной, при котором уравнение обращается в верное числовое равенство.
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Как проверить</div>
+                        <ol>
+                            <li>Подставить число вместо переменной.</li>
+                            <li>Вычислить левую часть.</li>
+                            <li>Вычислить правую часть.</li>
+                            <li>Сравнить: если получилось верное равенство — корень; если нет — не корень.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример.</strong> Проверим число \(x = 6\) для уравнения \(x(x - 5) = 6\):
+                        <div class="steps">
+                            <span class="line">Левая часть: \(6 \cdot (6 - 5) = 6 \cdot 1 = 6\)</span>
+                            <span class="line">Правая часть: \(6\)</span>
+                            <span class="line">\(6 = 6\) — верно</span>
+                        </div>
+                        Значит, \(x = 6\) — корень.
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример.</strong> Проверим число \(x = 1\):
+                        <div class="steps">
+                            <span class="line">Левая часть: \(1 \cdot (1 - 5) = 1 \cdot (-4) = -4\)</span>
+                            <span class="line">Правая часть: \(6\)</span>
+                            <span class="line">\(-4 = 6\) — неверно</span>
+                        </div>
+                        Значит, \(x = 1\) — не корень.
+                    </div>
+
+                    <div class="rule-box warning">
+                        <div class="rule-title">Внимание</div>
+                        <p>Проверять нужно <strong>каждое</strong> число отдельно. Одно может подойти, другое — нет.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Тема 8: Линейные уравнения -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon tr">📌</div>
+                <div class="section-title">Алгебра · Линейные уравнения</div>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-title">8. Как решать линейные уравнения</div>
+                <div class="topic-content">
+
+                    <div class="definition">
+                        <div class="definition-title">Определение</div>
+                        <strong>Линейное уравнение</strong> — уравнение вида \(ax = b\), где \(a\) и \(b\) — числа, \(x\) — переменная.
+                    </div>
+
+                    <div class="rule-box important">
+                        <div class="rule-title">Алгоритм решения</div>
+                        <ol>
+                            <li><strong>Перенести</strong> слагаемые с переменной в одну часть, числа — в другую. При переносе знак меняется.</li>
+                            <li><strong>Привести подобные</strong> слагаемые.</li>
+                            <li><strong>Разделить</strong> обе части на коэффициент при \(x\).</li>
+                            <li><strong>Записать ответ</strong>.</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 1.</strong> \(5x = -60\)
+                        <div class="steps">
+                            <span class="line">\(x = -60 : 5\)</span>
+                            <span class="line">\(x = -12\)</span>
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 2.</strong> \(-10x = 8\)
+                        <div class="steps">
+                            <span class="line">\(x = 8 : (-10)\)</span>
+                            <span class="line">\(x = -0{,}8\)</span>
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 3.</strong> \(0{,}7x = 0\)
+                        <div class="steps">
+                            <span class="line">\(x = 0 : 0{,}7\)</span>
+                            <span class="line">\(x = 0\)</span>
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <strong>Пример 4.</strong> \(42x = 13\)
+                        <div class="steps">
+                            <span class="line">\(x = \dfrac{13}{42}\)</span>
+                        </div>
+                        Если ответ не делится нацело — оставляем дробью.
+                    </div>
+
+                    <div class="rule-box success">
+                        <div class="rule-title">Полезно помнить</div>
+                        <ul>
+                            <li>Если коэффициент положительный — знак сохраняется.</li>
+                            <li>Если коэффициент отрицательный — знак результата меняется.</li>
+                            <li>Если правая часть \(0\) — корень всегда \(x = 0\).</li>
+                            <li>Если ответ не целый — записываем обыкновенной дробью.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            📚 Теоретический справочник · Углы, выражения и уравнения
+        </div>
+
+    </div>
+
+</body>
+</html>
