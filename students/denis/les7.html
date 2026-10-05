@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Логарифмы и логарифмические уравнения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.green { border-left-color: #06d6a0; }
+        .card.orange { border-left-color: #f5a623; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.red { border-left-color: #ef4444; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.red { background: #ef4444; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 10px 16px;
+            margin: 12px 0;
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.9;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            line-height: 1.85;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .warn-box {
+            background: #fef2f2;
+            border-left: 6px solid #ef4444;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .warn-box strong { color: #b91c1c; }
+
+        .steps {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 2;
+        }
+        .steps .line { display: block; padding: 2px 0; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ЛОГАРИФМЫ · ТЕОРИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    §1. ОПРЕДЕЛЕНИЕ                                           -->
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <h2><span class="badge">§1</span> Что такое логарифм</h2>
+
+        <p><strong>Логарифм</strong> числа \(b\) по основанию \(a\) — это показатель степени, в которую нужно возвести \(a\), чтобы получить \(b\).</p>
+
+        <div class="formula-box">
+            \(\log_a b = c \;\Longleftrightarrow\; a^c = b\)
+        </div>
+
+        <div class="warn-box">
+            <strong>⚠️ ОДЗ:</strong> аргумент \(b > 0\), основание \(a > 0\), \(a \neq 1\).
+        </div>
+
+        <div class="note-box">
+            <strong>Обозначения:</strong> \(\lg b = \log_{10} b\) — десятичный, \(\ln b = \log_e b\) — натуральный.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §2. ВСЕ СВОЙСТВА В ОДНОМ МЕСТЕ                            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ СВОЙСТВА ЛОГАРИФМОВ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Все свойства</h2>
+
+        <p>Пусть \(a > 0\), \(a \neq 1\), \(b > 0\), \(c > 0\).</p>
+
+        <div class="formula-box">
+            <strong>1.</strong> \(\log_a a = 1\)<br>
+            <strong>2.</strong> \(\log_a 1 = 0\)<br>
+            <strong>3.</strong> \(a^{\log_a b} = b\)<br>
+            <strong>4.</strong> \(\log_a (bc) = \log_a b + \log_a c\)<br>
+            <strong>5.</strong> \(\log_a \dfrac{b}{c} = \log_a b - \log_a c\)<br>
+            <strong>6.</strong> \(\log_a b^n = n \cdot \log_a b\)<br>
+            <strong>7.</strong> \(\log_{a^n} b = \dfrac{1}{n} \cdot \log_a b\)<br>
+            <strong>8.</strong> \(\log_a b = \dfrac{\log_k b}{\log_k a}\)
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §3. ПРОСТЕЙШИЕ УРАВНЕНИЯ                                  -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРОСТЕЙШИЕ УРАВНЕНИЯ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§3</span> Уравнения вида \(\log_a x = c\)</h2>
+
+        <div class="formula-box">
+            \(\log_a x = c \;\Longleftrightarrow\; x = a^c\), &nbsp; при \(x > 0\)
+        </div>
+
+        <div class="note-box">
+            <strong>План решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Найти <strong>ОДЗ</strong>: аргумент \(> 0\).</li>
+                <li>Использовать определение: \(x = a^c\).</li>
+                <li>Проверить корень по ОДЗ.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(\log_2 x = 5\)
+            <div class="steps">
+                <span class="line">ОДЗ: \(x > 0\)</span>
+                <span class="line">\(x = 2^5 = 32\)</span>
+                <span class="line">Проверка: \(32 > 0\) ✔</span>
+            </div>
+            <strong>Ответ:</strong> \(32\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §4. ЛОГАРИФМЫ С ОБЕИХ СТОРОН                              -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ЛОГАРИФМЫ С ОБЕИХ СТОРОН ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Уравнения \(\log_a f(x) = \log_a g(x)\)</h2>
+
+        <div class="formula-box">
+            \(\log_a f(x) = \log_a g(x) \;\Longrightarrow\; f(x) = g(x)\)<br>
+            <span style="font-size:0.95rem;">при условии \(f(x) > 0\) и \(g(x) > 0\)</span>
+        </div>
+
+        <div class="note-box">
+            <strong>План решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Найти <strong>ОДЗ</strong>: \(f(x) > 0\) и \(g(x) > 0\).</li>
+                <li>Приравнять аргументы: \(f(x) = g(x)\).</li>
+                <li>Решить уравнение.</li>
+                <li>Проверить корни по ОДЗ.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(\log_3 (x + 2) = \log_3 (2x - 1)\)
+            <div class="steps">
+                <span class="line">ОДЗ: \(x + 2 > 0\) и \(2x - 1 > 0 \Rightarrow x > 0{,}5\)</span>
+                <span class="line">\(x + 2 = 2x - 1\)</span>
+                <span class="line">\(x = 3\)</span>
+                <span class="line">Проверка: \(3 > 0{,}5\) ✔</span>
+            </div>
+            <strong>Ответ:</strong> \(3\).
+        </div>
+
+        <div class="warn-box">
+            <strong>⚠️ Внимание!</strong> Даже если уравнение решается легко, <strong>обязательно</strong> проверяй корни по ОДЗ. Посторонние корни отбрасываются.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §5. СУММА И РАЗНОСТЬ                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ СУММА И РАЗНОСТЬ ЛОГАРИФМОВ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§5</span> Уравнения с несколькими логарифмами</h2>
+
+        <div class="formula-box">
+            \(\log_a f(x) + \log_a g(x) = \log_a [f(x) \cdot g(x)]\)<br>
+            \(\log_a f(x) - \log_a g(x) = \log_a \dfrac{f(x)}{g(x)}\)
+        </div>
+
+        <div class="note-box">
+            <strong>План решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Найти <strong>ОДЗ</strong>: все аргументы \(> 0\).</li>
+                <li>Свернуть сумму (или разность) в один логарифм.</li>
+                <li>Приравнять аргументы (или использовать определение).</li>
+                <li>Решить уравнение и проверить корни по ОДЗ.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(\log_2 x + \log_2 (x - 2) = 3\)
+            <div class="steps">
+                <span class="line">ОДЗ: \(x > 0\) и \(x - 2 > 0 \Rightarrow x > 2\)</span>
+                <span class="line">\(\log_2 [x(x - 2)] = 3\)</span>
+                <span class="line">\(x(x - 2) = 8\)</span>
+                <span class="line">\(x^2 - 2x - 8 = 0\)</span>
+                <span class="line">\(x_1 = 4\), \(x_2 = -2\)</span>
+                <span class="line">ОДЗ: \(x > 2 \Rightarrow\) подходит только \(x = 4\)</span>
+            </div>
+            <strong>Ответ:</strong> \(4\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §6. СВОДКА                                                -->
+    <!-- ============================================================ -->
+
+    <div class="card" style="border-left-color: #7c4dff;">
+        <h2><span class="badge purple">Итог</span> Порядок решения</h2>
+
+        <ol>
+            <li>Найти <strong>ОДЗ</strong> — все аргументы логарифмов \(> 0\).</li>
+            <li>Свернуть логарифмы слева и справа (если их несколько).</li>
+            <li>Если основания одинаковые — приравнять аргументы.</li>
+            <li>Если один логарифм — использовать определение.</li>
+            <li>Решить получившееся уравнение.</li>
+            <li>Проверить корни по ОДЗ.</li>
+        </ol>
+
+        <div class="warn-box">
+            <strong>⚠️ Запомни:</strong> под знаком логарифма всегда положительное число. Проверка корней — обязательна!
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
