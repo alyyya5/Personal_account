@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Треугольник и линейные уравнения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · ТРЕУГОЛЬНИК И УРАВНЕНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ТРЕУГОЛЬНИК                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · ТРЕУГОЛЬНИК ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Что такое треугольник</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Треугольником</em> называется многоугольник с тремя вершинами. Он имеет три стороны и три угла.
+        </div>
+
+        <p>На рисунке ниже изображён треугольник с вершинами \(A\), \(B\), \(C\) и сторонами \(AB\), \(BC\), \(CA\).</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="80,170 330,170 200,30" fill="#fdf2f8" stroke="#ec4899" stroke-width="3"/>
+                <circle cx="80" cy="170" r="5" fill="#ec4899"/>
+                <circle cx="330" cy="170" r="5" fill="#ec4899"/>
+                <circle cx="200" cy="30" r="5" fill="#ec4899"/>
+                <text x="65" y="190" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="335" y="190" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="195" y="20" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+            </svg>
+            <div class="fig-caption">Треугольник \(ABC\)</div>
+        </div>
+
+        <p><strong>Обозначение:</strong> \(\triangle ABC\). Буквы можно перечислять по обходу в любом порядке, но подряд: \(\triangle BCA\), \(\triangle CAB\) и т. д.</p>
+
+        <div class="note-box">
+            <strong>Углы треугольника</strong> — это \(\angle A\), \(\angle B\), \(\angle C\) (или \(\angle BAC\), \(\angle CBA\), \(\angle ACB\)).
+        </div>
+
+        <div class="formula-box">
+            <strong>Периметр треугольника</strong> равен сумме длин трёх его сторон:<br>
+            \(P_{ABC} = AB + BC + CA\)
+        </div>
+    </div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§2</span> Равные треугольники</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Две фигуры, в частности два треугольника, называются <em>равными</em>, если их можно совместить наложением.
+        </div>
+
+        <p>Если \(\triangle ABC\) и \(\triangle A_1B_1C_1\) равны, то при наложении полностью совместятся их вершины, стороны и углы.</p>
+
+        <div class="formula-box">
+            \(\triangle ABC = \triangle A_1B_1C_1\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> В равных треугольниках против соответственно равных сторон лежат равные углы, и наоборот: против соответственно равных углов лежат равные стороны.
+        </div>
+
+        <p>Например, если \(AB = A_1B_1\), то и угол \(C\) равен углу \(C_1\).</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЛИНЕЙНЫЕ УРАВНЕНИЯ                                -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ АЛГЕБРА · ЛИНЕЙНЫЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="card">
+        <h2><span class="badge">§3</span> Что такое линейное уравнение</h2>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Определение.</strong> <em>Линейным уравнением</em> с одной переменной называется уравнение вида \(ax = b\), где \(a\) и \(b\) — числа, \(x\) — переменная.
+        </div>
+
+        <p>Примеры линейных уравнений:</p>
+        <div class="formula-box">
+            \(3x = 12\) &nbsp;&nbsp;&nbsp; \(5x - 8 = 2x + 4\) &nbsp;&nbsp;&nbsp; \(0{,}5x = 7\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно помнить:</strong>
+            <ul style="margin-top:6px;">
+                <li>Если \(a \neq 0\) — уравнение имеет один корень.</li>
+                <li>Если \(a = 0\), \(b = 0\) — бесконечно много корней (любое \(x\)).</li>
+                <li>Если \(a = 0\), \(b \neq 0\) — корней нет.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§4</span> Как решать линейное уравнение</h2>
+
+        <div class="note-box">
+            <strong>План решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Раскрыть скобки (если есть).</li>
+                <li>Перенести слагаемые с переменной в одну часть, а числа — в другую. <strong>Знак меняется</strong> на противоположный.</li>
+                <li>Привести подобные слагаемые в каждой части.</li>
+                <li>Разделить обе части на коэффициент при переменной.</li>
+                <li>Записать ответ.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> \(4x - 7 = x + 8\)
+            <div style="line-height:2; margin-top:6px;">
+                \(4x - x = 8 + 7\)<br>
+                \(3x = 15\)<br>
+                \(x = 5\)
+            </div>
+            <strong>Ответ:</strong> \(5\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> \(6a - 12 = 3 - 3a\)
+            <div style="line-height:2; margin-top:6px;">
+                \(6a + 3a = 3 + 12\)<br>
+                \(9a = 15\)<br>
+                \(a = \dfrac{15}{9} = \dfrac{5}{3}\)
+            </div>
+            <strong>Ответ:</strong> \(\dfrac{5}{3}\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3 (с дробями в коэффициентах).</strong> \(\dfrac{2}{5}x = \dfrac{1}{3}\)
+            <div style="line-height:2; margin-top:6px;">
+                \(x = \dfrac{1}{3} : \dfrac{2}{5} = \dfrac{1}{3} \cdot \dfrac{5}{2}\)<br>
+                \(x = \dfrac{5}{6}\)
+            </div>
+            <strong>Ответ:</strong> \(\dfrac{5}{6}\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 4.</strong> \(1{,}2x + 3 = 0{,}4x - 5\)
+            <div style="line-height:2; margin-top:6px;">
+                \(1{,}2x - 0{,}4x = -5 - 3\)<br>
+                \(0{,}8x = -8\)<br>
+                \(x = -10\)
+            </div>
+            <strong>Ответ:</strong> \(-10\).
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§5</span> Уравнения со скобками</h2>
+
+        <p>Если в уравнении есть скобки, сначала их раскрывают, а потом решают как обычное линейное уравнение.</p>
+
+        <div class="note-box">
+            <strong>Правила раскрытия скобок:</strong>
+            <ul style="margin-top:6px;">
+                <li>Перед скобкой «+» — знаки <strong>не меняются</strong>.</li>
+                <li>Перед скобкой «−» — знаки <strong>всех</strong> слагаемых меняются на противоположные.</li>
+                <li>Число перед скобкой — умножаем на <strong>каждое</strong> слагаемое.</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> \((y + 5) - (y - 2) = 7y\)
+            <div style="line-height:2; margin-top:6px;">
+                \(y + 5 - y + 2 = 7y\)<br>
+                \(7 = 7y\)<br>
+                \(y = 1\)
+            </div>
+            <strong>Ответ:</strong> \(1\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> \(4p - 2 - (p + 4) = 2\)
+            <div style="line-height:2; margin-top:6px;">
+                \(4p - 2 - p - 4 = 2\)<br>
+                \(3p - 6 = 2\)<br>
+                \(3p = 8\)<br>
+                \(p = \dfrac{8}{3}\)
+            </div>
+            <strong>Ответ:</strong> \(\dfrac{8}{3}\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> \(7x - (8x - 15) = 100\)
+            <div style="line-height:2; margin-top:6px;">
+                \(7x - 8x + 15 = 100\)<br>
+                \(-x + 15 = 100\)<br>
+                \(-x = 85\)<br>
+                \(x = -85\)
+            </div>
+            <strong>Ответ:</strong> \(-85\).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§6</span> Двойные скобки</h2>
+
+        <p>Если скобок несколько, раскрываем их <strong>по очереди</strong>: сначала одни, потом другие. Потом приводим подобные.</p>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> \((15x - 20) - (10 + 7x) = -4x\)
+            <div style="line-height:2; margin-top:6px;">
+                \(15x - 20 - 10 - 7x = -4x\)<br>
+                \(8x - 30 = -4x\)<br>
+                \(8x + 4x = 30\)<br>
+                \(12x = 30\)<br>
+                \(x = 2{,}5\)
+            </div>
+            <strong>Ответ:</strong> \(2{,}5\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> \(14 - (5x - 20) = (40 + 5x) + (20 - 7x)\)
+            <div style="line-height:2; margin-top:6px;">
+                \(14 - 5x + 20 = 40 + 5x + 20 - 7x\)<br>
+                \(34 - 5x = 60 - 2x\)<br>
+                \(-5x + 2x = 60 - 34\)<br>
+                \(-3x = 26\)<br>
+                \(x = -\dfrac{26}{3}\)
+            </div>
+            <strong>Ответ:</strong> \(-\dfrac{26}{3}\).
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> раскрывай скобки <strong>слева</strong> и <strong>справа</strong> по отдельности, потом приравнивай. Так меньше шансов ошибиться.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ИТОГ                                                      -->
+    <!-- ============================================================ -->
+
+    <div class="card" style="border-left-color: #7c4dff;">
+        <h2><span class="badge purple">Итог</span> Проверь себя</h2>
+        <ul>
+            <li>Что называется треугольником? Как его обозначают?</li>
+            <li>Что такое периметр треугольника?</li>
+            <li>Какие треугольники называются равными?</li>
+            <li>Какое уравнение называется линейным?</li>
+            <li>Как переносить слагаемые из одной части уравнения в другую?</li>
+            <li>Как раскрывать скобки со знаком «минус» перед ними?</li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>
