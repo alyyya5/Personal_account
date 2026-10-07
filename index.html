@@ -189,6 +189,36 @@
         .stat-trend.down { background: rgba(216, 92, 92, 0.15); color: var(--accent-red); }
         .stat-trend.flat { background: rgba(153, 163, 181, 0.15); color: var(--text-muted); }
 
+        /* ===== ПЕРЕКЛЮЧАТЕЛЬ МЕСЯЦЕВ ДЛЯ ГРАФИКОВ ===== */
+        .progress-month-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .progress-month-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+        .progress-month-title .month-label {
+            color: var(--accent-blue);
+            font-weight: 800;
+        }
+        .progress-month-title .month-sub {
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            font-weight: 650;
+        }
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
@@ -299,6 +329,7 @@
             .calendar-grid { gap: 5px; }
             .weekday { font-size: 0.68rem; }
             .math-symbol { display: none; }
+            .progress-month-bar { flex-direction: column; align-items: stretch; }
         }
         @media (max-width: 500px) {
             .main-wrapper { padding-left: 10px; padding-right: 10px; }
@@ -378,7 +409,7 @@
             </button>
         </div>
         <div class="sidebar-bottom">
-            <button class="theme-toggle" id="themeToggle"> Сменить тему</button>
+            <button class="theme-toggle" id="themeToggle">Сменить тему</button>
         </div>
     </aside>
     <div class="main-wrapper" id="mainWrapper">
@@ -446,6 +477,16 @@
                     <button class="show-more-btn" id="showAllMaterials" style="display: none;">Показать все</button>
                 </div>
                 <div class="page" id="page-progress">
+                    <div class="progress-month-bar">
+                        <div class="progress-month-title">
+                            <span>📊 Статистика за</span>
+                            <span class="month-label" id="progressMonthLabel"></span>
+                        </div>
+                        <div class="nav-buttons">
+                            <button id="progressPrevMonth">◀</button>
+                            <button id="progressNextMonth">▶</button>
+                        </div>
+                    </div>
                     <div class="progress-stats" id="progressStats"></div>
                     <div class="charts-container" id="chartsContainer"></div>
                     <div class="topics-wrapper" id="topicsWrapper">
@@ -466,11 +507,49 @@
         </div>
     </div>
     <script>
-        const passwords = { 'valeriya': 'der44', 'amina': '5678', 'denis': '1234', 'sanie': '1122', 'alina': '121212' };
-        const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'сание': 'sanie', 'ден': 'denis', 'алина': 'alina' };
+        const passwords = { 'valeriya': 'der44', 'amina': '5678', 'denis': '1234', 'sanie': '1122' };
+        const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'сание': 'sanie', 'ден': 'denis' };
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
-        const nameInput = document.getElementById('nameInput'), passwordInput = document.getElementById('passwordInput'), loginBtn = document.getElementById('loginBtn'), loginError = document.getElementById('loginError'), loginWrapper = document.getElementById('loginWrapper'), mainContent = document.getElementById('mainContent'), mainWrapper = document.getElementById('mainWrapper'), sidebar = document.getElementById('sidebar'), sidebarToggle = document.getElementById('sidebarToggle'), monthYear = document.getElementById('monthYear'), calendarGrid = document.getElementById('calendarGrid'), homeworkCards = document.getElementById('homeworkCards'), materialsCards = document.getElementById('materialsCards'), progressStats = document.getElementById('progressStats'), chartsContainer = document.getElementById('chartsContainer'), prevMonthBtn = document.getElementById('prevMonth'), nextMonthBtn = document.getElementById('nextMonth'), modalOverlay = document.getElementById('modalOverlay'), modalClose = document.getElementById('modalClose'), modalDate = document.getElementById('modalDate'), modalTime = document.getElementById('modalTime'), modalTopic = document.getElementById('modalTopic'), modalLinks = document.getElementById('modalLinks'), pageTitle = document.getElementById('pageTitle'), pageSubtitle = document.getElementById('pageSubtitle'), zoomBtn = document.getElementById('zoomBtn'), boardBtn = document.getElementById('boardBtn'), quickLinks = document.getElementById('quickLinks'), themeToggle = document.getElementById('themeToggle'), showAllHomeworkBtn = document.getElementById('showAllHomework'), showAllMaterialsBtn = document.getElementById('showAllMaterials'), topicGroups = document.getElementById('topicGroups'), topicsWrapper = document.getElementById('topicsWrapper');
+
+        const nameInput = document.getElementById('nameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const loginWrapper = document.getElementById('loginWrapper');
+        const mainContent = document.getElementById('mainContent');
+        const mainWrapper = document.getElementById('mainWrapper');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const monthYear = document.getElementById('monthYear');
+        const calendarGrid = document.getElementById('calendarGrid');
+        const homeworkCards = document.getElementById('homeworkCards');
+        const materialsCards = document.getElementById('materialsCards');
+        const progressStats = document.getElementById('progressStats');
+        const chartsContainer = document.getElementById('chartsContainer');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const progressPrevMonthBtn = document.getElementById('progressPrevMonth');
+        const progressNextMonthBtn = document.getElementById('progressNextMonth');
+        const progressMonthLabel = document.getElementById('progressMonthLabel');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalDate = document.getElementById('modalDate');
+        const modalTime = document.getElementById('modalTime');
+        const modalTopic = document.getElementById('modalTopic');
+        const modalLinks = document.getElementById('modalLinks');
+        const pageTitle = document.getElementById('pageTitle');
+        const pageSubtitle = document.getElementById('pageSubtitle');
+        const zoomBtn = document.getElementById('zoomBtn');
+        const boardBtn = document.getElementById('boardBtn');
+        const quickLinks = document.getElementById('quickLinks');
+        const themeToggle = document.getElementById('themeToggle');
+        const showAllHomeworkBtn = document.getElementById('showAllHomework');
+        const showAllMaterialsBtn = document.getElementById('showAllMaterials');
+        const topicGroups = document.getElementById('topicGroups');
+        const topicsWrapper = document.getElementById('topicsWrapper');
+
+        const monthNamesFull = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
         if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
 
@@ -610,6 +689,7 @@
 
         // ============================================================
         //  ПРОГРЕСС: средний балл, тренд, линейный график, сильные/слабые темы
+        //  ВСЁ — ЗА ВЫБРАННЫЙ МЕСЯЦ (листается как календарь)
         // ============================================================
         async function renderProgressPage() {
             if (!lessonsData.length) {
@@ -623,10 +703,21 @@
 
             const today = new Date();
             const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            const pastLessons = lessonsData.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
+
+            // Заголовок месяца для графиков
+            progressMonthLabel.textContent = `${monthNamesFull[currentMonth]} ${currentYear}`;
+
+            // Границы выбранного месяца
+            const monthStart = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`;
+            const monthEnd = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(new Date(currentYear, currentMonth + 1, 0).getDate()).padStart(2, '0')}`;
+
+            // Только уроки выбранного месяца
+            const monthLessons = lessonsData.filter(l => l.date >= monthStart && l.date <= monthEnd);
+
+            const pastLessons = monthLessons.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
             const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
 
-            // === Собираем все оценки (ДЗ + тесты) для среднего и тренда ===
+            // === Собираем все оценки (ДЗ + тесты) за месяц ===
             const hwTasks = hwLessons
                 .filter(l => l.hwScore !== undefined && l.hwScore !== null && l.hwScore !== '')
                 .map(l => ({
@@ -640,6 +731,10 @@
 
             const testTasks = (testsData || [])
                 .filter(t => t.name && t.name.trim() !== '')
+                .filter(t => {
+                    if (!t.date) return false;
+                    return t.date >= monthStart && t.date <= monthEnd;
+                })
                 .map(t => ({
                     name: t.name,
                     score: t.score !== undefined && t.score !== null ? t.score : null,
@@ -700,8 +795,8 @@
                 const avgSecond = secondHalf.reduce((s, t) => s + t.score, 0) / secondHalf.length;
                 const diff = Math.round(avgSecond - avgFirst);
 
-                if (diff > 0) { trendClass = 'up'; trendText = `↑ +${diff} за период`; }
-                else if (diff < 0) { trendClass = 'down'; trendText = `↓ ${diff} за период`; }
+                if (diff > 0) { trendClass = 'up'; trendText = `↑ +${diff} за месяц`; }
+                else if (diff < 0) { trendClass = 'down'; trendText = `↓ ${diff} за месяц`; }
                 else { trendClass = 'flat'; trendText = `→ без изменений`; }
             }
 
@@ -717,13 +812,13 @@
                 <div class="stat-card">
                     <div class="stat-value">${avgScore}</div>
                     <div class="stat-label">Средний балл</div>
-                    <div class="stat-sublabel">по ${scoredTasks.length} работам</div>
+                    <div class="stat-sublabel">за ${monthNamesFull[currentMonth].toLowerCase()} по ${scoredTasks.length} работам</div>
                     <span class="stat-trend ${trendClass}">${trendText}</span>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${completedHw} / ${hwLessons.length}</div>
                     <div class="stat-label">ДЗ выполнено</div>
-                    <div class="stat-sublabel">${hwLessons.length ? Math.round(completedHw / hwLessons.length * 100) : 0}% от всех</div>
+                    <div class="stat-sublabel">${hwLessons.length ? Math.round(completedHw / hwLessons.length * 100) : 0}% за месяц</div>
                 </div>
             `;
 
@@ -732,11 +827,11 @@
             // === ГРАФИКИ ===
             chartsContainer.innerHTML = `
                 <div class="chart-card">
-                    <h3>Выполнение домашних заданий</h3>
+                    <h3>Выполнение домашних заданий — ${monthNamesFull[currentMonth]} ${currentYear}</h3>
                     <canvas id="hwChart"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>${isDenis ? 'Динамика по пробникам' : 'Динамика баллов'}</h3>
+                    <h3>${isDenis ? 'Динамика по пробникам' : 'Динамика баллов'} — ${monthNamesFull[currentMonth]} ${currentYear}</h3>
                     <canvas id="testsChart"></canvas>
                 </div>
             `;
@@ -838,7 +933,7 @@
                 }
             });
 
-            // === СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ ===
+            // === СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ (за месяц) ===
             renderTopicGroups(scoredTasks);
         }
 
@@ -905,7 +1000,7 @@
             let html = '';
             items.forEach(l => {
                 const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase();
-                let statusText = ' Не решено', statusClass = 'pending';
+                let statusText = '⏳ Не решено', statusClass = 'pending';
                 if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; }
                 else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; }
                 else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; }
@@ -937,7 +1032,6 @@
             const id = nameMap[raw.toLowerCase()];
             if (!id) { loginError.textContent = 'Ученик не найден'; return; }
             if (passwords[id] !== password) { loginError.textContent = 'Неверный пароль'; return; }
-            if (id === 'alina') { localStorage.setItem('teacherSession', JSON.stringify({ name: 'alina', time: Date.now() })); window.location.href = 'teacher.html'; return; }
             loginError.textContent = '';
             currentStudentId = id;
             if (!(await loadLessons(id))) { loginError.textContent = 'Нет расписания'; return; }
@@ -1009,6 +1103,9 @@
 
         prevMonthBtn.addEventListener('click', () => changeMonth(-1));
         nextMonthBtn.addEventListener('click', () => changeMonth(1));
+        progressPrevMonthBtn.addEventListener('click', () => changeMonth(-1));
+        progressNextMonthBtn.addEventListener('click', () => changeMonth(1));
+
         window.addEventListener('DOMContentLoaded', () => { const s = new URLSearchParams(window.location.search).get('student'); if (s && nameMap[s.toLowerCase()]) nameInput.value = s; });
     </script>
 </body>
