@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Вертикальные углы, биссектриса, смежные углы</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · УГЛЫ И ОТРЕЗКИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ВЕРТИКАЛЬНЫЕ И СМЕЖНЫЕ УГЛЫ                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · ВЕРТИКАЛЬНЫЕ УГЛЫ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Вертикальные и смежные углы</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Два угла называются <em>вертикальными</em>, если стороны одного угла являются продолжениями сторон другого.
+        </div>
+
+        <p>На рисунке прямые \(PK\) и \(ML\) пересекаются в точке \(B\). Углы \(\angle PBK\) и \(\angle MBL\) — вертикальные. Углы \(\angle PBL\) и \(\angle MBK\) — тоже вертикальные.</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Прямая PK -->
+                <line x1="60" y1="180" x2="340" y2="40" stroke="#ec4899" stroke-width="2.5"/>
+                <!-- Прямая ML -->
+                <line x1="80" y1="40" x2="320" y2="180" stroke="#2a6fdb" stroke-width="2.5"/>
+                <!-- Точка пересечения B -->
+                <circle cx="200" cy="110" r="5" fill="#0b1a33"/>
+                <text x="208" y="105" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <!-- Буквы на лучах -->
+                <text x="45" y="190" font-size="15" fill="#0b1a33" font-weight="700">P</text>
+                <text x="345" y="35" font-size="15" fill="#0b1a33" font-weight="700">K</text>
+                <text x="65" y="35" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+                <text x="325" y="190" font-size="15" fill="#0b1a33" font-weight="700">L</text>
+            </svg>
+            <div class="fig-caption">Пересекающиеся прямые \(PK\) и \(ML\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство вертикальных углов:</strong> вертикальные углы равны.
+            \[\angle PBK = \angle MBL, \quad \angle PBL = \angle MBK\]
+        </div>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Определение.</strong> Два угла называются <em>смежными</em>, если у них одна сторона общая, а две другие стороны являются продолжениями одна другой.
+        </div>
+
+        <p>На том же рисунке углы \(\angle PBL\) и \(\angle PBK\) — смежные. Их сумма равна \(180^\circ\).</p>
+
+        <div class="formula-box">
+            <strong>Свойство смежных углов:</strong> \(\angle PBL + \angle PBK = 180^\circ\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Известно, что \(\angle MBK = 72^\circ\). Найдём остальные углы.
+            <div style="line-height:2; margin-top:6px;">
+                \(\angle MBK = 72^\circ\) (острый)<br>
+                \(\angle MBL = 180^\circ - 72^\circ = 108^\circ\) (тупой, смежный с \(\angle MBK\))<br>
+                \(\angle PBK = \angle MBL = 108^\circ\) (вертикальные)<br>
+                \(\angle PBL = \angle MBK = 72^\circ\) (вертикальные)
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. БИССЕКТРИСА УГЛА                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · БИССЕКТРИСА ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Биссектриса угла</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Биссектрисой угла</em> называется луч, исходящий из вершины угла и делящий его на два равных угла.
+        </div>
+
+        <p>На рисунке \(MA\) — биссектриса угла \(\angle KML\). Это значит, что \(\angle KMA = \angle AML\).</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Луч MK -->
+                <line x1="200" y1="180" x2="80" y2="60" stroke="#06d6a0" stroke-width="2.5"/>
+                <!-- Луч ML -->
+                <line x1="200" y1="180" x2="340" y2="180" stroke="#06d6a0" stroke-width="2.5"/>
+                <!-- Биссектриса MA -->
+                <line x1="200" y1="180" x2="250" y2="60" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершина M -->
+                <circle cx="200" cy="180" r="5" fill="#0b1a33"/>
+                <text x="205" y="200" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+                <!-- Буквы на лучах -->
+                <text x="65" y="55" font-size="15" fill="#0b1a33" font-weight="700">K</text>
+                <text x="345" y="185" font-size="15" fill="#0b1a33" font-weight="700">L</text>
+                <text x="255" y="55" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+            </svg>
+            <div class="fig-caption">\(MA\) — биссектриса угла \(\angle KML\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство биссектрисы:</strong> если \(MA\) — биссектриса угла \(\angle KML\), то
+            \[\angle KMA = \angle AML = \frac{1}{2}\angle KML\]
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(\angle KML = 104^\circ\), \(MA\) — биссектриса. Найти \(\angle AML\).
+            <div style="line-height:2; margin-top:6px;">
+                \(\angle AML = \angle KML : 2 = 104^\circ : 2 = 52^\circ\)
+            </div>
+            <strong>Ответ:</strong> \(52^\circ\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. СМЕЖНЫЕ УГЛЫ (ПРИМЕР С ТРЕУГОЛЬНИКОМ)            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · СМЕЖНЫЕ УГЛЫ В ТРЕУГОЛЬНИКЕ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Смежные углы в треугольнике</h2>
+
+        <p>Рассмотрим треугольник \(CDE\). Если продолжить сторону \(CD\) за точку \(C\), получим луч \(CF\). Тогда угол \(\angle DCE\) и угол \(\angle FCE\) — смежные.</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник CDE -->
+                <polygon points="120,180 280,180 220,60" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Продолжение стороны CD за точку C -->
+                <line x1="120" y1="180" x2="60" y2="120" stroke="#7c4dff" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="120" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="280" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="220" cy="60" r="5" fill="#0b1a33"/>
+                <!-- Буквы -->
+                <text x="100" y="200" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="285" y="200" font-size="15" fill="#0b1a33" font-weight="700">D</text>
+                <text x="220" y="50" font-size="15" fill="#0b1a33" font-weight="700">E</text>
+                <text x="45" y="115" font-size="15" fill="#0b1a33" font-weight="700">F</text>
+            </svg>
+            <div class="fig-caption">Смежные углы \(\angle DCE\) и \(\angle FCE\)</div>
+        </div>
+
+        <div class="formula-box">
+            \(\angle DCE + \angle FCE = 180^\circ\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Известно, что \(\angle FCE = 56^\circ\). Найти \(\angle DCE\).
+            <div style="line-height:2; margin-top:6px;">
+                \(\angle DCE = 180^\circ - \angle FCE = 180^\circ - 56^\circ = 124^\circ\)
+            </div>
+            <strong>Ответ:</strong> \(124^\circ\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ОТРЕЗКИ И ИХ ЧАСТИ                                -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · ОТРЕЗКИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Части отрезка</h2>
+
+        <p>Рассмотрим отрезок \(DF\). Точка \(C\) делит его на две части: \(DC\) и \(FC\).</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+                <!-- Отрезок DF -->
+                <line x1="80" y1="100" x2="320" y2="100" stroke="#f5a623" stroke-width="3"/>
+                <!-- Точка C -->
+                <circle cx="200" cy="100" r="5" fill="#0b1a33"/>
+                <!-- Вершины -->
+                <circle cx="80" cy="100" r="5" fill="#0b1a33"/>
+                <circle cx="320" cy="100" r="5" fill="#0b1a33"/>
+                <!-- Буквы -->
+                <text x="65" y="120" font-size="15" fill="#0b1a33" font-weight="700">D</text>
+                <text x="195" y="120" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="325" y="120" font-size="15" fill="#0b1a33" font-weight="700">F</text>
+            </svg>
+            <div class="fig-caption">Отрезок \(DF\), разделённый точкой \(C\)</div>
+        </div>
+
+        <div class="formula-box">
+            \(DF = DC + FC\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(DF = 21\) см. Известно, что \(FC\) в 2 раза больше \(DC\). Найти \(DC\) и \(FC\).
+            <div style="line-height:2; margin-top:6px;">
+                Пусть \(DC = x\), тогда \(FC = 2x\).<br>
+                \(x + 2x = 21\)<br>
+                \(3x = 21\)<br>
+                \(x = 7\)<br>
+                Значит, \(DC = 7\) см, \(FC = 2 \cdot 7 = 14\) см.
+            </div>
+            <strong>Ответ:</strong> \(DC = 7\) см, \(FC = 14\) см.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. УГЛЫ С ОБЩЕЙ ВЕРШИНОЙ                            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · УГЛЫ С ОБЩЕЙ ВЕРШИНОЙ ◆</div>
+
+    <div class="card" style="border-left-color: #2a6fdb;">
+        <h2><span class="badge">§5</span> Углы с общей вершиной</h2>
+
+        <p>Из точки \(M\) выходят три луча: \(MO\), \(MN\) и \(MK\). Угол \(\angle OMN\) состоит из двух углов: \(\angle OMK\) и \(\angle KMN\).</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Луч MO -->
+                <line x1="200" y1="180" x2="60" y2="100" stroke="#2a6fdb" stroke-width="2.5"/>
+                <!-- Луч MN -->
+                <line x1="200" y1="180" x2="340" y2="140" stroke="#2a6fdb" stroke-width="2.5"/>
+                <!-- Луч MK -->
+                <line x1="200" y1="180" x2="280" y2="60" stroke="#2a6fdb" stroke-width="2.5"/>
+                <!-- Вершина M -->
+                <circle cx="200" cy="180" r="5" fill="#0b1a33"/>
+                <text x="205" y="200" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+                <!-- Буквы на лучах -->
+                <text x="45" y="95" font-size="15" fill="#0b1a33" font-weight="700">O</text>
+                <text x="345" y="145" font-size="15" fill="#0b1a33" font-weight="700">N</text>
+                <text x="285" y="55" font-size="15" fill="#0b1a33" font-weight="700">K</text>
+            </svg>
+            <div class="fig-caption">Лучи \(MO\), \(MK\), \(MN\) с общей вершиной \(M\)</div>
+        </div>
+
+        <div class="formula-box">
+            \(\angle OMN = \angle OMK + \angle KMN\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(\angle OMN = 78^\circ\), \(\angle OMK = 30^\circ\). Найти \(\angle NMK\).
+            <div style="line-height:2; margin-top:6px;">
+                \(\angle NMK = \angle OMN - \angle OMK = 78^\circ - 30^\circ = 48^\circ\)
+            </div>
+            <strong>Ответ:</strong> \(48^\circ\).
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> если из вершины выходит несколько лучей, всегда можно представить больший угол как сумму или разность меньших углов.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
