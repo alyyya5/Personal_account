@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Равенство треугольников и линейные уравнения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · ТРЕУГОЛЬНИКИ И УРАВНЕНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. РАВЕНСТВО ТРЕУГОЛЬНИКОВ                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГЕОМЕТРИЯ · РАВНЫЕ ТРЕУГОЛЬНИКИ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Соответствие элементов в равных треугольниках</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Два треугольника называются <em>равными</em>, если их можно совместить наложением. При этом все соответствующие стороны и углы равны.
+        </div>
+
+        <p>Если \(\triangle ABC = \triangle A_1B_1C_1\), то порядок букв в записи равенства задаёт <strong>соответствие</strong> вершин:</p>
+
+        <div class="formula-box">
+            \(A \leftrightarrow A_1, \quad B \leftrightarrow B_1, \quad C \leftrightarrow C_1\)
+        </div>
+
+        <p>Из этого соответствия автоматически следуют равенства сторон и углов:</p>
+
+        <div class="formula-box">
+            \(AB = A_1B_1, \quad BC = B_1C_1, \quad CA = C_1A_1\)<br>
+            \(\angle A = \angle A_1, \quad \angle B = \angle B_1, \quad \angle C = \angle C_1\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Если в задаче дано \(\triangle ABC = \triangle A_1B_1C_1\), то <span class="highlight">нельзя</span> произвольно переставлять буквы. Например, сторона \(AB\) соответствует стороне \(A_1B_1\), а не \(B_1C_1\).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="40,150 160,150 100,30" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <circle cx="40" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="160" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="100" cy="30" r="4" fill="#ec4899"/>
+                <text x="25" y="170" font-size="14" fill="#0b1a33" font-weight="700">A</text>
+                <text x="165" y="170" font-size="14" fill="#0b1a33" font-weight="700">C</text>
+                <text x="95" y="22" font-size="14" fill="#0b1a33" font-weight="700">B</text>
+
+                <!-- Знак равенства -->
+                <text x="220" y="100" font-size="30" fill="#2a6fdb" font-weight="700">=</text>
+
+                <!-- Треугольник A1B1C1 -->
+                <polygon points="300,150 420,150 360,30" fill="#eef4ff" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="300" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="420" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="360" cy="30" r="4" fill="#2a6fdb"/>
+                <text x="280" y="170" font-size="14" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="425" y="170" font-size="14" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="355" y="22" font-size="14" fill="#0b1a33" font-weight="700">B₁</text>
+            </svg>
+            <div class="fig-caption">\(\triangle ABC = \triangle A_1B_1C_1\)</div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Дано \(\triangle ABC = \triangle A_1B_1C_1\), причём \(\angle A = 50^\circ\), \(\angle B = 70^\circ\), \(AB = 6\) см. Найти \(\angle A_1\), \(\angle B_1\), \(A_1B_1\).
+            <div style="line-height:2; margin-top:6px;">
+                По определению равных треугольников:<br>
+                \(\angle A_1 = \angle A = 50^\circ\)<br>
+                \(\angle B_1 = \angle B = 70^\circ\)<br>
+                \(A_1B_1 = AB = 6\) см
+            </div>
+            <strong>Ответ:</strong> \(\angle A_1 = 50^\circ\), \(\angle B_1 = 70^\circ\), \(A_1B_1 = 6\) см.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Дано \(\triangle MKL = \triangle M_1K_1L_1\), причём \(MK = 12\) см, \(KL = 9\) см, \(\angle L = 55^\circ\). Найти \(M_1K_1\), \(K_1L_1\), \(\angle L_1\).
+            <div style="line-height:2; margin-top:6px;">
+                \(M_1K_1 = MK = 12\) см<br>
+                \(K_1L_1 = KL = 9\) см<br>
+                \(\angle L_1 = \angle L = 55^\circ\)
+            </div>
+            <strong>Ответ:</strong> \(M_1K_1 = 12\) см, \(K_1L_1 = 9\) см, \(\angle L_1 = 55^\circ\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЛИНЕЙНЫЕ УРАВНЕНИЯ                               -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ АЛГЕБРА · ЛИНЕЙНЫЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Решение уравнений со скобками</h2>
+
+        <p>При решении уравнений со скобками важно правильно раскрывать скобки и переносить слагаемые.</p>
+
+        <div class="note-box">
+            <strong>Правила раскрытия скобок:</strong>
+            <ul style="margin-top:6px;">
+                <li>Если перед скобкой стоит знак «+», знаки внутри <strong>не меняются</strong>.</li>
+                <li>Если перед скобкой стоит знак «−», знаки <strong>всех</strong> слагаемых внутри меняются на противоположные.</li>
+                <li>Если перед скобкой стоит число, умножаем его на <strong>каждое</strong> слагаемое в скобках.</li>
+            </ul>
+        </div>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Правило переноса.</strong> При переносе слагаемого из одной части уравнения в другую его знак меняется на противоположный.
+        </div>
+
+        <div class="formula-box">
+            \(5x + (3x - 3) = 6x + 11\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решить уравнение \(5x + (3x - 3) = 6x + 11\).
+            <div style="line-height:2; margin-top:6px;">
+                Раскроем скобки: \(5x + 3x - 3 = 6x + 11\)<br>
+                Перенесём слагаемые с \(x\) влево, числа вправо: \(5x + 3x - 6x = 11 + 3\)<br>
+                Приведём подобные: \(2x = 14\)<br>
+                Разделим на 2: \(x = 7\)
+            </div>
+            <strong>Ответ:</strong> \(7\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решить уравнение \(3a - (10 + 5a) = 54\).
+            <div style="line-height:2; margin-top:6px;">
+                Раскроем скобки: \(3a - 10 - 5a = 54\)<br>
+                Приведём подобные: \(-2a - 10 = 54\)<br>
+                Перенесём число: \(-2a = 54 + 10\)<br>
+                \(-2a = 64\)<br>
+                Разделим на \(-2\): \(a = -32\)
+            </div>
+            <strong>Ответ:</strong> \(-32\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> Решить уравнение \((x - 7) - (2x + 9) = -13\).
+            <div style="line-height:2; margin-top:6px;">
+                Раскроем скобки: \(x - 7 - 2x - 9 = -13\)<br>
+                Приведём подобные: \(-x - 16 = -13\)<br>
+                Перенесём число: \(-x = -13 + 16\)<br>
+                \(-x = 3\)<br>
+                Умножим на \(-1\): \(x = -3\)
+            </div>
+            <strong>Ответ:</strong> \(-3\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 4.</strong> Решить уравнение \(0{,}6 + (0{,}5y - 1) = y + 0{,}5\).
+            <div style="line-height:2; margin-top:6px;">
+                Раскроем скобки: \(0{,}6 + 0{,}5y - 1 = y + 0{,}5\)<br>
+                Приведём подобные в левой части: \(0{,}5y - 0{,}4 = y + 0{,}5\)<br>
+                Перенесём слагаемые с \(y\) влево, числа вправо: \(0{,}5y - y = 0{,}5 + 0{,}4\)<br>
+                \(-0{,}5y = 0{,}9\)<br>
+                Разделим на \(-0{,}5\): \(y = -1{,}8\)
+            </div>
+            <strong>Ответ:</strong> \(-1{,}8\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. УРАВНЕНИЯ ПО УСЛОВИЮ                             -->
+    <!-- ============================================================ -->
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Составление уравнения по условию задачи</h2>
+
+        <p>Часто в задачах требуется найти значение переменной, при котором выражения равны или одно больше другого. Для этого составляют уравнение.</p>
+
+        <div class="note-box">
+            <strong>Ключевые фразы:</strong>
+            <ul style="margin-top:6px;">
+                <li>«значения выражений <strong>равны</strong>» → приравниваем выражения.</li>
+                <li>«значение выражения \(A\) <strong>на \(k\) больше</strong> значения выражения \(B\)» → \(A - B = k\).</li>
+                <li>«значение выражения \(A\) <strong>в \(k\) раз больше</strong> значения выражения \(B\)» → \(A = k \cdot B\).</li>
+                <li>«значение выражения \(A\) <strong>на \(k\) меньше</strong> значения выражения \(B\)» → \(B - A = k\).</li>
+                <li>«значение выражения \(A\) <strong>в \(k\) раз меньше</strong> значения выражения \(B\)» → \(B = k \cdot A\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> При каком значении \(m\) значения выражений \(2m - 13\) и \(m + 3\) равны?
+            <div style="line-height:2; margin-top:6px;">
+                Составим уравнение: \(2m - 13 = m + 3\)<br>
+                \(2m - m = 3 + 13\)<br>
+                \(m = 16\)
+            </div>
+            <strong>Ответ:</strong> \(m = 16\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> При каком значении \(c\) значение выражения \(3 - 5c\) на 1 меньше значения выражения \(1 - c\)?
+            <div style="line-height:2; margin-top:6px;">
+                «На 1 меньше» означает: \((1 - c) - (3 - 5c) = 1\)<br>
+                \(1 - c - 3 + 5c = 1\)<br>
+                \(4c - 2 = 1\)<br>
+                \(4c = 3\)<br>
+                \(c = 0{,}75\)
+            </div>
+            <strong>Ответ:</strong> \(c = 0{,}75\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> При каком значении \(x\) значение выражения \(2x + 1\) на 20 больше значения выражения \(8x + 5\)?
+            <div style="line-height:2; margin-top:6px;">
+                \((2x + 1) - (8x + 5) = 20\)<br>
+                \(2x + 1 - 8x - 5 = 20\)<br>
+                \(-6x - 4 = 20\)<br>
+                \(-6x = 24\)<br>
+                \(x = -4\)
+            </div>
+            <strong>Ответ:</strong> \(x = -4\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 4.</strong> При каком значении \(x\) значение \(x\) в 3 раза меньше значения выражения \(45 - 10x\)?
+            <div style="line-height:2; margin-top:6px;">
+                «В 3 раза меньше» означает: \(45 - 10x = 3x\)<br>
+                \(45 = 3x + 10x\)<br>
+                \(45 = 13x\)<br>
+                \(x = \dfrac{45}{13}\)
+            </div>
+            <strong>Ответ:</strong> \(x = \dfrac{45}{13}\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 5.</strong> При каком значении \(y\) значение выражения \(9 - y\) в 2 раза больше значения \(y\)?
+            <div style="line-height:2; margin-top:6px;">
+                \(9 - y = 2y\)<br>
+                \(9 = 3y\)<br>
+                \(y = 3\)
+            </div>
+            <strong>Ответ:</strong> \(y = 3\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
