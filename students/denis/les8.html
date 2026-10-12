@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Скрещивающиеся прямые</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ СТЕРЕОМЕТРИЯ · СКРЕЩИВАЮЩИЕСЯ ПРЯМЫЕ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ                                       -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ОПРЕДЕЛЕНИЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Какие прямые называются скрещивающимися</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Две прямые в пространстве называются <em>скрещивающимися</em>, если они <strong>не лежат в одной плоскости</strong>.
+        </div>
+
+        <p>Из определения сразу следует важное свойство: скрещивающиеся прямые <strong>не пересекаются</strong> и <strong>не параллельны</strong>. Они вообще не имеют общих точек и не могут быть помещены в одну плоскость.</p>
+
+        <div class="note-box">
+            <strong>Сравнение:</strong>
+            <ul style="margin-top:6px;">
+                <li><strong>Пересекающиеся</strong> — лежат в одной плоскости и имеют одну общую точку.</li>
+                <li><strong>Параллельные</strong> — лежат в одной плоскости и не имеют общих точек.</li>
+                <li><strong>Скрещивающиеся</strong> — <span class="highlight">не лежат в одной плоскости</span>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ПРИМЕР НА КУБЕ                                   -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРИМЕР · КУБ \(ABCDA_1B_1C_1D_1\) ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Скрещивающиеся прямые в кубе</h2>
+
+        <p>Рассмотрим куб \(ABCDA_1B_1C_1D_1\). В нём 12 рёбер и множество диагоналей. Среди них легко найти примеры всех трёх случаев взаимного расположения прямых.</p>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 450 340" xmlns="http://www.w3.org/2000/svg">
+                <!-- Невидимые рёбра (пунктир, светло-серые) - рисуем первыми -->
+                <line x1="80" y1="240" x2="80" y2="120" stroke="#999" stroke-width="2" stroke-dasharray="6,4"/>
+                <line x1="80" y1="240" x2="160" y2="180" stroke="#999" stroke-width="2" stroke-dasharray="6,4"/>
+                <line x1="80" y1="120" x2="160" y2="60" stroke="#999" stroke-width="2" stroke-dasharray="6,4"/>
+                
+                <!-- Видимые рёбра задней грани -->
+                <line x1="80" y1="120" x2="280" y2="120" stroke="#2a6fdb" stroke-width="2.5"/>
+                <line x1="280" y1="120" x2="280" y2="240" stroke="#2a6fdb" stroke-width="2.5"/>
+                <line x1="280" y1="240" x2="80" y2="240" stroke="#2a6fdb" stroke-width="2.5"/>
+                
+                <!-- Видимые рёбра передней грани -->
+                <line x1="160" y1="60" x2="360" y2="60" stroke="#ec4899" stroke-width="2.5"/>
+                <line x1="360" y1="60" x2="360" y2="180" stroke="#ec4899" stroke-width="2.5"/>
+                <line x1="360" y1="180" x2="160" y2="180" stroke="#ec4899" stroke-width="2.5"/>
+                <line x1="160" y1="180" x2="160" y2="60" stroke="#ec4899" stroke-width="2.5"/>
+                
+                <!-- Соединяющие рёбра (видимые) -->
+                <line x1="280" y1="120" x2="360" y2="60" stroke="#7c4dff" stroke-width="2.5"/>
+                <line x1="280" y1="240" x2="360" y2="180" stroke="#7c4dff" stroke-width="2.5"/>
+
+                <!-- Вершины (кружочки) -->
+                <circle cx="80" cy="120" r="4" fill="#0b1a33"/>
+                <circle cx="280" cy="120" r="4" fill="#0b1a33"/>
+                <circle cx="280" cy="240" r="4" fill="#0b1a33"/>
+                <circle cx="80" cy="240" r="4" fill="#0b1a33"/>
+                <circle cx="160" cy="60" r="4" fill="#0b1a33"/>
+                <circle cx="360" cy="60" r="4" fill="#0b1a33"/>
+                <circle cx="360" cy="180" r="4" fill="#0b1a33"/>
+                <circle cx="160" cy="180" r="4" fill="#0b1a33"/>
+
+                <!-- Буквы (чуть дальше от вершин для лучшей видимости) -->
+                <text x="65" y="115" font-size="16" fill="#0b1a33" font-weight="700">A</text>
+                <text x="285" y="115" font-size="16" fill="#0b1a33" font-weight="700">B</text>
+                <text x="285" y="260" font-size="16" fill="#0b1a33" font-weight="700">C</text>
+                <text x="65" y="260" font-size="16" fill="#0b1a33" font-weight="700">D</text>
+                <text x="145" y="52" font-size="16" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="365" y="52" font-size="16" fill="#0b1a33" font-weight="700">B₁</text>
+                <text x="365" y="200" font-size="16" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="145" y="200" font-size="16" fill="#0b1a33" font-weight="700">D₁</text>
+            </svg>
+            <div class="fig-caption">Куб \(ABCDA_1B_1C_1D_1\)</div>
+        </div>
+
+        <div class="example-box">
+            <strong>Примеры в кубе:</strong>
+            <ul style="margin-top:6px;">
+                <li>\(AB\) и \(BC\) — <strong>пересекающиеся</strong> (общая точка \(B\), лежат в грани \(ABCD\)).</li>
+                <li>\(AB\) и \(D_1C_1\) — <strong>параллельные</strong> (лежат в одной плоскости \(ABC_1D_1\)).</li>
+                <li>\(AB\) и \(CC_1\) — <strong>скрещивающиеся</strong> (не лежат в одной плоскости).</li>
+                <li>\(AA_1\) и \(BC\) — <strong>скрещивающиеся</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>Как понять, что прямые скрещиваются?</strong> Попробуй мысленно провести плоскость через одну прямую и точку на другой. Если вторая прямая <span class="highlight">не целиком</span> лежит в этой плоскости — прямые скрещиваются.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ТЕОРЕМА (ПРИЗНАК)                                -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ТЕОРЕМА · ПРИЗНАК СКРЕЩИВАЮЩИХСЯ ПРЯМЫХ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Признак скрещивающихся прямых</h2>
+
+        <div class="define-box" style="background:#f3e8ff; border-left-color:#7c4dff;">
+            <strong style="color:#5b21b6;">Теорема (признак).</strong> Если одна прямая лежит в некоторой плоскости, а другая прямая пересекает эту плоскость в точке, <strong>не лежащей</strong> на первой прямой, то эти прямые <em>скрещиваются</em>.
+        </div>
+
+        <div class="formula-box">
+            \(a \subset \alpha, \quad b \cap \alpha = M, \quad M \notin a \quad \Rightarrow \quad a\) и \(b\) — скрещиваются
+        </div>
+
+        <p>Эта теорема — основной инструмент для доказательства того, что две прямые скрещиваются. Она позволяет не проверять напрямую, лежат ли прямые в одной плоскости, а использовать более простой факт: одна прямая «протыкает» плоскость, в которой лежит другая.</p>
+
+        <div class="note-box">
+            <strong>Почему это работает?</strong> Если бы \(a\) и \(b\) лежали в одной плоскости \(\beta\), то через прямую \(a\) и точку \(M\) можно провести только одну плоскость. Но тогда \(b\) целиком лежала бы в \(\beta\), а значит, пересекала бы \(a\) — противоречие. Значит, одной плоскости для \(a\) и \(b\) не существует.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. КАК ПОЛЬЗОВАТЬСЯ                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · КАК ПРИМЕНЯТЬ ТЕОРЕМУ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Алгоритм доказательства</h2>
+
+        <p>Чтобы доказать, что две прямые скрещиваются, действуй по шагам:</p>
+
+        <ol class="step-list">
+            <li><strong>Выбери одну из прямых</strong> (например, \(a\)) и найди плоскость \(\alpha\), в которой она целиком лежит. Обычно это плоскость какой-нибудь грани куба.</li>
+            <li><strong>Проверь, что вторая прямая</strong> (\(b\)) пересекает эту плоскость \(\alpha\). Найди точку пересечения \(M\).</li>
+            <li><strong>Убедись, что точка \(M\) не лежит на прямой \(a\).</strong> Тогда по признаку прямые \(a\) и \(b\) — скрещивающиеся.</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Разбор на кубе.</strong> Докажем, что \(AB\) и \(CC_1\) — скрещивающиеся.
+            <div style="line-height:2; margin-top:6px;">
+                1) Прямая \(AB\) лежит в плоскости \(ABCD\) (грань куба).<br>
+                2) Прямая \(CC_1\) пересекает плоскость \(ABCD\) в точке \(C\).<br>
+                3) Точка \(C\) не лежит на прямой \(AB\) (так как \(AB\) — ребро, а \(C\) — другая вершина).<br>
+                Значит, по признаку \(AB\) и \(CC_1\) — скрещивающиеся.
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Разбор на кубе.</strong> Докажем, что \(AA_1\) и \(BC\) — скрещивающиеся.
+            <div style="line-height:2; margin-top:6px;">
+                1) Прямая \(BC\) лежит в плоскости \(ABCD\).<br>
+                2) Прямая \(AA_1\) пересекает плоскость \(ABCD\) в точке \(A\).<br>
+                3) Точка \(A\) не лежит на прямой \(BC\).<br>
+                Значит, \(AA_1\) и \(BC\) — скрещивающиеся.
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> выбирай ту прямую, для которой плоскость очевидна — например, ребро грани. Тогда точка пересечения второй прямой с этой плоскостью обычно совпадает с одной из вершин куба.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. ЛАЙФАК                                           -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ЛАЙФАК · БЫСТРАЯ ПРОВЕРКА ◆</div>
+
+    <div class="card" style="border-left-color: #2a6fdb;">
+        <h2><span class="badge">§5</span> Как быстро определить скрещивающиеся прямые</h2>
+
+        <div class="note-box">
+            <strong>Лайфак «ножа».</strong> Представь, что через одну из прямых ты мысленно проводишь плоскость, как будто разрезаешь пространство ножом вдоль этой прямой. Если вторая прямая <span class="highlight">не может целиком улечься</span> в эту плоскость — она «протыкает» её в одной точке, и прямые скрещиваются.
+        </div>
+
+        <p>Более строгая формулировка того же приёма: построй плоскость через первую прямую и какую-нибудь точку второй прямой. Если вторая прямая не лежит в этой плоскости целиком — прямые скрещиваются.</p>
+
+        <div class="example-box">
+            <strong>Пример.</strong> В кубе \(AB\) и \(CC_1\).
+            <div style="line-height:2; margin-top:6px;">
+                Проведём плоскость через \(AB\) и точку \(C\) — это грань \(ABCD\).<br>
+                Прямая \(CC_1\) выходит из точки \(C\) <em>вверх</em>, то есть не лежит в плоскости \(ABCD\).<br>
+                Значит, \(AB\) и \(CC_1\) — скрещивающиеся.
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Ещё проще:</strong> если две прямые не пересекаются и не параллельны, но при этом «видны» в разных гранях куба так, что не укладываются в одну плоскость, — это скрещивающиеся.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
