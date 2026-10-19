@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Простейшие показательные и логарифмические уравнения (ЕГЭ №7)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ЕГЭ №7 · ПОКАЗАТЕЛЬНЫЕ И ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Что такое показательное уравнение</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Показательным уравнением</em> называется уравнение, в котором неизвестная переменная содержится в показателе степени.
+        </div>
+
+        <p>Простейшее показательное уравнение имеет вид:</p>
+
+        <div class="formula-box">
+            \(a^{f(x)} = a^{g(x)}, \quad a > 0, \quad a \neq 1\)
+        </div>
+
+        <div class="note-box">
+            <strong>Ключевая идея:</strong> если основания степеней одинаковы (\(a > 0\), \(a \neq 1\)), то равенство степеней равносильно равенству показателей:
+            \[a^{f(x)} = a^{g(x)} \quad \Leftrightarrow \quad f(x) = g(x)\]
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Основание должно быть <span class="highlight">положительным</span> и <span class="highlight">не равным 1</span>. Иначе переход к равенству показателей может быть неверным.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ СВОЙСТВА · СТЕПЕНИ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Свойства степеней, которые нужны для решения</h2>
+
+        <div class="formula-box">
+            <table style="width:100%; border-collapse:collapse; font-size:1rem;">
+                <tr style="background:#d1fae5;">
+                    <th style="padding:10px; border:1px solid #06d6a0; text-align:left;">Формула</th>
+                    <th style="padding:10px; border:1px solid #06d6a0; text-align:left;">Пояснение</th>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #06d6a0;">\(a^m \cdot a^n = a^{m+n}\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">при умножении показатели складываются</td>
+                </tr>
+                <tr style="background:#f0fdf4;">
+                    <td style="padding:10px; border:1px solid #06d6a0;">\(\dfrac{a^m}{a^n} = a^{m-n}\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">при делении показатели вычитаются</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #06d6a0;">\((a^m)^n = a^{m \cdot n}\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">степень в степени — показатели перемножаются</td>
+                </tr>
+                <tr style="background:#f0fdf4;">
+                    <td style="padding:10px; border:1px solid #06d6a0;">\(a^0 = 1\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">любое число в нулевой степени равно 1</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #06d6a0;">\(a^{-n} = \dfrac{1}{a^n}\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">отрицательная степень — это дробь</td>
+                </tr>
+                <tr style="background:#f0fdf4;">
+                    <td style="padding:10px; border:1px solid #06d6a0;">\(a^{1/n} = \sqrt[n]{a}\)</td>
+                    <td style="padding:10px; border:1px solid #06d6a0;">дробная степень — это корень</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> чтобы привести обе части уравнения к одинаковому основанию, полезно представлять числа как степени одного и того же числа. Например: \(4 = 2^2\), \(8 = 2^3\), \(9 = 3^2\), \(27 = 3^3\), \(\dfrac{1}{2} = 2^{-1}\).
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ АЛГОРИТМ · РЕШЕНИЕ ПОКАЗАТЕЛЬНЫХ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Алгоритм решения простейшего показательного уравнения</h2>
+
+        <ol class="step-list">
+            <li><strong>Привести обе части уравнения к одинаковому основанию.</strong> Использовать свойства степеней.</li>
+            <li><strong>Приравнять показатели степеней.</strong> Получить обычное уравнение.</li>
+            <li><strong>Решить полученное уравнение.</strong> Найти \(x\).</li>
+            <li><strong>Проверить корень.</strong> Убедиться, что основание положительно и не равно 1.</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решить уравнение \(2^{x} = 8\).
+            <div style="line-height:2; margin-top:6px;">
+                Представим 8 как степень двойки: \(8 = 2^3\).<br>
+                Получим: \(2^{x} = 2^3\).<br>
+                Основания одинаковы, значит: \(x = 3\).
+            </div>
+            <strong>Ответ:</strong> \(3\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решить уравнение \(3^{2x - 1} = 27\).
+            <div style="line-height:2; margin-top:6px;">
+                \(27 = 3^3\).<br>
+                \(3^{2x - 1} = 3^3\).<br>
+                \(2x - 1 = 3\).<br>
+                \(2x = 4\).<br>
+                \(x = 2\).
+            </div>
+            <strong>Ответ:</strong> \(2\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> Решить уравнение \(5^{x + 2} = \dfrac{1}{25}\).
+            <div style="line-height:2; margin-top:6px;">
+                \(\dfrac{1}{25} = 5^{-2}\).<br>
+                \(5^{x + 2} = 5^{-2}\).<br>
+                \(x + 2 = -2\).<br>
+                \(x = -4\).
+            </div>
+            <strong>Ответ:</strong> \(-4\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ                        -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ АЛГЕБРА · ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ ОСНОВЫ · ОПРЕДЕЛЕНИЕ ЛОГАРИФМА ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Что такое логарифм</h2>
+
+        <div class="define-box" style="background:#f3e8ff; border-left-color:#7c4dff;">
+            <strong style="color:#5b21b6;">Определение.</strong> <em>Логарифмом</em> числа \(b\) по основанию \(a\) называется показатель степени, в которую нужно возвести \(a\), чтобы получить \(b\).
+        </div>
+
+        <div class="formula-box">
+            \(\log_a b = c \quad \Leftrightarrow \quad a^c = b\)
+        </div>
+
+        <div class="note-box">
+            <strong>Условия:</strong>
+            <ul style="margin-top:6px;">
+                <li>\(a > 0\), \(a \neq 1\) — основание;</li>
+                <li>\(b > 0\) — аргумент (логарифм существует только от положительного числа).</li>
+            </ul>
+        </div>
+
+        <div class="formula-box">
+            <strong>Основное логарифмическое тождество:</strong><br>
+            \(a^{\log_a b} = b\)
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ СВОЙСТВА · ЛОГАРИФМЫ ◆</div>
+
+    <div class="card" style="border-left-color: #7c4dff;">
+        <h2><span class="badge purple">§5</span> Свойства логарифмов, которые нужны для решения</h2>
+
+        <div class="formula-box">
+            <table style="width:100%; border-collapse:collapse; font-size:1rem;">
+                <tr style="background:#ede9fe;">
+                    <th style="padding:10px; border:1px solid #7c4dff; text-align:left;">Формула</th>
+                    <th style="padding:10px; border:1px solid #7c4dff; text-align:left;">Пояснение</th>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a (bc) = \log_a b + \log_a c\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">логарифм произведения</td>
+                </tr>
+                <tr style="background:#f5f3ff;">
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a \dfrac{b}{c} = \log_a b - \log_a c\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">логарифм частного</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a b^n = n \log_a b\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">степень выносится вперёд</td>
+                </tr>
+                <tr style="background:#f5f3ff;">
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a a = 1\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">логарифм основания равен 1</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a 1 = 0\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">логарифм единицы равен 0</td>
+                </tr>
+                <tr style="background:#f5f3ff;">
+                    <td style="padding:10px; border:1px solid #7c4dff;">\(\log_a b = \dfrac{\log_c b}{\log_c a}\)</td>
+                    <td style="padding:10px; border:1px solid #7c4dff;">переход к новому основанию</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> чтобы привести логарифмы к одинаковому основанию, полезно помнить: \(\log_2 4 = 2\), \(\log_3 9 = 2\), \(\log_2 8 = 3\), \(\log_5 25 = 2\), \(\log_{10} 100 = 2\).
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ АЛГОРИТМ · РЕШЕНИЕ ЛОГАРИФМИЧЕСКИХ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§6</span> Алгоритм решения простейшего логарифмического уравнения</h2>
+
+        <ol class="step-list">
+            <li><strong>Привести уравнение к виду \(\log_a f(x) = \log_a g(x)\).</strong> Использовать свойства логарифмов.</li>
+            <li><strong>Приравнять аргументы:</strong> \(f(x) = g(x)\).</li>
+            <li><strong>Решить полученное уравнение.</strong> Найти \(x\).</li>
+            <li><strong>Проверить ОДЗ:</strong> аргументы логарифмов должны быть <span class="highlight">положительными</span>.</li>
+            <li><strong>Отбросить посторонние корни.</strong> Записать ответ.</li>
+        </ol>
+
+        <div class="note-box">
+            <strong>Ключевая идея:</strong> если основания логарифмов одинаковы (\(a > 0\), \(a \neq 1\)), то равенство логарифмов равносильно равенству их аргументов при условии положительности аргументов:
+            \[\log_a f(x) = \log_a g(x) \quad \Leftrightarrow \quad \begin{cases} f(x) = g(x) \\ f(x) > 0 \end{cases}\]
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решить уравнение \(\log_2 x = 3\).
+            <div style="line-height:2; margin-top:6px;">
+                По определению логарифма: \(x = 2^3 = 8\).<br>
+                Проверка ОДЗ: \(x = 8 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(8\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Решить уравнение \(\log_3 (x + 1) = 2\).
+            <div style="line-height:2; margin-top:6px;">
+                По определению: \(x + 1 = 3^2 = 9\).<br>
+                \(x = 8\).<br>
+                Проверка ОДЗ: \(x + 1 = 9 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(8\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 3.</strong> Решить уравнение \(\log_2 (x - 3) = \log_2 (2x - 7)\).
+            <div style="line-height:2; margin-top:6px;">
+                Основания одинаковы, приравниваем аргументы:<br>
+                \(x - 3 = 2x - 7\)<br>
+                \(x - 2x = -7 + 3\)<br>
+                \(-x = -4\)<br>
+                \(x = 4\).<br>
+                Проверка ОДЗ: \(x - 3 = 1 > 0\), \(2x - 7 = 1 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(4\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 4.</strong> Решить уравнение \(\log_5 (x - 2) = \log_5 (3x - 8)\).
+            <div style="line-height:2; margin-top:6px;">
+                \(x - 2 = 3x - 8\)<br>
+                \(x - 3x = -8 + 2\)<br>
+                \(-2x = -6\)<br>
+                \(x = 3\).<br>
+                Проверка ОДЗ: \(x - 2 = 1 > 0\), \(3x - 8 = 1 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(3\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ТИПИЧНЫЕ ЗАДАНИЯ ЕГЭ №7                           -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ЕГЭ №7 · ТИПИЧНЫЕ ЗАДАНИЯ ✦</div>
+
+    <div class="mini-divider">◆ ФОРМАТ · ЧТО ВСТРЕЧАЕТСЯ НА ЭКЗАМЕНЕ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§7</span> Что нужно уметь для задания №7</h2>
+
+        <div class="note-box">
+            <strong>Типичные задания:</strong>
+            <ul style="margin-top:6px;">
+                <li>Решить показательное уравнение вида \(a^{f(x)} = a^{g(x)}\) и найти корень.</li>
+                <li>Решить логарифмическое уравнение вида \(\log_a f(x) = b\) или \(\log_a f(x) = \log_a g(x)\).</li>
+                <li>Найти корень уравнения, используя определение логарифма.</li>
+                <li>Применить свойства степеней или логарифмов для упрощения.</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>Что важно помнить:</strong>
+            <ul style="margin-top:6px;">
+                <li>Основание степени и логарифма должно быть \(> 0\) и \(\neq 1\).</li>
+                <li>Аргумент логарифма должен быть \(> 0\).</li>
+                <li>При решении логарифмических уравнений <span class="highlight">обязательна проверка ОДЗ</span>.</li>
+                <li>В показательных уравнениях удобно приводить обе части к одному основанию.</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример из ЕГЭ.</strong> Найдите корень уравнения \(2^{x - 7} = \dfrac{1}{8}\).
+            <div style="line-height:2; margin-top:6px;">
+                \(\dfrac{1}{8} = 2^{-3}\).<br>
+                \(2^{x - 7} = 2^{-3}\).<br>
+                \(x - 7 = -3\).<br>
+                \(x = 4\).
+            </div>
+            <strong>Ответ:</strong> \(4\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример из ЕГЭ.</strong> Найдите корень уравнения \(\log_4 (x + 3) = 2\).
+            <div style="line-height:2; margin-top:6px;">
+                По определению логарифма: \(x + 3 = 4^2 = 16\).<br>
+                \(x = 13\).<br>
+                Проверка ОДЗ: \(x + 3 = 16 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(13\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример из ЕГЭ.</strong> Найдите корень уравнения \(\log_3 (2x - 5) = \log_3 (x + 1)\).
+            <div style="line-height:2; margin-top:6px;">
+                \(2x - 5 = x + 1\)<br>
+                \(2x - x = 1 + 5\)<br>
+                \(x = 6\).<br>
+                Проверка ОДЗ: \(2x - 5 = 7 > 0\), \(x + 1 = 7 > 0\) — верно.
+            </div>
+            <strong>Ответ:</strong> \(6\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
