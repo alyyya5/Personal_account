@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Основы функций</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ОСНОВЫ ФУНКЦИЙ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ И ПЕРЕМЕННЫЕ                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ЧТО ТАКОЕ ФУНКЦИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Что такое функция</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Функцией</em> называется правило, по которому каждому значению одной переменной соответствует <strong>ровно одно</strong> значение другой переменной.
+        </div>
+
+        <p>Проще говоря, функция — это «машина», которая берёт число, что-то с ним делает по определённому правилу и выдаёт результат.</p>
+
+        <div class="note-box">
+            <strong>Пример из жизни:</strong> автомат по продаже кофе. Вы опускаете монету (вход), нажимаете кнопку, и получаете чашку кофе (выход). Каждой монете соответствует ровно один стакан кофе.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Независимая и зависимая переменные</h2>
+
+        <p>В функции всегда участвуют две переменные. Важно уметь их различать.</p>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Независимая переменная (аргумент)</strong> — это переменная, которую мы задаём сами. Обычно обозначается буквой \(x\). От неё зависит результат.
+        </div>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Зависимая переменная (функция)</strong> — это переменная, значение которой вычисляется по правилу. Обычно обозначается буквой \(y\). Её значение зависит от \(x\).
+        </div>
+
+        <div class="formula-box">
+            <strong>Схема:</strong><br>
+            \(x\) (аргумент) \(\longrightarrow\) <em>правило</em> \(\longrightarrow\) \(y\) (функция)
+        </div>
+
+        <div class="note-box">
+            <strong>Как запомнить:</strong> аргумент — это то, что мы «крутим» (независимая переменная), а функция — это то, что получается в результате (зависимая переменная).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. КАК СОСТАВИТЬ ФОРМУЛУ ФУНКЦИИ                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · СОСТАВЛЕНИЕ ФОРМУЛЫ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Как составить формулу функции</h2>
+
+        <p>Формула функции — это математическая запись правила, по которому вычисляется зависимая переменная.</p>
+
+        <ol class="step-list">
+            <li><strong>Выберите независимую переменную (аргумент).</strong> Подумайте, какое значение вы задаёте сами, чтобы узнать результат.</li>
+            <li><strong>Запишите правило.</strong> Вспомните формулу, которая связывает эту величину с результатом (например, площадь, периметр, расстояние).</li>
+            <li><strong>Проверьте.</strong> Убедитесь, что каждому \(x\) соответствует <strong>только одно</strong> значение \(y\).</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Периметр квадрата зависит от его стороны \(a\).<br>
+            <div style="line-height:2; margin-top:6px;">
+                Независимая переменная: \(a\) (сторона квадрата).<br>
+                Зависимая переменная: \(P\) (периметр).<br>
+                Формула: \(P = 4a\).
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Площадь прямоугольника со сторонами \(9\) см и \(x\) см.<br>
+            <div style="line-height:2; margin-top:6px;">
+                Независимая переменная: \(x\) (вторая сторона).<br>
+                Зависимая переменная: \(S\) (площадь).<br>
+                Формула: \(S = 9x\).
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. НАХОЖДЕНИЕ ЗНАЧЕНИЯ ФУНКЦИИ                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · НАХОЖДЕНИЕ ЗНАЧЕНИЯ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Как найти значение функции</h2>
+
+        <p>Чтобы найти значение функции, нужно подставить заданное значение аргумента в формулу и выполнить вычисления.</p>
+
+        <div class="formula-box">
+            Если \(y = f(x)\), то значение функции при \(x = a\) — это \(f(a)\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Дана функция \(P = 4a\). Найти периметр при \(a = 3\).
+            <div style="line-height:2; margin-top:6px;">
+                Подставим \(a = 3\) в формулу:<br>
+                \(P = 4 \cdot 3 = 12\).
+            </div>
+            <strong>Ответ:</strong> \(12\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Дана функция \(s = 70t\) (расстояние поезда). Найти путь при \(t = 2\), \(t = 4\), \(t = 3{,}8\).
+            <div style="line-height:2; margin-top:6px;">
+                \(t = 2\): \(s = 70 \cdot 2 = 140\) км.<br>
+                \(t = 4\): \(s = 70 \cdot 4 = 280\) км.<br>
+                \(t = 3{,}8\): \(s = 70 \cdot 3{,}8 = 266\) км.
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> если нужно найти значение аргумента по известному значению функции (обратная задача), подставьте известное \(y\) в формулу и решите полученное уравнение относительно \(x\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
