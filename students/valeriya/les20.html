@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Функции и Первый признак равенства</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · ФУНКЦИИ И ТРЕУГОЛЬНИКИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ФУНКЦИИ                                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ФУНКЦИИ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Что такое функция</h2>
+
+        <p>В жизни мы часто встречаем зависимость одних величин от других. Площадь квадрата зависит от его стороны, путь зависит от времени, температура — от времени суток.</p>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Функция</em> — это правило, по которому каждому значению <strong>независимой переменной</strong> (аргумента) соответствует <strong>ровно одно</strong> значение <strong>зависимой переменной</strong> (функции).
+        </div>
+
+        <div class="note-box">
+            <strong>Обозначения:</strong><br>
+            \(x\) — независимая переменная (аргумент).<br>
+            \(y\) — зависимая переменная (функция).<br>
+            Запись \(y = f(x)\) означает: «\(y\) есть функция от \(x\)».<br>
+            Значение функции \(f\) в точке \(x\) обозначают \(f(x)\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Площадь квадрата зависит от его стороны:<br>
+            \(S = a^2\).<br>
+            Здесь \(a\) — независимая переменная (можно взять любую сторону), \(S\) — зависимая.<br>
+            Если \(a = 3\), то \(S(3) = 3^2 = 9\).<br>
+            Если \(a = 10\), то \(S(10) = 10^2 = 100\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Путь автомобиля при скорости \(50\) км/ч:<br>
+            \(s = 50t\).<br>
+            Здесь \(t\) — время (аргумент), \(s\) — путь (функция).<br>
+            Если \(t = 2\), то \(s(2) = 50 \cdot 2 = 100\) км.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Область определения и область значений</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Область определения</em> — это множество всех чисел, которые могут являться аргументами данной функции (то есть все допустимые \(x\)).
+        </div>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Область значений</em> — это множество всех чисел, которые могут являться значениями функции (то есть все возможные \(y\)).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (периметр квадрата).</strong> \(P = 4a\).<br>
+            Сторона квадрата \(a\) — это длина. Длина не может быть отрицательной и не может быть равна нулю (иначе квадрата не получится). Значит, \(a > 0\).<br>
+            При умножении положительного числа \(a\) на \(4\) получается тоже только положительное число. Значит, \(P > 0\).<br>
+            <strong>Область определения:</strong> \(a \in (0; +\infty)\).<br>
+            <strong>Область значений:</strong> \(P \in (0; +\infty)\).
+        </div>
+
+        <div class="note-box">
+            <strong>Полезно запомнить:</strong>
+            <ul style="margin-top:8px;">
+                <li>Если в функции есть деление на \(x\), то \(x \neq 0\) (или знаменатель \(\neq 0\)).</li>
+                <li>Если в функции есть квадратный корень, то подкоренное выражение \(\ge 0\).</li>
+                <li>Если функция описывает реальную величину (длину, время, массу), то она положительна.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Как задать функцию</h2>
+
+        <p>Одну и ту же функцию можно задать по-разному. Рассмотрим три основных способа.</p>
+
+        <div class="note-box">
+            <strong>1. Словесный способ.</strong><br>
+            «У Даши есть яблоки. При этом у её старшего брата Вани всегда на два яблока больше.»<br>
+            Здесь словами описана зависимость количества яблок у Вани от количества яблок у Даши.
+        </div>
+
+        <div class="note-box">
+            <strong>2. Табличный способ.</strong><br>
+            Составим таблицу аргументов и зависимых от них величин:
+            <table style="margin:10px auto; border-collapse: collapse; text-align: center;">
+                <tr style="background:#eef4ff;">
+                    <td style="border:1px solid #aaa; padding:6px 16px; font-weight:bold;">x (яблоки Даши)</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">1</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">2</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">3</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">4</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #aaa; padding:6px 16px; font-weight:bold;">y (яблоки Вани)</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">3</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">4</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">5</td>
+                    <td style="border:1px solid #aaa; padding:6px 16px;">6</td>
+                </tr>
+            </table>
+            Видно, что каждое \(y\) больше своего \(x\) на \(2\).
+        </div>
+
+        <div class="note-box">
+            <strong>3. Формульный способ.</strong><br>
+            Это самый удобный способ. Зависимость записывается в виде формулы:
+            <div class="formula-box" style="margin:10px 0 0 0;">\(y = x + 2\)</div>
+            По формуле сразу видно, что каждый \(y\) на \(2\) больше, чем соответствующий ему \(x\).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Как найти значение функции</h2>
+
+        <div class="example-box">
+            <strong>Пример №1.</strong> Найдите значение функции \(y = \dfrac{x - 2}{5}\) при \(x = 2\) и \(x = 27\).<br><br>
+            1) Подставим \(x = 2\):<br>
+            \(f(2) = \dfrac{2 - 2}{5} = \dfrac{0}{5} = 0\).<br>
+            Значит, аргументу \(2\) соответствует значение функции \(0\).<br><br>
+            2) Подставим \(x = 27\):<br>
+            \(f(27) = \dfrac{27 - 2}{5} = \dfrac{25}{5} = 5\).<br>
+            Значит, аргументу \(27\) соответствует значение функции \(5\).<br><br>
+            <strong>Ответ:</strong> \(0\); \(5\).
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: #2a6fdb;">
+        <h2><span class="badge">§5</span> График функции</h2>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Определение.</strong> <em>Графиком функции</em> называется множество всех точек координатной плоскости, абсциссы которых равны значениям аргумента, а ординаты — соответствующим значениям функции.
+        </div>
+
+        <p>Любую функцию можно изобразить на координатной плоскости. Если точка принадлежит графику функции, её координаты — это (аргумент; значение функции).</p>
+
+        <div class="example-box">
+            <strong>Пример №2 (построение).</strong> Построим график функции \(y = x + 2\).<br><br>
+            <em>Шаг 1.</em> Составим таблицу значений:
+            <table style="margin:10px auto; border-collapse: collapse; text-align: center;">
+                <tr style="background:#eef4ff;">
+                    <td style="border:1px solid #aaa; padding:4px 12px;">x</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">-2</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">0</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">3</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">6</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">y</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">0</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">2</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">5</td>
+                    <td style="border:1px solid #aaa; padding:4px 12px;">8</td>
+                </tr>
+            </table>
+            <em>Шаг 2.</em> У нас есть точки: \(A(-2; 0)\), \(B(0; 2)\), \(C(3; 5)\), \(D(6; 8)\).<br>
+            <em>Шаг 3.</em> Отметим их на координатной плоскости и соединим. Получится прямая.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Сетка -->
+                <g stroke="#e2e8f0" stroke-width="1">
+                    <line x1="50" y1="250" x2="350" y2="250" />
+                    <line x1="50" y1="200" x2="350" y2="200" />
+                    <line x1="50" y1="150" x2="350" y2="150" />
+                    <line x1="50" y1="100" x2="350" y2="100" />
+                    <line x1="50" y1="50" x2="350" y2="50" />
+                    <line x1="50" y1="30" x2="50" y2="270" />
+                    <line x1="100" y1="30" x2="100" y2="270" />
+                    <line x1="150" y1="30" x2="150" y2="270" />
+                    <line x1="200" y1="30" x2="200" y2="270" />
+                    <line x1="250" y1="30" x2="250" y2="270" />
+                    <line x1="300" y1="30" x2="300" y2="270" />
+                </g>
+                <!-- Оси -->
+                <line x1="40" y1="250" x2="360" y2="250" stroke="#2c3e5a" stroke-width="2"/>
+                <line x1="200" y1="270" x2="200" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                <text x="365" y="255" font-size="14" fill="#2c3e5a" font-weight="bold">x</text>
+                <text x="205" y="25" font-size="14" fill="#2c3e5a" font-weight="bold">y</text>
+
+                <!-- График y = x + 2 (сдвиг: 1 ед = 20px) -->
+                <line x1="80" y1="230" x2="310" y2="50" stroke="#06d6a0" stroke-width="3"/>
+            </svg>
+            <div class="fig-caption">График функции \(y = x + 2\) — прямая линия</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Важно:</strong> график функции не обязательно должен быть прямой линией. Он может быть параболой (как \(y = x^2\)), гиперболой, волной и т.д. Форма зависит от формулы.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ПЕРВЫЙ ПРИЗНАК РАВЕНСТВА ТРЕУГОЛЬНИКОВ           -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · ПЕРВЫЙ ПРИЗНАК РАВЕНСТВА ✦</div>
+
+    <div class="mini-divider">◆ ОСНОВЫ · РАВНЫЕ ТРЕУГОЛЬНИКИ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§6</span> Равные треугольники</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Два треугольника называются <em>равными</em>, если их можно совместить наложением. При этом все соответствующие стороны и углы равны.
+        </div>
+
+        <p>Если \(\triangle ABC = \triangle A_1B_1C_1\), то порядок букв в записи равенства задаёт <strong>соответствие</strong> вершин:</p>
+
+        <div class="formula-box">
+            \(A \leftrightarrow A_1, \quad B \leftrightarrow B_1, \quad C \leftrightarrow C_1\)
+        </div>
+
+        <p>Из этого соответствия автоматически следуют равенства сторон и углов:</p>
+
+        <div class="formula-box">
+            \(AB = A_1B_1, \quad BC = B_1C_1, \quad CA = C_1A_1\)<br>
+            \(\angle A = \angle A_1, \quad \angle B = \angle B_1, \quad \angle C = \angle C_1\)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="40,150 160,150 100,30" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <circle cx="40" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="160" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="100" cy="30" r="4" fill="#ec4899"/>
+                <text x="25" y="170" font-size="14" fill="#0b1a33" font-weight="700">A</text>
+                <text x="165" y="170" font-size="14" fill="#0b1a33" font-weight="700">C</text>
+                <text x="95" y="22" font-size="14" fill="#0b1a33" font-weight="700">B</text>
+
+                <text x="220" y="100" font-size="30" fill="#2a6fdb" font-weight="700">=</text>
+
+                <polygon points="300,150 420,150 360,30" fill="#eef4ff" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="300" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="420" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="360" cy="30" r="4" fill="#2a6fdb"/>
+                <text x="280" y="170" font-size="14" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="425" y="170" font-size="14" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="355" y="22" font-size="14" fill="#0b1a33" font-weight="700">B₁</text>
+            </svg>
+            <div class="fig-caption">\(\triangle ABC = \triangle A_1B_1C_1\)</div>
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ТЕОРЕМА · ПЕРВЫЙ ПРИЗНАК ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§7</span> Первый признак равенства треугольников</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Теорема (первый признак).</strong> Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники <em>равны</em>.
+        </div>
+
+        <div class="formula-box">
+            \(AB = A_1B_1, \quad AC = A_1C_1, \quad \angle A = \angle A_1\)<br>
+            \(\Downarrow\)<br>
+            \(\triangle ABC = \triangle A_1B_1C_1\)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="40,160 180,160 110,40" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <circle cx="40" cy="160" r="4" fill="#ec4899"/>
+                <circle cx="180" cy="160" r="4" fill="#ec4899"/>
+                <circle cx="110" cy="40" r="4" fill="#ec4899"/>
+                <text x="25" y="180" font-size="14" fill="#0b1a33" font-weight="700">A</text>
+                <text x="185" y="180" font-size="14" fill="#0b1a33" font-weight="700">C</text>
+                <text x="105" y="32" font-size="14" fill="#0b1a33" font-weight="700">B</text>
+
+                <!-- Знак равенства -->
+                <text x="230" y="110" font-size="30" fill="#2a6fdb" font-weight="700">=</text>
+
+                <!-- Треугольник A1B1C1 -->
+                <polygon points="310,160 450,160 380,40" fill="#eef4ff" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="310" cy="160" r="4" fill="#2a6fdb"/>
+                <circle cx="450" cy="160" r="4" fill="#2a6fdb"/>
+                <circle cx="380" cy="40" r="4" fill="#2a6fdb"/>
+                <text x="290" y="180" font-size="14" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="455" y="180" font-size="14" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="375" y="32" font-size="14" fill="#0b1a33" font-weight="700">B₁</text>
+            </svg>
+            <div class="fig-caption">Равные треугольники по двум сторонам и углу между ними</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Угол обязательно должен лежать <span class="highlight">между</span> этими сторонами. Если угол не между сторонами, первый признак не работает.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ПРИМЕНЕНИЕ · КАК ПОЛЬЗОВАТЬСЯ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§8</span> Как применять первый признак</h2>
+
+        <p>Чтобы доказать равенство треугольников по первому признаку, действуй по шагам:</p>
+
+        <ol class="step-list">
+            <li><strong>Найди две пары равных сторон</strong> в треугольниках. Обычно они даны в условии или видны на рисунке.</li>
+            <li><strong>Найди угол между этими сторонами</strong> в каждом треугольнике и докажи, что они равны.</li>
+            <li><strong>Сделай вывод:</strong> треугольники равны по первому признаку (по двум сторонам и углу между ними).</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Дано: \(AB = A_1B_1\), \(AC = A_1C_1\), \(\angle A = \angle A_1\). Доказать: \(\triangle ABC = \triangle A_1B_1C_1\).
+            <div style="line-height:2; margin-top:6px;">
+                Рассмотрим \(\triangle ABC\) и \(\triangle A_1B_1C_1\):<br>
+                \(AB = A_1B_1\) (по условию),<br>
+                \(AC = A_1C_1\) (по условию),<br>
+                \(\angle A = \angle A_1\) (по условию) — угол между сторонами \(AB\) и \(AC\).<br>
+                Значит, \(\triangle ABC = \triangle A_1B_1C_1\) по первому признаку.
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Схема оформления доказательства:</strong><br>
+            1) Рассмотрим \(\triangle \ldots\) и \(\triangle \ldots\)<br>
+            2) \(\ldots = \ldots\) (по условию)<br>
+            3) \(\ldots = \ldots\) (по условию)<br>
+            4) \(\angle \ldots = \angle \ldots\) (по условию)<br>
+            5) Значит, \(\triangle \ldots = \triangle \ldots\) по первому признаку.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
