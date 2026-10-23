@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Числовые промежутки и Элементы треугольника</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · ПРОМЕЖУТКИ И ТРЕУГОЛЬНИКИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЧИСЛОВЫЕ ПРОМЕЖУТКИ                              -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ЧИСЛОВЫЕ ПРОМЕЖУТКИ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§1</span> Отрезок, интервал и полуинтервал</h2>
+
+        <p>Пусть \(a < b\) — два числа. Множество чисел, удовлетворяющих неравенству \(a < x < b\), называется <strong>интервалом</strong> и обозначается \((a; b)\). Точки \(a\) и \(b\) этому промежутку <strong>не принадлежат</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Интервал \((a; b)\):</strong><br>
+            \(a < x < b\)<br>
+            Точки \(a\) и \(b\) — <strong>выколоты</strong> (не входят).
+        </div>
+
+        <p>Множество чисел \(x\), для которых выполняются неравенства \(a \le x \le b\), называется <strong>отрезком</strong> и обозначается \([a; b]\). Точки \(a\) и \(b\) этому промежутку <strong>принадлежат</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Отрезок \([a; b]\):</strong><br>
+            \(a \le x \le b\)<br>
+            Точки \(a\) и \(b\) — <strong>закрашены</strong> (входят).
+        </div>
+
+        <p>Если один конец входит, а другой нет — это <strong>полуинтервал</strong>:</p>
+        <div class="formula-box">
+            <strong>Полуинтервалы:</strong><br>
+            \([a; b)\) — \(a \le x < b\) (закрашен \(a\), выколот \(b\))<br>
+            \((a; b]\) — \(a < x \le b\) (выколот \(a\), закрашен \(b\))
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Бесконечные промежутки</h2>
+
+        <p>Если ограничение есть только с одной стороны, получаются бесконечные промежутки. Знак \(\infty\) («бесконечность») означает, что число может быть сколь угодно большим (или маленьким).</p>
+
+        <div class="formula-box">
+            <strong>Открытые лучи:</strong><br>
+            \((-\infty; a)\) — \(x < a\) (выколота \(a\), штрих влево)<br>
+            \((a; +\infty)\) — \(x > a\) (выколота \(a\), штрих вправо)
+        </div>
+
+        <div class="formula-box">
+            <strong>Замкнутые лучи:</strong><br>
+            \((-\infty; a]\) — \(x \le a\) (закрашена \(a\), штрих влево)<br>
+            \([a; +\infty)\) — \(x \ge a\) (закрашена \(a\), штрих вправо)
+        </div>
+
+        <div class="formula-box">
+            <strong>Вся числовая прямая:</strong><br>
+            \((-\infty; +\infty)\) — все действительные числа (\(x \in \mathbb{R}\))
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Бесконечность — это не число, поэтому скобка рядом с \(\infty\) всегда <span class="highlight">круглая</span> (выколотая).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Как рисовать промежутки на прямой</h2>
+
+        <div class="note-box">
+            <strong>Правила изображения:</strong>
+            <ul style="margin-top:8px;">
+                <li>Если знак \(<\) или \(>\) — точка <strong>выколотая</strong> (кружок не закрашен).</li>
+                <li>Если знак \(\le\) или \(\ge\) — точка <strong>закрашенная</strong>.</li>
+                <li>Штриховка показывает, какие числа входят в промежуток.</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Изобразим промежуток \(x > 2\).<br>
+            Ставим выколотую точку \(2\), штрихуем вправо.<br>
+            Этот промежуток называется <em>открытым лучом</em> и обозначается \((2; +\infty)\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> \(x \le 3\).<br>
+            Ставим закрашенную точку \(3\), штрихуем влево.<br>
+            Обозначение: \((-\infty; 3]\).
+        </div>
+        
+        <div class="example-box">
+            <strong>Пример 3.</strong> \(-2 < x \le 4\).<br>
+            Ставим выколотую точку \(-2\), закрашенную точку \(4\), штрихуем между ними.<br>
+            Обозначение: \((-2; 4]\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА                            -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА ✦</div>
+
+    <div class="mini-divider">◆ МЕДИАНА, БИССЕКТРИСА, ВЫСОТА ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§4</span> Медиана треугольника</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Медианой</em> треугольника называется отрезок, соединяющий вершину треугольника с серединой противоположной стороны.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="60,180 340,180 200,40" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <!-- Медиана AM -->
+                <line x1="200" y1="40" x2="200" y2="180" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Середина BC -->
+                <circle cx="200" cy="180" r="5" fill="#ec4899"/>
+                <!-- Вершины -->
+                <circle cx="60" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="340" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="200" cy="40" r="5" fill="#0b1a33"/>
+                <!-- Буквы -->
+                <text x="45" y="200" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="345" y="200" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="195" y="30" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="205" y="200" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">\(AM\) — медиана треугольника \(ABC\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство медианы:</strong> медиана делит противоположную сторону <span class="highlight">пополам</span>. Если \(AM\) — медиана, то \(BM = MC\).
+        </div>
+
+        <div class="note-box">
+            <strong>Важно:</strong> в любом треугольнике можно провести <strong>три</strong> медианы (из каждой вершины). Все три медианы пересекаются в одной точке — <em>центроиде</em> (центре тяжести треугольника).
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Биссектриса треугольника</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Биссектрисой</em> треугольника называется отрезок биссектрисы угла треугольника, соединяющий вершину с точкой на противоположной стороне.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник BFP -->
+                <polygon points="60,60 340,60 200,180" fill="#f0fdf4" stroke="#06d6a0" stroke-width="2.5"/>
+                <!-- Биссектриса BC -->
+                <line x1="200" y1="180" x2="200" y2="60" stroke="#06d6a0" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="60" cy="60" r="5" fill="#0b1a33"/>
+                <circle cx="340" cy="60" r="5" fill="#0b1a33"/>
+                <circle cx="200" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="200" cy="60" r="5" fill="#06d6a0"/>
+                <!-- Буквы -->
+                <text x="45" y="55" font-size="15" fill="#0b1a33" font-weight="700">F</text>
+                <text x="345" y="55" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="195" y="200" font-size="15" fill="#0b1a33" font-weight="700">P</text>
+                <text x="205" y="55" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+            </svg>
+            <div class="fig-caption">\(BC\) — биссектриса треугольника \(BFP\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство биссектрисы:</strong> биссектриса делит угол <span class="highlight">пополам</span>. Если \(BC\) — биссектриса, то \(\angle FBC = \angle CBP\).
+        </div>
+
+        <div class="note-box">
+            <strong>Важно:</strong> в любом треугольнике можно провести <strong>три</strong> биссектрисы. Все три биссектрисы пересекаются в одной точке — <em>центре вписанной окружности</em>.
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§6</span> Высота треугольника</h2>
+
+        <div class="define-box" style="background:#f3e8ff; border-left-color:#7c4dff;">
+            <strong style="color:#5b21b6;">Определение.</strong> <em>Высотой</em> треугольника называется перпендикуляр, проведённый из вершины треугольника к прямой, содержащей противоположную сторону.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник DEF -->
+                <polygon points="80,180 340,180 240,60" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Высота DH -->
+                <line x1="240" y1="60" x2="240" y2="180" stroke="#7c4dff" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Прямой угол -->
+                <polyline points="240,170 250,170 250,180" fill="none" stroke="#7c4dff" stroke-width="1.5"/>
+                <!-- Вершины -->
+                <circle cx="80" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="340" cy="180" r="5" fill="#0b1a33"/>
+                <circle cx="240" cy="60" r="5" fill="#0b1a33"/>
+                <circle cx="240" cy="180" r="5" fill="#7c4dff"/>
+                <!-- Буквы -->
+                <text x="65" y="200" font-size="15" fill="#0b1a33" font-weight="700">E</text>
+                <text x="345" y="200" font-size="15" fill="#0b1a33" font-weight="700">F</text>
+                <text x="235" y="50" font-size="15" fill="#0b1a33" font-weight="700">D</text>
+                <text x="245" y="200" font-size="15" fill="#0b1a33" font-weight="700">H</text>
+            </svg>
+            <div class="fig-caption">\(DH\) — высота треугольника \(DEF\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство высоты:</strong> высота образует <span class="highlight">прямой угол</span> (\(90^\circ\)) с противоположной стороной. Если \(DH\) — высота, то \(DH \perp EF\).
+        </div>
+
+        <div class="note-box">
+            <strong>Важно:</strong> в любом треугольнике можно провести <strong>три</strong> высоты. Все три высоты (или их продолжения) пересекаются в одной точке — <em>ортоцентре</em>.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§7</span> Как различать медиану, биссектрису и высоту</h2>
+
+        <div class="formula-box">
+            <table style="width:100%; border-collapse:collapse; font-size:1rem;">
+                <tr style="background:#ffe8cc;">
+                    <th style="padding:10px; border:1px solid #f5a623; text-align:left;">Элемент</th>
+                    <th style="padding:10px; border:1px solid #f5a623; text-align:left;">Что делает</th>
+                    <th style="padding:10px; border:1px solid #f5a623; text-align:left;">Как выглядит на рисунке</th>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #f5a623;"><strong>Медиана</strong></td>
+                    <td style="padding:10px; border:1px solid #f5a623;">делит сторону пополам</td>
+                    <td style="padding:10px; border:1px solid #f5a623;">идёт из вершины к середине стороны</td>
+                </tr>
+                <tr style="background:#fff8f0;">
+                    <td style="padding:10px; border:1px solid #f5a623;"><strong>Биссектриса</strong></td>
+                    <td style="padding:10px; border:1px solid #f5a623;">делит угол пополам</td>
+                    <td style="padding:10px; border:1px solid #f5a623;">идёт из вершины, делит угол на две равные части</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #f5a623;"><strong>Высота</strong></td>
+                    <td style="padding:10px; border:1px solid #f5a623;">образует прямой угол со стороной</td>
+                    <td style="padding:10px; border:1px solid #f5a623;">опускается из вершины перпендикулярно стороне</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> чтобы не путать, запомни: <span class="highlight">медиана — к середине</span>, <span class="highlight">биссектриса — к углу</span>, <span class="highlight">высота — под прямым углом</span>.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
