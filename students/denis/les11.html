@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Вычисления и преобразования (ЕГЭ №8)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ЕГЭ №8 · ВЫЧИСЛЕНИЯ И ПРЕОБРАЗОВАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    §1. ДЕЙСТВИЯ С ДРОБЯМИ                                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АРИФМЕТИКА · ДРОБИ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Действия с обыкновенными дробями</h2>
+
+        <p>В задании №8 ЕГЭ часто встречаются примеры на сложение, вычитание, умножение и деление дробей. Главное — помнить базовые правила.</p>
+
+        <div class="formula-box">
+            <strong>Умножение:</strong> \(\dfrac{a}{b} \cdot \dfrac{c}{d} = \dfrac{a \cdot c}{b \cdot d}\)<br><br>
+            <strong>Деление:</strong> \(\dfrac{a}{b} : \dfrac{c}{d} = \dfrac{a}{b} \cdot \dfrac{d}{c} = \dfrac{a \cdot d}{b \cdot c}\)<br>
+            <em>(деление заменяем умножением на «перевёрнутую» дробь)</em>
+        </div>
+
+        <div class="formula-box">
+            <strong>Сложение/вычитание:</strong> приводят к общему знаменателю:<br>
+            \(\dfrac{a}{b} \pm \dfrac{c}{d} = \dfrac{a \cdot d \pm c \cdot b}{b \cdot d}\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> \(\dfrac{1}{3} : \dfrac{2}{9}\)<br>
+            Переворачиваем вторую дробь: \(\dfrac{1}{3} \cdot \dfrac{9}{2} = \dfrac{9}{6} = 1{,}5\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2 (смешанные числа).</strong> \(3\dfrac{3}{5} \cdot 5\dfrac{5}{8}\)<br>
+            Переведём в неправильные дроби: \(\dfrac{18}{5} \cdot \dfrac{45}{8}\).<br>
+            Сократим: \(\dfrac{18 \cdot 45}{5 \cdot 8} = \dfrac{810}{40} = 20{,}25\).
+        </div>
+
+        <div class="note-box">
+            <strong>Лайфхак (телескопическое умножение):</strong> В произведении вида \(\dfrac{1}{2} \cdot \dfrac{2}{3} \cdot \dfrac{3}{4} \cdot \dots \cdot \dfrac{n}{n+1}\) числитель каждой дроби сокращается со знаменателем предыдущей. Остаётся только первая числительная часть и последняя знаменательная. В примере до \(\dfrac{99}{100}\) останется \(\dfrac{1}{100} = 0{,}01\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §2. МОДУЛЬ ЧИСЛА                                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · МОДУЛЬ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Модуль числа</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Модулем</em> числа \(a\) называется расстояние от точки \(a\) до нуля на координатной прямой. Обозначается \(|a|\).
+        </div>
+
+        <div class="formula-box">
+            \(|a| = a\), если \(a \ge 0\)<br>
+            \(|a| = -a\), если \(a < 0\)
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> Модуль всегда неотрицателен: \(|a| \ge 0\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> Вычислить \(\dfrac{|3 - \pi|}{3 - \pi}\).<br>
+            Мы знаем, что \(\pi \approx 3{,}14\), значит \(3 - \pi < 0\) (выражение отрицательное).<br>
+            По правилу раскрытия модуля для отрицательного числа: \(|3 - \pi| = -(3 - \pi) = \pi - 3\).<br>
+            Тогда дробь примет вид: \(\dfrac{\pi - 3}{-( \pi - 3)} = -1\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §3. ФОРМУЛЫ СОКРАЩЁННОГО УМНОЖЕНИЯ                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ФОРМУЛЫ СОКРАЩЁННОГО УМНОЖЕНИЯ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Разность квадратов</h2>
+
+        <p>Это одна из самых частых формул на ЕГЭ. Она позволяет мгновенно считать большие числа.</p>
+
+        <div class="formula-box">
+            <strong>Формула:</strong><br>
+            \(a^2 - b^2 = (a - b)(a + b)\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Вычислить \(3002^2 - 3000^2\).<br>
+            Применяем формулу: \((3002 - 3000)(3002 + 3000) = 2 \cdot 6002 = 12004\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> Вычислить \(99\dfrac{1}{2} \cdot 100\dfrac{1}{2}\).<br>
+            Представим как \((100 - 0{,}5)(100 + 0{,}5) = 100^2 - 0{,}5^2 = 10000 - 0{,}25 = 9999{,}75\).
+        </div>
+
+        <div class="note-box">
+            <strong>Лайфхак:</strong> если видишь разность двух квадратов, где числа заканчиваются на одинаковые цифры (например, 1234 и 234), сразу применяй формулу — считать в столбик не придётся.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Квадрат суммы и квадрат разности</h2>
+
+        <div class="formula-box">
+            <strong>Квадрат суммы:</strong> \((a + b)^2 = a^2 + 2ab + b^2\)<br><br>
+            <strong>Квадрат разности:</strong> \((a - b)^2 = a^2 - 2ab + b^2\)
+        </div>
+
+        <div class="note-box">
+            <strong>Как узнать в примере:</strong> если видишь выражение вида \(a^2 - 2ab + b^2\), это «свёрнутый» квадрат разности, который равен \((a - b)^2\). Это часто используется в знаменателях.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> В знаменателе дроби стоит \(65^2 - 2 \cdot 65 \cdot 59 + 59^2\).<br>
+            Это в точности формула квадрата разности, где \(a = 65, b = 59\).<br>
+            Знаменатель равен \((65 - 59)^2 = 6^2 = 36\).
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: #2a6fdb;">
+        <h2><span class="badge">§5</span> Сумма и разность кубов</h2>
+
+        <p>Эти формулы нужны для заданий, где в числителе стоит сумма или разность кубов, а в знаменателе — неполный квадрат.</p>
+
+        <div class="formula-box">
+            <strong>Сумма кубов:</strong><br>
+            \(a^3 + b^3 = (a + b)(a^2 - ab + b^2)\)<br><br>
+            <strong>Разность кубов:</strong><br>
+            \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно:</strong> вторая скобка называется «неполным квадратом». В сумме кубов там стоит <strong>минус</strong> (\(a^2 - ab + b^2\)), а в разности кубов — <strong>плюс</strong> (\(a^2 + ab + b^2\)).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1 (сумма кубов).</strong> Вычислить \(\dfrac{87^3 + 43^3}{87^2 - 87 \cdot 43 + 43^2}\).<br>
+            Числитель раскладываем по формуле суммы кубов:<br>
+            \(87^3 + 43^3 = (87 + 43)(87^2 - 87 \cdot 43 + 43^2)\).<br>
+            Знаменатель в точности равен второй скобке. Они сокращаются.<br>
+            Остаётся \(87 + 43 = 130\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2 (разность кубов).</strong> Вычислить \(\dfrac{59^3 - 41^3}{18} + 59 \cdot 41\).<br>
+            Раскладываем числитель: \(59^3 - 41^3 = (59 - 41)(59^2 + 59 \cdot 41 + 41^2)\).<br>
+            Так как \(59 - 41 = 18\), то дробь равна \(59^2 + 59 \cdot 41 + 41^2\).<br>
+            Прибавляем \(59 \cdot 41\):<br>
+            \(59^2 + 59 \cdot 41 + 41^2 + 59 \cdot 41 = 59^2 + 2 \cdot 59 \cdot 41 + 41^2\).<br>
+            Это квадрат суммы! \((59 + 41)^2 = 100^2 = 10000\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §6. АЛГОРИТМ РЕШЕНИЯ                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ СТРАТЕГИЯ · АЛГОРИТМ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§6</span> Как действовать на экзамене</h2>
+
+        <ol class="step-list">
+            <li><strong>Посмотри на структуру выражения.</strong> Есть ли там разность квадратов, сумма/разность кубов или квадрат разности?</li>
+            <li><strong>Вспомни формулу.</strong> Если видишь \(a^2 - b^2\), применяй \((a-b)(a+b)\). Если видишь три слагаемых с квадратами и удвоенным произведением — это квадрат.</li>
+            <li><strong>Сократи дробь.</strong> Часто после применения формулы часть выражения в числителе и знаменателе совпадает, и её можно сократить.</li>
+            <li><strong>Вычисли результат.</strong> Считай устно или на черновике, следя за знаками.</li>
+        </ol>
+
+        <div class="note-box">
+            <strong>Совет:</strong> Если сомневаешься в формуле, распиши её на черновике. На экзамене главное — не скорость, а точность.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
