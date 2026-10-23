@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Числовые промежутки с рисунками</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ЧИСЛОВЫЕ ПРОМЕЖУТКИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    §1. ОСНОВНЫЕ ВИДЫ ПРОМЕЖУТКОВ                             -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ВИДЫ ПРОМЕЖУТКОВ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§1</span> Отрезок, интервал и полуинтервал</h2>
+
+        <p>Пусть \(a < b\) — два числа. Множество чисел, удовлетворяющих неравенству \(a < x < b\), называется <strong>интервалом</strong> и обозначается \((a; b)\). Точки \(a\) и \(b\) этому промежутку <strong>не принадлежат</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Интервал \((a; b)\):</strong><br>
+            \(a < x < b\)<br>
+            Точки \(a\) и \(b\) — <strong>выколоты</strong> (не входят).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ось -->
+                <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                <!-- Стрелка -->
+                <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
+                <!-- Штриховка (линия над осью) -->
+                <line x1="120" y1="20" x2="280" y2="20" stroke="#2a6fdb" stroke-width="4"/>
+                <!-- Выколотые точки -->
+                <circle cx="120" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="280" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
+                <!-- Подписи -->
+                <text x="115" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
+            </svg>
+            <div class="fig-caption">Интервал \((a; b)\) — точки выколоты</div>
+        </div>
+
+        <p>Множество чисел \(x\), для которых выполняются неравенства \(a \le x \le b\), называется <strong>отрезком</strong> и обозначается \([a; b]\). Точки \(a\) и \(b\) этому промежутку <strong>принадлежат</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Отрезок \([a; b]\):</strong><br>
+            \(a \le x \le b\)<br>
+            Точки \(a\) и \(b\) — <strong>закрашены</strong> (входят).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+                <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
+                <line x1="120" y1="20" x2="280" y2="20" stroke="#06d6a0" stroke-width="4"/>
+                <!-- Закрашенные точки -->
+                <circle cx="120" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
+                <circle cx="280" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
+                <text x="115" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
+            </svg>
+            <div class="fig-caption">Отрезок \([a; b]\) — точки закрашены</div>
+        </div>
+
+        <p>Если один конец входит, а другой нет — это <strong>полуинтервал</strong>:</p>
+        <div class="formula-box">
+            <strong>Полуинтервалы:</strong><br>
+            \([a; b)\) — \(a \le x < b\) (закрашен \(a\), выколот \(b\))<br>
+            \((a; b]\) — \(a < x \le b\) (выколот \(a\), закрашен \(b\))
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Верхняя ось [a; b) -->
+                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
+                <line x1="120" y1="30" x2="280" y2="30" stroke="#f5a623" stroke-width="4"/>
+                <circle cx="120" cy="40" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
+                <circle cx="280" cy="40" r="5" fill="white" stroke="#f5a623" stroke-width="2.5"/>
+                <text x="115" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="275" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
+                <text x="330" y="35" font-size="14" fill="#f5a623" font-weight="bold">[a; b)</text>
+
+                <!-- Нижняя ось (a; b] -->
+                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
+                <line x1="120" y1="100" x2="280" y2="100" stroke="#7c4dff" stroke-width="4"/>
+                <circle cx="120" cy="110" r="5" fill="white" stroke="#7c4dff" stroke-width="2.5"/>
+                <circle cx="280" cy="110" r="5" fill="#7c4dff" stroke="#7c4dff" stroke-width="2.5"/>
+                <text x="115" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="275" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
+                <text x="330" y="105" font-size="14" fill="#7c4dff" font-weight="bold">(a; b]</text>
+            </svg>
+            <div class="fig-caption">Полуинтервалы</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §2. БЕСКОНЕЧНЫЕ ПРОМЕЖУТКИ                                -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ БЕСКОНЕЧНОСТЬ · ЛУЧИ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Бесконечные промежутки</h2>
+
+        <p>Если ограничение есть только с одной стороны, получаются бесконечные промежутки. Знак \(\infty\) («бесконечность») означает, что число может быть сколь угодно большим (или маленьким).</p>
+
+        <div class="formula-box">
+            <strong>Открытые лучи:</strong><br>
+            \((-\infty; a)\) — \(x < a\) (выколота \(a\), штрих влево)<br>
+            \((a; +\infty)\) — \(x > a\) (выколота \(a\), штрих вправо)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Верхняя ось (-inf; a) -->
+                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
+                <line x1="30" y1="30" x2="200" y2="30" stroke="#ec4899" stroke-width="4"/>
+                <circle cx="200" cy="40" r="5" fill="white" stroke="#ec4899" stroke-width="2.5"/>
+                <text x="195" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="310" y="35" font-size="14" fill="#ec4899" font-weight="bold">(-∞; a)</text>
+
+                <!-- Нижняя ось (a; +inf) -->
+                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
+                <line x1="200" y1="100" x2="370" y2="100" stroke="#2a6fdb" stroke-width="4"/>
+                <circle cx="200" cy="110" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
+                <text x="195" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="310" y="105" font-size="14" fill="#2a6fdb" font-weight="bold">(a; +∞)</text>
+            </svg>
+            <div class="fig-caption">Открытые лучи</div>
+        </div>
+
+        <div class="formula-box">
+            <strong>Замкнутые лучи:</strong><br>
+            \((-\infty; a]\) — \(x \le a\) (закрашена \(a\), штрих влево)<br>
+            \([a; +\infty)\) — \(x \ge a\) (закрашена \(a\), штрих вправо)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Верхняя ось (-inf; a] -->
+                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
+                <line x1="30" y1="30" x2="200" y2="30" stroke="#06d6a0" stroke-width="4"/>
+                <circle cx="200" cy="40" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
+                <text x="195" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="305" y="35" font-size="14" fill="#06d6a0" font-weight="bold">(-∞; a]</text>
+
+                <!-- Нижняя ось [a; +inf) -->
+                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
+                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
+                <line x1="200" y1="100" x2="370" y2="100" stroke="#f5a623" stroke-width="4"/>
+                <circle cx="200" cy="110" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
+                <text x="195" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
+                <text x="305" y="105" font-size="14" fill="#f5a623" font-weight="bold">[a; +∞)</text>
+            </svg>
+            <div class="fig-caption">Замкнутые лучи</div>
+        </div>
+
+        <div class="formula-box">
+            <strong>Вся числовая прямая:</strong><br>
+            \((-\infty; +\infty)\) — все действительные числа (\(x \in \mathbb{R}\))
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Бесконечность — это не число, поэтому скобка рядом с \(\infty\) всегда <span class="highlight">круглая</span> (выколотая).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    §3. ИЗОБРАЖЕНИЕ НА ПРЯМОЙ                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · КАК РИСОВАТЬ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Как рисовать промежутки на прямой</h2>
+
+        <div class="note-box">
+            <strong>Правила изображения:</strong>
+            <ul style="margin-top:8px;">
+                <li>Если знак \(<\) или \(>\) — точка <strong>выколотая</strong> (кружок не закрашен).</li>
+                <li>Если знак \(\le\) или \(\ge\) — точка <strong>закрашенная</strong>.</li>
+                <li>Штриховка показывает, какие числа входят в промежуток.</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Изобразим промежуток \(x > 2\).<br>
+            Ставим выколотую точку \(2\), штрихуем вправо.<br>
+            Этот промежуток называется <em>открытым лучом</em> и обозначается \((2; +\infty)\).
+            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
+                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
+                    <line x1="150" y1="20" x2="370" y2="20" stroke="#2a6fdb" stroke-width="4"/>
+                    <circle cx="150" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
+                    <text x="145" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">2</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2.</strong> \(x \le 3\).<br>
+            Ставим закрашенную точку \(3\), штрихуем влево.<br>
+            Обозначение: \((-\infty; 3]\).
+            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
+                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
+                    <line x1="30" y1="20" x2="250" y2="20" stroke="#06d6a0" stroke-width="4"/>
+                    <circle cx="250" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
+                    <text x="245" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">3</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="example-box">
+            <strong>Пример 3.</strong> \(-2 < x \le 4\).<br>
+            Ставим выколотую точку \(-2\), закрашенную точку \(4\), штрихуем между ними.<br>
+            Обозначение: \((-2; 4]\).
+            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
+                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
+                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
+                    <line x1="120" y1="20" x2="280" y2="20" stroke="#f5a623" stroke-width="4"/>
+                    <circle cx="120" cy="30" r="5" fill="white" stroke="#f5a623" stroke-width="2.5"/>
+                    <circle cx="280" cy="30" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
+                    <text x="110" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">-2</text>
+                    <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">4</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
