@@ -28,7 +28,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 </div>
 
 <div id="app" style="display:none">
- <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button></div>
+ <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button><button id="b3" onclick="tab(3)">📬 Домашки <span id="bd"></span></button></div>
 
  <div id="t1" class="c">
   <h2>Ученики</h2>
@@ -39,6 +39,8 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
    <button onclick="addStudent()">Добавить</button>
   </div>
  </div>
+
+ <div id="t3" class="c" style="display:none"><h2>Присланные домашки</h2><div id="isT">Загрузка…</div></div>
 
  <div id="t2" class="c" style="display:none">
   <div class="row"><h2 style="margin:0">Занятия ученика:</h2><select id="sel" onchange="pick(this.value)"></select>
@@ -77,10 +79,31 @@ async function init(){
   {id:'sanie',name:'Сание',aliases:['сание','sanie'],password:'1122'}];
   await put('config/students.json',students,'create students.json');msg('Создан students.json')}
  if(!students.some(x=>x.role==='teacher')){students.unshift({id:'alina',name:'Алина',role:'teacher',aliases:['алина','alina'],password:'1111'});await put('config/students.json',students,'add teacher')}
- $('#setup').style.display='none';$('#app').style.display='block';renderStudents()}
+ $('#setup').style.display='none';$('#app').style.display='block';renderStudents();loadIssues();setInterval(loadIssues,60000)}
 
 function preview(i){sessionStorage.setItem('preview',students[i].id);location.href='index.html'}
-function tab(n){[1,2].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel()}
+let seen=-1;
+async function loadIssues(){
+ try{const r=await fetch(`https://api.github.com/repos/${cfg.repo}/issues?state=open&per_page=50&t=${Date.now()}`,{headers:H()});
+ if(!r.ok)throw new Error('Issues '+r.status);
+ const a=(await r.json()).filter(i=>!i.pull_request&&i.title.startsWith('ДЗ:'));
+ $('#bd').textContent=a.length?'('+a.length+')':'';document.title=(a.length?`(${a.length}) `:'')+'Панель учителя';
+ if(seen>=0&&a.length>seen)msg('📬 Пришла новая домашка!');seen=a.length;
+ $('#isT').innerHTML=a.length?a.map(i=>{const b=i.body||'',g=re=>(b.match(re)||[])[1]||'';
+  const st=g(/\*\*Ученик:\*\*\s*([\w-]+)/),d=g(/\*\*Дата:\*\*\s*(\d{4}-\d{2}-\d{2})/),res=g(/\*\*Результат:\*\*\s*([^\n]+)/),pc=g(/\((\d+)%\)/);
+  return `<div class="row" style="border-bottom:1px solid #eef;padding:8px 0"><div style="flex:1;min-width:220px"><b>${esc(i.title)}</b><br><small>${esc(res)} · ${new Date(i.created_at).toLocaleString('ru-RU')}</small></div>
+  <a href="${i.html_url}" target="_blank"><button class="g">Открыть отчёт</button></a>
+  <button onclick="grade(${i.number},'${st}','${d}','${pc}')">✅ Поставить балл</button>
+  <button class="g" onclick="closeIssue(${i.number})">Скрыть</button></div>`}).join(''):'Новых домашек нет 🎉'}
+ catch(e){$('#isT').textContent='❌ '+e.message+' — проверьте, что у токена есть право Issues'}}
+async function closeIssue(n){await fetch(`https://api.github.com/repos/${cfg.repo}/issues/${n}`,{method:'PATCH',headers:H(),body:JSON.stringify({state:'closed'})});loadIssues()}
+async function grade(n,st,d,pc){
+ const v=prompt('Балл за домашку (можно изменить):',pc?pc+'%':'');if(v===null)return;
+ try{const r=await get('config/'+st+'.json');const l=(r.data||[]).find(x=>x.date===d&&x.homework);
+ if(!l)return msg('Урок на '+d+' не найден — поставьте балл вручную во вкладке «Занятия»');
+ l.hwScore=v;l.hwStatus='Проверено';await put('config/'+st+'.json',r.data,'score '+st+' '+d);
+ if(cur===st)pick(st);await closeIssue(n);msg('✅ Балл поставлен')}catch(e){msg('❌ '+e.message)}}
+function tab(n){[1,2,3].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel();if(n==3)loadIssues()}
 function renderStudents(){
  $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
  `<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
