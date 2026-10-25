@@ -507,8 +507,25 @@
         </div>
     </div>
     <script>
-        const passwords = { 'valeriya': 'der44', 'amina': '5678', 'denis': '1234', 'sanie': '1122' };
-        const nameMap = { 'валерия': 'valeriya', 'лера': 'valeriya', 'амина': 'amina', 'денис': 'denis', 'сание': 'sanie', 'ден': 'denis' };
+        let users = [
+          { id:'alina', name:'Алина', role:'teacher', aliases:['алина','alina'], password:'1111' },
+          { id:'valeriya', name:'Валерия', aliases:['валерия','лера','valeriya'], password:'der44' },
+          { id:'amina', name:'Амина', aliases:['амина','amina'], password:'5678' },
+          { id:'denis', name:'Денис', aliases:['денис','ден','denis'], password:'1234' },
+          { id:'sanie', name:'Сание', aliases:['сание','sanie'], password:'1122' }
+        ];
+        function checkPreview() {
+          const p = sessionStorage.getItem('preview');
+          const u = users.find(x => x.id === p);
+          if (!u) return;
+          sessionStorage.removeItem('preview');
+          nameInput.value = u.id; passwordInput.value = u.password; handleLogin();
+        }
+        fetch('config/students.json?t=' + Date.now())
+          .then(r => r.ok ? r.json() : null)
+          .then(d => { if (Array.isArray(d) && d.length) users = d; checkPreview(); })
+          .catch(checkPreview);
+        
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
 
@@ -577,8 +594,8 @@
         });
 
         function getStudentDisplayName() {
-            const names = { valeriya: 'Валерия', amina: 'Амина', denis: 'Денис', sanie: 'Сание' };
-            return names[currentStudentId] || '';
+            const u = users.find(x => x.id === currentStudentId);
+            return u ? u.name : '';
         }
 
         function updateWelcome() {
@@ -1029,9 +1046,11 @@
             const raw = nameInput.value.trim(), password = passwordInput.value.trim();
             if (!raw) { loginError.textContent = 'Введите имя'; return; }
             if (!password) { loginError.textContent = 'Введите пароль'; return; }
-            const id = nameMap[raw.toLowerCase()];
-            if (!id) { loginError.textContent = 'Ученик не найден'; return; }
-            if (passwords[id] !== password) { loginError.textContent = 'Неверный пароль'; return; }
+            const u = users.find(x => x.aliases.includes(raw.toLowerCase()));
+            if (!u) { loginError.textContent = 'Ученик не найден'; return; }
+            if (u.password !== password) { loginError.textContent = 'Неверный пароль'; return; }
+            if (u.role === 'teacher') { sessionStorage.setItem('teacher', '1'); location.href = 'admin.html'; return; }
+            const id = u.id;
             loginError.textContent = '';
             currentStudentId = id;
             if (!(await loadLessons(id))) { loginError.textContent = 'Нет расписания'; return; }
@@ -1106,7 +1125,7 @@
         progressPrevMonthBtn.addEventListener('click', () => changeMonth(-1));
         progressNextMonthBtn.addEventListener('click', () => changeMonth(1));
 
-        window.addEventListener('DOMContentLoaded', () => { const s = new URLSearchParams(window.location.search).get('student'); if (s && nameMap[s.toLowerCase()]) nameInput.value = s; });
+        window.addEventListener('DOMContentLoaded', () => { const s = new URLSearchParams(window.location.search).get('student'); if (s) nameInput.value = s; });
     </script>
 </body>
 </html>
