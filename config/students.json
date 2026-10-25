@@ -1,5 +1,15 @@
 [
   {
+    "id": "alina",
+    "name": "Алина",
+    "role": "teacher",
+    "aliases": [
+      "алина",
+      "alina"
+    ],
+    "password": "1111"
+  },
+  {
     "id": "valeriya",
     "name": "Валерия",
     "aliases": [
