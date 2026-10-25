@@ -1,0 +1,40 @@
+[
+  {
+    "id": "valeriya",
+    "name": "Валерия",
+    "aliases": [
+      "валерия",
+      "лера",
+      "valeriya"
+    ],
+    "password": "der44"
+  },
+  {
+    "id": "amina",
+    "name": "Амина",
+    "aliases": [
+      "амина",
+      "amina"
+    ],
+    "password": "5678"
+  },
+  {
+    "id": "denis",
+    "name": "Денис",
+    "aliases": [
+      "денис",
+      "ден",
+      "denis"
+    ],
+    "password": "1234"
+  },
+  {
+    "id": "sanie",
+    "name": "Сание",
+    "aliases": [
+      "сание",
+      "sanie"
+    ],
+    "password": "1122"
+  }
+]
