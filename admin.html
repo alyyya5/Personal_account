@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Панель учителя</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#eef1fb;color:#263247;padding:20px}
+.w{max-width:1200px;margin:0 auto}.c{background:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 14px #38486e14}
+h1{margin:0 0 14px}h2{margin:0 0 12px;font-size:1.1rem}
+input,select{padding:8px 10px;border:1px solid #cfd6ea;border-radius:10px;font:inherit;max-width:100%}
+button{padding:9px 16px;border:0;border-radius:10px;background:linear-gradient(135deg,#3567c9,#6d54c7);color:#fff;font-weight:700;cursor:pointer}
+button.g{background:#e8ecf8;color:#3567c9}button.r{background:#d85c5c}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.tabs button{opacity:.55}.tabs button.on{opacity:1}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.88rem}td,th{padding:4px;text-align:left}
+td input,td select{width:100%;min-width:90px}.t{min-width:260px}
+#msg{position:fixed;bottom:16px;right:16px;background:#263247;color:#fff;padding:10px 16px;border-radius:12px;display:none}
+</style></head><body><div class="w">
+<h1>🛠 Панель учителя</h1>
+
+<div class="c" id="setup">
+ <h2>Подключение к GitHub</h2>
+ <div class="row">
+  <input id="repo" placeholder="логин/репозиторий">
+  <input id="branch" placeholder="ветка" value="main" size="8">
+  <input id="token" type="password" placeholder="токен (Contents: read/write)">
+  <button onclick="connect()">Подключиться</button>
+ </div>
+ <small>Токен хранится только в этом браузере.</small>
+</div>
+
+<div id="app" style="display:none">
+ <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button></div>
+
+ <div id="t1" class="c">
+  <h2>Ученики</h2>
+  <div class="tw"><table id="stT"></table></div>
+  <h2 style="margin-top:18px">Добавить ученика</h2>
+  <div class="row">
+   <input id="nName" placeholder="Имя (Иван)"><input id="nId" placeholder="id латиницей (ivan)"><input id="nPass" placeholder="пароль">
+   <button onclick="addStudent()">Добавить</button>
+  </div>
+ </div>
+
+ <div id="t2" class="c" style="display:none">
+  <div class="row"><h2 style="margin:0">Занятия ученика:</h2><select id="sel" onchange="pick(this.value)"></select>
+   <button onclick="saveLessons()">💾 Сохранить</button><button class="g" onclick="addLesson()">+ Урок</button></div>
+  <div class="tw"><table id="lsT"></table></div>
+ </div>
+</div>
+<div id="msg"></div></div>
+
+<script>
+if(sessionStorage.getItem('teacher')!=='1'){document.querySelector('.w').innerHTML='<div class="c"><h2>Доступ закрыт</h2><p>Войдите через <a href="index.html">главную страницу</a> под именем учителя.</p></div>';throw new Error('no access')}
+const $=s=>document.querySelector(s);
+let cfg=JSON.parse(localStorage.getItem('gh')||'{}'),students=[],lessons=[],cur=null;
+const enc=s=>btoa(unescape(encodeURIComponent(s))),dec=s=>decodeURIComponent(escape(atob(s.replace(/\n/g,''))));
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function msg(t){const m=$('#msg');m.textContent=t;m.style.display='block';setTimeout(()=>m.style.display='none',3000)}
+const url=p=>`https://api.github.com/repos/${cfg.repo}/contents/${p}`;
+const H=()=>({Authorization:'Bearer '+cfg.token,Accept:'application/vnd.github+json'});
+async function get(p){const r=await fetch(url(p)+`?ref=${cfg.branch}&t=${Date.now()}`,{headers:H()});
+ if(r.status===404)return{data:null};if(!r.ok)throw new Error('GitHub '+r.status);
+ const j=await r.json();return{data:JSON.parse(dec(j.content)),sha:j.sha}}
+async function put(p,data,m){const o=await get(p);const b={message:m,branch:cfg.branch,content:enc(JSON.stringify(data,null,2))};
+ if(o.sha)b.sha=o.sha;const r=await fetch(url(p),{method:'PUT',headers:H(),body:JSON.stringify(b)});if(!r.ok)throw new Error('Ошибка сохранения '+r.status)}
+async function del(p){const r=await fetch(url(p)+`?ref=${cfg.branch}`,{headers:H()});if(!r.ok)return;const j=await r.json();
+ await fetch(url(p),{method:'DELETE',headers:H(),body:JSON.stringify({message:'delete '+p,sha:j.sha,branch:cfg.branch})})}
+
+async function connect(){
+ cfg={repo:$('#repo').value.trim(),branch:$('#branch').value.trim()||'main',token:$('#token').value.trim()};
+ try{await init();localStorage.setItem('gh',JSON.stringify(cfg))}catch(e){msg('❌ '+e.message)}}
+async function init(){
+ let r=await get('config/students.json');students=r.data;
+ if(!students){students=[
+  {id:'valeriya',name:'Валерия',aliases:['валерия','лера','valeriya'],password:'der44'},
+  {id:'amina',name:'Амина',aliases:['амина','amina'],password:'5678'},
+  {id:'denis',name:'Денис',aliases:['денис','ден','denis'],password:'1234'},
+  {id:'sanie',name:'Сание',aliases:['сание','sanie'],password:'1122'}];
+  await put('config/students.json',students,'create students.json');msg('Создан students.json')}
+ if(!students.some(x=>x.role==='teacher')){students.unshift({id:'alina',name:'Алина',role:'teacher',aliases:['алина','alina'],password:'1111'});await put('config/students.json',students,'add teacher')}
+ $('#setup').style.display='none';$('#app').style.display='block';renderStudents()}
+
+function preview(i){sessionStorage.setItem('preview',students[i].id);location.href='index.html'}
+function tab(n){[1,2].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel()}
+function renderStudents(){
+ $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
+ `<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
+ <td><input value="${esc(s.password)}" onchange="students[${i}].password=this.value;saveSt()"></td>
+ <td><button class="g" onclick="preview(${i})">👁 Как ученик</button> <button class="r" onclick="rmStudent(${i})">Удалить</button></td></tr>`).join('')}
+async function saveSt(){try{await put('config/students.json',students,'update students');msg('✅ Сохранено')}catch(e){msg('❌ '+e.message)}}
+async function addStudent(){
+ const name=$('#nName').value.trim(),id=$('#nId').value.trim().toLowerCase(),password=$('#nPass').value.trim();
+ if(!name||!/^[a-z0-9_]+$/.test(id)||!password)return msg('Заполните имя, id (латиница) и пароль');
+ if(students.some(s=>s.id===id))return msg('Такой id уже есть');
+ try{students.push({id,name,aliases:[name.toLowerCase(),id],password});
+  await put('config/'+id+'.json',[],'add '+id);await put('config/'+id+'_tests.json',[],'add tests '+id);
+  await saveSt();renderStudents();['#nName','#nId','#nPass'].forEach(s=>$(s).value='')}catch(e){msg('❌ '+e.message)}}
+async function rmStudent(i){const s=students[i];
+ if(!confirm('Удалить '+s.name+'? Файлы расписания тоже будут удалены.'))return;
+ try{students.splice(i,1);await saveSt();await del('config/'+s.id+'.json');await del('config/'+s.id+'_tests.json');renderStudents()}catch(e){msg('❌ '+e.message)}}
+
+function renderSel(){$('#sel').innerHTML='<option value="">— выберите —</option>'+students.filter(s=>s.role!=='teacher').map(s=>`<option value="${s.id}"${s.id===cur?' selected':''}>${esc(s.name)}</option>`).join('')}
+async function pick(id){cur=id;if(!id){lessons=[];return renderLessons()}
+ try{lessons=(await get('config/'+id+'.json')).data||[];renderLessons()}catch(e){msg('❌ '+e.message)}}
+const K=['date','start','end','topic','material','homework','zoomLink','boardLink'];
+function renderLessons(){
+ lessons.sort((a,b)=>a.date.localeCompare(b.date));
+ $('#lsT').innerHTML='<tr><th>Дата</th><th>С</th><th>До</th><th>Тема</th><th>Материал</th><th>Домашка</th><th>Звонок</th><th>Доска</th><th>Статус ДЗ</th><th>Балл</th><th></th></tr>'+
+ lessons.map((l,i)=>`<tr>`+K.map(k=>`<td><input class="${k=='topic'?'t':''}" ${k=='date'?'type="date"':''} value="${esc(l[k])}" oninput="lessons[${i}].${k}=this.value"></td>`).join('')+
+ `<td><select onchange="lessons[${i}].hwStatus=this.value">${['Не решено','Не проверено','Проверено'].map(o=>`<option${o==l.hwStatus?' selected':''}>${o}</option>`).join('')}</select></td>
+ <td><input size="6" value="${esc(l.hwScore)}" oninput="lessons[${i}].hwScore=this.value||null"></td>
+ <td><button class="r" onclick="lessons.splice(${i},1);renderLessons()">✕</button></td></tr>`).join('')}
+function addLesson(){if(!cur)return msg('Выберите ученика');
+ const p=lessons[lessons.length-1]||{},n=lessons.length+1;
+ lessons.push({date:new Date().toISOString().slice(0,10),start:p.start||'16:00',end:p.end||'17:00',topic:'',
+  material:`students/${cur}/les${n}.html`,homework:`homework/${cur}/hw${n}.html`,zoomLink:p.zoomLink||'',boardLink:p.boardLink||'',hwStatus:'Не решено',hwScore:null});
+ renderLessons()}
+async function saveLessons(){if(!cur)return;try{await put('config/'+cur+'.json',lessons,'update lessons '+cur);msg('✅ Сохранено')}catch(e){msg('❌ '+e.message)}}
+
+if(cfg.token){$('#repo').value=cfg.repo;$('#branch').value=cfg.branch;$('#token').value=cfg.token;init().catch(e=>msg('❌ '+e.message))}
+</script></body></html>
