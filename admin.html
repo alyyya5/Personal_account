@@ -28,7 +28,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 </div>
 
 <div id="app" style="display:none">
- <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button><button id="b3" onclick="tab(3)">📬 Домашки <span id="bd"></span></button></div>
+ <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button><button id="b3" onclick="tab(3)">📬 Домашки <span id="bd"></span></button><button id="b4" onclick="tab(4)">📎 Файлы</button></div>
 
  <div id="t1" class="c">
   <h2>Ученики</h2>
@@ -38,6 +38,15 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
    <input id="nName" placeholder="Имя (Иван)"><input id="nId" placeholder="id латиницей (ivan)"><input id="nPass" placeholder="пароль">
    <button onclick="addStudent()">Добавить</button>
   </div>
+ </div>
+
+ <div id="t4" class="c" style="display:none"><h2>Загрузить домашку или материал урока</h2>
+  <div class="row"><select id="fS" onchange="fillL()"></select><select id="fL"></select>
+   <select id="fT"><option value="homework">Домашка</option><option value="material">Материал</option></select></div>
+  <div class="row">Файл с компьютера: <input type="file" id="fF" accept=".html,.htm"></div>
+  <p style="margin:6px 0">…или вставьте HTML-код целиком:</p>
+  <textarea id="fC" rows="8" style="width:100%;border:1px solid #cfd6ea;border-radius:10px;padding:8px"></textarea>
+  <div class="row" style="margin-top:8px"><button onclick="upload()">⬆ Загрузить</button></div>
  </div>
 
  <div id="t3" class="c" style="display:none"><h2>Присланные домашки</h2><div id="isT">Загрузка…</div></div>
@@ -103,7 +112,23 @@ async function grade(n,st,d,pc){
  if(!l)return msg('Урок на '+d+' не найден — поставьте балл вручную во вкладке «Занятия»');
  l.hwScore=v;l.hwStatus='Проверено';await put('config/'+st+'.json',r.data,'score '+st+' '+d);
  if(cur===st)pick(st);await closeIssue(n);msg('✅ Балл поставлен')}catch(e){msg('❌ '+e.message)}}
-function tab(n){[1,2,3].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel();if(n==3)loadIssues()}
+let fLs=[];
+async function putFile(p,text,m){const r=await fetch(url(p)+`?ref=${cfg.branch}&t=${Date.now()}`,{headers:H()});
+ const b={message:m,branch:cfg.branch,content:enc(text)};if(r.ok)b.sha=(await r.json()).sha;
+ const w=await fetch(url(p),{method:'PUT',headers:H(),body:JSON.stringify(b)});if(!w.ok)throw new Error('Ошибка '+w.status)}
+function initF(){$('#fS').innerHTML=students.filter(s=>s.role!=='teacher').map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');fillL()}
+async function fillL(){const id=$('#fS').value;if(!id)return;
+ try{fLs=((await get('config/'+id+'.json')).data||[]).sort((a,b)=>a.date.localeCompare(b.date));
+ $('#fL').innerHTML=fLs.map((l,i)=>`<option value="${i}">${l.date} — ${esc(l.topic||'без темы')}</option>`).join('')}catch(e){msg('❌ '+e.message)}}
+async function upload(){
+ const id=$('#fS').value,i=+$('#fL').value,t=$('#fT').value,l=fLs[i];if(!l)return msg('Выберите урок');
+ let text=$('#fC').value;const f=$('#fF').files[0];if(f)text=await f.text();
+ if(!text.trim())return msg('Выберите файл или вставьте код');
+ const path=l[t]||(t==='homework'?`homework/${id}/hw${i+1}.html`:`students/${id}/les${i+1}.html`);
+ if(!confirm('Загрузить в '+path+'? Если файл уже есть, он будет заменён.'))return;
+ try{if(!l[t]){l[t]=path;await put('config/'+id+'.json',fLs,'link '+path)}
+ await putFile(path,text,'upload '+path);$('#fC').value='';$('#fF').value='';msg('✅ Загружено, появится на сайте через 1–2 минуты')}catch(e){msg('❌ '+e.message)}}
+function tab(n){[1,2,3,4].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel();if(n==3)loadIssues();if(n==4)initF()}
 function renderStudents(){
  $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
  `<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
