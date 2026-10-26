@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Текстовые задачи на движение (ЕГЭ №11)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+            overflow-x: auto;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 18px;
+            font-size: 1.02rem;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 1rem;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #c9d4e4;
+            padding: 10px 14px;
+            text-align: center;
+        }
+        .data-table th {
+            background: #eef4ff;
+            color: #2a6fdb;
+            font-weight: 700;
+        }
+        .data-table td {
+            background: #fff;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+            .data-table { font-size: 0.9rem; }
+            .data-table th, .data-table td { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ЕГЭ №11 · ЗАДАЧИ НА ДВИЖЕНИЕ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. НЕОБХОДИМАЯ ТЕОРИЯ                               -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ТЕОРИЯ · ФОРМУЛЫ ДВИЖЕНИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Базовые величины и формулы</h2>
+
+        <p>В любой задаче на движение участвуют три величины: <strong>скорость (\(v\))</strong>, <strong>время (\(t\))** и **расстояние (\(S\))</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Главная формула:</strong><br>
+            \(S = v \cdot t\)<br><br>
+            <strong>Следствия:</strong><br>
+            \(v = \dfrac{S}{t}\) &nbsp;&nbsp;&nbsp;&nbsp; \(t = \dfrac{S}{v}\)
+        </div>
+
+        <div class="define-box">
+            <strong>Движение по воде (важно для ЕГЭ):</strong><br>
+            При движении по течению реки скорости складываются, а против течения — вычитаются.
+        </div>
+
+        <div class="formula-box">
+            \(v_{\text{по теч.}} = v_{\text{соб}} + v_{\text{теч}}\)<br><br>
+            \(v_{\text{против теч.}} = v_{\text{соб}} - v_{\text{теч}}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Стоянка (остановка):</strong> если в задаче есть слово «стоянка», это значит, что какое-то время объект не двигался. Время стоянки нужно учитывать при составлении общего времени.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. АЛГОРИТМ РЕШЕНИЯ (по таблице)                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · МЕТОД ТАБЛИЦЫ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Пошаговый алгоритм решения</h2>
+
+        <p>Большинство задач на движение удобнее всего решать с помощью таблицы из трех столбцов: \(v\), \(t\), \(S\).</p>
+
+        <ol class="step-list">
+            <li>
+                <strong>Определяем неизвестное (столбец с \(x\)).</strong><br>
+                Читаем вопрос задачи. Ту величину, которую нужно найти, обозначаем за \(x\). Заполняем тот столбец, к которому относится эта величина. Если есть зависимые величины (например, скорость по течению и против), выражаем их через \(x\) (например, \(12+x\), \(12-x\)).
+            </li>
+            <li>
+                <strong>Заносим готовые данные (столбец с числами).</strong><br>
+                Смотрим, какие числа даны в условии напрямую (без \(x\)). Заполняем тот столбец, к которому они относятся. Это могут быть конкретные значения времени, расстояния или скорости.
+            </li>
+            <li>
+                <strong>Собираем третий столбец (вычисляемый).</strong><br>
+                Остается один незаполненный столбец. Заполняем его, используя формулу связи трех величин (например, \(S = v \cdot t\)). Если известны два столбца, третий находим умножением или делением. Записываем в виде дроби или произведения, не обращая внимания на оставшиеся условия.
+            </li>
+            <li>
+                <strong>Составляем уравнение (по последнему столбцу).</strong><br>
+                Берем ту часть условия, которую мы еще не использовали. Обычно она описывает связь между двумя строками таблицы. Смотрим на последний заполненный столбец и выбираем действие:
+                <ul style="margin-top:6px;">
+                    <li>Если в условии есть сравнение («больше/меньше», «быстрее/медленнее», «на сколько-то») → ставим <strong>минус</strong> (разность). <em>Правило: из большего вычитаем меньшее.</em></li>
+                    <li>Если в условии есть объединение («всего», «вместе», «суммарно») → ставим <strong>плюс</strong> (сумма).</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Решение и проверка.</strong><br>
+                Решаем полученное уравнение. Обязательно проверяем корни: скорость, время и расстояние не могут быть отрицательными, а знаменатели дробей не должны равняться нулю. Записываем ответ.
+            </li>
+        </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ПРИМЕР ИЗ ДОМАШНЕГО ЗАДАНИЯ                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРИМЕР · ЗАДАЧА ПРО КАТЕР (№16) ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Разбор задачи по алгоритму</h2>
+
+        <div class="example-box">
+            <strong>Условие (Задача №16 из файла).</strong><br>
+            Катер в 9:00 вышел из пункта А в пункт В, расположенный в 24 км от А. Пробыв в пункте В 1 час 30 минут, катер отправился назад и вернулся в пункт А в 15:00 того же дня. Определите (в км/ч) скорость течения реки, если известно, что собственная скорость катера равна 12 км/ч.
+        </div>
+
+        <p><strong>Шаг 1. Определяем неизвестное.</strong><br>
+        Найти нужно скорость течения реки. Обозначим её за \(x\) км/ч.<br>
+        Тогда скорость по течению: \(12 + x\) км/ч.<br>
+        Скорость против течения: \(12 - x\) км/ч.</p>
+
+        <p><strong>Шаг 2. Заносим готовые данные.</strong><br>
+        Расстояние в обе стороны известно: \(S = 24\) км. Запишем это в столбец «Расстояние (S)».</p>
+
+        <p><strong>Шаг 3. Собираем третий столбец (время).</strong><br>
+        Время = Расстояние / Скорость.<br>
+        Время туда: \(t_{\text{туда}} = \dfrac{24}{12 + x}\).<br>
+        Время обратно: \(t_{\text{обратно}} = \dfrac{24}{12 - x}\).</p>
+
+        <table class="data-table">
+            <tr>
+                <th>Объект</th>
+                <th>Скорость (\(v\)), км/ч</th>
+                <th>Время (\(t\)), ч</th>
+                <th>Расстояние (\(S\)), км</th>
+            </tr>
+            <tr>
+                <td>По течению</td>
+                <td>\(12 + x\)</td>
+                <td>\(\dfrac{24}{12 + x}\)</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>Против течения</td>
+                <td>\(12 - x\)</td>
+                <td>\(\dfrac{24}{12 - x}\)</td>
+                <td>24</td>
+            </tr>
+        </table>
+
+        <p><strong>Шаг 4. Составляем уравнение.</strong><br>
+        Мы не использовали общее время. Катер вышел в 9:00, вернулся в 15:00. Всего прошло \(15 - 9 = 6\) часов.<br>
+        Из этого времени 1,5 часа катер стоял. Значит, на само движение он потратил \(6 - 1{,}5 = 4{,}5\) часа.<br>
+        Так как он плыл туда и обратно, общее время — это сумма времени туда и обратно:<br>
+        \[
+ \dfrac{24}{12 + x} + \dfrac{24}{12 - x} = 4{,}5 
+\]</p>
+
+        <p><strong>Шаг 5. Решение и проверка.</strong><br>
+        Решаем уравнение (избавимся от знаменателей, приведем подобные и найдем корни).<br>
+        В итоге получим \(x = 4\).<br>
+        Проверка: скорость течения \(4\) км/ч. По течению: \(12+4=16\) км/ч (время \(24/16 = 1.5\) ч). Против течения: \(12-4=8\) км/ч (время \(24/8 = 3\) ч). Общее время: \(1.5 + 3 = 4.5\) ч. Сходится!</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ДОПОЛНИТЕЛЬНАЯ ТЕОРИЯ (ДРОБИ)                     -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ЗАДАЧ 1-15 (ДРОБИ) ✦</div>
+
+    <div class="mini-divider">◆ АЛГЕБРАИЧЕСКИЕ ДРОБИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Что нужно помнить про алгебраические дроби</h2>
+
+        <p>Первая часть домашнего задания (задачи 1–15) посвящена упрощению выражений и работе с алгебраическими дробями. Вот основные правила, которые там пригодятся:</p>
+
+        <div class="note-box">
+            <strong>1. Вынесение за скобки (группировка).</strong><br>
+            Часто в числителе и знаменателе можно вынести общий множитель. Например: \(3a + 3 + na + n = 3(a+1) + n(a+1) = (a+1)(3+n)\).
+        </div>
+
+        <div class="note-box">
+            <strong>2. Формулы сокращенного умножения.</strong><br>
+            <ul style="margin-top:6px;">
+                <li>\(a^2 - b^2 = (a-b)(a+b)\) (разность квадратов)</li>
+                <li>\(a^2 + 2ab + b^2 = (a+b)^2\) (квадрат суммы)</li>
+                <li>\(a^2 - 2ab + b^2 = (a-b)^2\) (квадрат разности)</li>
+                <li>\(a^3 + b^3 = (a+b)(a^2 - ab + b^2)\) (сумма кубов)</li>
+                <li>\(a^3 - b^3 = (a-b)(a^2 + ab + b^2)\) (разность кубов)</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>3. Сокращение дробей.</strong><br>
+            Сокращать можно только <strong>множители</strong>. Если в числителе или знаменателе стоит сумма или разность, сначала нужно разложить её на множители (вынести общее или применить формулы), и только потом зачёркивать одинаковые скобки.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из домашнего задания).</strong> Найдите значение выражения \(\frac{11 \cdot (2x - 1)^2}{x - 1}\) при \(x = 0\).<br><br>
+            <em>Решение:</em> просто подставляем \(x = 0\) в формулу:<br>
+            \(\frac{11 \cdot (2 \cdot 0 - 1)^2}{0 - 1} = \frac{11 \cdot (-1)^2}{-1} = \frac{11 \cdot 1}{-1} = -11\).
+        </div>
+
+        <div class="note-box">
+            <strong>4. Область допустимых значений (ОДЗ).</strong><br>
+            Если в задаче просят найти значение выражения «при тех значениях \(x\), при которых оно имеет смысл», это значит, что знаменатель не должен быть равен нулю. Но если в задаче дано конкретное число, просто подставляем его и считаем.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
