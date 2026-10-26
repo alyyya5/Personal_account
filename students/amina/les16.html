@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Первый признак и элементы треугольника</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · 7 КЛАСС ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ПЕРВЫЙ ПРИЗНАК РАВЕНСТВА ТРЕУГОЛЬНИКОВ           -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ТЕОРЕМА · ПЕРВЫЙ ПРИЗНАК ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Первый признак равенства треугольников</h2>
+        
+        <div class="define-box">
+            <strong>Теорема.</strong> Если две стороны и угол <strong>между ними</strong> одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники <strong>равны</strong>.
+        </div>
+
+        <div class="formula-box">
+            \(AB = A_1B_1, \quad AC = A_1C_1, \quad \angle A = \angle A_1\)<br>
+            \(\Downarrow\)<br>
+            \(\triangle ABC = \triangle A_1B_1C_1\)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="40,160 200,160 120,40" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <circle cx="40" cy="160" r="4" fill="#ec4899"/>
+                <circle cx="200" cy="160" r="4" fill="#ec4899"/>
+                <circle cx="120" cy="40" r="4" fill="#ec4899"/>
+                <text x="25" y="180" font-size="14" fill="#0b1a33" font-weight="700">A</text>
+                <text x="205" y="180" font-size="14" fill="#0b1a33" font-weight="700">C</text>
+                <text x="115" y="30" font-size="14" fill="#0b1a33" font-weight="700">B</text>
+
+                <!-- Знак равенства -->
+                <text x="230" y="110" font-size="30" fill="#2a6fdb" font-weight="700">=</text>
+
+                <!-- Треугольник A1B1C1 -->
+                <polygon points="290,160 450,160 370,40" fill="#eef4ff" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="290" cy="160" r="4" fill="#2a6fdb"/>
+                <circle cx="450" cy="160" r="4" fill="#2a6fdb"/>
+                <circle cx="370" cy="40" r="4" fill="#2a6fdb"/>
+                <text x="270" y="180" font-size="14" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="455" y="180" font-size="14" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="365" y="30" font-size="14" fill="#0b1a33" font-weight="700">B₁</text>
+            </svg>
+            <div class="fig-caption">Если \(AB = A_1B_1\), \(AC = A_1C_1\) и \(\angle A = \angle A_1\), то \(\triangle ABC = \triangle A_1B_1C_1\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Угол обязательно должен быть <strong>между</strong> этими сторонами. Если дан угол не между ними, признак не работает.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ПРИМЕНЕНИЕ · КАК ПОЛЬЗОВАТЬСЯ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Как применять первый признак</h2>
+
+        <div class="note-box">
+            <strong>Схема оформления доказательства:</strong><br>
+            1) Рассмотрим \(\triangle \ldots\) и \(\triangle \ldots\)<br>
+            2) \(\ldots = \ldots\) (по условию)<br>
+            3) \(\ldots = \ldots\) (по условию)<br>
+            4) \(\angle \ldots = \angle \ldots\) (по условию)<br>
+            5) Значит, \(\triangle \ldots = \triangle \ldots\) по первому признаку.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (общая сторона).</strong> Даны треугольники \(ABC\) и \(ADC\). Известно, что \(AB = AD\) и \(\angle BAC = \angle DAC\).<br>
+            Докажем, что они равны.<br>
+            <em>Решение:</em> \(AB = AD\) (по условию), \(AC\) — общая сторона, \(\angle BAC = \angle DAC\) (по условию) — угол между этими сторонами. Треугольники равны по первому признаку.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. МЕДИАНА, БИССЕКТРИСА, ВЫСОТА                     -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА ✦</div>
+
+    <div class="mini-divider">◆ МЕДИАНА, БИССЕКТРИСА, ВЫСОТА ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Медиана треугольника</h2>
+        
+        <div class="define-box" style="background:#f3e8ff; border-left-color:#7c4dff;">
+            <strong style="color:#5b21b6;">Определение.</strong> <em>Медианой</em> треугольника называется отрезок, соединяющий вершину треугольника с серединой противоположной стороны.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Медиана AM -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#7c4dff" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Середина BC -->
+                <circle cx="150" cy="170" r="5" fill="#7c4dff"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="5" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="5" fill="#0b1a33"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">\(AM\) — медиана: \(BM = MC\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> медиана делит противоположную сторону <span class="highlight">пополам</span>. В любом треугольнике можно провести три медианы, и все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§4</span> Биссектриса треугольника</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Биссектрисой</em> треугольника называется отрезок биссектрисы угла треугольника, соединяющий вершину с точкой на противоположной стороне.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#f0fdf4" stroke="#06d6a0" stroke-width="2.5"/>
+                <!-- Биссектриса AL -->
+                <line x1="150" y1="30" x2="210" y2="170" stroke="#06d6a0" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="5" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="210" cy="170" r="5" fill="#06d6a0"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="215" y="185" font-size="15" fill="#0b1a33" font-weight="700">L</text>
+            </svg>
+            <div class="fig-caption">\(AL\) — биссектриса: \(\angle BAL = \angle CAL\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> биссектриса делит угол <span class="highlight">пополам</span>. В любом треугольнике можно провести три биссектрисы, и все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§5</span> Высота треугольника</h2>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Определение.</strong> <em>Высотой</em> треугольника называется перпендикуляр, проведённый из вершины треугольника к прямой, содержащей противоположную сторону.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#fff7ed" stroke="#f5a623" stroke-width="2.5"/>
+                <!-- Высота AH -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#f5a623" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Прямой угол -->
+                <polyline points="150,160 160,160 160,170" fill="none" stroke="#f5a623" stroke-width="1.5"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="5" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="5" fill="#f5a623"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">H</text>
+            </svg>
+            <div class="fig-caption">\(AH\) — высота: \(AH \perp BC\)</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> высота образует <span class="highlight">прямой угол</span> (\(90^\circ\)) с противоположной стороной. В любом треугольнике можно провести три высоты (или их продолжения), и все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ СРАВНЕНИЕ · КАК РАЗЛИЧАТЬ ◆</div>
+
+    <div class="card" style="border-left-color: #2a6fdb;">
+        <h2><span class="badge">§6</span> Как различать медиану, биссектрису и высоту</h2>
+
+        <div class="formula-box">
+            <table style="width:100%; border-collapse:collapse; font-size:1rem;">
+                <tr style="background:#dbe7ff;">
+                    <th style="padding:10px; border:1px solid #2a6fdb; text-align:left;">Элемент</th>
+                    <th style="padding:10px; border:1px solid #2a6fdb; text-align:left;">Что делает</th>
+                    <th style="padding:10px; border:1px solid #2a6fdb; text-align:left;">Как выглядит на рисунке</th>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #2a6fdb;"><strong>Медиана</strong></td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">делит сторону пополам</td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">идёт из вершины к середине стороны</td>
+                </tr>
+                <tr style="background:#f9fbff;">
+                    <td style="padding:10px; border:1px solid #2a6fdb;"><strong>Биссектриса</strong></td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">делит угол пополам</td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">идёт из вершины, делит угол на две равные части</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px; border:1px solid #2a6fdb;"><strong>Высота</strong></td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">образует прямой угол со стороной</td>
+                    <td style="padding:10px; border:1px solid #2a6fdb;">опускается из вершины перпендикулярно стороне</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="note-box">
+            <strong>Совет:</strong> чтобы не путать, запомни: <span class="highlight">медиана — к середине</span>, <span class="highlight">биссектриса — к углу</span>, <span class="highlight">высота — под прямым углом</span>.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ВАЖНОЕ СВОЙСТВО · РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§7</span> Свойство равнобедренного треугольника</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Свойство.</strong> В <em>равнобедренном</em> треугольнике медиана, проведённая к основанию, является одновременно <strong>биссектрисой</strong> и <strong>высотой</strong>.
+        </div>
+
+        <div class="note-box">
+            <strong>Почему это важно:</strong> это свойство часто используется в задачах, когда нужно доказать равенство углов или отрезков, не выполняя дополнительных построений. Достаточно провести одну линию — и она сразу «работает» за три.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
