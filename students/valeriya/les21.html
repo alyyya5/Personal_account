@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Функции, графики и степени</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ФУНКЦИИ, ГРАФИКИ И СТЕПЕНИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЧТО ТАКОЕ ФУНКЦИЯ                                -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ФУНКЦИИ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§1</span> Что такое функция</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Функция</em> — это правило, по которому каждому значению независимой переменной (аргумента \(x\)) соответствует <strong>ровно одно</strong> значение зависимой переменной (функции \(y\)).
+        </div>
+
+        <div class="formula-box">
+            <strong>Найти значение функции по формуле</strong> — значит подставить заданный \(x\) в формулу и вычислить \(y\).
+        </div>
+
+        <div class="note-box">
+            <strong>Обозначения:</strong><br>
+            \(x\) — независимая переменная (аргумент).<br>
+            \(y\) — зависимая переменная (функция).<br>
+            Запись \(y = f(x)\) означает, что \(y\) есть функция от \(x\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ГРАФИК ФУНКЦИИ                                   -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГРАФИКИ · КАК СТРОИТЬ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> График функции</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Графиком функции</em> называется множество всех точек координатной плоскости, абсциссы (\(x\)) которых равны значениям аргумента, а ординаты (\(y\)) — соответствующим значениям функции.
+        </div>
+
+        <p>Чтобы построить график функции, нужно выполнить три шага:</p>
+
+        <ol class="step-list">
+            <li><strong>Составить таблицу значений.</strong> Выбрать несколько значений \(x\) и вычислить для них \(y\) по формуле.</li>
+            <li><strong>Отметить полученные точки</strong> на координатной плоскости.</li>
+            <li><strong>Соединить их плавной линией.</strong></li>
+        </ol>
+
+        <div class="note-box">
+            <strong>Лайфхак:</strong> при составлении таблицы для дробных коэффициентов выбирай \(x\) так, чтобы \(y\) получались целыми числами. Так чертить точки будет гораздо удобнее.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Линейная функция \(y = kx + b\)</h2>
+
+        <p>Это одна из самых простых и часто встречающихся функций. Её график — всегда <strong>прямая линия</strong>.</p>
+
+        <div class="formula-box">
+            \(y = kx + b\)<br>
+            \(k\) и \(b\) — любые числа (\(k\) — угловой коэффициент, \(b\) — сдвиг по оси \(Oy\)).
+        </div>
+
+        <div class="note-box">
+            <strong>Для построения достаточно двух точек</strong>, но лучше взять 3–4, чтобы проверить себя и избежать ошибок.
+        </div>
+
+        <div class="example-box">
+            <strong>Как это работает:</strong> если \(k > 0\), прямая идёт «в гору» (возрастает). Если \(k < 0\), прямая идёт «с горы» (убывает). Число \(b\) показывает, где прямая пересекает ось \(Oy\).
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Квадратичная функция \(y = x^2\)</h2>
+
+        <p>График этой функции называется <strong>параболой</strong>.</p>
+
+        <div class="formula-box">
+            \(y = x^2\)
+        </div>
+
+        <div class="note-box">
+            <strong>Свойства графика \(y = x^2\):</strong>
+            <ul style="margin-top:8px;">
+                <li>Ветви направлены <strong>вверх</strong>.</li>
+                <li>Вершина параболы находится в точке \((0; 0)\).</li>
+                <li>График <strong>симметричен</strong> относительно оси \(Oy\) (левая и правая части одинаковы).</li>
+                <li>При возведении отрицательного числа в квадрат всегда получается положительное число, поэтому график целиком лежит в верхней полуплоскости.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. СТЕПЕНИ                                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · СТЕПЕНИ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§5</span> Что такое степень</h2>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Определение.</strong> <em>Степенью</em> числа \(a\) с натуральным показателем \(n\) называется произведение \(n\) одинаковых множителей, каждый из которых равен \(a\).
+        </div>
+
+        <div class="formula-box">
+            \(a^n = \underbrace{a \cdot a \cdot \ldots \cdot a}_{n \text{ раз}}\)
+        </div>
+
+        <p>Здесь \(a\) — <strong>основание степени</strong>, а \(n\) — <strong>показатель степени</strong>.</p>
+
+        <div class="note-box">
+            <strong>Как считать знак результата:</strong>
+            <ul style="margin-top:8px;">
+                <li>Если показатель степени <strong>чётный</strong>, то результат всегда положительный (минус «исчезает»): \((-4)^2 = 16\).</li>
+                <li>Если показатель степени <strong>нечётный</strong>, то знак сохраняется: \((-3)^3 = -27\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(2^3 = 2 \cdot 2 \cdot 2 = 8\).<br>
+            Здесь \(a = 2\) (основание), \(n = 3\) (показатель).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
