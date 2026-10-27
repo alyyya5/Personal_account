@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Квадратные корни и иррациональные числа</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card.teal { border-left-color: #14b8a6; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card h2 .badge.teal { background: #14b8a6; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+        
+        .proof-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 6px solid #64748b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #334155;
+        }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · КВАДРАТНЫЕ КОРНИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ                                       -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ БЛОК 1 · ОТ ЗАДАЧИ К ОПРЕДЕЛЕНИЮ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Арифметический квадратный корень</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Арифметическим квадратным корнем</em> из числа \(a\) называется <strong>неотрицательное</strong> число, квадрат которого равен \(a\).
+        </div>
+
+        <div class="formula-box">
+            Обозначение: \(\sqrt{a}\)<br>
+            Знак \(\sqrt{\phantom{a}}\) называют <strong>знаком радикала</strong>, а выражение под ним — <strong>подкоренным выражением</strong>.
+        </div>
+
+        <p>Из определения следуют два важнейших свойства:</p>
+        <div class="formula-box">
+            \(\sqrt{a} \ge 0\)<br><br>
+            \((\sqrt{a})^2 = a\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Выражение \(\sqrt{a}\) имеет смысл <span class="highlight">только при \(a \ge 0\)</span>.<br>
+            Почему так? Квадрат любого действительного числа неотрицателен. Поэтому не существует такого числа, квадрат которого равен отрицательному. Запись \(\sqrt{-36}\) не имеет смысла.
+        </div>
+
+        <div class="note-box">
+            <strong>Напоминание из прошлых тем:</strong>
+            <ul style="margin-top:6px;">
+                <li><strong>Рациональное число</strong> можно записать в виде несократимой дроби \(\frac{m}{n}\), где \(m \in \mathbb{Z}\), \(n \in \mathbb{N}\).</li>
+                <li><strong>Иррациональное число</strong> так записать нельзя.</li>
+                <li>Модуль числа \(a\) — это расстояние от точки \(a\) до нуля, \(|a| \ge 0\).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. УРАВНЕНИЯ ВИДА x^2 = a                           -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ БЛОК 2 · УРАВНЕНИЕ \(x^2 = a\) ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Решение уравнения \(x^2 = a\)</h2>
+
+        <p>В зависимости от знака числа \(a\) возможны три случая:</p>
+
+        <div class="note-box">
+            <strong>1. Если \(a < 0\)</strong> — корней нет (квадрат не может быть отрицательным).<br>
+            <strong>2. Если \(a = 0\)</strong> — единственный корень \(x = 0\).<br>
+            <strong>3. Если \(a > 0\)</strong> — два корня: \(x = \sqrt{a}\) и \(x = -\sqrt{a}\), то есть \(x = \pm\sqrt{a}\).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Оси -->
+                <line x1="200" y1="200" x2="200" y2="20" stroke="#2c3e5a" stroke-width="2"/>
+                <line x1="40" y1="120" x2="360" y2="120" stroke="#2c3e5a" stroke-width="2"/>
+                <text x="360" y="115" font-size="12" fill="#2c3e5a" font-weight="bold">x</text>
+                <text x="205" y="20" font-size="12" fill="#2c3e5a" font-weight="bold">y</text>
+                
+                <!-- Парабола y = x^2 -->
+                <path d="M 100 200 Q 200 -80 300 200" fill="none" stroke="#06d6a0" stroke-width="3"/>
+                
+                <!-- Линия y = a (a > 0) -->
+                <line x1="80" y1="80" x2="320" y2="80" stroke="#ec4899" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="325" y="85" font-size="12" fill="#ec4899" font-weight="bold">y = a (a>0)</text>
+                
+                <!-- Точки пересечения -->
+                <circle cx="140" cy="80" r="4" fill="#ec4899"/>
+                <circle cx="260" cy="80" r="4" fill="#ec4899"/>
+                <text x="125" y="95" font-size="12" fill="#2c3e5a" font-weight="bold">-√a</text>
+                <text x="250" y="95" font-size="12" fill="#2c3e5a" font-weight="bold">√a</text>
+            </svg>
+            <div class="fig-caption">Прямая \(y = a\) пересекает параболу \(y = x^2\) в двух точках при \(a > 0\)</div>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 1.</strong> Решить уравнение \(0{,}3x^2 = 1{,}2\).<br>
+            <em>Решение:</em> Разделим обе части на \(0{,}3\):<br>
+            \(x^2 = 1{,}2 : 0{,}3 = 4\).<br>
+            Так как \(4 > 0\), корня два: \(x_1 = 2\), \(x_2 = -2\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2 (нет корней).</strong> Решить уравнение \(-0{,}2x^2 = 1{,}8\).<br>
+            <em>Решение:</em> Разделим обе части на \(-0{,}2\):<br>
+            \(x^2 = 1{,}8 : (-0{,}2) = -9\).<br>
+            Квадрат числа не может быть отрицательным, значит, <strong>корней нет</strong>.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. СВОЙСТВА КОРНЕЙ                                  -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ СВОЙСТВА И ПРЕОБРАЗОВАНИЯ ✦</div>
+
+    <div class="mini-divider">◆ БЛОК 4 · ТЕОРЕМЫ О КОРНЯХ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Свойства квадратных корней</h2>
+
+        <div class="formula-box">
+            <strong>Теорема 1 (корень из произведения):</strong><br>
+            Если \(a \ge 0, b \ge 0\), то \(\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Теорема 2 (корень из частного):</strong><br>
+            Если \(a \ge 0, b > 0\), то \(\sqrt{\dfrac{a}{b}} = \dfrac{\sqrt{a}}{\sqrt{b}}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Следствие:</strong><br>
+            Если \(a \ge 0\), то \(\sqrt{a^{2n}} = a^n\), где \(n \in \mathbb{N}\).<br>
+            Например: \(\sqrt{a^6} = \sqrt{(a^3)^2} = a^3\).
+        </div>
+
+        <div class="note-box">
+            <strong>Внимание, частая ошибка!</strong><br>
+            Свойство \(\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}\) работает <span class="highlight">только для неотрицательных чисел</span>.<br>
+            Нельзя писать \(\sqrt{(-2)(-3)} = \sqrt{-2} \cdot \sqrt{-3}\). Выражения \(\sqrt{-2}\) и \(\sqrt{-3}\) не имеют смысла.
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ БЛОК 5 · ПРЕОБРАЗОВАНИЕ ВЫРАЖЕНИЙ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Основные приёмы работы с корнями</h2>
+
+        <p>В задачах часто требуется упростить выражения с корнями. Вот основные приёмы:</p>
+
+        <ol class="step-list">
+            <li><strong>Вынесение множителя из-под корня.</strong><br>
+            Нужно представить число под корнем в виде произведения, где один из множителей — полный квадрат.<br>
+            <em>Пример:</em> \(\sqrt{75} = \sqrt{25 \cdot 3} = \sqrt{25} \cdot \sqrt{3} = 5\sqrt{3}\).
+            </li>
+            <li><strong>Внесение множителя под корень.</strong><br>
+            Число перед корнем возводим в квадрат и заносим под знак корня.<br>
+            <em>Пример:</em> \(2\sqrt{10} = \sqrt{2^2 \cdot 10} = \sqrt{4 \cdot 10} = \sqrt{40}\).
+            </li>
+            <li><strong>Избавление от иррациональности в знаменателе.</strong><br>
+            Домножаем числитель и знаменатель на такой корень, чтобы в знаменателе получилось целое число.<br>
+            <em>Пример:</em> \(\dfrac{5}{\sqrt{6}} = \dfrac{5 \cdot \sqrt{6}}{\sqrt{6} \cdot \sqrt{6}} = \dfrac{5\sqrt{6}}{6}\).
+            </li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Сложный пример (выделение полного квадрата).</strong><br>
+            Вычислить \(\sqrt{21 - 8\sqrt{5}}\).
+            <div style="line-height:2; margin-top:6px;">
+                Заметим, что \(21 - 8\sqrt{5} = 16 - 8\sqrt{5} + 5 = 4^2 - 2 \cdot 4 \cdot \sqrt{5} + (\sqrt{5})^2\).<br>
+                Это формула квадрата разности: \((a-b)^2 = a^2 - 2ab + b^2\).<br>
+                Получаем: \((4 - \sqrt{5})^2\).<br>
+                Так как \(4 > \sqrt{5}\), то \(\sqrt{(4 - \sqrt{5})^2} = 4 - \sqrt{5}\).
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ИРРАЦИОНАЛЬНЫЕ ЧИСЛА                             -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ БЛОК 8 · ДОКАЗАТЕЛЬСТВО ИРРАЦИОНАЛЬНОСТИ ◆</div>
+
+    <div class="card teal">
+        <h2><span class="badge teal">§5</span> Иррациональные числа</h2>
+
+        <div class="define-box" style="background:#f0fdfa; border-left-color:#14b8a6;">
+            <strong style="color:#0f766e;">Определение.</strong> <em>Иррациональным числом</em> называется число, которое нельзя представить в виде несократимой дроби \(\frac{m}{n}\) (где \(m \in \mathbb{Z}\), \(n \in \mathbb{N}\)).
+        </div>
+
+        <p>Самый классический пример — число \(\sqrt{2}\). Рассмотрим теорему из учебника.</p>
+
+        <div class="proof-box">
+            <strong style="font-size:1.1rem; color:#0b1a33;">Теорема. Число \(\sqrt{2}\) является иррациональным.</strong><br><br>
+            <strong>Доказательство (методом от противного).</strong><br>
+            Предположим, что \(\sqrt{2}\) — рациональное число. Тогда его можно записать в виде несократимой дроби:<br>
+            \(\sqrt{2} = \frac{m}{n}\), где \(m, n \in \mathbb{N}\).<br><br>
+            Возведём обе части в квадрат:<br>
+            \(2 = \frac{m^2}{n^2} \implies m^2 = 2n^2\).<br><br>
+            Правая часть делится на 2, значит, \(m^2\) чётное. Но квадрат целого числа чётный тогда и только тогда, когда само число чётное. Значит, \(m\) — чётное. Пусть \(m = 2k\), где \(k \in \mathbb{N}\).<br><br>
+            Подставим:<br>
+            \((2k)^2 = 2n^2 \implies 4k^2 = 2n^2 \implies 2k^2 = n^2\).<br><br>
+            Теперь видим, что \(n^2\) чётное, следовательно, и \(n\) чётное.<br>
+            Получили, что и \(m\), и \(n\) — чётные числа. Значит, дробь \(\frac{m}{n}\) можно сократить на 2. Но мы предполагали, что она несократима!<br><br>
+            Противоречие означает, что наше исходное предположение неверно. Следовательно, \(\sqrt{2}\) — иррациональное число.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                <!-- Квадрат -->
+                <rect x="30" y="30" width="100" height="100" fill="#f0fdfa" stroke="#14b8a6" stroke-width="2"/>
+                <!-- Диагональ -->
+                <line x1="30" y1="130" x2="130" y2="30" stroke="#ec4899" stroke-width="2.5"/>
+                <!-- Подписи -->
+                <text x="80" y="145" font-size="14" fill="#2c3e5a" font-weight="bold">1</text>
+                <text x="10" y="85" font-size="14" fill="#2c3e5a" font-weight="bold">1</text>
+                <text x="90" y="70" font-size="14" fill="#ec4899" font-weight="bold">√2</text>
+            </svg>
+            <div class="fig-caption">Диагональ квадрата со стороной \(1\) равна \(\sqrt{2}\)</div>
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ОЦЕНКА КОРНЕЙ И ВЛОЖЕННЫЕ РАДИКАЛЫ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§6</span> Дополнительные приёмы</h2>
+
+        <p><strong>1. Оценка значения корня (без калькулятора).</strong><br>
+        Если нужно понять, между какими числами находится корень, используем возведение в квадрат. Например, найдем приближенное значение \(\sqrt{3}\).</p>
+        
+        <div class="note-box">
+            <ul style="margin-top:6px;">
+                <li>\(1^2 = 1\), \(2^2 = 4\), значит \(1 < \sqrt{3} < 2\).</li>
+                <li>Проверим десятые: \(1{,}7^2 = 2{,}89\), а \(1{,}8^2 = 3{,}24\). Значит, \(1{,}7 < \sqrt{3} < 1{,}8\).</li>
+                <li>Проверим сотые: \(1{,}73^2 = 2{,}9929\), а \(1{,}74^2 = 3{,}0276\). Значит, \(\sqrt{3} \approx 1{,}73\).</li>
+            </ul>
+        </div>
+
+        <p><strong>2. Вложенные корни.</strong><br>
+        Если корень стоит под корнем, вычисления начинаем с самого внутреннего (как в матрешке).</p>
+        
+        <div class="example-box">
+            <strong>Пример.</strong> Вычислить \(\sqrt{\sqrt{94 + \sqrt{36}}}\).
+            <div style="line-height:2; margin-top:6px;">
+                Сначала внутренний корень: \(\sqrt{36} = 6\).<br>
+                Подставляем: \(\sqrt{\sqrt{94 + 6}} = \sqrt{\sqrt{100}}\).<br>
+                Снова внутренний: \(\sqrt{100} = 10\).<br>
+                Остается внешний: \(\sqrt{10}\).
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
