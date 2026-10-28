@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Медианы, биссектрисы, высоты и равнобедренный треугольник</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · ТРЕУГОЛЬНИКИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА                            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВНЫЕ ЛИНИИ В ТРЕУГОЛЬНИКЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Медиана</h2>
+        
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Медианой</em> треугольника называется отрезок, соединяющий вершину треугольника с <strong>серединой</strong> противоположной стороны.
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> В любом треугольнике можно провести три медианы. Все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Биссектриса</h2>
+        
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Биссектрисой</em> треугольника называется отрезок биссектрисы угла треугольника, соединяющий вершину с точкой на противоположной стороне. Она делит угол <strong>пополам</strong>.
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> В любом треугольнике можно провести три биссектрисы. Все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Высота</h2>
+        
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Определение.</strong> <em>Высотой</em> треугольника называется перпендикуляр, опущенный из вершины треугольника на прямую, содержащую противоположную сторону (или на её продолжение). Она образует <strong>прямой угол</strong> (\(90^\circ\)).
+        </div>
+
+        <div class="note-box">
+            <strong>Свойство:</strong> В любом треугольнике можно провести три высоты (или их продолжения). Все они пересекаются в одной точке.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК                       -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК ✦</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Свойства равнобедренного треугольника</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Равнобедренным</em> называется треугольник, у которого две стороны равны. Эти равные стороны называются <strong>боковыми</strong>, а третья сторона — <strong>основанием</strong>.
+        </div>
+
+        <div class="formula-box">
+            <strong>Теорема 1 (свойство углов).</strong><br>
+            В равнобедренном треугольнике углы при основании равны.
+        </div>
+
+        <div class="formula-box">
+            <strong>Теорема 2 (свойство биссектрисы).</strong><br>
+            В равнобедренном треугольнике биссектриса, проведённая к основанию, является <strong>медианой</strong> и <strong>высотой</strong>.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Биссектриса/медиана/высота BD -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Прямой угол -->
+                <polyline points="150,160 160,160 160,170" fill="none" stroke="#ec4899" stroke-width="1.5"/>
+                
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="5" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="5" fill="#ec4899"/>
+                
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">D</text>
+            </svg>
+            <div class="fig-caption">Если \(AB = BC\), то \(\angle A = \angle C\). А если \(BD\) — биссектриса, то \(AD = DC\) и \(BD \perp AC\).</div>
+        </div>
+        
+        <div class="note-box">
+            <strong>Следствие (признак равнобедренного треугольника):</strong><br>
+            Если в треугольнике медиана (или высота), проведённая к стороне, совпадает с биссектрисой, то такой треугольник является равнобедренным.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
