@@ -1,382 +1,769 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Теория | Числовые промежутки с рисунками</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Домашнее задание | Числовые промежутки</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
     <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --border-light: #d0ddea;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            padding: 30px 20px;
-            min-height: 100vh;
-            color: #0b1a33;
-        }
-        .container { max-width: 1100px; margin: 0 auto; }
-
-        .card {
-            background: rgba(255,255,255,0.96);
-            border-radius: 28px;
-            padding: 26px 30px;
-            margin-bottom: 26px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-            border-left: 8px solid #2a6fdb;
-        }
-        .card.pink { border-left-color: #ec4899; }
-        .card.green { border-left-color: #06d6a0; }
-        .card.purple { border-left-color: #7c4dff; }
-        .card.orange { border-left-color: #f5a623; }
-        .card h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 14px;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 80px 16px 30px;
             display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .card h2 .badge {
-            background: #2a6fdb;
-            color: white;
-            font-size: 0.95rem;
-            padding: 0 16px;
-            border-radius: 40px;
-            line-height: 2;
-        }
-        .card h2 .badge.pink { background: #ec4899; }
-        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
-        .card h2 .badge.purple { background: #7c4dff; }
-        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
-        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
-        .card ul, .card ol { margin: 12px 0 8px 22px; }
-        .card li { margin-bottom: 6px; }
-
-        .formula-box {
-            background: #eef4ff;
-            border: 2px solid #2a6fdb;
-            border-radius: 14px;
-            padding: 12px 18px;
-            margin: 14px 0;
-            text-align: center;
-            font-size: 1.08rem;
-            font-weight: 500;
-            line-height: 2;
-        }
-        .example-box {
-            background: #fcf3e0;
-            border-left: 6px solid #e8b84b;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.9;
-            font-size: 1rem;
-        }
-        .example-box strong { color: #b47d2a; }
-        .note-box {
-            background: #f0f7f0;
-            border-left: 6px solid #06d6a0;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.75;
-            font-size: 1rem;
-        }
-        .note-box strong { color: #059669; }
-        .define-box {
-            background: #fdf2f8;
-            border-left: 6px solid #ec4899;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.8;
-            font-size: 1rem;
-        }
-        .define-box strong { color: #be185d; }
-
-        .fig-box {
-            background: #fafbfd;
-            border-radius: 20px;
-            padding: 16px 10px;
-            text-align: center;
-            border: 1px solid #dde3ed;
-            margin: 16px 0;
-        }
-        .fig-box svg { max-width: 100%; height: auto; }
-        .fig-caption {
-            margin-top: 10px;
-            font-weight: 500;
-            color: #2c3e5a;
-            font-size: 0.95rem;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        .section-divider {
-            text-align: center;
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.15);
-            padding: 8px 0 18px;
-            letter-spacing: 6px;
+        .sticky-timer {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: var(--accent-blue); color: white;
+            text-align: center; padding: 12px;
+            font-size: 1.2rem; font-weight: 800;
+            z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .mini-divider {
-            text-align: center;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #7c4dff;
-            padding: 4px 0 8px;
-            letter-spacing: 3px;
+        .sticky-timer.urgent {
+            background: var(--accent-red); animation: pulse 1s infinite;
         }
-        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
 
-        @media print {
-            body { background: white; padding: 10px; }
-            .card { box-shadow: none !important; break-inside: avoid; }
-            .section-divider { color: #ccc; }
+        .container {
+            max-width: 1100px; width: 100%;
+            background: var(--card-bg); border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
         }
-        @media (max-width: 500px) {
-            .card { padding: 16px; }
-            .card h2 { font-size: 1.25rem; }
+
+        header {
+            text-align: center; margin-bottom: 32px;
+            padding-bottom: 24px; border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .info-line {
+            font-size: 14px; color: var(--text-secondary);
+            margin-top: 12px; padding: 8px 16px;
+            background: #f8faff; border-radius: 8px; display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags {
+            display: flex; justify-content: center; gap: 10px;
+            margin-top: 12px; flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px; font-weight: 600; padding: 4px 14px;
+            border-radius: 40px; text-transform: uppercase;
+            letter-spacing: 0.5px; background: #dce5f2; color: #1d3a66;
+        }
+        .tag.orange { background: #fee2d6; color: var(--accent-red); }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+
+        .progress-wrap {
+            background: #f4f8fd; border: 1px solid #e2ebf5;
+            border-radius: 16px; padding: 14px 18px; margin-bottom: 32px;
+        }
+        .progress-top {
+            display: flex; justify-content: space-between;
+            align-items: center; font-size: 13px; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px; background: #e3ecf5;
+            border-radius: 20px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
+            border-radius: 20px; transition: width 0.5s ease;
+        }
+
+        .section { margin-bottom: 38px; }
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 18px; padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue); color: white;
+            width: 34px; height: 34px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px; flex-shrink: 0;
+        }
+        .section-num.green { background: var(--accent-green); }
+        .section-num.purple { background: var(--accent-purple); }
+        .section-title { font-size: 19px; font-weight: 700; }
+        .section-desc { font-size: 13px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+
+        /* --- Тесты --- */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .task-card {
+            background: #fafcff; border-radius: 14px;
+            padding: 16px 18px 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6; transition: transform 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .task-card.empty-field { border-color: var(--accent-red); background: #fdf0ee; }
+
+        .task-label {
+            font-size: 11px; font-weight: 700; color: var(--accent-blue);
+            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;
+        }
+        .task-condition {
+            font-size: 16px; margin-bottom: 12px; padding: 4px 0;
+            color: var(--text-main); line-height: 1.7;
+        }
+        .test-options {
+            display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+        }
+        .test-options label {
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 14px; font-weight: 500; color: var(--text-main);
+            cursor: pointer; padding: 6px 10px; border-radius: 10px;
+            transition: background 0.2s; border: 1px solid transparent;
+        }
+        .test-options label:hover { background: #eef3fa; border-color: #dce5ef; }
+        .test-options input[type="radio"] {
+            width: 18px; height: 18px; cursor: pointer;
+            accent-color: var(--accent-blue); margin-top: 2px; flex-shrink: 0;
+        }
+
+        /* --- Соответствия --- */
+        .match-task {
+            background: #fafcff; border-radius: 20px;
+            padding: 20px 24px; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e6edf6;
+        }
+        .match-table {
+            width: 100%; border-collapse: collapse; margin: 15px 0;
+        }
+        .match-table th {
+            text-align: center; padding: 10px;
+            background: #f8fafc; border-bottom: 2px solid #e2e8f0;
+            color: #2a6fdb; font-weight: 700;
+        }
+        .match-table td {
+            padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle;
+        }
+        .match-table tr:last-child td { border-bottom: none; }
+        .left-col { width: 50%; text-align: center; font-weight: 600; }
+        .right-col { width: 50%; text-align: center; font-size: 1.1rem; }
+
+        .number-line {
+            position: relative; height: 40px; width: 220px;
+            margin: 5px auto; display: inline-block;
+        }
+        .number-line .line {
+            position: absolute; top: 20px; left: 0; right: 0;
+            height: 2px; background: #2c3e5a;
+        }
+        .number-line .arrow {
+            position: absolute; top: 15px; right: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #2c3e5a;
+        }
+        .number-line .point {
+            position: absolute; top: 13px; width: 14px; height: 14px;
+            border-radius: 50%; border: 2px solid #ec4899;
+            background: #fff; transform: translateX(-50%); z-index: 2;
+        }
+        .number-line .point.filled { background: #ec4899; }
+        .number-line .label {
+            position: absolute; top: 30px; font-size: 12px;
+            color: #2c3e5a; transform: translateX(-50%); font-weight: bold;
+        }
+        .number-line .shade {
+            position: absolute; top: 17px; height: 8px;
+            background: rgba(236, 72, 153, 0.3); z-index: 1;
+        }
+
+        /* Поля для ответов на соответствие и функции */
+        .answer-box {
+            margin-top: 20px; background: #fbfcfe;
+            border: 2px dashed #c9d4e4; border-radius: 12px;
+            padding: 16px; display: flex; flex-wrap: wrap;
+            gap: 15px; align-items: center; justify-content: center;
+        }
+        .ans-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 1.1rem; font-weight: 600;
+        }
+        .ans-item span { color: #2a6fdb; }
+        .ans-input {
+            width: 60px; padding: 6px 10px; font-size: 1rem;
+            text-align: center; border: 2px solid var(--border-light);
+            border-radius: 8px; outline: none; transition: border 0.2s;
+            font-family: inherit;
+        }
+        .ans-input:focus { border-color: var(--accent-blue); }
+
+        /* Стиль для поля ввода функции */
+        .func-input {
+            width: 100%; padding: 12px 14px; font-size: 1.1rem;
+            border: 2px solid var(--border-light); border-radius: 10px;
+            outline: none; transition: border 0.2s; font-family: inherit;
+            background: #fbfcfe;
+        }
+        .func-input:focus { border-color: var(--accent-purple); }
+
+        .action-bar {
+            display: flex; flex-wrap: wrap; gap: 14px;
+            margin: 20px 0 24px; justify-content: center;
+        }
+        .btn {
+            padding: 10px 32px; border: none; border-radius: 40px;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+            transition: 0.2s; background: var(--accent-blue); color: white;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3); }
+        .btn:active { transform: scale(0.97); }
+        .btn-success { background: var(--accent-green); }
+        .btn-danger { background: var(--accent-red); }
+        .btn-outline { background: none; border: 2px solid var(--border-light); color: var(--text-secondary); }
+
+        .result-area {
+            background: #f8faff; border-radius: 20px;
+            padding: 20px 24px; margin-top: 20px;
+            font-size: 0.95rem; border: 1px solid #dce5ef;
+            min-height: 60px; color: var(--text-secondary); text-align: center;
+        }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(6px); display: none;
+            align-items: center; justify-content: center;
+            z-index: 1100; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; border-radius: 28px;
+            max-width: 600px; width: 100%; padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+        }
+        .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card textarea {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid #dce5ef; border-radius: 18px;
+            font-size: 0.95rem; font-family: inherit;
+            resize: vertical; outline: none;
+        }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .modal-buttons .btn { flex: 1; }
+        #modalStatus { margin-top: 10px; font-size: 0.9rem; text-align: center; }
+
+        .footer-note {
+            margin-top: 30px; padding-top: 16px;
+            border-top: 2px solid #eef2f7; font-size: 13px;
+            color: var(--text-secondary); text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            body { padding-top: 70px; }
+            .container { padding: 22px 18px; }
+            .task-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
 
-    <div class="section-divider">✦ АЛГЕБРА · ЧИСЛОВЫЕ ПРОМЕЖУТКИ ✦</div>
-
-    <!-- ============================================================ -->
-    <!--    §1. ОСНОВНЫЕ ВИДЫ ПРОМЕЖУТКОВ                             -->
-    <!-- ============================================================ -->
-
-    <div class="mini-divider">◆ ОСНОВЫ · ВИДЫ ПРОМЕЖУТКОВ ◆</div>
-
-    <div class="card">
-        <h2><span class="badge">§1</span> Отрезок, интервал и полуинтервал</h2>
-
-        <p>Пусть \(a < b\) — два числа. Множество чисел, удовлетворяющих неравенству \(a < x < b\), называется <strong>интервалом</strong> и обозначается \((a; b)\). Точки \(a\) и \(b\) этому промежутку <strong>не принадлежат</strong>.</p>
-
-        <div class="formula-box">
-            <strong>Интервал \((a; b)\):</strong><br>
-            \(a < x < b\)<br>
-            Точки \(a\) и \(b\) — <strong>выколоты</strong> (не входят).
-        </div>
-
-        <div class="fig-box">
-            <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
-                <!-- Ось -->
-                <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
-                <!-- Стрелка -->
-                <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
-                <!-- Штриховка (линия над осью) -->
-                <line x1="120" y1="20" x2="280" y2="20" stroke="#2a6fdb" stroke-width="4"/>
-                <!-- Выколотые точки -->
-                <circle cx="120" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
-                <circle cx="280" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
-                <!-- Подписи -->
-                <text x="115" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
-            </svg>
-            <div class="fig-caption">Интервал \((a; b)\) — точки выколоты</div>
-        </div>
-
-        <p>Множество чисел \(x\), для которых выполняются неравенства \(a \le x \le b\), называется <strong>отрезком</strong> и обозначается \([a; b]\). Точки \(a\) и \(b\) этому промежутку <strong>принадлежат</strong>.</p>
-
-        <div class="formula-box">
-            <strong>Отрезок \([a; b]\):</strong><br>
-            \(a \le x \le b\)<br>
-            Точки \(a\) и \(b\) — <strong>закрашены</strong> (входят).
-        </div>
-
-        <div class="fig-box">
-            <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
-                <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
-                <line x1="120" y1="20" x2="280" y2="20" stroke="#06d6a0" stroke-width="4"/>
-                <!-- Закрашенные точки -->
-                <circle cx="120" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
-                <circle cx="280" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
-                <text x="115" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
-            </svg>
-            <div class="fig-caption">Отрезок \([a; b]\) — точки закрашены</div>
-        </div>
-
-        <p>Если один конец входит, а другой нет — это <strong>полуинтервал</strong>:</p>
-        <div class="formula-box">
-            <strong>Полуинтервалы:</strong><br>
-            \([a; b)\) — \(a \le x < b\) (закрашен \(a\), выколот \(b\))<br>
-            \((a; b]\) — \(a < x \le b\) (выколот \(a\), закрашен \(b\))
-        </div>
-
-        <div class="fig-box">
-            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
-                <!-- Верхняя ось [a; b) -->
-                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
-                <line x1="120" y1="30" x2="280" y2="30" stroke="#f5a623" stroke-width="4"/>
-                <circle cx="120" cy="40" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
-                <circle cx="280" cy="40" r="5" fill="white" stroke="#f5a623" stroke-width="2.5"/>
-                <text x="115" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="275" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
-                <text x="330" y="35" font-size="14" fill="#f5a623" font-weight="bold">[a; b)</text>
-
-                <!-- Нижняя ось (a; b] -->
-                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
-                <line x1="120" y1="100" x2="280" y2="100" stroke="#7c4dff" stroke-width="4"/>
-                <circle cx="120" cy="110" r="5" fill="white" stroke="#7c4dff" stroke-width="2.5"/>
-                <circle cx="280" cy="110" r="5" fill="#7c4dff" stroke="#7c4dff" stroke-width="2.5"/>
-                <text x="115" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="275" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">b</text>
-                <text x="330" y="105" font-size="14" fill="#7c4dff" font-weight="bold">(a; b]</text>
-            </svg>
-            <div class="fig-caption">Полуинтервалы</div>
-        </div>
+    <div id="stickyTimer" class="sticky-timer">
+        ⏱ Осталось времени: <span id="timerDisplay">15:00</span>
     </div>
 
-    <!-- ============================================================ -->
-    <!--    §2. БЕСКОНЕЧНЫЕ ПРОМЕЖУТКИ                                -->
-    <!-- ============================================================ -->
+    <div class="container">
+        <header>
+            <h1>📝 Домашнее задание</h1>
+            <div class="subtitle">Числовые промежутки · Функции</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span>
+            </div>
+            <div class="tags">
+                <span class="tag">13 заданий</span>
+                <span class="tag orange">⏱ 15 минут</span>
+                <span class="tag green">Автоотправка</span>
+            </div>
+        </header>
 
-    <div class="mini-divider">◆ БЕСКОНЕЧНОСТЬ · ЛУЧИ ◆</div>
-
-    <div class="card green">
-        <h2><span class="badge green">§2</span> Бесконечные промежутки</h2>
-
-        <p>Если ограничение есть только с одной стороны, получаются бесконечные промежутки. Знак \(\infty\) («бесконечность») означает, что число может быть сколь угодно большим (или маленьким).</p>
-
-        <div class="formula-box">
-            <strong>Открытые лучи:</strong><br>
-            \((-\infty; a)\) — \(x < a\) (выколота \(a\), штрих влево)<br>
-            \((a; +\infty)\) — \(x > a\) (выколота \(a\), штрих вправо)
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span>📈 Прогресс выполнения</span>
+                <span id="progressText">Заполнено: 0 / 13</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
 
-        <div class="fig-box">
-            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
-                <!-- Верхняя ось (-inf; a) -->
-                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
-                <line x1="30" y1="30" x2="200" y2="30" stroke="#ec4899" stroke-width="4"/>
-                <circle cx="200" cy="40" r="5" fill="white" stroke="#ec4899" stroke-width="2.5"/>
-                <text x="195" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="310" y="35" font-size="14" fill="#ec4899" font-weight="bold">(-∞; a)</text>
+        <!-- ==================== БЛОК 1: ТЕСТЫ ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Тесты</div>
+                <div class="section-desc">3 вопроса</div>
+            </div>
+            <div class="task-grid">
 
-                <!-- Нижняя ось (a; +inf) -->
-                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
-                <line x1="200" y1="100" x2="370" y2="100" stroke="#2a6fdb" stroke-width="4"/>
-                <circle cx="200" cy="110" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
-                <text x="195" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="310" y="105" font-size="14" fill="#2a6fdb" font-weight="bold">(a; +∞)</text>
-            </svg>
-            <div class="fig-caption">Открытые лучи</div>
-        </div>
+                <div class="task-card">
+                    <div class="task-label">Тест №1</div>
+                    <div class="task-condition"><p>Как называется промежуток <strong>\([2; 6]\)</strong>?</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t1" value="отрезок"> отрезок</label>
+                        <label><input type="radio" name="t1" value="интервал"> интервал</label>
+                        <label><input type="radio" name="t1" value="полуинтервал"> полуинтервал</label>
+                    </div>
+                    <input type="hidden" id="q1" value="">
+                </div>
 
-        <div class="formula-box">
-            <strong>Замкнутые лучи:</strong><br>
-            \((-\infty; a]\) — \(x \le a\) (закрашена \(a\), штрих влево)<br>
-            \([a; +\infty)\) — \(x \ge a\) (закрашена \(a\), штрих вправо)
-        </div>
+                <div class="task-card">
+                    <div class="task-label">Тест №2</div>
+                    <div class="task-condition"><p>Какое неравенство соответствует промежутку <strong>\((-3; 1)\)</strong>?</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t2" value="-3<x<1"> \(-3 < x < 1\)</label>
+                        <label><input type="radio" name="t2" value="-3<=x<=1"> \(-3 \le x \le 1\)</label>
+                        <label><input type="radio" name="t2" value="-3<x<=1"> \(-3 < x \le 1\)</label>
+                    </div>
+                    <input type="hidden" id="q2" value="">
+                </div>
 
-        <div class="fig-box">
-            <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
-                <!-- Верхняя ось (-inf; a] -->
-                <line x1="30" y1="40" x2="370" y2="40" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,40 360,35 360,45" fill="#2c3e5a"/>
-                <line x1="30" y1="30" x2="200" y2="30" stroke="#06d6a0" stroke-width="4"/>
-                <circle cx="200" cy="40" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
-                <text x="195" y="60" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="305" y="35" font-size="14" fill="#06d6a0" font-weight="bold">(-∞; a]</text>
+                <div class="task-card">
+                    <div class="task-label">Тест №3</div>
+                    <div class="task-condition"><p>Какой промежуток обозначается \((-\infty; 4]\)?</p></div>
+                    <div class="test-options">
+                        <label><input type="radio" name="t3" value="x<=4"> \(x \le 4\)</label>
+                        <label><input type="radio" name="t3" value="x<4"> \(x < 4\)</label>
+                        <label><input type="radio" name="t3" value="x>=4"> \(x \ge 4\)</label>
+                    </div>
+                    <input type="hidden" id="q3" value="">
+                </div>
 
-                <!-- Нижняя ось [a; +inf) -->
-                <line x1="30" y1="110" x2="370" y2="110" stroke="#2c3e5a" stroke-width="2"/>
-                <polygon points="370,110 360,105 360,115" fill="#2c3e5a"/>
-                <line x1="200" y1="100" x2="370" y2="100" stroke="#f5a623" stroke-width="4"/>
-                <circle cx="200" cy="110" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
-                <text x="195" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">a</text>
-                <text x="305" y="105" font-size="14" fill="#f5a623" font-weight="bold">[a; +∞)</text>
-            </svg>
-            <div class="fig-caption">Замкнутые лучи</div>
-        </div>
-
-        <div class="formula-box">
-            <strong>Вся числовая прямая:</strong><br>
-            \((-\infty; +\infty)\) — все действительные числа (\(x \in \mathbb{R}\))
-        </div>
-
-        <div class="note-box">
-            <strong>Важно!</strong> Бесконечность — это не число, поэтому скобка рядом с \(\infty\) всегда <span class="highlight">круглая</span> (выколотая).
-        </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!--    §3. ИЗОБРАЖЕНИЕ НА ПРЯМОЙ                                 -->
-    <!-- ============================================================ -->
-
-    <div class="mini-divider">◆ ПРАКТИКА · КАК РИСОВАТЬ ◆</div>
-
-    <div class="card orange">
-        <h2><span class="badge orange">§3</span> Как рисовать промежутки на прямой</h2>
-
-        <div class="note-box">
-            <strong>Правила изображения:</strong>
-            <ul style="margin-top:8px;">
-                <li>Если знак \(<\) или \(>\) — точка <strong>выколотая</strong> (кружок не закрашен).</li>
-                <li>Если знак \(\le\) или \(\ge\) — точка <strong>закрашенная</strong>.</li>
-                <li>Штриховка показывает, какие числа входят в промежуток.</li>
-            </ul>
-        </div>
-
-        <div class="example-box">
-            <strong>Пример 1.</strong> Изобразим промежуток \(x > 2\).<br>
-            Ставим выколотую точку \(2\), штрихуем вправо.<br>
-            Этот промежуток называется <em>открытым лучом</em> и обозначается \((2; +\infty)\).
-            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
-                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
-                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
-                    <line x1="150" y1="20" x2="370" y2="20" stroke="#2a6fdb" stroke-width="4"/>
-                    <circle cx="150" cy="30" r="5" fill="white" stroke="#2a6fdb" stroke-width="2.5"/>
-                    <text x="145" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">2</text>
-                </svg>
             </div>
         </div>
 
-        <div class="example-box">
-            <strong>Пример 2.</strong> \(x \le 3\).<br>
-            Ставим закрашенную точку \(3\), штрихуем влево.<br>
-            Обозначение: \((-\infty; 3]\).
-            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
-                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
-                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
-                    <line x1="30" y1="20" x2="250" y2="20" stroke="#06d6a0" stroke-width="4"/>
-                    <circle cx="250" cy="30" r="5" fill="#06d6a0" stroke="#06d6a0" stroke-width="2.5"/>
-                    <text x="245" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">3</text>
-                </svg>
+        <!-- ==================== БЛОК 2: СООТВЕТСТВИЕ ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num green">2</div>
+                <div class="section-title">Задания на соответствие</div>
+                <div class="section-desc">8 ответов</div>
+            </div>
+
+            <!-- Задание 1 -->
+            <div class="match-task">
+                <div style="font-weight:700; margin-bottom:10px;">Задание 1. Рисунок → промежуток</div>
+                <table class="match-table">
+                    <tr><th>Рисунок</th><th>Промежуток</th></tr>
+                    <tr>
+                        <td class="left-col">
+                            <div class="number-line">
+                                <div class="line"></div><div class="arrow"></div>
+                                <div class="shade" style="left: 20%; right: 20%;"></div>
+                                <div class="point" style="left: 20%;"></div>
+                                <div class="point filled" style="left: 80%;"></div>
+                                <div class="label" style="left: 20%;">1</div>
+                                <div class="label" style="left: 80%;">5</div>
+                            </div>
+                        </td>
+                        <td class="right-col">1) \([1; 5)\)</td>
+                    </tr>
+                    <tr>
+                        <td class="left-col">
+                            <div class="number-line">
+                                <div class="line"></div><div class="arrow"></div>
+                                <div class="shade" style="left: 20%; right: 20%;"></div>
+                                <div class="point filled" style="left: 20%;"></div>
+                                <div class="point" style="left: 80%;"></div>
+                                <div class="label" style="left: 20%;">1</div>
+                                <div class="label" style="left: 80%;">5</div>
+                            </div>
+                        </td>
+                        <td class="right-col">2) \((1; 5]\)</td>
+                    </tr>
+                    <tr>
+                        <td class="left-col">
+                            <div class="number-line">
+                                <div class="line"></div><div class="arrow"></div>
+                                <div class="shade" style="left: 20%; right: 20%;"></div>
+                                <div class="point filled" style="left: 20%;"></div>
+                                <div class="point filled" style="left: 80%;"></div>
+                                <div class="label" style="left: 20%;">1</div>
+                                <div class="label" style="left: 80%;">5</div>
+                            </div>
+                        </td>
+                        <td class="right-col">3) \([1; 5]\)</td>
+                    </tr>
+                    <tr>
+                        <td class="left-col">
+                            <div class="number-line">
+                                <div class="line"></div><div class="arrow"></div>
+                                <div class="shade" style="left: 20%; right: 20%;"></div>
+                                <div class="point" style="left: 20%;"></div>
+                                <div class="point" style="left: 80%;"></div>
+                                <div class="label" style="left: 20%;">1</div>
+                                <div class="label" style="left: 80%;">5</div>
+                            </div>
+                        </td>
+                        <td class="right-col">4) \((1; 5)\)</td>
+                    </tr>
+                </table>
+                <div class="answer-box">
+                    <div class="ans-item"><span>А</span> <input class="ans-input" type="text" id="m1_1"></div>
+                    <div class="ans-item"><span>Б</span> <input class="ans-input" type="text" id="m1_2"></div>
+                    <div class="ans-item"><span>В</span> <input class="ans-input" type="text" id="m1_3"></div>
+                    <div class="ans-item"><span>Г</span> <input class="ans-input" type="text" id="m1_4"></div>
+                </div>
+            </div>
+
+            <!-- Задание 2 -->
+            <div class="match-task">
+                <div style="font-weight:700; margin-bottom:10px;">Задание 2. Промежуток → неравенство</div>
+                <table class="match-table">
+                    <tr><th>Промежуток</th><th>Неравенство</th></tr>
+                    <tr><td class="left-col">А) \([-3; 2]\)</td><td class="right-col">1) \(-3 < x < 2\)</td></tr>
+                    <tr><td class="left-col">Б) \((-3; 2)\)</td><td class="right-col">2) \(-3 \le x \le 2\)</td></tr>
+                    <tr><td class="left-col">В) \([-3; 2)\)</td><td class="right-col">3) \(x \ge -3\)</td></tr>
+                    <tr><td class="left-col">Г) \([-3; +\infty)\)</td><td class="right-col">4) \(-3 \le x < 2\)</td></tr>
+                </table>
+                <div class="answer-box">
+                    <div class="ans-item"><span>А</span> <input class="ans-input" type="text" id="m2_1"></div>
+                    <div class="ans-item"><span>Б</span> <input class="ans-input" type="text" id="m2_2"></div>
+                    <div class="ans-item"><span>В</span> <input class="ans-input" type="text" id="m2_3"></div>
+                    <div class="ans-item"><span>Г</span> <input class="ans-input" type="text" id="m2_4"></div>
+                </div>
             </div>
         </div>
-        
-        <div class="example-box">
-            <strong>Пример 3.</strong> \(-2 < x \le 4\).<br>
-            Ставим выколотую точку \(-2\), закрашенную точку \(4\), штрихуем между ними.<br>
-            Обозначение: \((-2; 4]\).
-            <div class="fig-box" style="margin-bottom:0; margin-top:10px; padding:10px;">
-                <svg viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="30" y1="30" x2="370" y2="30" stroke="#2c3e5a" stroke-width="2"/>
-                    <polygon points="370,30 360,25 360,35" fill="#2c3e5a"/>
-                    <line x1="120" y1="20" x2="280" y2="20" stroke="#f5a623" stroke-width="4"/>
-                    <circle cx="120" cy="30" r="5" fill="white" stroke="#f5a623" stroke-width="2.5"/>
-                    <circle cx="280" cy="30" r="5" fill="#f5a623" stroke="#f5a623" stroke-width="2.5"/>
-                    <text x="110" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">-2</text>
-                    <text x="275" y="50" font-size="14" fill="#2c3e5a" font-weight="bold">4</text>
-                </svg>
+
+        <!-- ==================== БЛОК 3: ФУНКЦИИ ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num purple">3</div>
+                <div class="section-title">Вычисление значений функции</div>
+                <div class="section-desc">2 задания</div>
             </div>
+            <div class="task-grid">
+                <div class="task-card">
+                    <div class="task-label">Задание 1 (а)</div>
+                    <div class="task-condition"><p>Функция задана формулой <strong>\(y = 4x - 5\)</strong>. Найдите значение функции при \(x = 3\).</p></div>
+                    <input type="text" class="func-input" id="q4" placeholder="Ваш ответ...">
+                </div>
+                <div class="task-card">
+                    <div class="task-label">Задание 1 (б)</div>
+                    <div class="task-condition"><p>Функция задана формулой <strong>\(y = -0.5x + 10\)</strong>. Найдите значение функции при \(x = 4\).</p></div>
+                    <input type="text" class="func-input" id="q5" placeholder="Ваш ответ...">
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+        </div>
+
+        <div id="resultArea" class="result-area">
+            📌 Заполните все поля. Таймер запущен!
+        </div>
+
+        <div class="footer-note">
+            <span>📌 Тема: Числовые промежутки и функции · 13 заданий</span>
         </div>
     </div>
 
-</div>
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправить отчёт</h3>
+            <p>Напишите, что было сложно (обязательно).</p>
+            <textarea id="reportComment" rows="4"></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
+                <button class="btn btn-outline" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
+
+        (function() {
+            let timeLeft = 15 * 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            const stickyTimer = document.getElementById('stickyTimer');
+            let timerInterval;
+
+            function formatTime(seconds) {
+                const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+                const s = (seconds % 60).toString().padStart(2, '0');
+                return `${m}:${s}`;
+            }
+
+            function startTimer() {
+                timerDisplay.textContent = formatTime(timeLeft);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = formatTime(timeLeft);
+                    if (timeLeft <= 60) stickyTimer.classList.add('urgent');
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        stickyTimer.textContent = "⏰ Время вышло! Отправка...";
+                        autoSubmitHomework();
+                    }
+                }, 1000);
+            }
+
+            // ========== ОТВЕТЫ ==========
+            const answers = {
+                // Тесты
+                q1: "отрезок",
+                q2: "-3<x<1",
+                q3: "x<=4",
+                // Задание 1 (Рисунок → промежуток)
+                m1_1: "2", // 1 выколота, 5 закрашена → (1; 5]
+                m1_2: "1", // 1 закрашена, 5 выколота → [1; 5)
+                m1_3: "4", // обе выколоты → (1; 5)
+                m1_4: "3", // обе закрашены → [1; 5]
+                // Задание 2 (Промежуток → неравенство)
+                m2_1: "2", // [-3; 2] → -3 ≤ x ≤ 2
+                m2_2: "1", // (-3; 2) → -3 < x < 2
+                m2_3: "4", // [-3; 2) → -3 ≤ x < 2
+                m2_4: "3", // [-3; +∞) → x ≥ -3
+                // Задание 3 (Функции)
+                q4: "7",   // 4*3 - 5 = 7
+                q5: "8"    // -0.5*4 + 10 = 8
+            };
+
+            const radioGroups = [
+                { name: 't1', id: 'q1' },
+                { name: 't2', id: 'q2' },
+                { name: 't3', id: 'q3' }
+            ];
+
+            const answerInputs = document.querySelectorAll('.ans-input, .func-input');
+            const resetBtn = document.getElementById('resetBtn');
+            const reportBtn = document.getElementById('reportBtn');
+            const resultArea = document.getElementById('resultArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const reportModal = document.getElementById('reportModal');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const sendReportBtn = document.getElementById('sendReportBtn');
+            const reportComment = document.getElementById('reportComment');
+            const modalStatus = document.getElementById('modalStatus');
+
+            const params = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+
+            document.getElementById('studentName').textContent = student;
+            document.getElementById('lessonDate').textContent = date;
+
+            function getRadioValue(name) {
+                const el = document.querySelector(`input[name="${name}"]:checked`);
+                return el ? el.value : '';
+            }
+
+            function setRadioHidden() {
+                radioGroups.forEach(group => {
+                    document.getElementById(group.id).value = getRadioValue(group.name);
+                });
+            }
+
+            radioGroups.forEach(group => {
+                document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        document.getElementById(group.id).value = this.value;
+                        updateProgress();
+                    });
+                });
+            });
+
+            function normalize(str) {
+                return str.trim().replace(/\s+/g, '').replace(/,/g, '.').toLowerCase();
+            }
+
+            function isAnswerCorrect(id, userVal) {
+                const right = answers[id];
+                if (!right) return false;
+                return normalize(userVal) === normalize(right);
+            }
+
+            function updateProgress() {
+                let filled = 0;
+                const allInputs = [];
+                radioGroups.forEach(group => {
+                    const hidden = document.getElementById(group.id);
+                    if (hidden) allInputs.push(hidden);
+                });
+                answerInputs.forEach(inp => allInputs.push(inp));
+                allInputs.forEach(el => { if (el.value && el.value.trim() !== '') filled++; });
+                const total = allInputs.length;
+                const pct = Math.round((filled / total) * 100);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = `Заполнено: ${filled} / ${total}`;
+            }
+
+            function resetAll() {
+                radioGroups.forEach(group => {
+                    const checked = document.querySelector(`input[name="${group.name}"]:checked`);
+                    if (checked) checked.checked = false;
+                    document.getElementById(group.id).value = '';
+                });
+                answerInputs.forEach(input => input.value = '');
+                document.querySelectorAll('.task-card.empty-field').forEach(c => c.classList.remove('empty-field'));
+                resultArea.innerHTML = '🧹 Поля очищены.';
+                progressFill.style.width = '0%';
+                updateProgress();
+            }
+
+            function validateBeforeSubmit() {
+                let emptyFields = [];
+                answerInputs.forEach(inp => { if (!inp.value.trim()) emptyFields.push(inp.id); });
+                radioGroups.forEach(g => { if (!document.getElementById(g.id).value) emptyFields.push(g.id); });
+                if (emptyFields.length > 0) {
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены поля: ${emptyFields.join(', ')}</div>`;
+                    return false;
+                }
+                return true;
+            }
+
+            reportBtn.addEventListener('click', function() {
+                if (!validateBeforeSubmit()) return;
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            });
+
+            async function executeSubmission(isAuto = false) {
+                setRadioHidden();
+                const comment = isAuto ? "Автоотправка: время вышло." : reportComment.value.trim();
+                if (!isAuto && !comment) {
+                    modalStatus.textContent = '⚠️ Напишите комментарий.';
+                    modalStatus.style.color = '#dc2626';
+                    return;
+                }
+
+                let correct = 0;
+                let total = 0;
+                let mistakes = [];
+                const allIds = Object.keys(answers);
+
+                for (let id of allIds) {
+                    let userAnswer = '';
+                    if (radioGroups.some(g => g.id === id)) {
+                        const hidden = document.getElementById(id);
+                        userAnswer = hidden ? hidden.value || '(не выбрано)' : '(не выбрано)';
+                    } else {
+                        const input = document.getElementById(id);
+                        userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
+                    }
+                    const right = answers[id];
+                    const isCorrect = isAnswerCorrect(id, userAnswer);
+                    total++;
+                    if (isCorrect) correct++;
+                    else {
+                        const card = document.getElementById(id)?.closest('.task-card, .match-task');
+                        const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
+                        mistakes.push(`❌ ${id}: ${userAnswer} (правильно: ${right})`);
+                    }
+                }
+
+                const percent = Math.round((correct / total) * 100);
+                const autoTag = isAuto ? "\n\n⚠️ **Автоотправка: время вышло.**" : "";
+
+                let reportBody = `**Ученик:** ${student}\n**Дата:** ${date}\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)${autoTag}\n\n`;
+
+                if (mistakes.length > 0) {
+                    reportBody += `**Ошибки:**\n${mistakes.join('\n')}\n\n`;
+                }
+
+                reportBody += `**Комментарий:**\n${comment}`;
+
+                const title = `ДЗ: ${student} — Промежутки и функции (${date})`;
+
+                try {
+                    if (typeof createGitHubIssue === 'function') {
+                        const issueUrl = await createGitHubIssue(title, reportBody);
+                        if (!isAuto) {
+                            modalStatus.innerHTML = `✅ Отправлено! <a href="${issueUrl}" target="_blank">Посмотреть</a>`;
+                            modalStatus.style.color = '#16a34a';
+                            setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        }
+                        resultArea.innerHTML = isAuto ? '⏰ Время вышло! Отправлено.' : '✅ Отправлено!';
+                    } else {
+                        console.log(title, reportBody);
+                        modalStatus.textContent = '✅ Отправлено! (демо)';
+                        modalStatus.style.color = '#16a34a';
+                        setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        resultArea.innerHTML = '✅ Отправлено! (демо)';
+                    }
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
+                    modalStatus.style.color = '#dc2626';
+                }
+            }
+
+            sendReportBtn.addEventListener('click', async function() {
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳...';
+                await executeSubmission(false);
+                btn.disabled = false;
+                btn.textContent = '✅ Отправить';
+            });
+
+            resetBtn.addEventListener('click', resetAll);
+            answerInputs.forEach(input => input.addEventListener('input', updateProgress));
+
+            async function autoSubmitHomework() {
+                reportBtn.disabled = true;
+                reportBtn.textContent = '⏰ Время вышло';
+                await executeSubmission(true);
+            }
+
+            updateProgress();
+            startTimer();
+        })();
+    </script>
 </body>
 </html>
