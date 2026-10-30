@@ -145,8 +145,8 @@
   },
   {
     "date": "2026-10-23",
-    "start": "16:45",
-    "end": "17:45",
+    "start": "16:00",
+    "end": "17:00",
     "topic": "Числовые промежутки",
     "material": "students/sanie/les13.html",
     "homework": "homework/sanie/hw13.html",
