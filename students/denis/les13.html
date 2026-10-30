@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Алгебраические дроби и текстовые задачи</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · АЛГЕБРА И ТЕКСТОВЫЕ ЗАДАЧИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ТЕКСТОВЫЕ ЗАДАЧИ НА ДВИЖЕНИЕ                     -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ЗАДАЧИ НА ДВИЖЕНИЕ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§1</span> Как решать задачи на движение</h2>
+
+        <p>В основе всех задач на движение лежит одна главная формула:</p>
+        <div class="formula-box">
+            \(S = v \cdot t\)<br>
+            <em>Расстояние = Скорость \(\times\) Время</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Алгоритм решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Определите, какую величину нужно найти, и обозначьте её за \(x\).</li>
+                <li>Составьте таблицу (Скорость \(v\), Время \(t\), Расстояние \(S\)).</li>
+                <li>Заполните таблицу данными из условия (используя \(x\)).</li>
+                <li>Найдите ту величину, которую можно выразить через две другие (обычно время или расстояние).</li>
+                <li>Составьте уравнение, используя оставшееся условие (сумма времен, разность скоростей и т.д.).</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (похожий на №1).</strong> Дорога состоит из подъема и спуска. Путь занял 5 часов, из которых 2 часа — спуск.<br>
+            Пусть скорость на подъеме \(x\) км/ч, тогда скорость на спуске \((x + 3)\) км/ч.<br>
+            Время подъема: \(5 - 2 = 3\) часа.<br>
+            Расстояние на подъеме: \(3x\).<br>
+            Расстояние на спуске: \(2(x + 3)\).<br>
+            Их сумма — это весь путь. Получаем уравнение: \(3x + 2(x + 3) = S\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ФОРМУЛЫ СОКРАЩЕННОГО УМНОЖЕНИЯ                   -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ФОРМУЛЫ ДЛЯ УПРОЩЕНИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§2</span> Разность квадратов</h2>
+
+        <p>Эта формула — самая важная для решения задач №3, №4, №5, №6, №7, №10.</p>
+
+        <div class="formula-box">
+            <strong>\(a^2 - b^2 = (a - b)(a + b)\)</strong>
+        </div>
+
+        <div class="note-box">
+            <strong>Как применять с корнями:</strong><br>
+            Формула работает и тогда, когда \(a\) или \(b\) являются корнями.<br>
+            Например: \(x^2 - 3 = x^2 - (\sqrt{3})^2 = (x - \sqrt{3})(x + \sqrt{3})\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №5).</strong> Рассмотрим выражение \(289z^2 - 1\).<br>
+            Это \((17z)^2 - 1^2\).<br>
+            Раскладывается как \((17z - 1)(17z + 1)\).
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Сумма и разность кубов</h2>
+
+        <p>Эти формулы нужны для задачи №12.</p>
+
+        <div class="formula-box">
+            <strong>Сумма кубов:</strong> \(a^3 + b^3 = (a + b)(a^2 - ab + b^2)\)<br><br>
+            <strong>Разность кубов:</strong> \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Второй множитель \(a^2 - ab + b^2\) называется «неполным квадратом». Он не раскладывается дальше.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ДЕЙСТВИЯ С АЛГЕБРАИЧЕСКИМИ ДРОБЯМИ               -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРАИЧЕСКИЕ ДРОБИ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§4</span> Сложение и вычитание дробей</h2>
+
+        <p>Чтобы сложить или вычесть алгебраические дроби, нужно привести их к общему знаменателю (точно так же, как с обыкновенными дробями).</p>
+
+        <div class="formula-box">
+            \(\dfrac{A}{B} \pm \dfrac{C}{D} = \dfrac{A \cdot D \pm C \cdot B}{B \cdot D}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Внимание, частая ошибка со знаками!</strong><br>
+            Если перед дробью стоит минус, он меняет знак у <strong>всего</strong> числителя.<br>
+            Например: \(\dfrac{1}{7x-4} - \dfrac{1}{7x+4} = \dfrac{(7x+4) - (7x-4)}{(7x-4)(7x+4)}\).
+        </div>
+        
+        <div class="note-box">
+            <strong>Смена знака:</strong> иногда полезно поменять знак в знаменателе, чтобы знаменатели стали одинаковыми.<br>
+            Например: \(\dfrac{1}{1 - 17z} = -\dfrac{1}{17z - 1}\) (поменяли знак перед дробью и поменяли знаки в знаменателе).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§5</span> Сокращение дробей</h2>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Правило.</strong> Сокращать можно только <strong>множители</strong>! Если в числителе или знаменателе стоит сумма или разность, сначала разложите её на множители (вынесите за скобки или примените формулу).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №4).</strong><br>
+            \(\dfrac{4(x^2 - 16)}{(x - 4)(x + 4)}\)<br>
+            В числителе скобку \((x^2 - 16)\) раскладываем по формуле разности квадратов: \((x - 4)(x + 4)\).<br>
+            Получаем: \(\dfrac{4(x - 4)(x + 4)}{(x - 4)(x + 4)}\).<br>
+            Скобки \((x - 4)\) и \((x + 4)\) полностью сокращаются, остается просто \(4\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ПОДСТАНОВКА И СИСТЕМЫ                            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ МЕТОД ПОДСТАНОВКИ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§6</span> Как работать с выражениями</h2>
+
+        <p>В задачах №8, №9, №11 вам даны не просто числа, а связи между переменными.</p>
+
+        <div class="note-box">
+            <strong>1. Прямая подстановка (№8, №9).</strong><br>
+            Если сказано \(s = 11t\), просто замените все буквы \(s\) в выражении на \(11t\).<br>
+            Если дано \(a = \sqrt[3]{\pi}\) и \(b = 2\), подставьте эти числа вместо букв и посчитайте.
+        </div>
+
+        <div class="note-box">
+            <strong>2. Выражение одной переменной через другую (№11).</strong><br>
+            Если дана система вида:
+            <ul style="margin-top:6px;">
+                <li>\(3u + w = 15\)</li>
+            </ul>
+            Вы можете выразить \(u\): \(u = \dfrac{15 - w}{3}\).<br>
+            Или выразить \(w\): \(w = 15 - 3u\).<br>
+            Подставьте это выражение в искомую формулу \(u + v - 4w + 1\) и упростите.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (похожий на №12).</strong> Упростить \(\dfrac{(x^3 + y^3)(x - y)}{x^2 - xy + y^2}\).<br>
+            Применяем формулу суммы кубов к первой скобке:<br>
+            \(x^3 + y^3 = (x + y)(x^2 - xy + y^2)\).<br>
+            Подставляем в дробь: \(\dfrac{(x + y)(x^2 - xy + y^2)(x - y)}{x^2 - xy + y^2}\).<br>
+            Скобка \((x^2 - xy + y^2)\) сокращается. Остается: \((x + y)(x - y)\).<br>
+            Раскрываем по формуле разности квадратов: \(x^2 - y^2\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. СВОЙСТВА КОРНЕЙ                                  -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ СВОЙСТВА КОРНЕЙ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§7</span> Что нужно помнить про корни</h2>
+
+        <p>В задачах часто встречаются корни. Главное правило:</p>
+
+        <div class="formula-box">
+            \((\sqrt{a})^2 = a\) (при \(a \ge 0\))<br><br>
+            \(\sqrt{a} \cdot \sqrt{a} = a\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Если в знаменателе стоит \((\sqrt{\pi} - x)\), то при подстановке значений или сокращении помните, что \(\sqrt{\pi} \cdot \sqrt{\pi} = \pi\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
