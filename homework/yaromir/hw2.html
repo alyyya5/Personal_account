@@ -474,6 +474,7 @@
                 <div class="task-card">
                     <div class="task-label orange">Тест №8 (Трапеция)</div>
                     <div class="task-condition">
+                        <!-- ИСПРАВЛЕНО: Возвращено условие с поиском основания, варианты заменены на длины -->
                         <p>В равнобокой трапеции ABCD, AB = CD = 15. Биссектриса угла A пересекает боковую сторону CD в точке O так, что CO : OD = 3 : 8. Найдите <strong>основание BC</strong>, если большее основание AD = 24.</p>
                     </div>
                     <div class="fig-box">
@@ -495,9 +496,9 @@
                         </svg>
                     </div>
                     <div class="test-options">
-                        <label><input type="radio" name="t8" value="180"> 180</label>
-                        <label><input type="radio" name="t8" value="240"> 240</label>
-                        <label><input type="radio" name="t8" value="150"> 150</label>
+                        <label><input type="radio" name="t8" value="6"> 6</label>
+                        <label><input type="radio" name="t8" value="9"> 9</label>
+                        <label><input type="radio" name="t8" value="12"> 12</label>
                     </div>
                     <input type="hidden" id="q8" value="">
                 </div>
@@ -588,7 +589,7 @@
                 q5: "8",
                 q6: "8",
                 q7: "16",
-                q8: "180",
+                q8: "6", // Исправлено на правильное основание
                 q9: "64",
                 q10: "лежащие против равных углов"
             };
