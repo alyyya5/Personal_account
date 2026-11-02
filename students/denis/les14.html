@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Задачи на работу, выражения и уравнения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ТЕКСТОВЫЕ ЗАДАЧИ                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ЗАДАЧИ НА РАБОТУ (№1, №2) ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§1</span> Задачи на совместную работу</h2>
+
+        <p>В задачах на работу (кондитер печет конфеты, насос качает воду) действует та же логика, что и в задачах на движение.</p>
+
+        <div class="formula-box">
+            <strong>Главная формула:</strong><br>
+            \(A = p \cdot t\)<br>
+            <em>Работа (A) = Производительность (p) \(\times\) Время (t)</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Как оформлять задачу (метод таблицы):</strong>
+            <ol style="margin-top:8px;">
+                <li>Обозначаем за \(x\) обычно производительность (сколько конфет в час, сколько литров в минуту).</li>
+                <li>Заполняем столбцы: Работа (\(A\)), Производительность (\(p\)), Время (\(t\)).</li>
+                <li>Время вычисляется как \(t = \frac{A}{p}\).</li>
+                <li>Составляем уравнение, используя разницу во времени («на 4 часа быстрее/медленнее») или общее время.</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (схема для Задачи №1).</strong><br>
+            Работа = 285 конфет.<br>
+            Пусть \(p\) первого = \(x\) конфет/час. Тогда \(p\) второго = \((x - 4)\) конфет/час.<br>
+            Время первого: \(\frac{285}{x}\).<br>
+            Время второго: \(\frac{285}{x-4}\).<br>
+            Так как первый делает быстрее (тратит меньше времени), уравнение имеет вид:<br>
+            \(\frac{285}{x-4} - \frac{285}{x} = 4\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. АЛГЕБРАИЧЕСКИЕ ВЫРАЖЕНИЯ                         -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ПРЕОБРАЗОВАНИЕ ВЫРАЖЕНИЙ ✦</div>
+
+    <div class="mini-divider">◆ ФОРМУЛЫ И ГРУППИРОВКА ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§2</span> Метод группировки (Задачи №3, 4, 7, 8)</h2>
+
+        <p>Если в числителе или знаменателе стоит многочлен из 4 и более слагаемых, их нужно сгруппировать, чтобы вынести общий множитель.</p>
+
+        <div class="example-box">
+            <strong>Пример (из №3):</strong> \(bc + 3ac - 2ab - 6a^2\).<br>
+            Группируем первое со вторым, а третье с четвертым:<br>
+            \(c(b + 3a) - 2a(b + 3a)\).<br>
+            Теперь выносим общую скобку \((b + 3a)\):<br>
+            \((b + 3a)(c - 2a)\).<br>
+            А в знаменателе \((c^2 - 4a^2)\) — это разность квадратов: \((c - 2a)(c + 2a)\).<br>
+            Дробь отлично сокращается!
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Разность квадратов и корни (Задачи №4, 6, 7, 8)</h2>
+
+        <p>Формула разности квадратов работает не только с обычными числами, но и с квадратными корнями.</p>
+
+        <div class="formula-box">
+            \(a^2 - b^2 = (a - b)(a + b)\)<br><br>
+            <em>Для корней:</em><br>
+            \(x^2 - (\sqrt{k})^2 = (x - \sqrt{k})(x + \sqrt{k})\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №6):</strong> Выражение \(\frac{4x - 25y}{2\sqrt{x} - 5\sqrt{y}}\).<br>
+            Заметим, что \(4x = (2\sqrt{x})^2\), а \(25y = (5\sqrt{y})^2\).<br>
+            Числитель раскладывается как разность квадратов: \((2\sqrt{x} - 5\sqrt{y})(2\sqrt{x} + 5\sqrt{y})\).<br>
+            Знаменатель сокращается, остается просто \(2\sqrt{x} + 5\sqrt{y}\).
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§4</span> Свойства степеней (Задачи №9, 10)</h2>
+
+        <div class="formula-box">
+            \(\dfrac{a^n}{a^m} = a^{n-m}\)<br><br>
+            \(a^0 = 1\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №9):</strong> Выражение \(\frac{31 \cdot (x - 2017)^{2017}}{(x - 2017)^2}\) при \(x = 2018\).<br>
+            Сначала подставим \(x = 2018\):<br>
+            \(x - 2017 = 2018 - 2017 = 1\).<br>
+            Получаем: \(\frac{31 \cdot 1^{2017}}{1^2} = 31 \cdot 1 = 31\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ                          -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ УРАВНЕНИЯ №15–17 ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§5</span> Как решать</h2>
+
+        <p>Главный метод решения простейших показательных уравнений — <strong>приведение к одному основанию</strong>.</p>
+
+        <div class="formula-box">
+            Если \(a^{f(x)} = a^{g(x)}\), то \(f(x) = g(x)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Полезные преобразования:</strong>
+            <ul style="margin-top:6px;">
+                <li>Десятичные дроби переводим в обыкновенные: \(0{,}2 = \frac{1}{5}\), \(0{,}04 = \frac{1}{25}\).</li>
+                <li>Отрицательная степень: \(\left(\frac{1}{5}\right)^{-n} = 5^n\).</li>
+                <li>Числа типа 125 представляем как степень: \(125 = 5^3\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №16):</strong> \(0{,}2^{5+4x} = 125\).<br>
+            Переведем \(0{,}2\) в \(\frac{1}{5}\), а \(125\) в \(5^3\).<br>
+            \(\left(\frac{1}{5}\right)^{5+4x} = 5^3\).<br>
+            Перевернем левую дробь (поменяем знак степени):<br>
+            \(5^{-(5+4x)} = 5^3\).<br>
+            Основания равны, приравниваем степени:<br>
+            \(-(5 + 4x) = 3 \implies -5 - 4x = 3 \implies -4x = 8 \implies x = -2\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ                        -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ УРАВНЕНИЯ №18–24 ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§6</span> Определение логарифма</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> Логарифм числа \(b\) по основанию \(a\) — это показатель степени, в которую нужно возвести \(a\), чтобы получить \(b\).
+        </div>
+
+        <div class="formula-box">
+            \(\log_a b = c \quad \Leftrightarrow \quad a^c = b\)
+        </div>
+
+        <div class="note-box">
+            <strong>Ограничения (ОДЗ):</strong><br>
+            \(a > 0\), \(a \neq 1\) (основание), \(b > 0\) (аргумент).
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§7</span> Свойства логарифмов</h2>
+
+        <p>Для решения задач вам понадобятся следующие свойства:</p>
+
+        <div class="formula-box">
+            <strong>1. Сложение логарифмов (с одинаковым основанием):</strong><br>
+            \(\log_a b + \log_a c = \log_a(b \cdot c)\)<br><br>
+            <strong>2. Вынесение степени из аргумента:</strong><br>
+            \(n \log_a b = \log_a (b^n)\)<br><br>
+            <strong>3. Логарифм основания:</strong><br>
+            \(\log_a a = 1\)<br><br>
+            <strong>4. Равенство логарифмов:</strong><br>
+            \(\log_a f(x) = \log_a g(x) \implies f(x) = g(x)\) (при условии \(f(x)>0, g(x)>0\))
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №21):</strong> \(\log_5(5-x) = 2\log_5 3\).<br>
+            Сначала внесем двойку внутрь логарифма как степень:<br>
+            \(2\log_5 3 = \log_5(3^2) = \log_5 9\).<br>
+            Уравнение принимает вид:<br>
+            \(\log_5(5-x) = \log_5 9\).<br>
+            Приравниваем аргументы:<br>
+            \(5 - x = 9 \implies -x = 4 \implies x = -4\).
+            <em>(Не забываем проверить ОДЗ: \(5 - (-4) = 9 > 0\) — подходит).</em>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (из №23):</strong> \(\log_5(7-x) = \log_5(3-x) + 1\).<br>
+            Единицу представляем как \(\log_5 5\).<br>
+            \(\log_5(7-x) = \log_5(3-x) + \log_5 5\).<br>
+            Сворачиваем правую часть по свойству суммы:<br>
+            \(\log_5(7-x) = \log_5((3-x) \cdot 5)\).<br>
+            \(7 - x = 15 - 5x\).<br>
+            \(4x = 8 \implies x = 2\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
