@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Признаки равенства и элементы треугольника</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · 7 КЛАСС ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ПЕРВЫЙ ПРИЗНАК РАВЕНСТВА                         -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ПЕРВЫЙ ПРИЗНАК ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Первый признак равенства треугольников</h2>
+
+        <div class="define-box">
+            <strong>Теорема.</strong> Если две стороны и угол <strong>между ними</strong> одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники <strong>равны</strong>.
+        </div>
+
+        <div class="formula-box">
+            \(AB = A_1B_1\)<br>
+            \(AC = A_1C_1\)<br>
+            \(\angle A = \angle A_1\)<br>
+            \(\Downarrow\)<br>
+            \(\triangle ABC = \triangle A_1B_1C_1\)
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="40,150 160,150 100,30" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <circle cx="40" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="160" cy="150" r="4" fill="#ec4899"/>
+                <circle cx="100" cy="30" r="4" fill="#ec4899"/>
+                <text x="25" y="170" font-size="14" fill="#0b1a33" font-weight="700">A</text>
+                <text x="165" y="170" font-size="14" fill="#0b1a33" font-weight="700">C</text>
+                <text x="95" y="22" font-size="14" fill="#0b1a33" font-weight="700">B</text>
+
+                <text x="220" y="100" font-size="30" fill="#2a6fdb" font-weight="700">=</text>
+
+                <!-- Треугольник A1B1C1 -->
+                <polygon points="300,150 420,150 360,30" fill="#eef4ff" stroke="#2a6fdb" stroke-width="2.5"/>
+                <circle cx="300" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="420" cy="150" r="4" fill="#2a6fdb"/>
+                <circle cx="360" cy="30" r="4" fill="#2a6fdb"/>
+                <text x="280" y="170" font-size="14" fill="#0b1a33" font-weight="700">A₁</text>
+                <text x="425" y="170" font-size="14" fill="#0b1a33" font-weight="700">C₁</text>
+                <text x="355" y="22" font-size="14" fill="#0b1a33" font-weight="700">B₁</text>
+            </svg>
+            <div class="fig-caption">Если две стороны и угол между ними равны, то треугольники равны</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Угол обязательно должен лежать <span class="highlight">между</span> этими сторонами. Если угол прилежит только к одной стороне, признак не работает.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Как оформлять доказательство</h2>
+
+        <p>Чтобы доказать равенство треугольников, нужно четко выделить три пары равных элементов.</p>
+
+        <div class="note-box">
+            <strong>Схема оформления:</strong><br>
+            1) Рассмотрим \(\triangle \ldots\) и \(\triangle \ldots\)<br>
+            2) \(\ldots = \ldots\) (по условию)<br>
+            3) \(\ldots = \ldots\) (по условию или так как общая сторона)<br>
+            4) \(\angle \ldots = \angle \ldots\) (по условию или как вертикальные углы)<br>
+            5) Значит, \(\triangle \ldots = \triangle \ldots\) по первому признаку.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (пересекающиеся отрезки).</strong><br>
+            Даны отрезки \(AB\) и \(CD\), пересекающиеся в точке \(O\). Известно, что \(AO = OB\) и \(CO = OD\).<br>
+            Докажем равенство \(\triangle AOC\) и \(\triangle BOD\).<br>
+            <em>Решение:</em> \(AO = OB\) (по условию), \(CO = OD\) (по условию), \(\angle AOC = \angle BOD\) (вертикальные углы). Треугольники равны по первому признаку. Следовательно, и соответствующие стороны \(AC = BD\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА                            -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА ✦</div>
+
+    <div class="mini-divider">◆ МЕДИАНА, БИССЕКТРИСА, ВЫСОТА ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Основные линии в треугольнике</h2>
+
+        <p>В любом треугольнике из вершины можно провести три особые линии. Они отличаются тем, что именно «делают» с противоположной стороной.</p>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Медиана</strong> — отрезок, соединяющий вершину треугольника с <strong>серединой</strong> противоположной стороны.<br>
+            <em>Свойство: делит сторону пополам.</em>
+        </div>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Биссектриса</strong> — отрезок, исходящий из вершины угла и делящий этот <strong>угол пополам</strong>.
+        </div>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Высота</strong> — перпендикуляр, опущенный из вершины треугольника на противоположную сторону (или её продолжение).<br>
+            <em>Свойство: образует угол \(90^\circ\) со стороной.</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Лайфхак для запоминания:</strong> <span class="highlight">Медиана — к середине</span>, <span class="highlight">Биссектриса — к углу</span>, <span class="highlight">Высота — под прямым углом</span>.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК                       -->
+    <!-- ============================================================ -->
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Свойства равнобедренного треугольника</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Равнобедренным</em> называется треугольник, у которого две стороны равны (они называются <strong>боковыми</strong>). Третья сторона — <strong>основание</strong>.
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство углов:</strong><br>
+            В равнобедренном треугольнике углы при основании равны.<br>
+            \(\angle A = \angle C\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство медианы (биссектрисы, высоты):</strong><br>
+            В равнобедренном треугольнике медиана, проведенная к основанию, является <strong>одновременно биссектрисой и высотой</strong>.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Медиана BM -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="5" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="5" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="5" fill="#ec4899"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">Если \(AB = BC\), то \(BM \perp AC\), \(AM = MC\), и \(\angle ABM = \angle MBC\)</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. РАБОТА С ПЕРИМЕТРОМ И УГЛАМИ                     -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ РАСЧЕТЫ В ЗАДАЧАХ ✦</div>
+
+    <div class="mini-divider">◆ ПЕРИМЕТР И УГЛЫ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Как использовать периметр</h2>
+
+        <p>В задачах часто даны два периметра треугольников, разделенных медианой. Обратите внимание, как они связаны.</p>
+
+        <div class="example-box">
+            <strong>Пример (Задача №4).</strong> В \(\triangle ABC\) проведена медиана \(BM\). Периметр \(\triangle ABM\) равен \(16\), а периметр \(\triangle CBM\) равен \(12\). Найдите разность \(AB\) и \(BC\).<br><br>
+            <em>Решение:</em><br>
+            \(P_{ABM} = AB + AM + BM = 16\)<br>
+            \(P_{CBM} = BC + MC + BM = 12\)<br>
+            Так как \(BM\) — медиана, то \(AM = MC\).<br>
+            Если мы вычтем из первого уравнения второе, то \(AM\) и \(MC\) сократятся, и \(BM\) тоже сократится:<br>
+            \((AB + AM + BM) - (BC + MC + BM) = 16 - 12\)<br>
+            \(AB - BC = 4\).
+        </div>
+        
+        <div class="note-box">
+            <strong>Полезно запомнить:</strong> Разность периметров двух треугольников, образованных медианой, равна разности их боковых сторон.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§6</span> Как считать углы</h2>
+
+        <p>Если из одной вершины проведены и высота, и биссектриса, угол между ними ищется через разность.</p>
+
+        <div class="example-box">
+            <strong>Пример (Задача №6).</strong> В \(\triangle ABC\) проведены высота \(BH\) и биссектриса \(BL\). Известно, что \(\angle ABC = 70^\circ\), а \(\angle ABH = 20^\circ\). Найти \(\angle HBL\).<br><br>
+            <em>Решение:</em><br>
+            1) Биссектриса \(BL\) делит угол \(ABC\) пополам. Значит, \(\angle ABL = 70^\circ : 2 = 35^\circ\).<br>
+            2) Высота \(BH\) лежит внутри угла \(ABC\) (ближе к стороне \(AB\)).<br>
+            3) Угол между высотой и биссектрисой — это разность \(\angle ABL\) и \(\angle ABH\):<br>
+            \(\angle HBL = \angle ABL - \angle ABH = 35^\circ - 20^\circ = 15^\circ\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
