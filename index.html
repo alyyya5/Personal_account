@@ -725,8 +725,8 @@
             progressMonthLabel.textContent = `${monthNamesFull[currentMonth]} ${currentYear}`;
 
             // Границы выбранного месяца
-            const monthStart = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`;
-            const monthEnd = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(new Date(currentYear, currentMonth + 1, 0).getDate()).padStart(2, '0')}`;
+            const monthStart = window.allTime ? '0000-01-01' : `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`;
+            const monthEnd = window.allTime ? '9999-12-31' : `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(new Date(currentYear, currentMonth + 1, 0).getDate()).padStart(2, '0')}`;
 
             // Только уроки выбранного месяца
             const monthLessons = lessonsData.filter(l => l.date >= monthStart && l.date <= monthEnd);
@@ -1127,5 +1127,6 @@
 
         window.addEventListener('DOMContentLoaded', () => { const s = new URLSearchParams(window.location.search).get('student'); if (s) nameInput.value = s; });
     </script>
+    <script src="extras.js"></script>
 </body>
 </html>
