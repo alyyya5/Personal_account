@@ -13,8 +13,9 @@ button.g{background:#e8ecf8;color:#3567c9}button.r{background:#d85c5c}
 .tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.88rem}td,th{padding:4px;text-align:left}
 td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 #msg{position:fixed;bottom:16px;right:16px;background:#263247;color:#fff;padding:10px 16px;border-radius:12px;display:none}
+.sg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.sg>b{text-align:center}.dc{min-height:70px;background:#f4f6fd;border-radius:10px;padding:6px}.dc.td{outline:2px solid #3567c9}.dc.ot{opacity:.4}.ls{font-size:.78rem;background:#e8ecf8;border-radius:6px;padding:2px 5px;margin-top:3px}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя</h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 6</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -28,7 +29,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 </div>
 
 <div id="app" style="display:none">
- <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button><button id="b3" onclick="tab(3)">📬 Домашки <span id="bd"></span></button><button id="b4" onclick="tab(4)">📎 Файлы</button></div>
+ <div class="row tabs"><button id="b1" class="on" onclick="tab(1)">👥 Ученики</button><button id="b2" onclick="tab(2)">📅 Занятия</button><button id="b3" onclick="tab(3)">📬 Домашки <span id="bd"></span></button><button id="b4" onclick="tab(4)">📎 Файлы</button><button id="b5" onclick="tab(5)">🗓 Моё расписание</button></div>
 
  <div id="t1" class="c">
   <h2>Ученики</h2>
@@ -39,6 +40,11 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
    <button onclick="addStudent()">Добавить</button>
   </div>
  </div>
+
+ <div id="t5" class="c" style="display:none">
+  <div class="row"><button class="g" onclick="sc.m='w';sc.off=0;renderSch()">Неделя</button><button class="g" onclick="sc.m='m';sc.off=0;renderSch()">Месяц</button>
+   <button class="g" onclick="sc.off--;renderSch()">◀</button><b id="scTitle"></b><button class="g" onclick="sc.off++;renderSch()">▶</button></div>
+  <div class="sg" id="scG"></div></div>
 
  <div id="t4" class="c" style="display:none"><h2>Загрузить домашку или материал урока</h2>
   <div class="row"><select id="fS" onchange="fillL()"></select><select id="fL"></select>
@@ -53,7 +59,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 
  <div id="t2" class="c" style="display:none">
   <div class="row"><h2 style="margin:0">Занятия ученика:</h2><select id="sel" onchange="pick(this.value)"></select>
-   <button onclick="saveLessons()">💾 Сохранить</button><button class="g" onclick="addLesson()">+ Урок</button></div>
+   <button onclick="saveLessons()">💾 Сохранить</button><button class="g" onclick="addLesson()">+ Урок</button><button class="g" onclick="addLesson(4)">+ 4 урока</button></div>
   <div class="tw"><table id="lsT"></table></div>
  </div>
 </div>
@@ -105,13 +111,30 @@ async function loadIssues(){
   <button onclick="grade(${i.number},'${st}','${d}','${pc}')">✅ Поставить балл</button>
   <button class="g" onclick="closeIssue(${i.number})">Скрыть</button></div>`}).join(''):'Новых домашек нет 🎉'}
  catch(e){$('#isT').textContent='❌ '+e.message+' — проверьте, что у токена есть право Issues'}}
-async function closeIssue(n){await fetch(`https://api.github.com/repos/${cfg.repo}/issues/${n}`,{method:'PATCH',headers:H(),body:JSON.stringify({state:'closed'})});loadIssues()}
+async function closeIssue(n){
+ try{const r=await fetch(`https://api.github.com/repos/${cfg.repo}/issues/${n}`,{method:'PATCH',headers:H(),body:JSON.stringify({state:'closed'})});
+ if(!r.ok){msg(r.status===403||r.status===404?'❌ Нет права закрывать отчёты: у токена в Issues нужно «Read and write»':'❌ Ошибка '+r.status);return false}
+ await loadIssues();return true}catch(e){msg('❌ '+e.message);return false}}
 async function grade(n,st,d,pc){
  const v=prompt('Балл за домашку (можно изменить):',pc?pc+'%':'');if(v===null)return;
  try{const r=await get('config/'+st+'.json');const l=(r.data||[]).find(x=>x.date===d&&x.homework);
  if(!l)return msg('Урок на '+d+' не найден — поставьте балл вручную во вкладке «Занятия»');
  l.hwScore=v;l.hwStatus='Проверено';await put('config/'+st+'.json',r.data,'score '+st+' '+d);
  if(cur===st)pick(st);await closeIssue(n);msg('✅ Балл поставлен')}catch(e){msg('❌ '+e.message)}}
+const DN={пн:1,вт:2,ср:3,чт:4,пт:5,сб:6,вс:0},DR=['вс','пн','вт','ср','чт','пт','сб'];
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fmtSch=s=>(s.schedule||[]).map(x=>`${DR[x.d]} ${x.start}-${x.end}`).join(', ');
+function setSch(i,v){students[i].schedule=[...v.matchAll(/(пн|вт|ср|чт|пт|сб|вс)\s*(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/gi)].map(m=>({d:DN[m[1].toLowerCase()],start:m[2].padStart(5,'0'),end:m[3].padStart(5,'0')}));saveSt();renderStudents()}
+function nextSlot(sch,after){if(!sch.length)return null;const d=new Date(after+'T12:00:00');
+ for(let k=0;k<400;k++){d.setDate(d.getDate()+1);const sl=sch.filter(x=>x.d===d.getDay()).sort((a,b)=>a.start.localeCompare(b.start))[0];if(sl)return{date:iso(d),start:sl.start,end:sl.end}}return null}
+let sc={all:[],m:'w',off:0};
+async function loadSch(){try{sc.all=(await Promise.all(students.filter(s=>s.role!=='teacher').map(async s=>((await get('config/'+s.id+'.json')).data||[]).map(l=>({...l,n:s.name}))))).flat();renderSch()}catch(e){msg('❌ '+e.message)}}
+function renderSch(){const t=new Date(),days=[],W=sc.m==='w',f=new Date(t.getFullYear(),t.getMonth()+sc.off,1);let a;
+ if(W){a=new Date(t);a.setDate(t.getDate()-((t.getDay()+6)%7)+sc.off*7);for(let i=0;i<7;i++){const d=new Date(a);d.setDate(a.getDate()+i);days.push(d)}}
+ else{const e=new Date(f.getFullYear(),f.getMonth()+1,0),off=(f.getDay()+6)%7;a=new Date(f);a.setDate(1-off);for(let i=0;i<Math.ceil((off+e.getDate())/7)*7;i++){const d=new Date(a);d.setDate(a.getDate()+i);days.push(d)}}
+ $('#scTitle').textContent=W?days[0].toLocaleDateString('ru-RU')+' – '+days[6].toLocaleDateString('ru-RU'):f.toLocaleDateString('ru-RU',{month:'long',year:'numeric'});
+ $('#scG').innerHTML=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>`<b>${x}</b>`).join('')+days.map(d=>{const k=iso(d),ls=sc.all.filter(l=>l.date===k).sort((x,y)=>x.start.localeCompare(y.start));
+  return `<div class="dc${k===iso(t)?' td':''}${!W&&d.getMonth()!==f.getMonth()?' ot':''}"><small>${d.getDate()}</small>${ls.map(l=>`<div class="ls" title="${esc(l.topic)}"><b>${l.start}${W?'–'+l.end:''}</b> ${esc(l.n)}${W&&l.topic?'<br><small>'+esc(l.topic)+'</small>':''}</div>`).join('')}</div>`}).join('')}
 let fLs=[];
 async function putFile(p,text,m){const r=await fetch(url(p)+`?ref=${cfg.branch}&t=${Date.now()}`,{headers:H()});
  const b={message:m,branch:cfg.branch,content:enc(text)};if(r.ok)b.sha=(await r.json()).sha;
@@ -128,11 +151,12 @@ async function upload(){
  if(!confirm('Загрузить в '+path+'? Если файл уже есть, он будет заменён.'))return;
  try{if(!l[t]){l[t]=path;await put('config/'+id+'.json',fLs,'link '+path)}
  await putFile(path,text,'upload '+path);$('#fC').value='';$('#fF').value='';msg('✅ Загружено, появится на сайте через 1–2 минуты')}catch(e){msg('❌ '+e.message)}}
-function tab(n){[1,2,3,4].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel();if(n==3)loadIssues();if(n==4)initF()}
+function tab(n){[1,2,3,4,5].forEach(i=>{$('#t'+i).style.display=i==n?'block':'none';$('#b'+i).classList.toggle('on',i==n)});if(n==2)renderSel();if(n==3)loadIssues();if(n==4)initF();if(n==5)loadSch()}
 function renderStudents(){
- $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
+ $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th>Расписание (пн 16:45-17:45, пт 17:15-18:15)</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
  `<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
  <td><input value="${esc(s.password)}" onchange="students[${i}].password=this.value;saveSt()"></td>
+ <td><input class="t" value="${esc(fmtSch(s))}" onchange="setSch(${i},this.value)"></td>
  <td><button class="g" onclick="preview(${i})">👁 Как ученик</button> <button class="r" onclick="rmStudent(${i})">Удалить</button></td></tr>`).join('')}
 async function saveSt(){try{await put('config/students.json',students,'update students');msg('✅ Сохранено')}catch(e){msg('❌ '+e.message)}}
 async function addStudent(){
@@ -157,10 +181,13 @@ function renderLessons(){
  `<td><select onchange="lessons[${i}].hwStatus=this.value">${['Не решено','Не проверено','Проверено'].map(o=>`<option${o==l.hwStatus?' selected':''}>${o}</option>`).join('')}</select></td>
  <td><input size="6" value="${esc(l.hwScore)}" oninput="lessons[${i}].hwScore=this.value||null"></td>
  <td><button class="r" onclick="lessons.splice(${i},1);renderLessons()">✕</button></td></tr>`).join('')}
-function addLesson(){if(!cur)return msg('Выберите ученика');
- const p=lessons[lessons.length-1]||{},n=lessons.length+1;
- lessons.push({date:new Date().toISOString().slice(0,10),start:p.start||'16:00',end:p.end||'17:00',topic:'',
-  material:`students/${cur}/les${n}.html`,homework:`homework/${cur}/hw${n}.html`,zoomLink:p.zoomLink||'',boardLink:p.boardLink||'',hwStatus:'Не решено',hwScore:null});
+function addLesson(k=1){if(!cur)return msg('Выберите ученика');
+ const sch=(students.find(x=>x.id===cur)||{}).schedule||[];
+ for(let j=0;j<k;j++){
+  const so=[...lessons].sort((a,b)=>a.date.localeCompare(b.date)),p=so[so.length-1]||{};
+  const n=Math.max(0,...lessons.map(l=>+((l.homework||'').match(/hw(\d+)/)||[])[1]||0))+1,last=p.date||iso(new Date());
+  const ns=nextSlot(sch,last)||{date:iso(new Date(new Date(last+'T12:00:00').getTime()+7*864e5)),start:p.start||'16:00',end:p.end||'17:00'};
+  lessons.push({...ns,topic:'',material:`students/${cur}/les${n}.html`,homework:`homework/${cur}/hw${n}.html`,zoomLink:p.zoomLink||'',boardLink:p.boardLink||'',hwStatus:'Не решено',hwScore:null})}
  renderLessons()}
 async function saveLessons(){if(!cur)return;try{await put('config/'+cur+'.json',lessons,'update lessons '+cur);msg('✅ Сохранено')}catch(e){msg('❌ '+e.message)}}
 
