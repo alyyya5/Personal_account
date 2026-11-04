@@ -188,6 +188,16 @@
         }
         .task-condition p { margin: 0 0 6px 0; }
 
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 14px;
+            padding: 10px 6px 6px;
+            text-align: center;
+            border: 1px solid #e2e8f2;
+            margin-bottom: 12px;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 180px; }
+
         .answer-input {
             width: 100%;
             padding: 10px 14px;
@@ -298,7 +308,7 @@
                 <strong>Дата:</strong> <span id="lessonDate"></span>
             </div>
             <div class="tags">
-                <span class="tag">7 заданий</span>
+                <span class="tag">5 заданий</span>
                 <span class="tag green">Автоотправка</span>
             </div>
         </header>
@@ -306,7 +316,7 @@
         <div class="progress-wrap">
             <div class="progress-top">
                 <span>📈 Прогресс выполнения</span>
-                <span id="progressText">Заполнено: 0 / 7</span>
+                <span id="progressText">Заполнено: 0 / 5</span>
             </div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
@@ -346,40 +356,83 @@
                     <input type="text" class="answer-input" id="q3" placeholder="Ваш ответ...">
                 </div>
 
-                <!-- Задача 4: Геометрия (углы) -->
+                <!-- Задача 4: Геометрия (аналог 116) -->
                 <div class="task-card">
-                    <div class="task-label purple">Задача №4 (Углы)</div>
+                    <div class="task-label purple">Задача №4 (Геометрия)</div>
                     <div class="task-condition">
-                        <p>В равнобедренном треугольнике угол при основании равен 65°. Найдите угол при вершине (противолежащий основанию).</p>
+                        <p>В треугольнике \(ABC\) на стороне \(AC\) отмечена точка \(D\) так, что \(CD = BD\) и \(\angle BDA = \angle CDA\). Найдите длину стороны \(AC\), если известно, что \(AB = 24\) см.</p>
+                    </div>
+                    <div class="fig-box">
+                        <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Треугольник ABC -->
+                            <polygon points="130,20 30,160 230,160" fill="#f3efff" stroke="#7c4dff" stroke-width="2"/>
+                            <!-- Точка D на AC -->
+                            <line x1="130" y1="20" x2="130" y2="160" stroke="#7c4dff" stroke-width="2"/>
+                            <!-- Отметки равенства CD и BD -->
+                            <line x1="70" y1="150" x2="75" y2="140" stroke="#2c3e5a" stroke-width="2"/>
+                            <line x1="75" y1="150" x2="80" y2="140" stroke="#2c3e5a" stroke-width="2"/>
+                            
+                            <line x1="125" y1="85" x2="135" y2="85" stroke="#2c3e5a" stroke-width="2"/>
+                            <line x1="125" y1="95" x2="135" y2="95" stroke="#2c3e5a" stroke-width="2"/>
+                            
+                            <!-- Отметки углов при D -->
+                            <path d="M 115,140 Q 130,120 145,140" stroke="#ec4899" stroke-width="1.5" fill="none"/>
+                            <path d="M 115,120 Q 130,140 145,120" stroke="#ec4899" stroke-width="1.5" fill="none"/>
+                            
+                            <circle cx="130" cy="20" r="3" fill="#0b1a33"/>
+                            <circle cx="30" cy="160" r="3" fill="#0b1a33"/>
+                            <circle cx="230" cy="160" r="3" fill="#0b1a33"/>
+                            <circle cx="130" cy="160" r="3" fill="#7c4dff"/>
+                            
+                            <text x="125" y="15" font-size="12" font-weight="bold">B</text>
+                            <text x="15" y="175" font-size="12" font-weight="bold">A</text>
+                            <text x="235" y="175" font-size="12" font-weight="bold">C</text>
+                            <text x="135" y="175" font-size="12" font-weight="bold">D</text>
+                        </svg>
                     </div>
                     <input type="text" class="answer-input" id="q4" placeholder="Ваш ответ (только число)...">
                 </div>
 
-                <!-- Задача 5: Геометрия (углы) -->
+                <!-- Задача 5: Геометрия (аналог 117) -->
                 <div class="task-card">
-                    <div class="task-label purple">Задача №5 (Углы)</div>
+                    <div class="task-label purple">Задача №5 (Геометрия)</div>
                     <div class="task-condition">
-                        <p>В равнобедренном треугольнике угол при вершине (противолежащий основанию) равен 40°. Найдите угол при основании.</p>
+                        <p>В равнобедренном треугольнике \(ABC\) (\(AB = BC\)) внешний угол при вершине \(C\) равен \(115^\circ\). Найдите внешний угол при вершине \(A\) (вертикальный внутреннему углу \(A\)).</p>
+                    </div>
+                    <div class="fig-box">
+                        <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Треугольник -->
+                            <polygon points="120,30 40,140 180,140" fill="#f0f7f0" stroke="#06d6a0" stroke-width="2"/>
+                            <!-- Продолжение CA (для внешнего угла A) -->
+                            <line x1="40" y1="140" x2="0" y2="210" stroke="#06d6a0" stroke-width="2"/>
+                            <!-- Продолжение CB (для внешнего угла C) -->
+                            <line x1="180" y1="140" x2="230" y2="140" stroke="#06d6a0" stroke-width="2"/>
+                            
+                            <!-- Отметки равенства AB и BC -->
+                            <line x1="75" y1="80" x2="85" y2="90" stroke="#2c3e5a" stroke-width="2"/>
+                            <line x1="85" y1="80" x2="95" y2="90" stroke="#2c3e5a" stroke-width="2"/>
+                            
+                            <line x1="155" y1="80" x2="165" y2="90" stroke="#2c3e5a" stroke-width="2"/>
+                            <line x1="165" y1="80" x2="175" y2="90" stroke="#2c3e5a" stroke-width="2"/>
+                            
+                            <!-- Угол 1 (внешний при C) -->
+                            <path d="M 180,140 Q 200,160 220,140" stroke="#ec4899" stroke-width="1.5" fill="none"/>
+                            <text x="205" y="155" font-size="12" fill="#ec4899" font-weight="bold">115°</text>
+                            
+                            <!-- Угол 2 (внешний при A) -->
+                            <path d="M 40,140 Q 20,165 0,200" stroke="#ec4899" stroke-width="1.5" fill="none"/>
+                            <text x="10" y="180" font-size="12" fill="#ec4899" font-weight="bold">?</text>
+                            
+                            <circle cx="120" cy="30" r="3" fill="#0b1a33"/>
+                            <circle cx="40" cy="140" r="3" fill="#0b1a33"/>
+                            <circle cx="180" cy="140" r="3" fill="#0b1a33"/>
+                            
+                            <text x="115" y="20" font-size="12" font-weight="bold">B</text>
+                            <text x="25" y="135" font-size="12" font-weight="bold">A</text>
+                            <text x="185" y="135" font-size="12" font-weight="bold">C</text>
+                        </svg>
                     </div>
                     <input type="text" class="answer-input" id="q5" placeholder="Ваш ответ (только число)...">
-                </div>
-
-                <!-- Задача 6: Геометрия (периметр) -->
-                <div class="task-card">
-                    <div class="task-label purple">Задача №6 (Периметр)</div>
-                    <div class="task-condition">
-                        <p>Периметр равнобедренного треугольника равен 50 см, а его основание равно 14 см. Найдите боковую сторону (в см).</p>
-                    </div>
-                    <input type="text" class="answer-input" id="q6" placeholder="Ваш ответ (только число)...">
-                </div>
-
-                <!-- Задача 7: Геометрия (внешний угол) -->
-                <div class="task-card">
-                    <div class="task-label purple">Задача №7 (Внешний угол)</div>
-                    <div class="task-condition">
-                        <p>В равнобедренном треугольнике внешний угол при основании равен 110°. Найдите угол при вершине (противолежащий основанию).</p>
-                    </div>
-                    <input type="text" class="answer-input" id="q7" placeholder="Ваш ответ (только число)...">
                 </div>
 
             </div>
@@ -395,7 +448,7 @@
         </div>
 
         <div class="footer-note">
-            <span>📌 Тема: Функции и равнобедренный треугольник · 7 заданий</span>
+            <span>📌 Тема: Функции и равнобедренный треугольник · 5 заданий</span>
         </div>
     </div>
 
@@ -422,10 +475,8 @@
                 q1: "-4",   // 24 / -6 = -4
                 q2: "-14",  // 3*(-2) - 8 = -14
                 q3: "3",    // x - 3 = 0
-                q4: "50",   // 180 - 65 - 65 = 50
-                q5: "70",   // (180 - 40) / 2 = 70
-                q6: "18",   // (50 - 14) / 2 = 18
-                q7: "40"    // Внутренний при основании 70, значит 180 - 140 = 40
+                q4: "24",   // Треугольники CDA и BDA равны по 1 признаку => AC = AB = 24
+                q5: "65"    // Внутренний C = 180-115=65. Т.к. AB=BC, внутренний A=65. Внешний A (вертикальный) = 65
             };
 
             const answerInputs = document.querySelectorAll('.answer-input');
