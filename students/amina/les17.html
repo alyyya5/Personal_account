@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Функции, равенство треугольников и углы</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 220px; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЛИНЕЙНАЯ ФУНКЦИЯ И ТАБЛИЦЫ                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ФУНКЦИИ И ТАБЛИЦЫ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§1</span> Как заполнять таблицу значений</h2>
+
+        <p>Часто в заданиях дана формула функции (например, \(y = kx + b\)) и таблица, где известны либо значения \(x\), либо значения \(y\). Задача — найти пропуски.</p>
+
+        <div class="note-box">
+            <strong>Правило 1: Найти \(y\), если известен \(x\).</strong><br>
+            Нужно просто подставить известное число \(x\) в формулу вместо буквы \(x\) и вычислить результат.
+        </div>
+
+        <div class="note-box">
+            <strong>Правило 2: Найти \(x\), если известен \(y\).</strong><br>
+            Нужно приравнять всю формулу к известному значению \(y\). Получится уравнение, которое нужно решить относительно \(x\) (перенести числа, разделить и т.д.).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема.</strong> Дана формула \(y = 2x + 1\).<br>
+            <em>Случай А: известен \(x = 3\).</em> Подставляем: \(y = 2 \cdot 3 + 1 = 7\).<br>
+            <em>Случай Б: известен \(y = -5\).</em> Решаем уравнение: \(2x + 1 = -5 \implies 2x = -6 \implies x = -3\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. РАВЕНСТВО ТРЕУГОЛЬНИКОВ                          -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · РАВЕНСТВО ТРЕУГОЛЬНИКОВ ✦</div>
+
+    <div class="mini-divider">◆ ПЕРВЫЙ ПРИЗНАК И ВЕРТИКАЛЬНЫЕ УГЛЫ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§2</span> Доказательство равенства через пересекающиеся отрезки</h2>
+
+        <p>В задачах часто встречаются два отрезка, которые пересекаются в одной точке и делятся ею пополам (или имеют равные части). Это классическая ловушка, которая решается через первый признак равенства.</p>
+
+        <div class="define-box">
+            <strong>Теорема (Первый признак).</strong> Если две стороны и угол <strong>между ними</strong> одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники <strong>равны</strong>.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Отрезки AB и CD -->
+                <line x1="60" y1="40" x2="340" y2="180" stroke="#2c3e5a" stroke-width="2.5"/>
+                <line x1="340" y1="40" x2="60" y2="180" stroke="#2c3e5a" stroke-width="2.5"/>
+                
+                <!-- Точка пересечения O -->
+                <circle cx="200" cy="110" r="5" fill="#ec4899"/>
+                
+                <!-- Соединяем A и C, B и D -->
+                <line x1="60" y1="40" x2="340" y2="40" stroke="#ec4899" stroke-width="2" stroke-dasharray="5,3"/>
+                <line x1="60" y1="180" x2="340" y2="180" stroke="#ec4899" stroke-width="2" stroke-dasharray="5,3"/>
+
+                <!-- Вершины -->
+                <circle cx="60" cy="40" r="4" fill="#0b1a33"/>
+                <circle cx="340" cy="180" r="4" fill="#0b1a33"/>
+                <circle cx="340" cy="40" r="4" fill="#0b1a33"/>
+                <circle cx="60" cy="180" r="4" fill="#0b1a33"/>
+                
+                <!-- Буквы -->
+                <text x="45" y="35" font-size="14" font-weight="bold">A</text>
+                <text x="345" y="195" font-size="14" font-weight="bold">B</text>
+                <text x="345" y="35" font-size="14" font-weight="bold">C</text>
+                <text x="45" y="195" font-size="14" font-weight="bold">D</text>
+                <text x="205" y="105" font-size="14" font-weight="bold" fill="#ec4899">O</text>
+            </svg>
+            <div class="fig-caption">Пересекающиеся отрезки образуют два треугольника</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Как рассуждать:</strong>
+            <ol style="margin-top:8px;">
+                <li>Углы при точке пересечения (вертикальные углы) <strong>всегда равны</strong>. Это дает нам «угол между сторонами».</li>
+                <li>Если по условию дано, что части отрезков равны (например, \(AO = OB\) и \(CO = OD\)), то мы имеем две пары равных сторон.</li>
+                <li>Следовательно, треугольники равны по <strong>первому признаку</strong>.</li>
+                <li>Из равенства треугольников следует, что их третьи стороны (которые нас просят найти) тоже равны.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. УГЛЫ В РАВНОБЕДРЕННОМ ТРЕУГОЛЬНИКЕ               -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · УГЛЫ И РАВНОБЕДРЕННОСТЬ ✦</div>
+
+    <div class="mini-divider">◆ СМЕЖНЫЕ УГЛЫ И СВОЙСТВА ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Как искать углы через внешний угол</h2>
+
+        <p>В задачах часто дают внешний угол (угол снаружи треугольника, образованный продлением стороны). Чтобы найти внутренние углы, нужно использовать два правила.</p>
+
+        <div class="formula-box">
+            <strong>Правило 1. Смежные углы.</strong><br>
+            Внутренний угол треугольника и смежный с ним внешний угол в сумме дают \(180^\circ\).<br>
+            \(\text{Внутренний} = 180^\circ - \text{Внешний}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Правило 2. Углы при основании.</strong><br>
+            В равнобедренном треугольнике углы при основании равны.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 50,150 280,150" fill="#fff7ed" stroke="#f5a623" stroke-width="2.5"/>
+                <!-- Продление стороны AC -->
+                <line x1="280" y1="150" x2="360" y2="150" stroke="#f5a623" stroke-width="2" stroke-dasharray="6,4"/>
+                
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="50" cy="150" r="4" fill="#0b1a33"/>
+                <circle cx="280" cy="150" r="4" fill="#0b1a33"/>
+                
+                <!-- Буквы -->
+                <text x="145" y="20" font-size="14" font-weight="bold">B</text>
+                <text x="35" y="165" font-size="14" font-weight="bold">A</text>
+                <text x="285" y="165" font-size="14" font-weight="bold">C</text>
+                <text x="330" y="140" font-size="14" fill="#b45309" font-weight="bold">Внешний</text>
+            </svg>
+            <div class="fig-caption">Внешний угол при вершине C</div>
+        </div>
+
+        <div class="note-box">
+            <strong>Алгоритм решения:</strong>
+            <ol style="margin-top:8px;">
+                <li>Если дан внешний угол, сначала найдите внутренний угол при этой же вершине (вычтите из \(180^\circ\)).</li>
+                <li>Затем вспомните, что треугольник равнобедренный. Значит, угол при другом основании (например, \(A\)) равен найденному внутреннему углу (если основанием является сторона \(AC\)).</li>
+                <li>Если нужно найти третий угол (при вершине \(B\)), используйте сумму углов треугольника: \(180^\circ - (\angle A + \angle C)\).</li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
