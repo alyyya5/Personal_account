@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Домашнее задание | Текстовые задачи и Уравнения</title>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #eef3fa;
+            --card-bg: #ffffff;
+            --text-main: #0b1e33;
+            --text-secondary: #5e6f8c;
+            --accent-blue: #1d6f9c;
+            --accent-green: #1a8a5a;
+            --accent-red: #c0392b;
+            --accent-orange: #d48a3a;
+            --accent-purple: #7c3aed;
+            --border-light: #d0ddea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(160deg, #eef3fa 0%, #e3ecf7 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; color: var(--text-secondary); }
+
+        .info-line {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #f8faff;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .info-line strong { color: var(--text-main); }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dce5f2;
+            color: #1d3a66;
+        }
+        .tag.green { background: #d5f2e3; color: var(--accent-green); }
+
+        .progress-wrap {
+            background: #f4f8fd;
+            border: 1px solid #e2ebf5;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 32px;
+        }
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e3ecf5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1d6f9c, #2ea3d8);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .section { margin-bottom: 38px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .section-num {
+            background: var(--accent-blue);
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .section-title { font-size: 19px; font-weight: 700; }
+        .section-desc { font-size: 13px; color: var(--text-secondary); margin-left: auto; font-style: italic; }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 2px solid #e6edf6;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+        .task-card.empty-field { border-color: var(--accent-red); background: #fdf0ee; }
+
+        .task-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .task-label.orange { color: var(--accent-orange); }
+        .task-label.purple { color: var(--accent-purple); }
+
+        .task-condition {
+            font-size: 16px;
+            margin-bottom: 14px;
+            padding: 4px 0;
+            color: var(--text-main);
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        .task-condition p { margin: 0 0 6px 0; }
+
+        .answer-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #dce5ef;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-top: auto;
+            background: white;
+        }
+        .answer-input:focus { border-color: var(--accent-blue); }
+
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 30px 0 24px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            background: var(--accent-blue);
+            color: white;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29, 111, 156, 0.3); }
+        .btn:active { transform: scale(0.97); }
+        .btn-success { background: var(--accent-green); }
+        .btn-success:hover { box-shadow: 0 4px 12px rgba(26, 138, 90, 0.3); }
+        .btn-danger { background: var(--accent-red); }
+
+        .result-area {
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            border: 1px solid #dce5ef;
+            min-height: 60px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1100; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; border-radius: 28px;
+            max-width: 600px; width: 100%; padding: 28px 30px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+            animation: modalFade 0.25s ease-out;
+        }
+        @keyframes modalFade {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-card h3 { font-size: 1.3rem; color: #0b2a44; margin-bottom: 10px; }
+        .modal-card p { margin-bottom: 12px; font-size: 0.95rem; color: #4a627a; }
+        .modal-card textarea {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid #dce5ef; border-radius: 18px;
+            font-size: 0.95rem; font-family: inherit;
+            resize: vertical; outline: none;
+        }
+        .modal-card textarea:focus { border-color: #3b82f6; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .modal-buttons .btn { flex: 1; }
+        #modalStatus { margin-top: 10px; font-size: 0.9rem; color: #4a627a; text-align: center; }
+
+        .footer-note {
+            margin-top: 30px; padding-top: 16px;
+            border-top: 2px solid #eef2f7;
+            font-size: 13px; color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 22px 18px; }
+            h1 { font-size: 22px; }
+            .info-line { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📝 Домашнее задание</h1>
+            <div class="subtitle">Текстовые задачи и Алгебраические уравнения</div>
+            <div class="info-line">
+                <strong>Ученик:</strong> <span id="studentName"></span> &nbsp;|&nbsp;
+                <strong>Дата:</strong> <span id="lessonDate"></span>
+            </div>
+            <div class="tags">
+                <span class="tag">20 заданий</span>
+                <span class="tag green">Автоотправка</span>
+            </div>
+        </header>
+
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span>📈 Прогресс выполнения</span>
+                <span id="progressText">Заполнено: 0 / 20</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <div class="section-title">Текстовые задачи</div>
+                <div class="section-desc">На движение и работу</div>
+            </div>
+            <div class="task-grid">
+
+                <div class="task-card">
+                    <div class="task-label orange">Задача №1</div>
+                    <div class="task-condition">
+                        <p>Из города А в город В, расстояние между которыми 60 км, одновременно выехали Вася на мотоцикле и Коля на велосипеде. Известно, что за час Вася проезжает на 20 км больше, чем Коля. Определите скорость велосипедиста Коли, если известно, что он прибыл в город В на 2 часа позже мотоциклиста Васи. Ответ дайте в км/ч.</p>
+                    </div>
+                    <input type="text" class="answer-input" id="q1">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Задача №2</div>
+                    <div class="task-condition">
+                        <p>На сборку 480 деталей первый мастер затрачивает на 4 часа меньше, чем второй мастер на сборку 480 деталей. Известно, что первый мастер за час собирает на 4 детали больше, чем второй. Сколько деталей в час собирает первый мастер?</p>
+                    </div>
+                    <input type="text" class="answer-input" id="q2">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Задача №3</div>
+                    <div class="task-condition">
+                        <p>Расстояние между поселками А и В равно 200 км. Из поселка А в поселок В выехал первый трактор, а через 2 часа после этого навстречу ему из поселка В выехал со скоростью 40 км/ч второй трактор. Найдите скорость первого трактора, если тракторы встретились на расстоянии 120 км от поселка А. Ответ дайте в км/ч.</p>
+                    </div>
+                    <input type="text" class="answer-input" id="q3">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Задача №4</div>
+                    <div class="task-condition">
+                        <p>От причала А к причалу В, расстояние между которыми равно 180 км, отправился с постоянной скоростью первый катер, а через 3 часа после этого следом за ним со скоростью на 3 км/ч большей отправился второй. Найдите скорость первого катера, если к причалу В оба катера прибыли одновременно. Ответ дайте в км/ч.</p>
+                    </div>
+                    <input type="text" class="answer-input" id="q4">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label orange">Задача №5</div>
+                    <div class="task-condition">
+                        <p>По двум параллельным железнодорожным путям навстречу друг другу следуют товарный и пассажирский поезда, скорости которых равны соответственно 40 км/ч и 50 км/ч. Длина пассажирского поезда равна 300 метров. Найдите длину товарного поезда, если время, за которое он прошёл мимо пассажирского, равно 40 секундам. Ответ дайте в метрах.</p>
+                    </div>
+                    <input type="text" class="answer-input" id="q5">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <div class="section-title">Алгебраические уравнения</div>
+                <div class="section-desc">Найдите корень уравнения</div>
+            </div>
+            <div class="task-grid">
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №6</div>
+                    <div class="task-condition"><p>Решите уравнение \(25^{x^2} = 0,2^x\). Если оно имеет более одного корня, в ответе укажите меньший из них.</p></div>
+                    <input type="text" class="answer-input" id="q6">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №7</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(7^{6-x} = 49^x\).</p></div>
+                    <input type="text" class="answer-input" id="q7">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №8</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(5^{2x-6} = \frac{1}{25}\).</p></div>
+                    <input type="text" class="answer-input" id="q8">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №9</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(3^{\log_{81}(8x+8)} = 4\).</p></div>
+                    <input type="text" class="answer-input" id="q9">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №10</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(\left(\frac{1}{4}\right)^{x-4} = \frac{1}{64}\).</p></div>
+                    <input type="text" class="answer-input" id="q10">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №11</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(0,2^{5-2x} = 125\).</p></div>
+                    <input type="text" class="answer-input" id="q11">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №12</div>
+                    <div class="task-condition"><p>Решите уравнение \(e \cdot \pi^{2x-8} = e^{2x-8} \cdot \pi\).</p></div>
+                    <input type="text" class="answer-input" id="q12">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №13</div>
+                    <div class="task-condition"><p>Решите уравнение \(0,2^{2-5x} = 125\).</p></div>
+                    <input type="text" class="answer-input" id="q13">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №14</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(3^{\log_9(4x+1)} = 9\).</p></div>
+                    <input type="text" class="answer-input" id="q14">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №15</div>
+                    <div class="task-condition"><p>Решите уравнение \(5^{x+2} = 0,2 \cdot 5^{-x}\).</p></div>
+                    <input type="text" class="answer-input" id="q15">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №16</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(\log_8 2^{8x-4} = 4\).</p></div>
+                    <input type="text" class="answer-input" id="q16">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №17</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(3^{\log_9(5x-5)} = 5\).</p></div>
+                    <input type="text" class="answer-input" id="q17">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №18</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(\log_3(x+6) = \log_3(10-x) - 1\).</p></div>
+                    <input type="text" class="answer-input" id="q18">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №19</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(\log_3(2-x) = \log_9 16\).</p></div>
+                    <input type="text" class="answer-input" id="q19">
+                </div>
+
+                <div class="task-card">
+                    <div class="task-label purple">Задача №20</div>
+                    <div class="task-condition"><p>Найдите корень уравнения \(\log_4 2^{5x+7} = 3\).</p></div>
+                    <input type="text" class="answer-input" id="q20">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="btn btn-success" id="reportBtn">📤 Отправить отчёт</button>
+            <button class="btn btn-danger" id="resetBtn">🔄 Очистить поля</button>
+        </div>
+
+        <div id="resultArea" class="result-area">
+            📌 Заполните все поля и нажмите «Отправить отчёт».
+        </div>
+
+        <div class="footer-note">
+            <span>📌 Тема: Текстовые задачи и Уравнения · 20 заданий</span>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card">
+            <h3>📤 Отправить отчёт</h3>
+            <p>Напишите, что было сложно, или задайте вопрос (обязательно).</p>
+            <textarea id="reportComment" rows="4" placeholder="Ваш комментарий..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn" id="sendReportBtn" style="background: #1e4663;">✅ Отправить</button>
+                <button class="btn" style="background:#e9eff6;color:#1f4970;" id="cancelReportBtn">Отмена</button>
+            </div>
+            <div id="modalStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        try { document.write('<script src="../../config.js"><\/script>'); } catch(e) {}
+
+        (function() {
+            // ========== ОТВЕТЫ ==========
+            const answers = {
+                // Текстовые задачи
+                q1: "10",     // 60/x - 60/(x+20) = 2 => x=10
+                q2: "24",     // 480/x - 480/(x+4) = 4 => x=20 (2-й), 1-й = 24
+                q3: "40",     // T2 = 80/40 = 2ч. T1 = 2+2 = 4ч. 120/4 = 30
+                q4: "12",     // 180/x - 180/(x+3) = 3 => x=12
+                q5: "700",    // (50+40)*1000/3600 = 25 м/с. (450+L2)/25 = 40 => L2=700
+
+                // Уравнения
+                q6: "-0.5",   // x=0, x=-0.5
+                q7: "2",
+                q8: "2",
+                q9: "31",
+                q10: "7",
+                q11: "4",
+                q12: "4.5",
+                q13: "1",
+                q14: "20",
+                q15: "-1.5",
+                q16: "2",
+                q17: "6",
+                q18: "-2",
+                q19: "-2",
+                q20: "-0.2"
+            };
+
+            const answerInputs = document.querySelectorAll('input[type="text"]');
+            const resetBtn = document.getElementById('resetBtn');
+            const reportBtn = document.getElementById('reportBtn');
+            const resultArea = document.getElementById('resultArea');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const reportModal = document.getElementById('reportModal');
+            const cancelReportBtn = document.getElementById('cancelReportBtn');
+            const sendReportBtn = document.getElementById('sendReportBtn');
+            const reportComment = document.getElementById('reportComment');
+            const modalStatus = document.getElementById('modalStatus');
+
+            const params = new URLSearchParams(window.location.search);
+            const student = params.get('student') || 'Ученик';
+            const date = params.get('date') || new Date().toLocaleDateString('ru-RU');
+
+            document.getElementById('studentName').textContent = student;
+            document.getElementById('lessonDate').textContent = date;
+
+            function normalize(str) {
+                let s = String(str).trim().replace(/\s+/g, '').replace(/,/g, '.');
+                s = s.replace(/[°см]/g, ''); 
+                if (/^[0-9+\-*/().]+$/.test(s)) {
+                    try {
+                        let val = eval(s);
+                        if (typeof val === 'number' && !isNaN(val)) {
+                            return parseFloat(val.toFixed(4)).toString();
+                        }
+                    } catch(e) {}
+                }
+                return s.toLowerCase();
+            }
+
+            function isAnswerCorrect(id, userVal) {
+                const right = answers[id];
+                if (!right) return false;
+                return normalize(userVal) === normalize(right);
+            }
+
+            function updateProgress() {
+                let filled = 0;
+                answerInputs.forEach(inp => {
+                    if (inp.value && inp.value.trim() !== '') filled++;
+                });
+                const total = answerInputs.length;
+                const pct = Math.round((filled / total) * 100);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = `Заполнено: ${filled} / ${total}`;
+            }
+
+            function resetAll() {
+                answerInputs.forEach(input => input.value = '');
+                document.querySelectorAll('.task-card.empty-field').forEach(c => c.classList.remove('empty-field'));
+                resultArea.innerHTML = '🧹 Поля очищены.';
+                progressFill.style.width = '0%';
+                updateProgress();
+            }
+
+            function validateBeforeSubmit() {
+                let emptyFields = [];
+                answerInputs.forEach(inp => { 
+                    if (!inp.value.trim()) emptyFields.push(inp.id.replace('q', '')); 
+                });
+                
+                if (emptyFields.length > 0) {
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены задания: № ${emptyFields.join(', ')}</div>`;
+                    emptyFields.forEach(id => {
+                        const el = document.getElementById('q' + id);
+                        if (el) el.closest('.task-card').classList.add('empty-field');
+                    });
+                    return false;
+                }
+                return true;
+            }
+
+            reportBtn.addEventListener('click', function() {
+                if (!validateBeforeSubmit()) return;
+                reportModal.classList.add('active');
+                reportComment.value = '';
+                modalStatus.textContent = '';
+            });
+
+            cancelReportBtn.addEventListener('click', () => reportModal.classList.remove('active'));
+            reportModal.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
+            });
+
+            async function executeSubmission() {
+                const comment = reportComment.value.trim();
+                if (!comment) {
+                    modalStatus.textContent = '⚠️ Напишите комментарий.';
+                    modalStatus.style.color = '#dc2626';
+                    return;
+                }
+
+                let correct = 0;
+                let total = 0;
+                let mistakes = [];
+                const allIds = Object.keys(answers);
+
+                for (let id of allIds) {
+                    const input = document.getElementById(id);
+                    let userAnswer = input ? (input.value.trim() || '(пусто)') : '(пусто)';
+                    
+                    const right = answers[id];
+                    const isCorrect = isAnswerCorrect(id, userAnswer);
+                    total++;
+                    
+                    if (isCorrect) {
+                        correct++;
+                    } else {
+                        const card = document.getElementById(id)?.closest('.task-card');
+                        const cond = card?.querySelector('.task-condition')?.textContent?.trim() || id;
+                        mistakes.push({
+                            num: id.replace('q', ''),
+                            condition: cond,
+                            right: right,
+                            user: userAnswer
+                        });
+                    }
+                }
+
+                const percent = Math.round((correct / total) * 100);
+
+                let reportBody = `**Ученик:** ${student}\n`;
+                reportBody += `**Дата:** ${date}\n\n`;
+                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
+
+                if (mistakes.length > 0) {
+                    reportBody += `Ниже — отчёт только с неправильными ответами:\n\n`;
+                    reportBody += `| № | Задание | Правильный ответ | Ответ ученика |\n`;
+                    reportBody += `|---|---------|------------------|---------------|\n`;
+                    mistakes.forEach(m => {
+                        let cond = m.condition
+                            .replace(/\\\(/g, '')
+                            .replace(/\\\)/g, '')
+                            .replace(/\$/g, '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                        if (cond.length > 50) cond = cond.substring(0, 50) + '...';
+                        reportBody += `| ${m.num} | ${cond} | ${m.right} | ${m.user} |\n`;
+                    });
+                    reportBody += `\n`;
+                } else {
+                    reportBody += `🎉 **Все задания выполнены верно!**\n\n`;
+                }
+
+                reportBody += `**💬 Комментарий:**\n${comment}`;
+                const title = `ДЗ: ${student} — Задачи и Уравнения (${date})`;
+
+                try {
+                    if (typeof createGitHubIssue === 'function') {
+                        const issueUrl = await createGitHubIssue(title, reportBody);
+                        modalStatus.innerHTML = `✅ Отправлено! <a href="${issueUrl}" target="_blank" style="color:#3b82f6;">Посмотреть</a>`;
+                        modalStatus.style.color = '#16a34a';
+                        setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        resultArea.innerHTML = '<div style="color: var(--accent-green); font-weight: 700;">✅ Отправлено!</div>';
+                    } else {
+                        console.log('📤 Отправка:', title, '\n', reportBody);
+                        modalStatus.innerHTML = '✅ Отправлено! (демо)';
+                        modalStatus.style.color = '#16a34a';
+                        setTimeout(() => reportModal.classList.remove('active'), 3000);
+                        resultArea.innerHTML = '✅ Отправлено! (демо)';
+                    }
+                } catch (error) {
+                    modalStatus.textContent = `❌ Ошибка: ${error.message}`;
+                    modalStatus.style.color = '#dc2626';
+                }
+            }
+
+            sendReportBtn.addEventListener('click', async function() {
+                const btn = this;
+                btn.disabled = true;
+                btn.textContent = '⏳...';
+                await executeSubmission();
+                btn.disabled = false;
+                btn.textContent = '✅ Отправить';
+            });
+
+            resetBtn.addEventListener('click', resetAll);
+            
+            answerInputs.forEach(input => input.addEventListener('input', () => {
+                input.closest('.task-card').classList.remove('empty-field');
+                updateProgress();
+            }));
+
+            updateProgress();
+        })();
+    </script>
+</body>
+</html>
