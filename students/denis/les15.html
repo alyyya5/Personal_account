@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Задачи и Уравнения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #f3efff;
+            border-left: 6px solid #7c4dff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #5a2fd6; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ТЕКСТОВЫЕ ЗАДАЧИ                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ТЕКСТОВЫЕ ЗАДАЧИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§1</span> Задачи на движение</h2>
+
+        <p>В основе всех задач на движение лежит формула:</p>
+        <div class="formula-box">
+            \(S = v \cdot t\)<br>
+            <em>Расстояние = Скорость \(\times\) Время</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Как оформлять таблицу:</strong>
+            <ul style="margin-top:6px;">
+                <li>Столбцы: Скорость (\(v\)), Время (\(t\)), Расстояние (\(S\)).</li>
+                <li>За \(x\) обычно обозначают скорость.</li>
+                <li>Время выражают как \(t = \frac{S}{v}\).</li>
+                <li>Если в условии есть «на \(k\) часов быстрее/медленнее», составляют уравнение с разностью времен.</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>Особые случаи:</strong>
+            <ul style="margin-top:6px;">
+                <li><strong>Движение навстречу:</strong> скорости складываются. Время до встречи: \(t = \frac{S}{v_1 + v_2}\).</li>
+                <li><strong>Движение вдогонку:</strong> разность скоростей. Если один выехал позже, его время меньше на время задержки.</li>
+                <li><strong>Поезда:</strong> чтобы найти время прохождения мимо друг друга, нужно сложить длины поездов и разделить на сумму (или разность) скоростей. <span class="highlight">Переведите км/ч в м/с</span>, умножив на \(\frac{1000}{3600} = \frac{5}{18}\).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Задачи на работу</h2>
+
+        <p>Логика задач на работу полностью повторяет задачи на движение:</p>
+        <div class="formula-box">
+            \(A = p \cdot t\)<br>
+            <em>Работа = Производительность \(\times\) Время</em>
+        </div>
+
+        <div class="example-box">
+            <strong>Схема:</strong> Если первый делает работу быстрее, он тратит меньше времени.<br>
+            \(t_1 = \frac{A}{x}\), \(t_2 = \frac{A}{x - k}\) (где \(k\) — разница в производительности).<br>
+            Уравнение: \(t_2 - t_1 = \text{разница во времени}\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ                          -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ АЛГЕБРА · ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ СВЕДЕНИЕ К ОДНОМУ ОСНОВАНИЮ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Как решать показательные уравнения</h2>
+
+        <p>Главный метод: привести обе части уравнения к одинаковому основанию.</p>
+
+        <div class="formula-box">
+            Если \(a^{f(x)} = a^{g(x)}\), то \(f(x) = g(x)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Самые важные преобразования:</strong>
+            <ul style="margin-top:6px;">
+                <li><strong>Десятичные дроби в обыкновенные:</strong> \(0{,}2 = \frac{1}{5}\), \(0{,}25 = \frac{1}{4}\).</li>
+                <li><strong>Дробь — это отрицательная степень:</strong> \(\left(\frac{1}{5}\right)^x = 5^{-x}\).</li>
+                <li><strong>Числа как степени:</strong> \(25 = 5^2\), \(125 = 5^3\), \(8 = 2^3\), \(4 = 2^2\).</li>
+                <li><strong>Дробь как степень:</strong> \(\frac{1}{25} = 5^{-2}\), \(\frac{1}{64} = 4^{-3}\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема.</strong> Уравнение \(5^{2x-6} = \frac{1}{25}\).<br>
+            Представляем: \(\frac{1}{25} = 5^{-2}\).<br>
+            Получаем: \(5^{2x-6} = 5^{-2}\).<br>
+            Приравниваем степени: \(2x - 6 = -2 \Rightarrow 2x = 4 \Rightarrow x = 2\).
+        </div>
+    </div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§4</span> Логарифм в показателе степени</h2>
+
+        <p>В некоторых задачах (№9, №14, №17) в степени стоит логарифм. Здесь работает основное логарифмическое тождество и его следствия.</p>
+
+        <div class="formula-box">
+            \(a^{\log_a b} = b\)<br><br>
+            <em>Пример:</em> \(3^{\log_3 7} = 7\).
+        </div>
+
+        <div class="note-box">
+            <strong>Если основания разные:</strong><br>
+            Например, \(3^{\log_9(4x+1)} = 9\).<br>
+            Нужно сделать основания одинаковыми. \(9 = 3^2\), значит \(3^{\log_{3^2}(4x+1)} = 3^2\).<br>
+            По свойству \(\log_{a^n} b = \frac{1}{n}\log_a b\) получаем в показателе \(\frac{1}{2}\log_3(4x+1)\).<br>
+            Приравниваем степени: \(\frac{1}{2}\log_3(4x+1) = 2\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ                        -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ АЛГЕБРА · ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ ОПРЕДЕЛЕНИЕ И СВОЙСТВА ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Определение логарифма</h2>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> Логарифм числа \(b\) по основанию \(a\) — это показатель степени, в которую нужно возвести \(a\), чтобы получить \(b\).
+        </div>
+
+        <div class="formula-box">
+            \(\log_a b = c \quad \Leftrightarrow \quad a^c = b\)
+        </div>
+
+        <div class="note-box">
+            <strong>ОДЗ (обязательно проверяем!):</strong><br>
+            Основание \(a > 0\), \(a \neq 1\).<br>
+            Аргумент \(b > 0\).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§6</span> Свойства логарифмов для решения</h2>
+
+        <div class="formula-box">
+            <strong>1. Равенство логарифмов:</strong><br>
+            \(\log_a f(x) = \log_a g(x) \implies f(x) = g(x)\)<br><br>
+            
+            <strong>2. Вынесение степени из аргумента:</strong><br>
+            \(\log_a (b^n) = n \cdot \log_a b\)<br><br>
+
+            <strong>3. Вынесение степени из основания:</strong><br>
+            \(\log_{a^n} b = \frac{1}{n} \log_a b\)<br><br>
+
+            <strong>4. Представление числа в виде логарифма:</strong><br>
+            \(c = \log_a (a^c)\)<br>
+            <em>Пример: \(1 = \log_5 5\), \(2 = \log_3 9\).</em>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема (степень в аргументе).</strong><br>
+            Уравнение \(\log_8 2^{8x-4} = 4\).<br>
+            Выносим степень из аргумента: \((8x-4) \cdot \log_8 2 = 4\).<br>
+            Так как \(8 = 2^3\), то \(\log_8 2 = \log_{2^3} 2 = \frac{1}{3}\).<br>
+            Уравнение: \((8x-4) \cdot \frac{1}{3} = 4\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема (сложение логарифмов).</strong><br>
+            Уравнение \(\log_3(x+6) = \log_3(10-x) - 1\).<br>
+            Единицу представляем как \(\log_3 3\).<br>
+            Переносим: \(\log_3(x+6) + \log_3 3 = \log_3(10-x)\).<br>
+            Слева сумма логарифмов: \(\log_3((x+6) \cdot 3) = \log_3(10-x)\).<br>
+            Приравниваем аргументы: \(3(x+6) = 10-x\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
