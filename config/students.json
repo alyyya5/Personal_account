@@ -17,7 +17,19 @@
       "лера",
       "valeriya"
     ],
-    "password": "der44"
+    "password": "der44",
+    "schedule": [
+      {
+        "d": 1,
+        "start": "15:30",
+        "end": "16:30"
+      },
+      {
+        "d": 3,
+        "start": "15:30",
+        "end": "16:30"
+      }
+    ]
   },
   {
     "id": "amina",
