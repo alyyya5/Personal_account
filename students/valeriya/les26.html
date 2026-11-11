@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Область определения функции (7 класс)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ОБЛАСТЬ ОПРЕДЕЛЕНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ТЕОРИЯ                                           -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ЧТО ЭТО ТАКОЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Что такое область определения</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Область определения функции</em> — это все значения независимой переменной \(x\), при которых функция имеет смысл (то есть её можно вычислить).
+        </div>
+
+        <div class="note-box">
+            <strong>Главное правило 7 класса:</strong> На ноль делить нельзя!<br>
+            Это значит, что <strong>знаменатель дроби не должен быть равен нулю</strong>.
+        </div>
+
+        <div class="example-box">
+            <strong>Важное уточнение!</strong><br>
+            Запрещён не только сам ноль. Запрещено любое выражение, из-за которого знаменатель превращается в ноль.<br>
+            Например, если в знаменателе стоит \(x - 5\), то мы не можем подставить \(x = 5\), потому что \(5 - 5 = 0\). Значит, \(x\) не может быть равен \(5\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ПРИМЕРЫ                                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · РАЗБОР СЛУЧАЕВ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">Случай 1</span> \(x\) только в знаменателе</h2>
+
+        <div class="example-box">
+            <strong>Функция:</strong> \(y = \frac{3}{x - 4}\)<br><br>
+            <strong>Как рассуждаем:</strong><br>
+            В числителе стоит число 3 — здесь ограничений нет.<br>
+            В знаменателе стоит \(x - 4\). На ноль делить нельзя, поэтому:<br>
+            \(x - 4 \neq 0\)<br>
+            Переносим число: \(x \neq 4\).
+        </div>
+
+        <div class="formula-box">
+            <strong>Ответ:</strong> \(D(y):\) любое число, кроме \(4\).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">Случай 2</span> \(x\) есть и в числителе, и в знаменателе</h2>
+
+        <div class="example-box">
+            <strong>Функция:</strong> \(y = \frac{2x + 1}{x + 6}\)<br><br>
+            <strong>Как рассуждаем:</strong><br>
+            На числитель (\(2x + 1\)) никаких ограничений нет — он может быть любым.<br>
+            А вот знаменатель (\(x + 6\)) не должен равняться нулю:<br>
+            \(x + 6 \neq 0\)<br>
+            \(x \neq -6\).
+        </div>
+
+        <div class="formula-box">
+            <strong>Ответ:</strong> \(D(y):\) любое число, кроме \(-6\).
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">Случай 3</span> Дроби вообще нет</h2>
+
+        <div class="example-box">
+            <strong>Функция:</strong> \(y = 5x^2 - 3x + 7\)<br><br>
+            <strong>Как рассуждаем:</strong><br>
+            Здесь нет дробной черты, нет деления на переменную. Мы можем подставить абсолютно любое число \(x\), возвести его в квадрат, умножить и сложить. Ничего не сломается.
+        </div>
+
+        <div class="formula-box">
+            <strong>Ответ:</strong> \(D(y):\) любое число.
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">Случай 4</span> Знаменатель сложнее, чем просто \(x\)</h2>
+
+        <div class="example-box">
+            <strong>Функция:</strong> \(y = \frac{x^2 + 2}{2x - 10}\)<br><br>
+            <strong>Как рассуждаем:</strong><br>
+            Знаменатель не равен нулю. Решаем простое уравнение:<br>
+            \(2x - 10 \neq 0\)<br>
+            \(2x \neq 10\)<br>
+            \(x \neq 5\).
+        </div>
+
+        <div class="formula-box">
+            <strong>Ответ:</strong> \(D(y):\) любое число, кроме \(5\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. КАК ОФОРМЛЯТЬ                                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОФОРМЛЕНИЕ · КАК ПИСАТЬ ОТВЕТ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§2</span> Формат записи</h2>
+
+        <p>В 7 классе область определения принято записывать буквой \(D\) (от английского Domain — область) или \(D(y)\).</p>
+
+        <div class="note-box">
+            <strong>Если ограничений нет:</strong><br>
+            <span class="highlight">\(D(y):\) любое число.</span> (Иногда пишут \(x \in (-\infty; +\infty)\), но в 7 классе чаще словами).
+        </div>
+
+        <div class="note-box">
+            <strong>Если есть запрещённое число:</strong><br>
+            <span class="highlight">\(D(y):\) любое число, кроме [число].</span>
+        </div>
+        
+        <div class="example-box">
+            <strong>Дополнительный пример для тренировки.</strong><br>
+            Функция: \(y = \frac{7}{3 - x}\)<br>
+            Знаменатель: \(3 - x \neq 0 \Rightarrow -x \neq -3 \Rightarrow x \neq 3\).<br>
+            <strong>Ответ:</strong> \(D(y):\) любое число, кроме \(3\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
