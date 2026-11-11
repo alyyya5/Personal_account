@@ -525,7 +525,7 @@
           .then(r => r.ok ? r.json() : null)
           .then(d => { if (Array.isArray(d) && d.length) users = d; checkPreview(); })
           .catch(checkPreview);
-        
+
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
         let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
 
@@ -1008,12 +1008,46 @@
             topicsWrapper.style.display = 'block';
         }
 
+        // ============================================================
+        //  ДОМАШКИ: только текущий месяц, начиная с 5-го числа
+        // ============================================================
         function renderHomeworkCards() {
-            if (!lessonsData.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`, sorted = lessonsData.filter(l => l.topic && l.topic.trim() !== '' && l.homework && l.homework.trim() !== '' && l.date <= todayStr).sort((a, b) => new Date(b.date) - new Date(a.date)), items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
-            if (!items.length) { homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>'; showAllHomeworkBtn.style.display = 'none'; return; }
+            if (!lessonsData.length) {
+                homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>';
+                showAllHomeworkBtn.style.display = 'none';
+                return;
+            }
+
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = today.getMonth() + 1;
+            const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+            // Границы «текущий месяц с 5-го по последний день»
+            const monthStart = `${y}-${String(m).padStart(2, '0')}-05`;
+            const monthEnd   = `${y}-${String(m).padStart(2, '0')}-${String(new Date(y, m, 0).getDate()).padStart(2, '0')}`;
+
+            const sorted = lessonsData
+                .filter(l =>
+                    l.topic && l.topic.trim() !== '' &&
+                    l.homework && l.homework.trim() !== '' &&
+                    l.date >= monthStart &&
+                    l.date <= monthEnd &&
+                    l.date <= todayStr
+                )
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
+
+            if (!items.length) {
+                homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>';
+                showAllHomeworkBtn.style.display = 'none';
+                return;
+            }
+
             showAllHomeworkBtn.style.display = sorted.length > 6 ? 'block' : 'none';
             showAllHomeworkBtn.textContent = showAllHomework ? 'Скрыть' : 'Показать все';
+
             let html = '';
             items.forEach(l => {
                 const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase();
@@ -1021,8 +1055,17 @@
                 if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; }
                 else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; }
                 else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; }
-                html += `<div class="hw-card"><div class="card-header"><span class="card-date">${d[2]}.${d[1]}</span><span class="card-status ${statusClass}">${statusText}</span></div><div class="card-topic">${l.topic}</div><a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a></div>`;
+
+                html += `<div class="hw-card">
+                    <div class="card-header">
+                        <span class="card-date">${d[2]}.${d[1]}</span>
+                        <span class="card-status ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="card-topic">${l.topic}</div>
+                    <a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a>
+                </div>`;
             });
+
             homeworkCards.innerHTML = html;
             showAllHomeworkBtn.onclick = () => { showAllHomework = !showAllHomework; renderHomeworkCards(); };
         }
