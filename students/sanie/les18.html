@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Функции и Элементы треугольника</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 200px; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0 15px;
+            line-height: 1.6;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. АЛГЕБРА (ФУНКЦИИ И ТАБЛИЦЫ)                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ЛИНЕЙНАЯ ФУНКЦИЯ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§1</span> Как заполнять таблицу по формуле</h2>
+
+        <p>В заданиях часто дана формула (например, \(y = kx + b\)) и таблица с пропусками. Чтобы её заполнить, нужно пользоваться двумя правилами.</p>
+
+        <div class="note-box">
+            <strong>Правило 1. Найти значение \(y\), если известен \(x\).</strong><br>
+            Нужно подставить известное число \(x\) в формулу вместо буквы \(x\) и просто посчитать результат.
+        </div>
+
+        <div class="note-box">
+            <strong>Правило 2. Найти значение \(x\), если известен \(y\).</strong><br>
+            Нужно приравнять всю формулу к известному значению \(y\). У вас получится уравнение. Решите его: перенесите числа в одну сторону, а \(x\) оставьте в другой.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема (не из домашки, для понимания).</strong> Дана формула \(y = 3x - 2\).<br><br>
+            <em>Случай А: известен \(x = 4\).</em><br>
+            Подставляем: \(y = 3 \cdot 4 - 2 = 12 - 2 = 10\).<br><br>
+            <em>Случай Б: известен \(y = 7\).</em><br>
+            Приравниваем: \(3x - 2 = 7\).<br>
+            Переносим число: \(3x = 7 + 2 \implies 3x = 9\).<br>
+            Делим: \(x = 3\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ГЕОМЕТРИЯ (ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА)                -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · ЭЛЕМЕНТЫ ТРЕУГОЛЬНИКА ✦</div>
+
+    <div class="mini-divider">◆ ОСНОВНЫЕ ЛИНИИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§2</span> Медиана, биссектриса, высота</h2>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Медиана</strong> — отрезок, соединяющий вершину треугольника с <strong>серединой</strong> противоположной стороны.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="150,30 40,170 260,170" fill="#fff7ed" stroke="#f5a623" stroke-width="2.5"/>
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="4" fill="#ec4899"/>
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">
+                Отрезок \(BM\) — медиана. Точка \(M\) делит сторону \(AC\) ровно пополам.
+            </div>
+        </div>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Биссектриса</strong> — отрезок, исходящий из вершины угла и делящий этот <strong>угол пополам</strong>.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="150,30 40,170 260,170" fill="#fff7ed" stroke="#f5a623" stroke-width="2.5"/>
+                <line x1="150" y1="30" x2="210" y2="170" stroke="#06d6a0" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="210" cy="170" r="4" fill="#06d6a0"/>
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="215" y="185" font-size="15" fill="#0b1a33" font-weight="700">L</text>
+            </svg>
+            <div class="fig-caption">
+                Отрезок \(BL\) — биссектриса. Она делит угол \(B\) на две равные части.
+            </div>
+        </div>
+
+        <div class="define-box" style="background:#fff7ed; border-left-color:#f5a623;">
+            <strong style="color:#b45309;">Высота</strong> — перпендикуляр, опущенный из вершины треугольника на противоположную сторону. Образует <strong>прямой угол</strong> (\(90^\circ\)).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="150,30 40,170 260,170" fill="#fff7ed" stroke="#f5a623" stroke-width="2.5"/>
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#7c4dff" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="4" fill="#7c4dff"/>
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">H</text>
+            </svg>
+            <div class="fig-caption">
+                Отрезок \(BH\) — высота. Она падает на сторону \(AC\) под прямым углом.
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК                       -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК ✦</div>
+
+    <div class="mini-divider">◆ СВОЙСТВА И ОПРЕДЕЛЕНИЯ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Равнобедренный треугольник</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Равнобедренным</em> называется треугольник, у которого <strong>две стороны равны</strong>. Эти равные стороны называются <strong>боковыми</strong>, а третья сторона — <strong>основанием</strong>.
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство 1 (углы):</strong><br>
+            В равнобедренном треугольнике углы при основании равны.
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство 2 (совпадение линий):</strong><br>
+            В равнобедренном треугольнике медиана, проведенная к основанию, является <strong>одновременно биссектрисой и высотой</strong>.<br>
+            <em>(То же самое можно сказать про биссектрису или высоту, проведённые к основанию).</em>
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Равнобедренный треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#f3e8ff" stroke="#7c4dff" stroke-width="2.5"/>
+                <!-- Линия BM (медиана/высота/биссектриса) -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="4" fill="#ec4899"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">
+                Дан равнобедренный треугольник \(ABC\) с основанием \(AC\) (то есть \(AB = BC\)).<br>
+                Проведена линия \(BM\). Так как треугольник равнобедренный, эта линия является сразу медианой, биссектрисой и высотой.
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Как это применять в тесте:</strong> Если вопрос звучит «Чем является биссектриса, проведенная к основанию равнобедренного треугольника?» — правильный ответ всегда: «медианой и высотой». Это универсальное правило.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
