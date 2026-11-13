@@ -130,11 +130,6 @@
         .welcome-block { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
         .welcome-block h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; width: 100%; }
-        .quick-links-container { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .quick-link-btn { min-width: 145px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 20px; border-radius: 15px; text-decoration: none; font-weight: 750; transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s; }
-        .quick-link-btn:hover { transform: translateY(-2px); }
-        .zoom-btn { color: var(--accent-blue); background: rgba(255, 255, 255, 0.70); border: 1px solid rgba(53, 103, 201, 0.18); box-shadow: var(--shadow-sm); }
-        .board-btn { color: var(--accent-purple); background: rgba(255, 255, 255, 0.70); border: 1px solid rgba(109, 84, 199, 0.18); box-shadow: var(--shadow-sm); }
         .page { display: none; }
         .page.active { display: block; }
         .section-title { margin-bottom: 20px; font-size: 1.35rem; font-weight: 800; }
@@ -320,8 +315,6 @@
         }
         @media (max-width: 700px) {
             .top-bar { flex-direction: column; gap: 18px; }
-            .quick-links-container { width: 100%; }
-            .quick-link-btn { flex: 1; min-width: 0; }
             .calendar-wrapper { padding: 18px 12px; }
             .calendar-header { padding: 0 6px; }
             .calendar-title-text span:first-child { font-size: 0.95rem; }
@@ -334,7 +327,6 @@
         @media (max-width: 500px) {
             .main-wrapper { padding-left: 10px; padding-right: 10px; }
             .login-card { padding: 35px 22px; }
-            .quick-link-btn { padding: 12px 10px; font-size: 0.88rem; }
             .calendar-title { gap: 8px; }
             .calendar-icon { width: 36px; height: 36px; }
             .day { min-height: 45px; border-radius: 10px; font-size: 0.82rem; }
@@ -440,10 +432,6 @@
                     <div class="welcome-block">
                         <h1 id="pageTitle">Расписание занятий</h1>
                         <p id="pageSubtitle">Посмотри, что тебя ждёт</p>
-                    </div>
-                    <div class="quick-links-container" id="quickLinks">
-                        <a href="#" id="zoomBtn" target="_blank" class="quick-link-btn zoom-btn">📞 Звонок</a>
-                        <a href="#" id="boardBtn" target="_blank" class="quick-link-btn board-btn">📝 Доска</a>
                     </div>
                 </div>
                 <div class="page active" id="page-schedule">
@@ -557,9 +545,6 @@
         const modalLinks = document.getElementById('modalLinks');
         const pageTitle = document.getElementById('pageTitle');
         const pageSubtitle = document.getElementById('pageSubtitle');
-        const zoomBtn = document.getElementById('zoomBtn');
-        const boardBtn = document.getElementById('boardBtn');
-        const quickLinks = document.getElementById('quickLinks');
         const themeToggle = document.getElementById('themeToggle');
         const showAllHomeworkBtn = document.getElementById('showAllHomework');
         const showAllMaterialsBtn = document.getElementById('showAllMaterials');
@@ -657,22 +642,6 @@
                 pageTitle.textContent = titles.progress.title;
                 pageSubtitle.textContent = titles.progress.subtitle;
                 renderProgressPage();
-            }
-        }
-
-        function updateQuickLinks() {
-            if (!currentStudentId || !lessonsData.length) { quickLinks.style.display = 'none'; return; }
-            quickLinks.style.display = 'flex';
-            const today = new Date(), todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            let todaysLesson = lessonsData.find(l => l.date === todayStr) || lessonsData.filter(l => l.date < todayStr).sort((a, b) => b.date.localeCompare(a.date))[0];
-            if (todaysLesson) {
-                zoomBtn.href = todaysLesson.zoomLink || '#';
-                zoomBtn.style.opacity = todaysLesson.zoomLink ? '1' : '0.45';
-                boardBtn.href = todaysLesson.boardLink || '#';
-                boardBtn.style.opacity = todaysLesson.boardLink ? '1' : '0.45';
-            } else {
-                zoomBtn.href = '#'; boardBtn.href = '#';
-                zoomBtn.style.opacity = '0.45'; boardBtn.style.opacity = '0.45';
             }
         }
 
@@ -1019,13 +988,13 @@
                 showAllHomeworkBtn.style.display = 'none';
                 return;
             }
-        
+
             const today = new Date();
             const y = today.getFullYear();
             const m = today.getMonth();            // 0..11
             const dayOfMonth = today.getDate();
             const todayStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(dayOfMonth).padStart(2, '0')}`;
-        
+
             // Нижняя граница периода:
             //  - до 5-го числа — 1-е число ПРОШЛОГО месяца
             //  - с 5-го числа   — 1-е число ТЕКУЩЕГО месяца
@@ -1036,7 +1005,7 @@
             } else {
                 monthStart = `${y}-${String(m + 1).padStart(2, '0')}-01`;
             }
-        
+
             const sorted = lessonsData
                 .filter(l =>
                     l.topic && l.topic.trim() !== '' &&
@@ -1045,18 +1014,18 @@
                     l.date <= todayStr          // будущие уроки не показываем — домашки по ним ещё нет
                 )
                 .sort((a, b) => new Date(b.date) - new Date(a.date));
-        
+
             const items = sorted.slice(0, showAllHomework ? sorted.length : Math.min(6, sorted.length));
-        
+
             if (!items.length) {
                 homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>';
                 showAllHomeworkBtn.style.display = 'none';
                 return;
             }
-        
+
             showAllHomeworkBtn.style.display = sorted.length > 6 ? 'block' : 'none';
             showAllHomeworkBtn.textContent = showAllHomework ? 'Скрыть' : 'Показать все';
-        
+
             let html = '';
             items.forEach(l => {
                 const d = l.date.split('-'), status = (l.hwStatus || 'pending').toLowerCase();
@@ -1064,7 +1033,7 @@
                 if (status.includes('проверен') || status === 'checked') { statusText = l.hwScore ? `✅ ${l.hwScore}` : '✅ Проверено'; statusClass = 'checked'; }
                 else if (status.includes('не проверен') || status === 'done') { statusText = '📝 Не проверено'; statusClass = 'done'; }
                 else if (status.includes('не решен') || status === 'pending') { statusText = '⏳ Не решено'; statusClass = 'pending'; }
-        
+
                 html += `<div class="hw-card">
                     <div class="card-header">
                         <span class="card-date">${d[2]}.${d[1]}</span>
@@ -1074,7 +1043,7 @@
                     <a href="${buildHomeworkLink(l.homework, currentStudentId, l)}" target="_blank" class="card-btn">Открыть задание</a>
                 </div>`;
             });
-        
+
             homeworkCards.innerHTML = html;
             showAllHomeworkBtn.onclick = () => { showAllHomework = !showAllHomework; renderHomeworkCards(); };
         }
@@ -1111,7 +1080,6 @@
             sidebar.style.display = 'flex';
             mainWrapper.classList.add('with-sidebar');
             switchPage('schedule');
-            updateQuickLinks();
         }
 
         loginBtn.addEventListener('click', handleLogin);
