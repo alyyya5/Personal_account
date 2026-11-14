@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Прямая пропорциональность</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 250px; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0 15px;
+            line-height: 1.6;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ПРЯМАЯ ПРОПОРЦИОНАЛЬНОСТЬ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ЧТО ЭТО ТАКОЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Определение и формула</h2>
+        
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Прямой пропорциональностью</em> называется функция, которую можно задать формулой вида:
+        </div>
+
+        <div class="formula-box">
+            \(y = kx\)
+        </div>
+
+        <p>Где:</p>
+        <ul>
+            <li>\(x\) — независимая переменная (аргумент);</li>
+            <li>\(y\) — зависимая переменная (функция);</li>
+            <li>\(k\) — не равное нулю число (<strong>коэффициент пропорциональности</strong>).</li>
+        </ul>
+
+        <div class="note-box">
+            <strong>Главное свойство:</strong> Если \(x\) увеличивается в несколько раз, то и \(y\) увеличивается во столько же раз.
+        </div>
+
+        <div class="example-box">
+            <strong>Примеры из жизни:</strong>
+            <ul style="margin-top:6px;">
+                <li>Масса железа \(m\) от его объема \(V\): \(m = 7{,}8V\) (здесь \(k = 7{,}8\)).</li>
+                <li>Путь \(s\) при постоянной скорости \(70\) км/ч: \(s = 70t\) (здесь \(k = 70\)).</li>
+                <li>Стоимость \(p\) товара по цене \(250\) руб/кг: \(p = 250x\) (здесь \(k = 250\)).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ГРАФИК                                           -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ГРАФИКИ · КАК ВЫГЛЯДИТ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> График прямой пропорциональности</h2>
+        
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">График функции \(y = kx\)</strong> — это всегда <strong>прямая</strong>, которая проходит через <strong>начало координат</strong> (точку \((0; 0)\)).
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                <!-- Сетка -->
+                <g stroke="#e2e8f0" stroke-width="1">
+                    <line x1="20" y1="125" x2="380" y2="125" />
+                    <line x1="200" y1="20" x2="200" y2="230" />
+                    <line x1="80" y1="20" x2="80" y2="230" />
+                    <line x1="140" y1="20" x2="140" y2="230" />
+                    <line x1="260" y1="20" x2="260" y2="230" />
+                    <line x1="320" y1="20" x2="320" y2="230" />
+                    <line x1="20" y1="65" x2="380" y2="65" />
+                    <line x1="20" y1="185" x2="380" y2="185" />
+                </g>
+                
+                <!-- Оси -->
+                <line x1="20" y1="125" x2="380" y2="125" stroke="#2c3e5a" stroke-width="2"/>
+                <line x1="200" y1="20" x2="200" y2="230" stroke="#2c3e5a" stroke-width="2"/>
+                <text x="385" y="130" font-size="14" fill="#2c3e5a" font-weight="bold">x</text>
+                <text x="205" y="15" font-size="14" fill="#2c3e5a" font-weight="bold">y</text>
+
+                <!-- График k>0 -->
+                <line x1="80" y1="185" x2="320" y2="65" stroke="#06d6a0" stroke-width="3"/>
+                <text x="325" y="65" font-size="14" fill="#059669" font-weight="bold">k > 0</text>
+                
+                <!-- График k<0 -->
+                <line x1="80" y1="65" x2="320" y2="185" stroke="#ec4899" stroke-width="3"/>
+                <text x="325" y="190" font-size="14" fill="#be185d" font-weight="bold">k < 0</text>
+            </svg>
+            <div class="fig-caption">
+                Если \(k > 0\), прямая идёт «вверх» (I и III четверти).<br>
+                Если \(k < 0\), прямая идёт «вниз» (II и IV четверти).
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. КАК ПОСТРОИТЬ                                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАКТИКА · ПОСТРОЕНИЕ ГРАФИКА ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Как построить график</h2>
+
+        <p>Чтобы построить график, <strong>достаточно найти всего одну точку</strong> (кроме нуля) и провести через неё и начало координат прямую.</p>
+
+        <ol class="step-list">
+            <li>Отметьте на координатной плоскости начало координат — точку \((0; 0)\).</li>
+            <li>Выберите любое удобное значение \(x\) (не равное нулю).</li>
+            <li>Подставьте этот \(x\) в формулу \(y = kx\) и вычислите \(y\).</li>
+            <li>Отметьте полученную точку \((x; y)\) на координатной плоскости.</li>
+            <li>Проведите прямую линию через эту точку и начало координат.</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Пример 1 (целый коэффициент).</strong><br>
+            Построим график \(y = 3x\).<br>
+            Берём \(x = 1\), тогда \(y = 3 \cdot 1 = 3\).<br>
+            Отмечаем точки \((0; 0)\) и \((1; 3)\), проводим прямую.
+        </div>
+
+        <div class="example-box">
+            <strong>Пример 2 (дробный коэффициент).</strong><br>
+            Построим график \(y = -1{,}5x\).<br>
+            Чтобы не работать с дробями, удобнее взять \(x = 2\).<br>
+            Тогда \(y = -1{,}5 \cdot 2 = -3\).<br>
+            Отмечаем точки \((0; 0)\) и \((2; -3)\), проводим прямую.
+        </div>
+        
+        <div class="note-box">
+            <strong>Лайфхак:</strong> если коэффициент \(k\) — дробь (например, \(y = 2{,}5x\) или \(y = -4{,}5x\)), выбирайте \(x\) кратным знаменателю (то есть \(x = 2\), \(x = 4\) и т.д.), чтобы \(y\) получилось целым числом.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. НАХОЖДЕНИЕ КОЭФФИЦИЕНТА                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АНАЛИЗ · КАК НАЙТИ \(k\) ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Как найти коэффициент \(k\)</h2>
+
+        <p>Если известно, что график проходит через какую-то точку, можно найти коэффициент пропорциональности.</p>
+
+        <div class="formula-box">
+            Если точка \(A(x_0; y_0)\) принадлежит графику \(y = kx\), то:<br>
+            \(y_0 = k \cdot x_0 \quad \Rightarrow \quad k = \frac{y_0}{x_0}\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример.</strong> График прямой пропорциональности проходит через точку \(A(3; 21)\).<br>
+            Подставляем координаты в формулу \(y = kx\):<br>
+            \(21 = k \cdot 3\)<br>
+            Отсюда \(k = \frac{21}{3} = 7\).<br>
+            Значит, функция задается формулой \(y = 7x\).
+        </div>
+
+        <div class="note-box">
+            <strong>Как проверить точку:</strong> чтобы узнать, проходит ли график через точку \(B(x; y)\), подставьте её координаты в полученную формулу. Если равенство выполняется — точка принадлежит графику.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
