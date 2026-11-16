@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Задачи, Уравнения и Свойства</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЗАДАЧИ НА СПЛАВЫ И РАСТВОРЫ (№1, 2)              -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · СПЛАВЫ И РАСТВОРЫ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§1</span> Как решать задачи на смеси</h2>
+
+        <p>Вся математика таких задач строится на <strong>массе чистого вещества</strong>.</p>
+
+        <div class="formula-box">
+            <strong>Масса вещества = (Масса сплава) \(\times\) (Концентрация)</strong><br>
+            <em>Концентрацию переводим в десятичную дробь (38% = 0,38).</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Закон сохранения массы:</strong><br>
+            Масса чистого вещества в первом сплаве + масса чистого вещества во втором сплаве = масса чистого вещества в получившемся (третьем) сплаве.
+        </div>
+
+        <div class="example-box">
+            <strong>Схема решения (как в №1):</strong><br>
+            Пусть масса первого сплава \(x\) кг, а масса второго \(y\) кг.<br>
+            1) Общая масса: \(x + y = 100\).<br>
+            2) Масса серебра в 1-м: \(0{,}5x\).<br>
+            3) Масса серебра во 2-м: \(0{,}3y\).<br>
+            4) Масса серебра в 3-м: \(0{,}38 \cdot 100 = 38\).<br>
+            Уравнение: \(0{,}5x + 0{,}3y = 38\).<br>
+            Остается решить систему из двух уравнений.
+        </div>
+        
+        <div class="note-box">
+            <strong>Совет:</strong> если в задаче спрашивают «на сколько масса первого меньше второго», в ответ пишите разность \(y - x\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. УРАВНЕНИЯ С КОРНЯМИ (№3–12)                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · КОРНИ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§2</span> Как решать уравнения с корнями</h2>
+
+        <p>Главное правило: чтобы избавиться от корня, нужно возвести обе части уравнения в нужную степень.</p>
+
+        <div class="formula-box">
+            <strong>Квадратный корень (№3–10):</strong><br>
+            \(\sqrt{f(x)} = a \quad \Rightarrow \quad f(x) = a^2\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Кубический корень (№11–12):</strong><br>
+            \(\sqrt[3]{f(x)} = a \quad \Rightarrow \quad f(x) = a^3\)
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (как в №3):</strong> \(\sqrt{57 - 7x} = 6\).<br>
+            Возводим обе части в квадрат:<br>
+            \(57 - 7x = 6^2\)<br>
+            \(57 - 7x = 36\)<br>
+            \(-7x = 36 - 57\)<br>
+            \(-7x = -21\)<br>
+            \(x = 3\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (как в №11):</strong> \(\sqrt[3]{x + 6} = 4\).<br>
+            Возводим в куб:<br>
+            \(x + 6 = 4^3\)<br>
+            \(x + 6 = 64\)<br>
+            \(x = 58\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ЗАДАЧИ НА ДВИЖЕНИЕ (№13–22)                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ТЕКСТОВЫЕ ЗАДАЧИ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§3</span> Движение по воде и задержки</h2>
+
+        <p>Основная формула: \(S = v \cdot t\) (Расстояние = Скорость \(\times\) Время).</p>
+
+        <div class="formula-box">
+            \(v_{\text{по течению}} = v_{\text{собственная}} + v_{\text{течения}}\)<br><br>
+            \(v_{\text{против течения}} = v_{\text{собственная}} - v_{\text{течения}}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Два важных нюанса:</strong>
+            <ul style="margin-top:6px;">
+                <li><strong>Остановка/задержка:</strong> Если в задаче сказано, что был простой (лодка стояла, баржа отдыхала), это время нужно <span class="highlight">вычесть</span> из общего времени движения (или добавить к времени другой части пути).</li>
+                <li><strong>Догон (№15–17):</strong> Если второй теплоход вышел на 2 часа позже и прибыл одновременно, значит, он находился в пути на 2 часа меньше: \(t_1 - t_2 = 2\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Схема для №13 (туда и обратно):</strong><br>
+            Пусть собственная скорость \(v\) (озеро — течение 0).<br>
+            Время туда: \(\frac{264}{v}\).<br>
+            Время обратно (с учетом скорости и стоянки): \(\frac{264}{v+2} + 1\).<br>
+            Так как время одинаковое: \(\frac{264}{v} = \frac{264}{v+2} + 1\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ТЕОРИЯ: СТЕПЕНИ И ЛОГАРИФМЫ (№23–30)             -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ТЕОРИЯ · СТЕПЕНИ И ЛОГАРИФМЫ ✦</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§4</span> Свойства степеней (№23–26)</h2>
+
+        <div class="formula-box">
+            <strong>1. Умножение:</strong> \(a^m \cdot a^n = a^{m+n}\) (показатели складываются)
+        </div>
+        <div class="formula-box">
+            <strong>2. Деление:</strong> \(\frac{a^m}{a^n} = a^{m-n}\) (показатели вычитаются)
+        </div>
+        <div class="formula-box">
+            <strong>3. Степень в степени:</strong> \((a^m)^n = a^{m \cdot n}\) (показатели перемножаются)
+        </div>
+        <div class="formula-box">
+            <strong>4. Нулевая степень:</strong> \(a^0 = 1\) (любое число, кроме 0, в нулевой степени равно 1)
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§5</span> Свойства логарифмов (№27–30)</h2>
+
+        <p>Логарифм — это показатель степени. Для решения тестов достаточно знать четыре базовых свойства.</p>
+
+        <div class="formula-box">
+            <strong>1. Произведение:</strong> \(\log_a(x \cdot y) = \log_a(x) + \log_a(y)\)
+        </div>
+        <div class="formula-box">
+            <strong>2. Частное:</strong> \(\log_a\left(\frac{x}{y}\right) = \log_a(x) - \log_a(y)\)
+        </div>
+        <div class="formula-box">
+            <strong>3. Степень:</strong> \(\log_a(x^p) = p \cdot \log_a(x)\)
+        </div>
+        <div class="formula-box">
+            <strong>4. Логарифм основания:</strong> \(\log_a(a) = 1\)
+        </div>
+
+        <div class="note-box">
+            <strong>Лайфхак для запоминания:</strong><br>
+            <ul style="margin-top:6px;">
+                <li>Умножение внутри логарифма \(\rightarrow\) <strong>плюс</strong> снаружи.</li>
+                <li>Деление внутри логарифма \(\rightarrow\) <strong>минус</strong> снаружи.</li>
+                <li>Степень внутри логарифма \(\rightarrow\) выносим <strong>вперед</strong> как множитель.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
