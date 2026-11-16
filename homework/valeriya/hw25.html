@@ -370,29 +370,29 @@
             </div>
             <div class="task-grid">
 
-                <!-- Задача 1: Равнобедренный треугольник (2 признак, чекбоксы) -->
+                <!-- Задача 1 -->
                 <div class="task-card">
                     <div class="task-label purple">Задача №1 (Равнобедренный треугольник)</div>
                     <div class="task-condition">
-                        <p>В равнобедренном треугольнике \(ABC\) с основанием \(AC\) проведена биссектриса \(BD\) к основанию. Выберите <strong>три условия</strong> (поставьте галочки), которых достаточно, чтобы доказать равенство треугольников \(ABD\) и \(CBD\) по второму признаку (УСУ).</p>
+                        <p>В равнобедренном треугольнике \(ABC\) с основанием \(AC\) проведена биссектриса \(BD\) к основанию. Выберите <strong>три условия</strong>, которых достаточно для доказательства равенства \(\triangle ABD = \triangle CBD\) по второму признаку.</p>
                         
                         <div class="options-list">
-                            <label class="checkbox-label"><input type="checkbox" name="t1" value="1"> 1) \(AB = BC\) (свойство равнобедренного треугольника)</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t1" value="2"> 2) \(\angle ABD = \angle CBD\) (свойство биссектрисы)</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t1" value="3"> 3) \(\angle BAC = \angle BCA\) (свойство равнобедренного треугольника)</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t1" value="4"> 4) \(AD = DC\) (свойство медианы)</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t1" value="5"> 5) \(\angle BDA = \angle BDC\) (свойство высоты)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t1" value="1"> 1) \(AB = BC\)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t1" value="2"> 2) \(\angle ABD = \angle CBD\)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t1" value="3"> 3) \(\angle BAC = \angle BCA\)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t1" value="4"> 4) \(AD = DC\)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t1" value="5"> 5) \(\angle BDA = \angle BDC\)</label>
                             <label class="checkbox-label"><input type="checkbox" name="t1" value="6"> 6) \(BD\) — общая сторона</label>
                         </div>
-
                         <div class="hint-box">
-                            <strong>💡 Подсказка:</strong> Для второго признака нужны два равных угла и сторона между ними. Вспомните, что у равнобедренного треугольника углы при основании равны.
+                            <strong>💡 Подсказка:</strong> Для второго признака нужны два угла и сторона между ними.
                         </div>
                     </div>
+                    <!-- ДОБАВЛЕНО СКРЫТОЕ ПОЛЕ ДЛЯ Q1 -->
                     <input type="hidden" id="q1" value="">
                 </div>
 
-                <!-- Задача 2: Четырехугольник (3 признак, выбор шагов + ввод угла) -->
+                <!-- Задача 2 -->
                 <div class="task-card">
                     <div class="task-label green">Задача №2 (Четырехугольник)</div>
                     <div class="task-condition">
@@ -414,7 +414,7 @@
                     </div>
                     
                     <div class="sub-task">
-                        <p>1. По какому признаку равны треугольники \(ABC\) и \(CDA\)?</p>
+                        <p>1. По какому признаку равны \(\triangle ABC\) и \(\triangle CDA\)?</p>
                         <div class="options-list">
                             <label class="radio-label"><input type="radio" name="t2_crit" value="1"> по первому признаку</label>
                             <label class="radio-label"><input type="radio" name="t2_crit" value="2"> по второму признаку</label>
@@ -423,27 +423,29 @@
                     </div>
 
                     <div class="sub-task">
-                        <p>2. Отметьте галочками верные шаги доказательства:</p>
+                        <p>2. Отметьте верные шаги доказательства:</p>
                         <div class="options-list">
-                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="1"> 1) \(AB = CD\) (по условию)</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="2"> 2) \(BC = AD\) (по условию)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="1"> 1) \(AB = CD\)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="2"> 2) \(BC = AD\)</label>
                             <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="3"> 3) \(AC\) — общая сторона</label>
-                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="4"> 4) \(\angle BAC = \angle DCA\) (накрест лежащие)</label>
+                            <label class="checkbox-label"><input type="checkbox" name="t2_steps" value="4"> 4) \(\angle BAC = \angle DCA\)</label>
                         </div>
                     </div>
 
                     <div class="sub-task">
-                        <p>3. Найдите угол \(ADC\) (в градусах), если угол \(ABC = 85^\circ\):</p>
+                        <p>3. Найдите угол \(ADC\), если \(\angle ABC = 85^\circ\):</p>
                         <input type="text" class="answer-input" id="q2_angle">
                     </div>
+                    <!-- ДОБАВЛЕНО СКРЫТОЕ ПОЛЕ ДЛЯ Q2_CRIT -->
+                    <input type="hidden" id="q2_crit" value="">
                     <input type="hidden" id="q2" value="">
                 </div>
 
-                <!-- Задача 3: Пересекающиеся отрезки (1 признак) -->
+                <!-- Задача 3 -->
                 <div class="task-card">
                     <div class="task-label green">Задача №3 (Отрезки)</div>
                     <div class="task-condition">
-                        <p>Отрезки \(AB\) и \(CD\) пересекаются в точке \(O\), которая является серединой каждого из них. Найдите длину отрезка \(AC\), если известно, что \(BD = 16\) см.</p>
+                        <p>Отрезки \(AB\) и \(CD\) пересекаются в точке \(O\), которая является серединой каждого из них. Найдите длину отрезка \(AC\), если \(BD = 16\) см.</p>
                     </div>
                     <div class="fig-box">
                         <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
@@ -464,11 +466,11 @@
                     <input type="text" class="answer-input" id="q3">
                 </div>
 
-                <!-- Задача 4: Определить признак (3 признак) -->
+                <!-- Задача 4 -->
                 <div class="task-card">
                     <div class="task-label purple">Задача №4 (Выбор признака)</div>
                     <div class="task-condition">
-                        <p>На рисунке в четырехугольнике \(ABCD\) проведена диагональ \(AC\). Известно, что \(AB = AD\) и \(BC = CD\). По какому признаку равны треугольники \(ABC\) и \(ADC\)?</p>
+                        <p>В четырехугольнике \(ABCD\) проведена диагональ \(AC\). Известно, что \(AB = AD\) и \(BC = CD\). По какому признаку равны \(\triangle ABC\) и \(\triangle ADC\)?</p>
                     </div>
                     <div class="fig-box">
                         <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
@@ -485,18 +487,18 @@
                         </svg>
                     </div>
                     <div class="options-list">
-                        <label class="radio-label"><input type="radio" name="t4" value="по первому признаку"> по первому признаку (две стороны и угол между ними)</label>
-                        <label class="radio-label"><input type="radio" name="t4" value="по второму признаку"> по второму признаку (сторона и два прилежащих угла)</label>
-                        <label class="radio-label"><input type="radio" name="t4" value="по третьему признаку"> по третьему признаку (три стороны)</label>
+                        <label class="radio-label"><input type="radio" name="t4" value="по первому признаку"> по первому признаку</label>
+                        <label class="radio-label"><input type="radio" name="t4" value="по второму признаку"> по второму признаку</label>
+                        <label class="radio-label"><input type="radio" name="t4" value="по третьему признаку"> по третьему признаку</label>
                     </div>
                     <input type="hidden" id="q4" value="">
                 </div>
 
-                <!-- Задача 5: 1 признак (Теория) -->
+                <!-- Задача 5 -->
                 <div class="task-card">
                     <div class="task-label">Задача №5 (Первый признак)</div>
                     <div class="task-condition">
-                        <p>Какой признак равенства треугольников гласит: «Если две стороны и угол <strong>между ними</strong> одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны»?</p>
+                        <p>Какой признак гласит: «Если две стороны и угол <strong>между ними</strong> одного треугольника соответственно равны двум сторонам и углу между ними другого, то такие треугольники равны»?</p>
                     </div>
                     <div class="options-list">
                         <label class="radio-label"><input type="radio" name="t5" value="Первый признак"> Первый признак</label>
@@ -506,11 +508,11 @@
                     <input type="hidden" id="q5" value="">
                 </div>
 
-                <!-- Задача 6: 2 признак (Теория) -->
+                <!-- Задача 6 -->
                 <div class="task-card">
                     <div class="task-label">Задача №6 (Второй признак)</div>
                     <div class="task-condition">
-                        <p>Какой признак равенства треугольников гласит: «Если сторона и два <strong>прилежащих к ней угла</strong> одного треугольника соответственно равны стороне и двум прилежащим к ней углам другого треугольника, то такие треугольники равны»?</p>
+                        <p>Какой признак гласит: «Если сторона и два <strong>прилежащих к ней угла</strong> одного треугольника соответственно равны стороне и двум прилежащим углам другого, то такие треугольники равны»?</p>
                     </div>
                     <div class="options-list">
                         <label class="radio-label"><input type="radio" name="t6" value="Первый признак"> Первый признак</label>
@@ -557,9 +559,9 @@
         (function() {
             // ========== ОТВЕТЫ ==========
             const answers = {
-                q1: "123",       // 1, 2, 3 (сторона AB=BC и два угла: A=C, ABD=CBD)
-                q2: "3_123_85",  // 3 признак, шаги 1,2,3, угол 85
-                q3: "16",        // Треугольники равны по 1 признаку => AC = BD
+                q1: "123",       
+                q2: "3_123_85",  
+                q3: "16",        
                 q4: "по третьему признаку",
                 q5: "Первый признак",
                 q6: "Второй признак"
@@ -599,14 +601,16 @@
 
             function setRadioHidden() {
                 radioGroups.forEach(group => {
-                    document.getElementById(group.id).value = getRadioValue(group.name);
+                    const hidden = document.getElementById(group.id);
+                    if(hidden) hidden.value = getRadioValue(group.name);
                 });
             }
 
             radioGroups.forEach(group => {
                 document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
                     radio.addEventListener('change', function() {
-                        document.getElementById(group.id).value = this.value;
+                        const hidden = document.getElementById(group.id);
+                        if(hidden) hidden.value = this.value;
                         updateProgress();
                     });
                 });
@@ -626,7 +630,6 @@
                 return s;
             }
 
-            // Специальная логика сборки ответа для Задачи 2
             function getTask2Answer() {
                 let crit = getRadioValue('t2_crit');
                 let steps = Array.from(document.querySelectorAll('input[name="t2_steps"]:checked')).map(cb => cb.value).sort().join('');
@@ -638,12 +641,10 @@
                 const right = answers[id];
                 if (!right) return false;
                 
-                // Для задачи 1 (чекбоксы)
                 if (id === 'q1') {
                     let checked = Array.from(document.querySelectorAll('input[name="t1"]:checked')).map(cb => cb.value).sort().join('');
                     return checked === right;
                 }
-                // Для задачи 2 (сборная солянка)
                 if (id === 'q2') {
                     return normalize(getTask2Answer()) === normalize(right);
                 }
@@ -654,19 +655,21 @@
             function updateProgress() {
                 let filled = 0;
                 
-                // Задача 1: хотя бы один чекбокс
+                // Задача 1
                 if (document.querySelector('input[name="t1"]:checked')) filled++;
                 
-                // Задача 2: выбран признак, отмечен хотя бы один шаг и введен угол
-                if (document.getElementById('q2_crit').value && document.querySelector('input[name="t2_steps"]:checked') && document.getElementById('q2_angle').value.trim()) filled++;
+                // Задача 2: проверяем наличие выбора в радио, чекбоксах и тексте напрямую
+                if (getRadioValue('t2_crit') && document.querySelector('input[name="t2_steps"]:checked') && document.getElementById('q2_angle').value.trim()) {
+                    filled++;
+                }
                 
-                // Задача 3: текст
+                // Задача 3
                 if (document.getElementById('q3').value.trim()) filled++;
                 
-                // Задачи 4, 5, 6: радио
-                if (document.getElementById('q4').value) filled++;
-                if (document.getElementById('q5').value) filled++;
-                if (document.getElementById('q6').value) filled++;
+                // Задачи 4, 5, 6
+                if (getRadioValue('t4')) filled++;
+                if (getRadioValue('t5')) filled++;
+                if (getRadioValue('t6')) filled++;
                 
                 const total = 6;
                 const pct = Math.round((filled / total) * 100);
@@ -690,22 +693,19 @@
             }
 
             function validateBeforeSubmit() {
-                // Проверка 1
                 if (!document.querySelector('input[name="t1"]:checked')) {
                     resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ В Задаче 1 не выбраны условия.</div>`;
                     return false;
                 }
-                // Проверка 2
-                if (!document.getElementById('q2_crit').value || !document.querySelector('input[name="t2_steps"]:checked') || !document.getElementById('q2_angle').value.trim()) {
-                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ В Задаче 2 заполнены не все части (признак, шаги или угол).</div>`;
+                if (!getRadioValue('t2_crit') || !document.querySelector('input[name="t2_steps"]:checked') || !document.getElementById('q2_angle').value.trim()) {
+                    resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ В Задаче 2 заполнены не все части.</div>`;
                     return false;
                 }
-                // Проверка остальных
                 let empty = [];
                 if (!document.getElementById('q3').value.trim()) empty.push('3');
-                if (!document.getElementById('q4').value) empty.push('4');
-                if (!document.getElementById('q5').value) empty.push('5');
-                if (!document.getElementById('q6').value) empty.push('6');
+                if (!getRadioValue('t4')) empty.push('4');
+                if (!getRadioValue('t5')) empty.push('5');
+                if (!getRadioValue('t6')) empty.push('6');
                 
                 if (empty.length > 0) {
                     resultArea.innerHTML = `<div style="color: var(--accent-red); font-weight: 700;">⚠️ Не заполнены задания: № ${empty.join(', ')}</div>`;
@@ -753,7 +753,7 @@
                         let angleText = document.getElementById('q2_angle').value.trim();
                         userAnswer = `Признак: ${critText}, Шаги: ${stepsText}, Угол: ${angleText}`;
                         isCorrect = isAnswerCorrect(id, userAnswer);
-                    } else if (id === 'q3' || id === 'q4' || id === 'q5' || id === 'q6') {
+                    } else if (['q3','q4','q5','q6'].includes(id)) {
                         userAnswer = document.getElementById(id).value.trim();
                         isCorrect = isAnswerCorrect(id, userAnswer);
                     }
@@ -769,19 +769,11 @@
                 }
 
                 const percent = Math.round((correct / total) * 100);
-
-                let reportBody = `**Ученик:** ${student}\n`;
-                reportBody += `**Дата:** ${date}\n\n`;
-                reportBody += `**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
+                let reportBody = `**Ученик:** ${student}\n**Дата:** ${date}\n\n**Результат:** ${correct} из ${total} (${percent}%)\n\n`;
 
                 if (mistakes.length > 0) {
-                    reportBody += `Ниже — отчёт только с неправильными ответами:\n\n`;
-                    reportBody += `| № | Правильный ответ | Ответ ученика |\n`;
-                    reportBody += `|---|------------------|---------------|\n`;
-                    mistakes.forEach(m => {
-                        reportBody += `| ${m.num} | ${m.right} | ${m.user} |\n`;
-                    });
-                    reportBody += `\n`;
+                    reportBody += `Неправильные ответы:\n\n| № | Правильный ответ | Ответ ученика |\n|---|------------------|---------------|\n`;
+                    mistakes.forEach(m => { reportBody += `| ${m.num} | ${m.right} | ${m.user} |\n`; });
                 } else {
                     reportBody += `🎉 **Все задания выполнены верно!**\n\n`;
                 }
