@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Теория | Степенные выражения и корни</title>
+    <title>Теория | Арифметический квадратный корень</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -14,233 +14,327 @@
             padding: 30px 20px;
             min-height: 100vh;
             color: #0b1a33;
+            line-height: 1.65;
         }
         .container { max-width: 1100px; margin: 0 auto; }
 
         .card {
-            background: rgba(255,255,255,0.96);
-            border-radius: 28px;
+            background: rgba(255,255,255,0.97);
+            border-radius: 24px;
             padding: 26px 30px;
             margin-bottom: 26px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.4);
             border-left: 8px solid #2a6fdb;
         }
-        .card.pink { border-left-color: #ec4899; }
         .card.green { border-left-color: #06d6a0; }
         .card.purple { border-left-color: #7c4dff; }
         .card.orange { border-left-color: #f5a623; }
+        .card.teal { border-left-color: #14b8a6; }
+        .card.pink { border-left-color: #ec4899; }
+
         .card h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            font-size: 1.55rem; font-weight: 800; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            letter-spacing: -.3px;
         }
         .card h2 .badge {
-            background: #2a6fdb;
-            color: white;
-            font-size: 0.95rem;
-            padding: 0 16px;
-            border-radius: 40px;
-            line-height: 2;
+            background: #2a6fdb; color: white; font-size: .85rem;
+            padding: 2px 14px; border-radius: 40px; line-height: 1.9;
+            letter-spacing: 0;
         }
-        .card h2 .badge.pink { background: #ec4899; }
         .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
         .card h2 .badge.purple { background: #7c4dff; }
         .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
-        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
-        .card ul, .card ol { margin: 12px 0 8px 22px; }
-        .card li { margin-bottom: 6px; }
+        .card h2 .badge.teal { background: #14b8a6; }
+        .card h2 .badge.pink { background: #ec4899; }
 
-        .formula-box {
-            background: #eef4ff;
-            border: 2px solid #2a6fdb;
-            border-radius: 14px;
-            padding: 12px 18px;
-            margin: 14px 0;
-            text-align: center;
-            font-size: 1.08rem;
-            font-weight: 500;
-            line-height: 2;
+        .props-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
         }
-        .example-box {
-            background: #fcf3e0;
-            border-left: 6px solid #e8b84b;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.9;
-            font-size: 1rem;
+        .prop-box {
+            background: #fbfcff;
+            border: 2px solid #e4ebf6;
+            border-radius: 16px;
+            padding: 16px 18px;
+            position: relative;
         }
-        .example-box strong { color: #b47d2a; }
-        .note-box {
-            background: #f0f7f0;
-            border-left: 6px solid #06d6a0;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.75;
-            font-size: 1rem;
+        .prop-box .title {
+            font-size: .85rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; color: #7a8699; margin-bottom: 8px;
         }
-        .note-box strong { color: #059669; }
-        .define-box {
-            background: #fdf2f8;
-            border-left: 6px solid #ec4899;
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin: 14px 0;
-            line-height: 1.8;
-            font-size: 1rem;
+        .prop-box .f {
+            font-size: 1.15rem; text-align: center; margin: 10px 0;
+            color: #0b1a33; font-weight: 600;
         }
-        .define-box strong { color: #be185d; }
+        .prop-box .cond {
+            font-size: .85rem; color: #5b6478; text-align: center;
+            border-top: 1px dashed #dde4ef; padding-top: 8px; margin-top: 8px;
+        }
+        .prop-box.hi { border-color: #2a6fdb; background: #eef4ff; }
+        .prop-box.hi .title { color: #2a6fdb; }
 
-        .section-divider {
-            text-align: center;
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.15);
-            padding: 8px 0 18px;
-            letter-spacing: 6px;
+        .algorithm {
+            background: #f8fafc;
+            border-left: 4px solid #2a6fdb;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+            margin: 16px 0;
         }
-        .mini-divider {
-            text-align: center;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #7c4dff;
-            padding: 4px 0 8px;
-            letter-spacing: 3px;
+        .algorithm .alg-title {
+            font-weight: 800; color: #2a6fdb; margin-bottom: 8px;
+            text-transform: uppercase; letter-spacing: .5px; font-size: .9rem;
         }
-        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+        .algorithm ol { margin-left: 20px; color: #2c3e5a; }
+        .algorithm li { margin-bottom: 6px; }
 
-        @media print {
-            body { background: white; padding: 10px; }
-            .card { box-shadow: none !important; break-inside: avoid; }
-            .section-divider { color: #ccc; }
+        .example {
+            background:#fcf3e0; border-left:5px solid #e8b84b; border-radius:12px;
+            padding:14px 18px; margin:12px 0; font-size:.98rem; line-height:1.85;
         }
-        @media (max-width: 500px) {
-            .card { padding: 16px; }
-            .card h2 { font-size: 1.25rem; }
+        .example .tagx {
+            display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:1px;
+            text-transform:uppercase; color:#b47d2a; background:#faeacb;
+            padding:2px 8px; border-radius:5px; margin-bottom:6px;
         }
+        .example b { color:#b47d2a; }
+        .example .ans { display:inline-block; margin-top:6px; font-weight:800; color:#0f766e;
+            background:#ecfdf5; border:1px solid #b7f0dd; padding:3px 10px; border-radius:8px; }
+
+        .warn { background:#fdf2f2; border-left:5px solid #ec4899; border-radius:12px; padding:12px 16px; margin:12px 0; font-size:.96rem; }
+        .warn b { color:#be185d; }
+        .note { background:#f0f7f0; border-left:5px solid #06d6a0; border-radius:12px; padding:12px 16px; margin:12px 0; font-size:.96rem; }
+        .note b { color:#059669; }
+
+        .section-divider { text-align:center; font-size:1.6rem; font-weight:800; color:rgba(255,255,255,0.18); padding:10px 0 20px; letter-spacing:6px; }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <div class="section-divider">✦ ТЕОРИЯ: СТЕПЕННЫЕ ВЫРАЖЕНИЯ ✦</div>
-
     <!-- ============================================================ -->
-    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ И ОГРАНИЧЕНИЯ                        -->
+    <!-- БЛОК 1: ПОЛНЫЙ СПРАВОЧНИК СВОЙСТВ                            -->
     <!-- ============================================================ -->
+    <div class="section-divider">✦ ТЕОРИЯ ✦</div>
 
-    <div class="mini-divider">◆ ОСНОВЫ ◆</div>
+    <div class="card">
+        <h2><span class="badge">Справочник</span> Все свойства и формулы</h2>
+        <p style="margin-bottom:14px; color:#2c3e5a;">
+            <strong>Арифметический квадратный корень</strong> из числа \(a\) — это неотрицательное число, квадрат которого равен \(a\).<br>
+            Обозначение: \(\sqrt{a} = b\), где \(b \ge 0\) и \(b^2 = a\).<br>
+            <em>Извлекать корень можно только из неотрицательных чисел!</em>
+        </p>
 
-    <div class="card pink">
-        <h2><span class="badge pink">§1</span> Что такое корень n-й степени?</h2>
-
-        <div class="define-box">
-            <strong style="color:#be185d;">Определение.</strong> Арифметическим корнем \(n\)-й степени из числа \(a\) называется такое неотрицательное число \(b\), которое при возведении в степень \(n\) даёт \(a\).<br>
-            Записывается как: \(a^{\frac{1}{n}} = b\), где \(b \ge 0\) и \(b^n = a\).
+        <div class="props-grid">
+            <div class="prop-box hi">
+                <div class="title">Квадрат корня</div>
+                <div class="f">\((\sqrt{a})^2 = a\)</div>
+                <div class="cond">при \(a \ge 0\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Корень из квадрата</div>
+                <div class="f">\(\sqrt{a^2} = |a|\)</div>
+                <div class="cond">для любого числа \(a\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Корень произведения</div>
+                <div class="f">\(\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}\)</div>
+                <div class="cond">при \(a \ge 0\), \(b \ge 0\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Корень частного</div>
+                <div class="f">\(\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}\)</div>
+                <div class="cond">при \(a \ge 0\), \(b > 0\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Вынесение множителя</div>
+                <div class="f">\(\sqrt{a^2b} = |a|\sqrt{b}\)</div>
+                <div class="cond">при \(b \ge 0\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Внесение множителя</div>
+                <div class="f">\(k\sqrt{b} = \sqrt{k^2b}\)</div>
+                <div class="cond">при \(k \ge 0\), \(b \ge 0\)</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Разность квадратов</div>
+                <div class="f">\((x-y)(x+y) = x^2 - y^2\)</div>
+                <div class="cond">для избавления от корней</div>
+            </div>
+            <div class="prop-box hi">
+                <div class="title">Сложный радикал</div>
+                <div class="f">\(\sqrt{a \pm 2\sqrt{b}} = \sqrt{m} \pm \sqrt{n}\)</div>
+                <div class="cond">где \(m+n=a\), \(m \cdot n=b\)</div>
+            </div>
         </div>
 
-        <div class="note-box">
-            <strong>Важно помнить:</strong><br>
-            <ul style="margin-top:6px;">
-                <li>Корень чётной степени (\(n=2, 4, 6\dots\)) можно извлекать только из <span class="highlight">неотрицательных</span> чисел (\(a \ge 0\)).</li>
-                <li>Корень нечётной степени (\(n=3, 5, 7\dots\)) можно извлекать из любых действительных чисел.</li>
-                <li>Результат арифметического корня всегда <strong>неотрицателен</strong>.</li>
-            </ul>
+        <div class="warn" style="margin-top: 20px;">
+            <b>Главные запреты:</b><br>
+            1. \(\sqrt{a+b} \ne \sqrt{a} + \sqrt{b}\) (корень суммы не равен сумме корней!).<br>
+            2. Нельзя извлекать корень из отрицательного числа (например, \(\sqrt{-9}\) не существует).
         </div>
     </div>
 
     <!-- ============================================================ -->
-    <!--    ЧАСТЬ 2. СВОЙСТВА СТЕПЕНЕЙ                                -->
+    <!-- БЛОК 2: АЛГОРИТМЫ И ПРИМЕРЫ                                  -->
     <!-- ============================================================ -->
-
-    <div class="mini-divider">◆ ФОРМУЛЫ ПРЕОБРАЗОВАНИЯ ◆</div>
-
-    <div class="card purple">
-        <h2><span class="badge purple">§2</span> Основные свойства степеней</h2>
-
-        <p>Для упрощения выражений используются следующие правила действий со степенями:</p>
-
-        <div class="formula-box">
-            <strong>1. Умножение степеней с одинаковым основанием:</strong><br>
-            \(a^x \cdot a^y = a^{x+y}\)
+    
+    <div class="card green">
+        <h2><span class="badge green">Практика 1</span> Упрощение выражений</h2>
+        
+        <div class="algorithm" style="border-left-color: #06d6a0;">
+            <div class="alg-title" style="color: #059669;">Алгоритм: как упростить</div>
+            <ol>
+                <li>Разложи каждое подкоренное число на множители так, чтобы один из них был полным квадратом (например, \(\sqrt{50} = \sqrt{25 \cdot 2}\)).</li>
+                <li>Вынеси квадрат из-под корня (получится \(5\sqrt{2}\)).</li>
+                <li>Сложи или вычти подобные слагаемые (корни с одинаковыми подкоренными выражениями).</li>
+                <li>Если есть скобки, раскрой их по правилам умножения многочленов или формулам сокращённого умножения.</li>
+            </ol>
         </div>
 
-        <div class="formula-box">
-            <strong>2. Деление степеней с одинаковым основанием:</strong><br>
-            \(\frac{a^x}{a^y} = a^{x-y}\)
+        <div class="example">
+            <div class="tagx">Пример 1</div>
+            \(\sqrt{75} - 2\sqrt{27} + \sqrt{12}\)<br>
+            \(= \sqrt{25 \cdot 3} - 2\sqrt{9 \cdot 3} + \sqrt{4 \cdot 3}\)<br>
+            \(= 5\sqrt{3} - 2 \cdot 3\sqrt{3} + 2\sqrt{3} = 5\sqrt{3} - 6\sqrt{3} + 2\sqrt{3} = \sqrt{3}\).<br>
+            <span class="ans">Ответ: \(\sqrt{3}\)</span>
         </div>
 
-        <div class="formula-box">
-            <strong>3. Возведение степени в степень:</strong><br>
-            \((a^x)^y = a^{x \cdot y}\)
-        </div>
-
-        <div class="formula-box">
-            <strong>4. Степень произведения:</strong><br>
-            \((a \cdot b)^x = a^x \cdot b^x\)
-        </div>
-
-        <div class="formula-box">
-            <strong>5. Степень частного:</strong><br>
-            \(\left(\frac{a}{b}\right)^x = \frac{a^x}{b^x}\)
-        </div>
-
-        <div class="note-box">
-            <strong>Связь корней и степеней:</strong><br>
-            Корень \(n\)-й степени — это то же самое, что степень \(\frac{1}{n}\).<br>
-            Например: \(a^{\frac{m}{n}} = (a^{\frac{1}{n}})^m\). Это позволяет применять все правила степеней к корням.
+        <div class="example">
+            <div class="tagx">Пример 2 (со скобками)</div>
+            \((3\sqrt{2} - 1)(2\sqrt{2} + 5)\)<br>
+            Перемножаем как обычные многочлены (фонтанчиком):<br>
+            \(= 3\sqrt{2} \cdot 2\sqrt{2} + 3\sqrt{2} \cdot 5 - 1 \cdot 2\sqrt{2} - 1 \cdot 5\)<br>
+            \(= 12 + 15\sqrt{2} - 2\sqrt{2} - 5 = 7 + 13\sqrt{2}\).<br>
+            <span class="ans">Ответ: \(7 + 13\sqrt{2}\)</span>
         </div>
     </div>
-
-    <!-- ============================================================ -->
-    <!--    ЧАСТЬ 3. ПРИМЕРЫ УПРОЩЕНИЯ                                -->
-    <!-- ============================================================ -->
-
-    <div class="mini-divider">◆ КАК РЕШАТЬ ЗАДАЧИ ◆</div>
 
     <div class="card green">
-        <h2><span class="badge green">§3</span> Алгоритм упрощения</h2>
-
-        <div class="example-box">
-            <strong>Пример 1 (Умножение):</strong><br>
-            Упростить: \(8^{\frac{1}{3}} \cdot 4^{\frac{1}{2}}\)<br>
-            Приведём основания к степеням двойки:<br>
-            \(8 = 2^3\), значит \(8^{\frac{1}{3}} = (2^3)^{\frac{1}{3}} = 2^1 = 2\).<br>
-            \(4 = 2^2\), значит \(4^{\frac{1}{2}} = (2^2)^{\frac{1}{2}} = 2^1 = 2\).<br>
-            Результат: \(2 \cdot 2 = 4\).
+        <h2><span class="badge green">Практика 2</span> Сравнение выражений</h2>
+        
+        <div class="algorithm" style="border-left-color: #06d6a0;">
+            <div class="alg-title" style="color: #059669;">Алгоритм: как сравнить</div>
+            <ol>
+                <li><strong>Способ 1 (внесение):</strong> Занеси множитель перед корнем под корень. Сравни подкоренные числа (больше то, у которого подкоренное больше).</li>
+                <li><strong>Способ 2 (квадрат):</strong> Если обе части положительны, возведи их в квадрат. Сравни полученные числа.</li>
+                <li><strong>Способ 3 (оценка):</strong> Используй приближённые значения (\(\sqrt{2} \approx 1{,}41\), \(\sqrt{3} \approx 1{,}73\) и т.д.).</li>
+            </ol>
         </div>
 
-        <div class="example-box">
-            <strong>Пример 2 (Деление и вычитание показателей):</strong><br>
-            Упростить: \(\frac{x^{\frac{5}{6}}}{x^{\frac{1}{3}}}\)<br>
-            При делении показатели вычитаются:<br>
-            \(\frac{5}{6} - \frac{1}{3} = \frac{5}{6} - \frac{2}{6} = \frac{3}{6} = \frac{1}{2}\).<br>
-            Ответ: \(x^{\frac{1}{2}}\).
+        <div class="example">
+            <div class="tagx">Пример 1</div>
+            Сравнить \(5\sqrt{2}\) и \(3\sqrt{5}\).<br>
+            Внесем множители под корень:<br>
+            \(5\sqrt{2} = \sqrt{25 \cdot 2} = \sqrt{50}\)<br>
+            \(3\sqrt{5} = \sqrt{9 \cdot 5} = \sqrt{45}\)<br>
+            Так как \(50 > 45\), то \(5\sqrt{2} > 3\sqrt{5}\).<br>
+            <span class="ans">Ответ: \(5\sqrt{2} > 3\sqrt{5}\)</span>
         </div>
 
-        <div class="example-box">
-            <strong>Пример 3 (Сложная степень):</strong><br>
-            Вычислить: \((27^{\frac{1}{3}})^2\)<br>
-            Сначала извлекаем кубический корень из 27: \(27^{\frac{1}{3}} = 3\).<br>
-            Затем возводим результат в квадрат: \(3^2 = 9\).
+        <div class="example">
+            <div class="tagx">Пример 2 (возведение в квадрат)</div>
+            Сравнить \(\sqrt{5} + \sqrt{3}\) и \(\sqrt{6} + \sqrt{2}\).<br>
+            Возводим обе части в квадрат:<br>
+            \((\sqrt{5} + \sqrt{3})^2 = 5 + 2\sqrt{15} + 3 = 8 + 2\sqrt{15}\)<br>
+            \((\sqrt{6} + \sqrt{2})^2 = 6 + 2\sqrt{12} + 2 = 8 + 2\sqrt{12}\)<br>
+            Так как \(15 > 12\), то первая сумма больше.<br>
+            <span class="ans">Ответ: \(\sqrt{5} + \sqrt{3} > \sqrt{6} + \sqrt{2}\)</span>
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">Практика 3</span> Сокращение дробей</h2>
+        
+        <div class="algorithm" style="border-left-color: #7c4dff;">
+            <div class="alg-title" style="color: #5a2fd6;">Алгоритм: как сократить</div>
+            <ol>
+                <li>Разложи числитель и знаменатель на множители. Корни часто выносятся за скобки как общий множитель.</li>
+                <li>Используй формулу разности квадратов: \(a - b = (\sqrt{a} - \sqrt{b})(\sqrt{a} + \sqrt{b})\).</li>
+                <li>Используй формулу полного квадрата: \(a \pm 2\sqrt{ab} + b = (\sqrt{a} \pm \sqrt{b})^2\).</li>
+                <li>Сократи общие скобки в числителе и знаменателе.</li>
+            </ol>
+        </div>
+
+        <div class="example">
+            <div class="tagx">Пример 1</div>
+            \(\dfrac{6 - \sqrt{6}}{\sqrt{6} - 1}\)<br>
+            Вынесем \(\sqrt{6}\) в числителе:<br>
+            \(6 - \sqrt{6} = \sqrt{6} \cdot \sqrt{6} - \sqrt{6} = \sqrt{6}(\sqrt{6} - 1)\).<br>
+            Подставляем в дробь:<br>
+            \(\dfrac{\sqrt{6}(\sqrt{6} - 1)}{\sqrt{6} - 1} = \sqrt{6}\).<br>
+            <span class="ans">Ответ: \(\sqrt{6}\)</span>
+        </div>
+
+        <div class="example">
+            <div class="tagx">Пример 2 (полный квадрат)</div>
+            \(\dfrac{a - 10\sqrt{a} + 25}{a - 25}\)<br>
+            Числитель — это полный квадрат: \((\sqrt{a} - 5)^2\).<br>
+            Знаменатель — разность квадратов: \((\sqrt{a} - 5)(\sqrt{a} + 5)\).<br>
+            \(\dfrac{(\sqrt{a} - 5)^2}{(\sqrt{a} - 5)(\sqrt{a} + 5)} = \dfrac{\sqrt{a} - 5}{\sqrt{a} + 5}\).<br>
+            <span class="ans">Ответ: \(\dfrac{\sqrt{a} - 5}{\sqrt{a} + 5}\)</span>
         </div>
     </div>
 
     <div class="card orange">
-        <h2><span class="badge orange">§4</span> Типичные ошибки</h2>
+        <h2><span class="badge orange">Практика 4</span> Избавление от иррациональности</h2>
+        
+        <div class="algorithm" style="border-left-color: #f5a623;">
+            <div class="alg-title" style="color: #b47d2a;">Алгоритм: как убрать корень</div>
+            <ol>
+                <li>Умножь числитель и знаменатель на такое выражение, чтобы в знаменателе исчез корень.</li>
+                <li>Если в знаменателе один корень \(\sqrt{b}\), умножай на \(\sqrt{b}\).</li>
+                <li>Если в знаменателе сумма или разность \((\sqrt{a} \pm \sqrt{b})\), умножай на <strong>сопряжённое</strong> (то же самое, но с противоположным знаком).</li>
+            </ol>
+        </div>
 
-        <div class="note-box" style="background: #fffbeb; border-left-color: #f59e0b;">
-            <strong style="color: #b45309;">Внимание!</strong> Часто ученики путают сложение оснований и сложение показателей.<br>
-            <br>
-            ❌ НЕВЕРНО: \(2^3 + 2^4 = 2^7\) (так делать нельзя!).<br>
-            ✅ ВЕРНО: \(2^3 + 2^4 = 8 + 16 = 24\).<br>
-            <br>
-            Правила сложения/вычитания показателей работают <strong>только</strong> при умножении или делении степеней.
+        <div class="example">
+            <div class="tagx">Пример 1 (один корень)</div>
+            \(\dfrac{24}{7\sqrt{3}} = \dfrac{24 \cdot \sqrt{3}}{7\sqrt{3} \cdot \sqrt{3}} = \dfrac{24\sqrt{3}}{7 \cdot 3} = \dfrac{24\sqrt{3}}{21} = \dfrac{8\sqrt{3}}{7}\).<br>
+            <span class="ans">Ответ: \(\dfrac{8\sqrt{3}}{7}\)</span>
+        </div>
+
+        <div class="example">
+            <div class="tagx">Пример 2 (сопряжённое)</div>
+            \(\dfrac{5}{\sqrt{7} + \sqrt{2}}\)<br>
+            Умножаем на \((\sqrt{7} - \sqrt{2})\):<br>
+            \(= \dfrac{5(\sqrt{7} - \sqrt{2})}{(\sqrt{7} + \sqrt{2})(\sqrt{7} - \sqrt{2})} = \dfrac{5(\sqrt{7} - \sqrt{2})}{7 - 2} = \dfrac{5(\sqrt{7} - \sqrt{2})}{5} = \sqrt{7} - \sqrt{2}\).<br>
+            <span class="ans">Ответ: \(\sqrt{7} - \sqrt{2}\)</span>
+        </div>
+    </div>
+
+    <div class="card teal">
+        <h2><span class="badge teal">Практика 5</span> Сложные радикалы и уравнения</h2>
+        
+        <div class="algorithm" style="border-left-color: #14b8a6;">
+            <div class="alg-title" style="color: #0f766e;">Алгоритм: как решать</div>
+            <ol>
+                <li>Заметить, что под корнем стоит выражение вида \(a \pm 2\sqrt{b}\).</li>
+                <li>Найти два числа, сумма которых равна \(a\), а произведение равно \(b\). Назовем их \(m\) и \(n\).</li>
+                <li>Свернуть корень: \(\sqrt{a \pm 2\sqrt{b}} = \sqrt{m} \pm \sqrt{n}\).</li>
+                <li>Если дано уравнение \(x^2 = (\sqrt{A} - \sqrt{B})^2\), то после упрощения скобки получаем \(x^2 = \text{число}\). Если число положительное, то \(x = \pm \sqrt{\text{число}}\).</li>
+            </ol>
+        </div>
+
+        <div class="example">
+            <div class="tagx">Пример 1 (свёртка)</div>
+            Упростить \(\sqrt{8 - 2\sqrt{15}}\).<br>
+            Ищем числа: сумма \(= 8\), произведение \(= 15\). Это \(5\) и \(3\).<br>
+            Значит, \(\sqrt{8 - 2\sqrt{15}} = \sqrt{5} - \sqrt{3}\).<br>
+            <span class="ans">Ответ: \(\sqrt{5} - \sqrt{3}\)</span>
+        </div>
+
+        <div class="example">
+            <div class="tagx">Пример 2 (уравнение)</div>
+            Решить \(x^2 = (\sqrt{7 - 4\sqrt{3}} - \sqrt{7 + 4\sqrt{3}})^2\).<br>
+            Сначала упростим корни.<br>
+            \(7 - 4\sqrt{3} = (2 - \sqrt{3})^2\); \(7 + 4\sqrt{3} = (2 + \sqrt{3})^2\).<br>
+            Тогда скобка равна: \((2 - \sqrt{3}) - (2 + \sqrt{3}) = -2\sqrt{3}\).<br>
+            Возводим в квадрат: \((-2\sqrt{3})^2 = 4 \cdot 3 = 12\).<br>
+            Получаем уравнение \(x^2 = 12\).<br>
+            <span class="ans">Ответ: \(x = \pm 2\sqrt{3}\)</span>
         </div>
     </div>
 
