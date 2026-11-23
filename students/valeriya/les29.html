@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Линейная функция и Равнобедренный треугольник</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 220px; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0 15px;
+            line-height: 1.6;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ · АЛГЕБРА И ГЕОМЕТРИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЛИНЕЙНАЯ ФУНКЦИЯ                                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ЛИНЕЙНАЯ ФУНКЦИЯ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§1</span> Определение и график</h2>
+        
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Определение.</strong> <em>Линейной функцией</em> называется функция вида:
+        </div>
+
+        <div class="formula-box">
+            \(y = kx + b\)<br>
+            <em>где \(x\) — аргумент, \(k\) и \(b\) — числа.</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Главное:</strong> Графиком линейной функции всегда является <strong>прямая линия</strong>. Для её построения достаточно найти координаты всего двух точек.
+        </div>
+
+        <div class="formula-box">
+            Если \(b = 0\), то функция имеет вид \(y = kx\).<br>
+            Это частный случай — <strong>прямая пропорциональность</strong>. Её график всегда проходит через начало координат \((0; 0)\).
+        </div>
+    </div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§2</span> Влияние коэффициентов \(k\) и \(b\)</h2>
+
+        <div class="note-box">
+            <strong>Коэффициент \(k\) (угловой коэффициент):</strong>
+            <ul style="margin-top:6px;">
+                <li>Если \(k > 0\), прямая идёт «в горку» (возрастает).</li>
+                <li>Если \(k < 0\), прямая идёт «с горки» (убывает).</li>
+                <li>Если \(k = 0\), прямая горизонтальна (функция \(y = b\)).</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>Коэффициент \(b\) (сдвиг):</strong>
+            <ul style="margin-top:6px;">
+                <li>Показывает, в какой точке прямая пересекает ось \(OY\).</li>
+                <li>Координата этой точки: \((0; b)\).</li>
+            </ul>
+        </div>
+
+        <div class="formula-box">
+            <strong>Условие параллельности:</strong><br>
+            Прямые \(y = k_1x + b_1\) и \(y = k_2x + b_2\) параллельны, если \(k_1 = k_2\) и \(b_1 \neq b_2\).
+        </div>
+    </div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Как найти точку пересечения</h2>
+
+        <p>Чтобы найти координаты точки пересечения двух прямых, нужно приравнять их правые части.</p>
+
+        <div class="example-box">
+            <strong>Пример.</strong> \(y = 2x - 1\) и \(y = -x + 5\).<br><br>
+            1) Приравниваем:<br>
+            \(2x - 1 = -x + 5\)<br><br>
+            2) Решаем уравнение:<br>
+            \(2x + x = 5 + 1\)<br>
+            \(3x = 6 \Rightarrow x = 2\).<br><br>
+            3) Подставляем \(x = 2\) в любую формулу:<br>
+            \(y = 2 \cdot 2 - 1 = 3\).<br><br>
+            <strong>Ответ: точка пересечения \((2; 3)\).</strong>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК                       -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ГЕОМЕТРИЯ · РАВНОБЕДРЕННЫЙ ТРЕУГОЛЬНИК ✦</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§4</span> Определение и свойства</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Равнобедренным</em> называется треугольник, у которого две стороны равны. Эти стороны называются <strong>боковыми</strong>, а третья — <strong>основанием</strong>.
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Треугольник ABC -->
+                <polygon points="150,30 40,170 260,170" fill="#fdf2f8" stroke="#ec4899" stroke-width="2.5"/>
+                <!-- Медиана/биссектриса/высота BM -->
+                <line x1="150" y1="30" x2="150" y2="170" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="6,4"/>
+                <!-- Вершины -->
+                <circle cx="150" cy="30" r="4" fill="#0b1a33"/>
+                <circle cx="40" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="260" cy="170" r="4" fill="#0b1a33"/>
+                <circle cx="150" cy="170" r="4" fill="#ec4899"/>
+                <!-- Буквы -->
+                <text x="145" y="22" font-size="15" fill="#0b1a33" font-weight="700">B</text>
+                <text x="25" y="185" font-size="15" fill="#0b1a33" font-weight="700">A</text>
+                <text x="265" y="185" font-size="15" fill="#0b1a33" font-weight="700">C</text>
+                <text x="155" y="185" font-size="15" fill="#0b1a33" font-weight="700">M</text>
+            </svg>
+            <div class="fig-caption">
+                Треугольник \(ABC\), в котором \(AB = BC\). Сторона \(AC\) — основание.
+            </div>
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство 1 (углы):</strong><br>
+            В равнобедренном треугольнике углы при основании равны:<br>
+            \(\angle A = \angle C\).
+        </div>
+
+        <div class="formula-box">
+            <strong>Свойство 2 (линии):</strong><br>
+            В равнобедренном треугольнике медиана, проведённая к основанию, является <strong>биссектрисой и высотой</strong>.<br>
+            <em>(То же самое можно сказать про биссектрису или высоту к основанию).</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Как это применять:</strong> Если в задаче сказано, что треугольник равнобедренный, и проведена линия к основанию, можно смело использовать все три её свойства: она делит основание пополам, делит угол пополам и перпендикулярна основанию.
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Признак равнобедренности</h2>
+
+        <p>Иногда нужно доказать, что треугольник является равнобедренным (например, найти равные стороны). В этом помогает обратное утверждение.</p>
+
+        <div class="define-box" style="background:#f0f7f0; border-left-color:#06d6a0;">
+            <strong style="color:#059669;">Признак.</strong> Если в треугольнике <strong>два угла равны</strong>, то он является равнобедренным (стороны, лежащие против этих углов, равны).
+        </div>
+
+        <div class="note-box">
+            <strong>Второй признак:</strong> Если медиана совпадает с высотой или биссектрисой, то треугольник также является равнобедренным.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
