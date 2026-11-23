@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Задачи и Уравнения (Банк ФИПИ)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ЗАДАЧИ НА ДВИЖЕНИЕ (№1–10)                       -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ДВИЖЕНИЕ ПО ВОДЕ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§1</span> Базовые формулы и таблица</h2>
+
+        <p>В основе всех задач на движение лежит формула:</p>
+        <div class="formula-box">
+            \(S = v \cdot t\)<br>
+            <em>Расстояние = Скорость \(\times\) Время</em><br>
+            \(v = \frac{S}{t} \quad t = \frac{S}{v}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Как оформлять:</strong> Всегда чертите таблицу с тремя столбцами: Скорость (\(v\)), Время (\(t\)), Расстояние (\(S\)). Заполняйте её данными из условия, а недостающее выражайте через \(x\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример-схема (похоже на №1–2).</strong><br>
+            Теплоход проходит путь туда и обратно.<br>
+            Пусть собственная скорость теплохода \(x\) км/ч.<br>
+            Скорость по течению: \(x + v_{\text{теч}}\).<br>
+            Скорость против течения: \(x - v_{\text{теч}}\).<br>
+            Время туда: \(\frac{S}{x + v_{\text{теч}}}\).<br>
+            Время обратно: \(\frac{S}{x - v_{\text{теч}}}\).<br>
+            <em>Так как была стоянка (какое-то время \(t_{\text{стоянки}}\)), то:</em><br>
+            \(t_{\text{туда}} + t_{\text{обратно}} + t_{\text{стоянки}} = \text{общее время}\).
+        </div>
+    </div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Движение по реке и плот (№3–10)</h2>
+
+        <p>При движении по воде важно учитывать скорость течения.</p>
+
+        <div class="formula-box">
+            \(v_{\text{по течению}} = v_{\text{собственная}} + v_{\text{течения}}\)<br><br>
+            \(v_{\text{против течения}} = v_{\text{собственная}} - v_{\text{течения}}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Про плот (№7):</strong><br>
+            Плот не имеет собственной скорости, он движется <span class="highlight">только со скоростью течения реки</span>. Значит, его скорость равна \(v_{\text{теч}}\).
+        </div>
+
+        <div class="note-box">
+            <strong>Про разницу во времени (№8–10):</strong><br>
+            Если сказано «затратил на обратный путь на 8 часов меньше», это означает, что:<br>
+            \(t_{\text{против течения}} - t_{\text{по течению}} = 8\).<br>
+            <em>Время против течения всегда больше (так как скорость меньше).</em>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЗАДАЧИ НА РАБОТУ (№11–13)                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · СОВМЕСТНАЯ РАБОТА ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Как решать задачи на работу</h2>
+
+        <p>В задачах на работу (мастер выполняет заказ, насос качает воду) действует та же логика, что и в задачах на движение.</p>
+
+        <div class="formula-box">
+            <strong>Главная формула:</strong><br>
+            \(A = p \cdot t\)<br>
+            <em>Работа (A) = Производительность (p) \(\times\) Время (t)</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Ключевой момент:</strong> всю работу обычно принимают за <strong>1</strong>. Тогда производительность — это та часть работы, которую можно выполнить за 1 час.
+        </div>
+
+        <div class="example-box">
+            <strong>Схема решения (как в №11).</strong><br>
+            Первый мастер выполняет заказ за 36 часов. Значит, его производительность: \(\frac{1}{36}\) работы в час.<br>
+            Второй — за 12 часов. Его производительность: \(\frac{1}{12}\) работы в час.<br>
+            Работая <strong>вместе</strong>, они складывают свои производительности:<br>
+            \(\frac{1}{36} + \frac{1}{12} = \frac{1}{36} + \frac{3}{36} = \frac{4}{36} = \frac{1}{9}\).<br>
+            Это значит, что за 1 час они вместе делают \(\frac{1}{9}\) всей работы.<br>
+            Чтобы выполнить всю работу (1), им нужно: \(1 : \frac{1}{9} = 9\) часов.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ПРОЦЕНТЫ И СПЛАВЫ (№14–17)                       -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ПРОЦЕНТЫ И СМЕСИ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§4</span> Концентрация, сухое вещество и сплавы</h2>
+
+        <p>В задачах на сплавы и варенье вся математика строится на массе чистого вещества (сухого остатка).</p>
+
+        <div class="formula-box">
+            <strong>Масса вещества = (Масса смеси) \(\times\) (Концентрация)</strong><br>
+            <em>Концентрацию переводим в десятичную дробь (80% = 0,8).</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Про варенье и сливы (№14–15):</strong><br>
+            Вода испаряется, а <strong>сухое вещество</strong> остается неизменным!<br>
+            Поэтому мы считаем массу сухого вещества до варки и после, и приравниваем их.
+        </div>
+
+        <div class="example-box">
+            <strong>Схема для №14 (ягоды):</strong><br>
+            Свежие ягоды: 80% воды, значит 20% сухого вещества.<br>
+            Варенье: 20% воды, значит 80% сухого вещества.<br>
+            Пусть взяли \(x\) кг свежих ягод. Тогда сухого вещества в них \(0{,}2x\).<br>
+            В 4 кг варенья сухого вещества \(4 \cdot 0{,}8 = 3{,}2\) кг.<br>
+            Так как сухое вещество не испаряется, приравниваем:<br>
+            \(0{,}2x = 3{,}2 \implies x = 16\) кг.
+        </div>
+
+        <div class="note-box">
+            <strong>Про сплавы (№16):</strong><br>
+            Масса чистого металла (серебра) в первом сплаве + масса во втором = масса в новом сплаве.<br>
+            \(0{,}5 \cdot m_1 + 0{,}3 \cdot m_2 = 0{,}38 \cdot (m_1 + m_2)\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ (№18–22)                 -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ УРАВНЕНИЯ ✦</div>
+
+    <div class="mini-divider">◆ АЛГЕБРА · ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Как решать показательные уравнения</h2>
+
+        <p>Главный метод — привести обе части к одному основанию.</p>
+
+        <div class="formula-box">
+            Если \(a^{f(x)} = a^{g(x)}\), то \(f(x) = g(x)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Полезные преобразования:</strong>
+            <ul style="margin-top:6px;">
+                <li>Числа типа \(49\) — это \(7^2\), \(36\) — это \(6^2\), \(16\) — это \(4^2\).</li>
+                <li>Дроби вида \(\frac{1}{36}\) — это \(6^{-2}\) или \(\left(\frac{1}{6}\right)^2\).</li>
+                <li>Если основание — дробь, её можно перевернуть, поменяв знак степени: \(\left(\frac{1}{6}\right)^n = 6^{-n}\).</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (как в №18):</strong> \(7^{11-x} = 49\).<br>
+            Представим \(49\) как \(7^2\):<br>
+            \(7^{11-x} = 7^2\).<br>
+            Основания равны, приравниваем степени:<br>
+            \(11 - x = 2 \implies x = 9\).
+        </div>
+
+        <div class="example-box">
+            <strong>Пример (как в №19):</strong> \(\left(\frac{1}{6}\right)^{x-3} = \frac{1}{36}\).<br>
+            Представим обе части как степень числа 6:<br>
+            \(\left(\frac{1}{6}\right)^{x-3} = \left(\frac{1}{6}\right)^2\).<br>
+            Приравниваем степени:<br>
+            \(x - 3 = 2 \implies x = 5\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
