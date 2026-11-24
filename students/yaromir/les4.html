@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Квадратные корни</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · КВАДРАТНЫЕ КОРНИ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ЧТО ЭТО ТАКОЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Определение и базовые свойства</h2>
+
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Арифметическим квадратным корнем</em> из числа \(a\) называется неотрицательное число, квадрат которого равен \(a\).
+        </div>
+
+        <div class="formula-box">
+            Обозначение: \(\sqrt{a}\)<br><br>
+            \(\sqrt{a} \ge 0\)<br>
+            \((\sqrt{a})^2 = a\)<br>
+            \(\sqrt{a^2} = |a|\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важно!</strong> Выражение \(\sqrt{a}\) имеет смысл <span class="highlight">только при \(a \ge 0\)</span>. Извлекать корень из отрицательного числа нельзя.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. СВОЙСТВА                                         -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ СВОЙСТВА · УМНОЖЕНИЕ И ДЕЛЕНИЕ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Свойства корней</h2>
+
+        <p>Для любых неотрицательных чисел \(a\) и \(b\) (и \(b > 0\) для деления) верны следующие равенства:</p>
+
+        <div class="formula-box">
+            <strong>Корень из произведения:</strong><br>
+            \(\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Корень из частного:</strong><br>
+            \(\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}\)
+        </div>
+
+        <div class="note-box">
+            <strong>Главный запрет:</strong><br>
+            \(\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}\)<br>
+            Корень суммы <strong>не равен</strong> сумме корней!
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ВЫНЕСЕНИЕ И ВНЕСЕНИЕ                             -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · ПРЕОБРАЗОВАНИЕ КОРНЕЙ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Вынесение и внесение множителя</h2>
+
+        <div class="note-box">
+            <strong>Вынесение множителя из-под корня</strong><br>
+            Чтобы упростить корень, ищут под ним полный квадрат.<br>
+            <em>Формула: \(\sqrt{a^2 b} = |a|\sqrt{b}\).</em><br>
+            После вынесения можно складывать и вычитать корни с одинаковыми подкоренными выражениями (как подобные слагаемые).
+        </div>
+
+        <div class="note-box">
+            <strong>Внесение множителя под корень</strong><br>
+            Множитель перед корнем возводят в квадрат и заносят под знак корня.<br>
+            <em>Формула: \(a\sqrt{b} = \sqrt{a^2 b}\) (при \(a \ge 0\)).</em><br>
+            Этот приём часто используется для сравнения корней.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ИЗБАВЛЕНИЕ ОТ ИРРАЦИОНАЛЬНОСТИ                   -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · КОРЕНЬ В ЗНАМЕНАТЕЛЕ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Избавление от иррациональности</h2>
+
+        <p>В математике принято, чтобы в знаменателе дроби не было корней. Чтобы этого добиться:</p>
+
+        <div class="note-box">
+            <strong>1. Если в знаменателе один корень \(\sqrt{b}\):</strong><br>
+            Умножают числитель и знаменатель на этот же корень. В знаменателе получается число \(b\).
+        </div>
+
+        <div class="note-box">
+            <strong>2. Если в знаменателе сумма или разность \((\sqrt{a} \pm \sqrt{b})\):</strong><br>
+            Умножают на <strong>сопряжённое выражение</strong> (то же самое, но со сменой знака).<br>
+            Это работает благодаря формуле разности квадратов: \((a-b)(a+b) = a^2 - b^2\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. СЛОЖНЫЕ РАДИКАЛЫ (МЕТОД ПОДБОРА)                 -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРИЁМЫ · СЛОЖНЫЕ РАДИКАЛЫ ◆</div>
+
+    <div class="card">
+        <h2><span class="badge">§5</span> Сложные корни (метод подбора)</h2>
+
+        <p>Если под корнем стоит выражение вида \(A \pm 2\sqrt{B}\) (или \(A \pm \sqrt{B}\)), его можно свернуть по формулам квадрата суммы/разности. Суть в том, чтобы <strong>подобрать два числа</strong>.</p>
+
+        <div class="define-box" style="background:#eef4ff; border-left-color:#2a6fdb;">
+            <strong style="color:#1d4a7a;">Правило:</strong><br>
+            Ищем в выражении «слагаемое с корнем» (оно должно быть удвоенным произведением \(2ab\)).<br>
+            Затем подбираем такие два числа \(a\) и \(b\) (они должны быть полными квадратами!), чтобы:
+            <ul style="margin-top:6px;">
+                <li>Их <strong>произведение</strong> давало число под корнем.</li>
+                <li>Сумма их <strong>квадратов</strong> давала число без корня.</li>
+            </ul>
+        </div>
+
+        <ol class="step-list">
+            <li><strong>Найдите «двойное произведение».</strong> Это число с корнем (например, \(\sqrt{B}\) или \(2\sqrt{B}\)). Представьте его в виде \(2ab\).</li>
+            <li><strong>Подберите числа \(a\) и \(b\).</strong> Их произведение должно быть равно числу под корнем. Удобнее всего брать числа, которые являются полными квадратами (2, 3, 5, 7 и т.д.).</li>
+            <li><strong>Проверьте сумму квадратов.</strong> \(a^2 + b^2\) должно быть равно числу без корня (первому слагаемому).</li>
+            <li><strong>Запишите ответ.</strong> Если выражение было с минусом — в скобке ставим минус (квадрат разности), если с плюсом — плюс (квадрат суммы).</li>
+        </ol>
+
+        <div class="note-box">
+            <strong>Как это выглядит на практике:</strong><br>
+            Дано \(\sqrt{11 - \sqrt{120}}\).<br>
+            Сначала запишем корень как удвоенное произведение: \(\sqrt{120} = 2\sqrt{30}\).<br>
+            Теперь ищем \(a\) и \(b\): их произведение \(ab = 30\), а сумма квадратов \(a^2 + b^2 = 11\).<br>
+            Подходят числа \(6\) и \(5\) (так как \(\sqrt{6} \cdot \sqrt{5} = \sqrt{30}\), а \(6 + 5 = 11\)).<br>
+            Получаем \(\sqrt{(\sqrt{6} - \sqrt{5})^2} = \sqrt{6} - \sqrt{5}\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 6. СРАВНЕНИЕ                                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · СРАВНЕНИЕ КОРНЕЙ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§6</span> Как сравнить выражения с корнями</h2>
+
+        <div class="note-box">
+            <strong>Способ 1 (внесение).</strong><br>
+            Занести множитель перед корнем под корень. Чем больше подкоренное число, тем больше сам корень.
+        </div>
+
+        <div class="note-box">
+            <strong>Способ 2 (возведение в квадрат).</strong><br>
+            Если обе сравниваемые части положительны, их можно возвести в квадрат и сравнить результаты.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
