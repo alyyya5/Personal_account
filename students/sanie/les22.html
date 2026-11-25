@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Линейная функция</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .example-box {
+            background: #fcf3e0;
+            border-left: 6px solid #e8b84b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .example-box strong { color: #b47d2a; }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .fig-box {
+            background: #fafbfd;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #dde3ed;
+            margin: 16px 0;
+        }
+        .fig-box svg { max-width: 100%; height: auto; max-height: 250px; }
+        .fig-caption {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #2c3e5a;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 0 15px;
+            line-height: 1.6;
+        }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 14px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: #2a6fdb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ АЛГЕБРА · ЛИНЕЙНАЯ ФУНКЦИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ                                      -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ОСНОВЫ · ЧТО ЭТО ТАКОЕ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Определение и график</h2>
+        
+        <div class="define-box">
+            <strong>Определение.</strong> <em>Линейной функцией</em> называется функция, которую можно задать формулой вида:
+        </div>
+
+        <div class="formula-box">
+            \(y = kx + b\)
+        </div>
+
+        <p>Где:</p>
+        <ul>
+            <li>\(x\) — независимая переменная (аргумент);</li>
+            <li>\(y\) — зависимая переменная (функция);</li>
+            <li>\(k\) и \(b\) — некоторые числа (коэффициенты).</li>
+        </ul>
+
+        <div class="note-box">
+            <strong>Главное:</strong> Графиком линейной функции является <strong>прямая линия</strong>.
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ВЛИЯНИЕ КОЭФФИЦИЕНТОВ                            -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АНАЛИЗ · РОЛЬ КОЭФФИЦИЕНТОВ \(k\) И \(b\) ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Как \(k\) и \(b\) влияют на график</h2>
+        
+        <div class="row cols-2">
+            <div class="cell">
+                <div class="cell-expr"><strong>Коэффициент \(b\) (сдвиг)</strong><br>Отвечает за сдвиг вдоль оси \(OY\).</div>
+                <ul>
+                    <li>График пересекает ось \(OY\) в точке \((0; b)\).</li>
+                    <li>Если \(b > 0\) — прямая сдвинута вверх.</li>
+                    <li>Если \(b < 0\) — прямая сдвинута вниз.</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="cell-expr"><strong>Коэффициент \(k\) (наклон)</strong><br>Отвечает за угол наклона прямой.</div>
+                <ul>
+                    <li>Если \(k > 0\) — прямая возрастает (идёт «в горку»).</li>
+                    <li>Если \(k < 0\) — прямая убывает (идёт «с горки»).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="fig-box">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Оси -->
+                <line x1="20" y1="110" x2="380" y2="110" stroke="#2c3e5a" stroke-width="2"/>
+                <line x1="200" y1="20" x2="200" y2="200" stroke="#2c3e5a" stroke-width="2"/>
+                <text x="385" y="115" font-size="12" fill="#2c3e5a" font-weight="bold">x</text>
+                <text x="205" y="15" font-size="12" fill="#2c3e5a" font-weight="bold">y</text>
+                
+                <!-- b > 0 (зеленая) -->
+                <line x1="100" y1="150" x2="300" y2="50" stroke="#06d6a0" stroke-width="3"/>
+                <text x="305" y="50" font-size="12" fill="#059669" font-weight="bold">k > 0, b > 0</text>
+                <circle cx="200" cy="100" r="4" fill="#06d6a0"/>
+                
+                <!-- b < 0 (красная) -->
+                <line x1="100" y1="170" x2="300" y2="70" stroke="#ec4899" stroke-width="3"/>
+                <text x="305" y="75" font-size="12" fill="#be185d" font-weight="bold">k > 0, b < 0</text>
+                <circle cx="200" cy="120" r="4" fill="#ec4899"/>
+            </svg>
+            <div class="fig-caption">
+                Прямые с одинаковым \(k\) параллельны друг другу, но пересекают ось \(y\) в разных точках (зависит от \(b\)).
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ПАРАЛЛЕЛЬНОСТЬ                                   -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ПРАВИЛО · ВЗАИМНОЕ РАСПОЛОЖЕНИЕ ПРЯМЫХ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§3</span> Когда прямые параллельны, а когда пересекаются?</h2>
+
+        <p>Пусть даны две линейные функции: \(y = k_1x + b_1\) и \(y = k_2x + b_2\).</p>
+
+        <div class="formula-box">
+            <strong>1. Прямые ПАРАЛЛЕЛЬНЫ, если:</strong><br>
+            \(k_1 = k_2\) и \(b_1 \neq b_2\)<br>
+            <em>(Угловые коэффициенты равны, но линии проходят через разные точки на оси \(OY\)).</em>
+        </div>
+
+        <div class="formula-box">
+            <strong>2. Прямые ПЕРЕСЕКАЮТСЯ, если:</strong><br>
+            \(k_1 \neq k_2\)<br>
+            <em>(Углы наклона разные).</em>
+        </div>
+
+        <div class="formula-box">
+            <strong>3. Прямые СОВПАДАЮТ, если:</strong><br>
+            \(k_1 = k_2\) и \(b_1 = b_2\)<br>
+            <em>(Это просто одна и та же прямая).</em>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ТОЧКИ ПЕРЕСЕЧЕНИЯ С ОСЯМИ                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · ПЕРЕСЕЧЕНИЕ С ОСЯМИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§4</span> Как найти пересечение с осями координат</h2>
+
+        <div class="note-box">
+            <strong>С осью \(OY\) (вертикальной):</strong><br>
+            В этой точке \(x = 0\). Подставляем \(x = 0\) в формулу и находим \(y\).<br>
+            Координата точки всегда будет \((0; b)\).
+        </div>
+
+        <div class="note-box">
+            <strong>С осью \(OX\) (горизонтальной):</strong><br>
+            В этой точке \(y = 0\). Приравниваем всю функцию к нулю: \(kx + b = 0\).<br>
+            Решаем уравнение и находим \(x\). Координата точки будет \((x; 0)\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. ТОЧКА ПЕРЕСЕЧЕНИЯ ДВУХ ПРЯМЫХ                    -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГОРИТМ · ПЕРЕСЕЧЕНИЕ ДВУХ ГРАФИКОВ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Как найти точку пересечения двух прямых</h2>
+
+        <p>Чтобы найти координаты точки, в которой пересекаются две прямые, нужно решить систему уравнений (или просто приравнять правые части).</p>
+
+        <ol class="step-list">
+            <li><strong>Приравнять правые части.</strong> В точке пересечения значения \(y\) у обеих функций одинаковы.<br>
+            \(k_1x + b_1 = k_2x + b_2\)</li>
+            <li><strong>Решить уравнение относительно \(x\)</strong> (перенести все \(x\) влево, числа вправо). Найденный \(x\) — это абсцисса точки.</li>
+            <li><strong>Подставить найденный \(x\) в любую из формул</strong> и вычислить \(y\). Это ордината точки.</li>
+            <li><strong>Записать ответ в виде \((x; y)\).</strong></li>
+        </ol>
+
+        <div class="note-box">
+            <strong>Особый случай:</strong> если одна из функций — это просто горизонтальная прямая (например, \(y = 6\)), то приравнивать нужно именно к этому числу, а затем решить уравнение относительно \(x\).
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
