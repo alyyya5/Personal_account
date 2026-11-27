@@ -35,19 +35,9 @@
         button { -webkit-tap-highlight-color: transparent; }
 
         .math-symbol {
-            position: fixed;
-            font-weight: 500;
-            color: rgba(53, 103, 201, 0.18);
-            pointer-events: none;
-            z-index: -1;
-            font-family: 'Times New Roman', 'STIX Two Math', serif;
-            user-select: none;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            position: fixed; font-weight: 500; color: rgba(53, 103, 201, 0.18); pointer-events: none; z-index: -1; font-family: 'Times New Roman', 'STIX Two Math', serif; user-select: none; text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         }
-        body.dark-mode .math-symbol {
-            color: rgba(130, 160, 255, 0.18);
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        }
+        body.dark-mode .math-symbol { color: rgba(130, 160, 255, 0.18); text-shadow: 0 0 20px rgba(0, 0, 0, 0.6); }
 
         .math-1 { top: 7%; left: 12%; font-size: 95px; transform: rotate(-23deg); }
         .math-2 { top: 3%; right: 18%; font-size: 128px; transform: rotate(31deg); }
@@ -78,20 +68,8 @@
         .math-27 { top: 63%; left: 65%; font-size: 101px; transform: rotate(-26deg); opacity: 0.13; }
         .math-28 { top: 77%; left: 72%; font-size: 73px; transform: rotate(28deg); opacity: 0.12; }
 
-        .wave-emoji {
-            display: inline-block;
-            animation: wave 2.5s ease-in-out infinite;
-            transform-origin: 70% 70%;
-        }
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            10% { transform: rotate(14deg); }
-            20% { transform: rotate(-8deg); }
-            30% { transform: rotate(14deg); }
-            40% { transform: rotate(-4deg); }
-            50% { transform: rotate(10deg); }
-            60%, 100% { transform: rotate(0deg); }
-        }
+        .wave-emoji { display: inline-block; animation: wave 2.5s ease-in-out infinite; transform-origin: 70% 70%; }
+        @keyframes wave { 0%, 100% { transform: rotate(0deg); } 10% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 30% { transform: rotate(14deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } 60%, 100% { transform: rotate(0deg); } }
 
         .sidebar { position: fixed; top: 18px; left: 18px; bottom: 18px; width: 250px; padding: 22px 16px; display: none; flex-direction: column; background: var(--sidebar-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); z-index: 100; transition: transform 0.3s ease, background 0.3s ease; }
         .sidebar.open { display: flex; }
@@ -156,6 +134,16 @@
         .day.today:not(.has-lesson) { border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 800; }
         .day.today.has-lesson { border: 2px solid white; box-shadow: 0 0 0 3px var(--accent-blue), 0 7px 16px rgba(65, 88, 180, 0.20); }
         .day .dot { width: 5px; height: 5px; margin-top: 5px; border-radius: 50%; background: white; }
+        
+        /* Стили для календаря оплаты (Для родителей) */
+        .day.paid-lesson { cursor: pointer; color: white; background: linear-gradient(135deg, #2f9d68, #248c5b); box-shadow: 0 7px 16px rgba(47, 157, 104, 0.20); }
+        body.dark-mode .day.paid-lesson { background: linear-gradient(135deg, #36a873, #2f9d68); border: 1px solid rgba(150, 255, 190, 0.3); }
+        .day.paid-lesson:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 24px rgba(47, 157, 104, 0.28); }
+        
+        .day.unpaid-lesson { cursor: pointer; color: white; background: linear-gradient(135deg, #d85c5c, #c0392b); box-shadow: 0 7px 16px rgba(216, 92, 92, 0.20); }
+        body.dark-mode .day.unpaid-lesson { background: linear-gradient(135deg, #e07070, #d85c5c); border: 1px solid rgba(255, 150, 150, 0.3); }
+        .day.unpaid-lesson:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 24px rgba(216, 92, 92, 0.28); }
+
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
         .hw-card, .mat-card { min-height: 210px; display: flex; flex-direction: column; padding: 21px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
         .hw-card:hover, .mat-card:hover { transform: translateY(-4px); background: var(--card-hover); box-shadow: var(--shadow-md); }
@@ -171,7 +159,6 @@
         .show-more-btn { display: block; width: 100%; max-width: 300px; margin: 24px auto 0; padding: 13px 20px; border: 1px solid rgba(53, 103, 201, 0.20); border-radius: 14px; background: rgba(255, 255, 255, 0.55); color: var(--accent-blue); font-weight: 750; cursor: pointer; box-shadow: var(--shadow-sm); transition: transform 0.2s, background 0.2s; }
         .show-more-btn:hover { transform: translateY(-2px); background: rgba(53, 103, 201, 0.08); }
 
-        /* ===== ПРОГРЕСС ===== */
         .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 22px; }
         .stat-card { position: relative; overflow: hidden; padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; }
         .stat-card::after { content: ""; position: absolute; width: 100px; height: 100px; border-radius: 50%; right: -35px; top: -45px; background: rgba(84, 106, 210, 0.06); }
@@ -184,111 +171,32 @@
         .stat-trend.down { background: rgba(216, 92, 92, 0.15); color: var(--accent-red); }
         .stat-trend.flat { background: rgba(153, 163, 181, 0.15); color: var(--text-muted); }
 
-        /* ===== ПЕРЕКЛЮЧАТЕЛЬ МЕСЯЦЕВ ДЛЯ ГРАФИКОВ ===== */
-        .progress-month-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 14px 18px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .progress-month-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.05rem;
-            font-weight: 800;
-        }
-        .progress-month-title .month-label {
-            color: var(--accent-blue);
-            font-weight: 800;
-        }
-        .progress-month-title .month-sub {
-            color: var(--text-secondary);
-            font-size: 0.86rem;
-            font-weight: 650;
-        }
+        .progress-month-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding: 14px 18px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 12px; }
+        .progress-month-title { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 800; }
+        .progress-month-title .month-label { color: var(--accent-blue); font-weight: 800; }
+        .progress-month-title .month-sub { color: var(--text-secondary); font-size: 0.86rem; font-weight: 650; }
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .chart-card { padding: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
         .chart-card h3 { margin-bottom: 20px; color: var(--text-primary); font-size: 1rem; font-weight: 800; }
 
-        /* ===== ТЕМЫ: СИЛЬНЫЕ / СЛАБЫЕ ===== */
-        .topics-wrapper {
-            margin-top: 24px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-        }
-        .topics-wrapper h3 {
-            font-size: 1rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-        .topic-groups {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
-        .topic-group {
-            padding: 14px 16px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid var(--border-color);
-        }
+        .topics-wrapper { margin-top: 24px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm); }
+        .topics-wrapper h3 { font-size: 1rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary); }
+        .topic-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .topic-group { padding: 14px 16px; border-radius: 14px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color); }
         body.dark-mode .topic-group { background: rgba(255, 255, 255, 0.03); }
-        .topic-group .group-title {
-            font-size: 0.85rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .topic-group .group-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .topic-group.excellent .group-title { color: var(--accent-green); }
         .topic-group.good .group-title { color: var(--accent-orange); }
         .topic-group.poor .group-title { color: var(--accent-red); }
         .topic-group ul { list-style: none; padding: 0; margin: 0; }
-        .topic-group li {
-            font-size: 0.82rem;
-            color: var(--text-primary);
-            padding: 6px 0;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            line-height: 1.35;
-        }
+        .topic-group li { font-size: 0.82rem; color: var(--text-primary); padding: 6px 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; gap: 8px; line-height: 1.35; }
         .topic-group li:last-child { border-bottom: none; }
-        .topic-group li .topic-name {
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-        .topic-group li .topic-score {
-            font-weight: 800;
-            white-space: nowrap;
-        }
+        .topic-group li .topic-name { flex: 1; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .topic-group li .topic-score { font-weight: 800; white-space: nowrap; }
         .topic-group.excellent .topic-score { color: var(--accent-green); }
         .topic-group.good .topic-score { color: var(--accent-orange); }
         .topic-group.poor .topic-score { color: var(--accent-red); }
-        .topic-group .empty-group {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-style: italic;
-            padding: 4px 0;
-        }
+        .topic-group .empty-group { font-size: 0.8rem; color: var(--text-muted); font-style: italic; padding: 4px 0; }
 
         .modal-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(23, 30, 52, 0.45); backdrop-filter: blur(7px); z-index: 1000; }
         .modal-overlay.active { display: flex; }
@@ -399,6 +307,13 @@
                 </span>
                 Прогресс
             </button>
+            <!-- НОВАЯ ВКЛАДКА -->
+            <button class="nav-item" data-page="parents">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                </span>
+                Для родителей
+            </button>
         </div>
         <div class="sidebar-bottom">
             <button class="theme-toggle" id="themeToggle">Сменить тему</button>
@@ -482,6 +397,27 @@
                         <div class="topic-groups" id="topicGroups"></div>
                     </div>
                 </div>
+                <!-- НОВАЯ СТРАНИЦА: ДЛЯ РОДИТЕЛЕЙ -->
+                <div class="page" id="page-parents">
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <div class="calendar-title">
+                                <div class="calendar-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                </div>
+                                <div class="calendar-title-text">
+                                    <span>Оплата занятий</span>
+                                    <span class="month-year" id="parentsMonthYear"></span>
+                                </div>
+                            </div>
+                            <div class="nav-buttons">
+                                <button id="parentsPrevMonth">◀</button>
+                                <button id="parentsNextMonth">▶</button>
+                            </div>
+                        </div>
+                        <div class="calendar-grid" id="parentsCalendarGrid"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -515,7 +451,10 @@
           .catch(checkPreview);
 
         let currentStudentId = null, currentDate = new Date(), currentMonth = currentDate.getMonth(), currentYear = currentDate.getFullYear();
-        let lessonsData = [], testsData = [], currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
+        let lessonsData = [], testsData = [], financeData = {}, currentPage = 'schedule', showAllHomework = false, showAllMaterials = false, charts = {};
+
+        // Переменные для календаря родителей
+        let parentsMonth = currentDate.getMonth(), parentsYear = currentDate.getFullYear();
 
         const nameInput = document.getElementById('nameInput');
         const passwordInput = document.getElementById('passwordInput');
@@ -550,6 +489,12 @@
         const showAllMaterialsBtn = document.getElementById('showAllMaterials');
         const topicGroups = document.getElementById('topicGroups');
         const topicsWrapper = document.getElementById('topicsWrapper');
+        
+        // Родительские элементы
+        const parentsMonthYear = document.getElementById('parentsMonthYear');
+        const parentsCalendarGrid = document.getElementById('parentsCalendarGrid');
+        const parentsPrevMonth = document.getElementById('parentsPrevMonth');
+        const parentsNextMonth = document.getElementById('parentsNextMonth');
 
         const monthNamesFull = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
@@ -559,6 +504,7 @@
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
             if (currentPage === 'progress') setTimeout(renderProgressPage, 100);
+            if (currentPage === 'parents') setTimeout(renderParentsCalendar, 100);
         });
 
         sidebarToggle.addEventListener('click', () => {
@@ -624,7 +570,8 @@
             const titles = {
                 homework: { title: 'Домашние задания', subtitle: 'Здесь находятся задания после уроков' },
                 materials: { title: 'Материалы', subtitle: 'Все полезные материалы для занятий' },
-                progress: { title: 'Мой прогресс', subtitle: 'Посмотри, как у тебя всё получается!' }
+                progress: { title: 'Мой прогресс', subtitle: 'Посмотри, как у тебя всё получается!' },
+                parents: { title: 'Оплата занятий', subtitle: 'Информация об оплате уроков' }
             };
 
             if (page === 'schedule') {
@@ -642,6 +589,10 @@
                 pageTitle.textContent = titles.progress.title;
                 pageSubtitle.textContent = titles.progress.subtitle;
                 renderProgressPage();
+            } else if (page === 'parents') {
+                pageTitle.textContent = titles.parents.title;
+                pageSubtitle.textContent = titles.parents.subtitle;
+                renderParentsCalendar();
             }
         }
 
@@ -673,9 +624,93 @@
             }
         }
 
+        // Загрузка финансов для родителей
+        async function loadFinance() {
+            try {
+                const response = await fetch(`config/finance.json?t=${Date.now()}`);
+                if (!response.ok) throw new Error('Нет данных');
+                financeData = await response.json();
+            } catch {
+                financeData = {};
+            }
+        }
+
+        // ============================================================
+        //  КАЛЕНДАРЬ ДЛЯ РОДИТЕЛЕЙ
+        // ============================================================
+        function renderParentsCalendar() {
+            const firstDay = new Date(parentsYear, parentsMonth, 1).getDay(), 
+                  startDay = firstDay === 0 ? 6 : firstDay - 1, 
+                  daysInMonth = new Date(parentsYear, parentsMonth + 1, 0).getDate(), 
+                  today = new Date(), 
+                  weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+            parentsMonthYear.textContent = `${monthNamesFull[parentsMonth]} ${parentsYear}`;
+            
+            // Ищем уроки, которые есть у этого ученика в выбранном месяце
+            const lessonDates = new Set(
+                lessonsData
+                    .filter(l => {
+                        const [y, m] = l.date.split('-');
+                        return parseInt(y) === parentsYear && parseInt(m) === parentsMonth + 1;
+                    })
+                    .map(l => l.date)
+            );
+
+            let html = weekdays.map(w => `<div class="weekday">${w}</div>`).join('');
+            for (let i = 0; i < startDay; i++) html += '<div class="day other-month"></div>';
+            
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${parentsYear}-${String(parentsMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                const hasLesson = lessonDates.has(dateStr);
+                let cls = 'day';
+                
+                if (hasLesson) {
+                    // Проверяем статус оплаты из financeData
+                    const isPaid = financeData.paid && financeData.paid[currentStudentId] && financeData.paid[currentStudentId][dateStr];
+                    const isSkipped = financeData.skipped && financeData.skipped[currentStudentId] && financeData.skipped[currentStudentId].includes(dateStr);
+                    
+                    if (isSkipped) {
+                        // Если урок удален учителем из финансов, показываем его просто как урок
+                        cls += ' has-lesson';
+                    } else if (isPaid) {
+                        cls += ' paid-lesson';
+                    } else {
+                        cls += ' unpaid-lesson';
+                    }
+                }
+                
+                if (d === today.getDate() && parentsMonth === today.getMonth() && parentsYear === today.getFullYear()) cls += ' today';
+                
+                // Родитель тоже может нажать на урок, чтобы посмотреть детали
+                html += `<div class="${cls}" ${hasLesson ? `data-date="${dateStr}"` : ''}>${d}${hasLesson ? '<span class="dot"></span>' : ''}</div>`;
+            }
+            
+            parentsCalendarGrid.innerHTML = html;
+            
+            // Обработчик клика для просмотра модалки (как в расписании)
+            document.querySelectorAll('#parentsCalendarGrid .day[data-date]').forEach(el => {
+                el.addEventListener('click', function () {
+                    const lessons = lessonsData.filter(item => item.date === this.dataset.date);
+                    if (lessons.length) showModal(this.dataset.date, lessons);
+                });
+            });
+        }
+
+        parentsPrevMonth.addEventListener('click', () => {
+            parentsMonth--;
+            if (parentsMonth < 0) { parentsMonth = 11; parentsYear--; }
+            renderParentsCalendar();
+        });
+
+        parentsNextMonth.addEventListener('click', () => {
+            parentsMonth++;
+            if (parentsMonth > 11) { parentsMonth = 0; parentsYear++; }
+            renderParentsCalendar();
+        });
+
         // ============================================================
         //  ПРОГРЕСС: средний балл, тренд, линейный график, сильные/слабые темы
-        //  ВСЁ — ЗА ВЫБРАННЫЙ МЕСЯЦ (листается как календарь)
         // ============================================================
         async function renderProgressPage() {
             if (!lessonsData.length) {
@@ -690,20 +725,16 @@
             const today = new Date();
             const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-            // Заголовок месяца для графиков
             progressMonthLabel.textContent = `${monthNamesFull[currentMonth]} ${currentYear}`;
 
-            // Границы выбранного месяца
             const monthStart = window.allTime ? '0000-01-01' : `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`;
             const monthEnd = window.allTime ? '9999-12-31' : `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(new Date(currentYear, currentMonth + 1, 0).getDate()).padStart(2, '0')}`;
 
-            // Только уроки выбранного месяца
             const monthLessons = lessonsData.filter(l => l.date >= monthStart && l.date <= monthEnd);
 
             const pastLessons = monthLessons.filter(l => l.date <= todayStr && l.topic && l.topic.trim() !== '');
             const hwLessons = pastLessons.filter(l => l.homework && l.homework.trim() !== '');
 
-            // === Собираем все оценки (ДЗ + тесты) за месяц ===
             const hwTasks = hwLessons
                 .filter(l => l.hwScore !== undefined && l.hwScore !== null && l.hwScore !== '')
                 .map(l => ({
@@ -730,7 +761,6 @@
                     source: 'test'
                 }));
 
-            // Объединяем и убираем дубли
             const allTasks = [];
             const usedKeys = new Set();
 
@@ -754,7 +784,6 @@
                 }
             });
 
-            // Сортируем по дате (для графика и тренда)
             allTasks.sort((a, b) => {
                 if (a.date && b.date) return a.date.localeCompare(b.date);
                 if (a.date) return -1;
@@ -764,12 +793,10 @@
 
             const scoredTasks = allTasks.filter(t => t.score !== null && t.score !== undefined);
 
-            // === СРЕДНИЙ БАЛЛ ===
             const avgScore = scoredTasks.length > 0
                 ? Math.round(scoredTasks.reduce((sum, t) => sum + t.score, 0) / scoredTasks.length)
                 : 0;
 
-            // === ТРЕНД ===
             let trendHtml = '';
             let trendClass = 'flat';
             let trendText = '— нет данных';
@@ -786,7 +813,6 @@
                 else { trendClass = 'flat'; trendText = `→ без изменений`; }
             }
 
-            // === ДЗ ВЫПОЛНЕНО ===
             const completedHw = hwLessons.filter(l => {
                 const status = (l.hwStatus || 'pending').toLowerCase();
                 return status.includes('проверен') || status === 'checked' || status === 'done';
@@ -810,7 +836,6 @@
 
             progressStats.innerHTML = statsHTML;
 
-            // === ГРАФИКИ ===
             chartsContainer.innerHTML = `
                 <div class="chart-card">
                     <h3>Выполнение домашних заданий — ${monthNamesFull[currentMonth]} ${currentYear}</h3>
@@ -827,7 +852,6 @@
             const textSecondary = styles.getPropertyValue('--text-secondary').trim();
             const borderColor = styles.getPropertyValue('--border-color').trim();
 
-            // Круговая диаграмма по ДЗ
             const hwCtx = document.getElementById('hwChart').getContext('2d');
             if (charts.hw) charts.hw.destroy();
             charts.hw = new Chart(hwCtx, {
@@ -854,7 +878,6 @@
                 }
             });
 
-            // Линейный график по датам
             const testCtx = document.getElementById('testsChart').getContext('2d');
             if (charts.tests) charts.tests.destroy();
 
@@ -919,13 +942,9 @@
                 }
             });
 
-            // === СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ (за месяц) ===
             renderTopicGroups(scoredTasks);
         }
 
-        // ============================================================
-        //  СИЛЬНЫЕ И СЛАБЫЕ ТЕМЫ
-        // ============================================================
         function renderTopicGroups(scoredTasks) {
             if (!scoredTasks || scoredTasks.length === 0) {
                 topicsWrapper.style.display = 'none';
@@ -977,11 +996,6 @@
             topicsWrapper.style.display = 'block';
         }
 
-        // ============================================================
-        //  ДОМАШКИ:
-        //  — до 5-го числа показываем ещё и прошлый месяц (с 1-го числа)
-        //  — с 5-го числа — только текущий месяц, начиная с 1-го
-        // ============================================================
         function renderHomeworkCards() {
             if (!lessonsData.length) {
                 homeworkCards.innerHTML = '<div class="empty-message">Нет домашних заданий</div>';
@@ -991,13 +1005,10 @@
 
             const today = new Date();
             const y = today.getFullYear();
-            const m = today.getMonth();            // 0..11
+            const m = today.getMonth();            
             const dayOfMonth = today.getDate();
             const todayStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(dayOfMonth).padStart(2, '0')}`;
 
-            // Нижняя граница периода:
-            //  - до 5-го числа — 1-е число ПРОШЛОГО месяца
-            //  - с 5-го числа   — 1-е число ТЕКУЩЕГО месяца
             let monthStart;
             if (dayOfMonth < 5) {
                 const prev = new Date(y, m - 1, 1);
@@ -1011,7 +1022,7 @@
                     l.topic && l.topic.trim() !== '' &&
                     l.homework && l.homework.trim() !== '' &&
                     l.date >= monthStart &&
-                    l.date <= todayStr          // будущие уроки не показываем — домашки по ним ещё нет
+                    l.date <= todayStr
                 )
                 .sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -1075,6 +1086,7 @@
             loginError.textContent = '';
             currentStudentId = id;
             if (!(await loadLessons(id))) { loginError.textContent = 'Нет расписания'; return; }
+            await loadFinance(); // Загружаем статусы оплаты
             loginWrapper.style.display = 'none';
             mainContent.style.display = 'block';
             sidebar.style.display = 'flex';
