@@ -16,17 +16,18 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 .sg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.sg>b{text-align:center}.dc{min-height:70px;background:#f4f6fd;border-radius:10px;padding:6px}.dc.td{outline:2px solid #3567c9}.dc.ot{opacity:.4}.ls{font-size:.78rem;background:#e8ecf8;border-radius:6px;padding:2px 5px;margin-top:3px}
 
 /* Стили для финансов */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
 .stat-card{background:#f4f6fd;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:flex-start;box-shadow:0 2px 8px #38486e0a}
-.stat-val{font-size:1.8rem;font-weight:800;color:#3567c9;margin-top:4px}
+.stat-val{font-size:1.6rem;font-weight:800;color:#3567c9;margin-top:4px}
 .stat-lbl{font-size:0.85rem;color:#657087;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
 .stat-sub{font-size:0.8rem;color:#99a3b5;margin-top:4px}
+
 .ls-fin{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;border-radius:6px;padding:4px 6px;margin-top:4px;cursor:pointer;user-select:none;transition:0.2s}
 .ls-fin.paid{background:#e6f4ea;color:#2f9d68;border:1px solid #b7e1c4}
 .ls-fin.unpaid{background:#fce8e6;color:#d85c5c;border:1px solid #f5c2c0}
-.ls-fin:hover{transform:scale(1.02)}
+.ls-fin:hover{transform:scale(1.02); filter:brightness(0.95)}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 7</small></h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 8</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -96,10 +97,10 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
    </div>
 
    <div id="finApp" style="display:none">
-     <div class="row" style="justify-content:space-between; align-items:flex-start;">
-       <div>
+     <div class="row" style="justify-content:space-between; align-items:flex-start; flex-wrap:nowrap; gap:20px; align-items:stretch;">
+       <div style="flex:1;">
          <h2 style="margin:0">Статистика</h2>
-         <div class="stats-grid" style="margin-top:10px; min-width:600px;">
+         <div class="stats-grid" style="margin-top:10px;">
            <div class="stat-card">
              <div class="stat-lbl">Заработано за месяц</div>
              <div class="stat-val" id="stMonth">0 ₽</div>
@@ -113,7 +114,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
            <div class="stat-card" style="background:#fff4e5;">
              <div class="stat-lbl" style="color:#d98a26">Должны за месяц</div>
              <div class="stat-val" id="stDebt" style="color:#d98a26">0 ₽</div>
-             <div class="stat-sub">неоплаченные уроки</div>
+             <div class="stat-sub">все неоплаченные</div>
            </div>
            <div class="stat-card" style="background:#e6f4ea;">
              <div class="stat-lbl" style="color:#2f9d68">Отложено</div>
@@ -123,19 +124,18 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
          </div>
        </div>
        
-       <div style="background:#f4f6fd; padding:15px; border-radius:14px; min-width:250px;">
-         <h3 style="margin:0 0 10px 0; font-size:1rem;">Настройки цен</h3>
-         <div id="priceSettings"></div>
+       <div style="background:#f4f6fd; padding:15px; border-radius:14px; width:260px; flex-shrink:0;">
+         <h3 style="margin:0 0 10px 0; font-size:1rem;">Цена за урок</h3>
+         <div id="priceSettings" style="max-height:250px; overflow-y:auto;"></div>
        </div>
      </div>
 
-     <div class="row" style="margin-top:20px;">
-       <select id="finSel" onchange="loadFinCalendar(this.value)"></select>
-       <button class="g" onclick="finOff--; loadFinCalendar()">◀</button>
-       <b id="finTitle" style="min-width:150px; text-align:center;"></b>
-       <button class="g" onclick="finOff++; loadFinCalendar()">▶</button>
-       <span style="color:#657087; font-size:0.85rem; margin-left:10px;">Кликните на урок, чтобы отметить оплату</span>
+     <div class="row" style="margin-top:20px; justify-content:center;">
+       <button class="g" onclick="finOff--; renderFinCalendar()">◀</button>
+       <b id="finTitle" style="min-width:150px; text-align:center; font-size:1.1rem;"></b>
+       <button class="g" onclick="finOff++; renderFinCalendar()">▶</button>
      </div>
+     <p style="text-align:center; color:#657087; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;">Кликните на урок, чтобы отметить оплату</p>
      
      <div class="sg" id="finG"></div>
    </div>
@@ -147,7 +147,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 if(sessionStorage.getItem('teacher')!=='1'){document.querySelector('.w').innerHTML='<div class="c"><h2>Доступ закрыт</h2><p>Войдите через <a href="index.html">главную страницу</a> под именем учителя.</p></div>';throw new Error('no access')}
 const $=s=>document.querySelector(s);
 let cfg=JSON.parse(localStorage.getItem('gh')||'{}'),students=[],lessons=[],cur=null;
-let finData={}, finLessonsCache=[], finOff=0;
+let finData={}, finLessonsAll=[], finOff=0;
 const enc=s=>btoa(unescape(encodeURIComponent(s))),dec=s=>decodeURIComponent(escape(atob(s.replace(/\n/g,''))));
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function msg(t){const m=$('#msg');m.textContent=t;m.style.display='block';setTimeout(()=>m.style.display='none',3000)}
@@ -243,14 +243,25 @@ async function loadFinance(){
     $('#finInit').style.display='none'; $('#finApp').style.display='block';
     renderPrices();
     
-    // Заполняем список учеников
-    $('#finSel').innerHTML = '<option value="">— выберите —</option>' + students.filter(s=>s.role!=='teacher').map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+    // Загружаем уроки ВСЕХ учеников для календаря
+    finLessonsAll = [];
+    const activeStudents = students.filter(s=>s.role!=='teacher');
     
-    // Сразу подгружаем данные первого ученика
-    if(students.filter(s=>s.role!=='teacher').length > 0) {
-      $('#finSel').value = students.filter(s=>s.role!=='teacher')[0].id;
-      loadFinCalendar();
-    }
+    // Показываем сообщение о загрузке
+    $('#finG').innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:20px; color:#657087;">Загрузка расписания...</div>';
+    
+    await Promise.all(activeStudents.map(async s => {
+      try {
+        const res = await get('config/'+s.id+'.json');
+        if(res.data) {
+          res.data.forEach(l => {
+            finLessonsAll.push({...l, studentId: s.id, studentName: s.name});
+          });
+        }
+      } catch(e) { console.warn('Не удалось загрузить', s.id); }
+    }));
+    
+    renderFinCalendar();
   } catch(e) { msg('❌ Ошибка загрузки финансов: '+e.message); }
 }
 
@@ -266,11 +277,11 @@ async function initFinance(){
 
 function renderPrices(){
   $('#priceSettings').innerHTML = students.filter(s=>s.role!=='teacher').map(s => `
-    <div class="row" style="margin-bottom:8px; justify-content:space-between; flex-wrap:nowrap;">
-      <span style="font-size:0.9rem; font-weight:600;">${esc(s.name)}</span>
+    <div class="row" style="margin-bottom:6px; justify-content:space-between; flex-wrap:nowrap; align-items:center;">
+      <span style="font-size:0.85rem; font-weight:600;">${esc(s.name)}</span>
       <div style="display:flex; align-items:center; gap:4px;">
-        <input type="number" id="price_${s.id}" value="${finData.prices[s.id] || 0}" style="width:70px; padding:4px; text-align:center;" onchange="updatePrice('${s.id}', this.value)">
-        <span style="font-size:0.85rem; color:#657087;">₽</span>
+        <input type="number" id="price_${s.id}" value="${finData.prices[s.id] || 0}" style="width:65px; padding:4px; text-align:center;" onchange="updatePrice('${s.id}', this.value)">
+        <span style="font-size:0.8rem; color:#657087;">₽</span>
       </div>
     </div>
   `).join('');
@@ -278,7 +289,7 @@ function renderPrices(){
 
 async function updatePrice(id, val){
   finData.prices[id] = Number(val);
-  try { await put('config/finance.json', finData, 'update price'); msg('Цена обновлена'); }
+  try { await put('config/finance.json', finData, 'update price'); msg('Цена обновлена'); renderFinCalendar(); }
   catch(e) { msg('❌ '+e.message); }
 }
 
@@ -287,17 +298,8 @@ async function editSaved(){
   const v = prompt('Сколько отложено за этот месяц?', finData.saved[m] || 0);
   if(v===null) return;
   finData.saved[m] = Number(v);
-  try { await put('config/finance.json', finData, 'update saved'); msg('Сохранено'); loadFinanceStats(finLessonsCache); }
+  try { await put('config/finance.json', finData, 'update saved'); msg('Сохранено'); renderFinCalendar(); }
   catch(e) { msg('❌ '+e.message); }
-}
-
-async function loadFinCalendar(){
-  const id = $('#finSel').value;
-  if(!id) { $('#finG').innerHTML = ''; return; }
-  try {
-    finLessonsCache = (await get('config/'+id+'.json')).data || [];
-    renderFinCalendar();
-  } catch(e) { msg('❌ '+e.message); }
 }
 
 function renderFinCalendar(){
@@ -314,26 +316,24 @@ function renderFinCalendar(){
   
   $('#finTitle').textContent = f.toLocaleDateString('ru-RU',{month:'long',year:'numeric'});
   
-  const id = $('#finSel').value;
-  const price = finData.prices[id] || 0;
-  
   $('#finG').innerHTML = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>`<b>${x}</b>`).join('') + 
   days.map(d => {
     const k = iso(d);
-    const ls = finLessonsCache.filter(l => l.date === k).sort((x,y) => x.start.localeCompare(y.start));
+    const ls = finLessonsAll.filter(l => l.date === k).sort((x,y) => x.studentName.localeCompare(y.studentName));
     return `<div class="dc${k===iso(t)?' td':''}${d.getMonth()!==f.getMonth()?' ot':''}">
       <small>${d.getDate()}</small>
       ${ls.map(l => {
-        const isPaid = finData.paid[id] && finData.paid[id][l.date];
-        return `<div class="ls-fin ${isPaid?'paid':'unpaid'}" onclick="togglePay('${id}', '${l.date}')" title="${esc(l.topic)}">
-          <span>${l.start}</span>
-          <span>${isPaid ? 'Оплачено' : price+' ₽'}</span>
+        const isPaid = finData.paid[l.studentId] && finData.paid[l.studentId][l.date];
+        const price = finData.prices[l.studentId] || 0;
+        return `<div class="ls-fin ${isPaid?'paid':'unpaid'}" onclick="togglePay('${l.studentId}', '${l.date}')" title="${esc(l.topic)}">
+          <b>${esc(l.studentName.split(' ')[0])}</b>
+          <span>${isPaid ? '✅' : price+'₽'}</span>
         </div>`;
       }).join('')}
     </div>`;
   }).join('');
 
-  loadFinanceStats(finLessonsCache);
+  loadFinanceStats();
 }
 
 async function togglePay(id, date){
@@ -345,18 +345,16 @@ async function togglePay(id, date){
   } catch(e) { msg('❌ '+e.message); }
 }
 
-function loadFinanceStats(lessons){
+function loadFinanceStats(){
   const now = new Date();
   const thisMonth = now.toISOString().slice(0,7);
   const thisYear = now.getFullYear().toString();
-  const curId = $('#finSel').value;
-  const price = finData.prices[curId] || 0;
 
   let paidMonth = 0, paidYear = 0, debtMonth = 0;
-  let allStudentsLessons = []; // Для подсчета общей суммы, надо было бы грузить всех, но для простоты считаем только текущего
   
-  lessons.forEach(l => {
-    const isPaid = finData.paid[curId] && finData.paid[curId][l.date];
+  finLessonsAll.forEach(l => {
+    const isPaid = finData.paid[l.studentId] && finData.paid[l.studentId][l.date];
+    const price = finData.prices[l.studentId] || 0;
     const m = l.date.slice(0,7);
     const y = l.date.slice(0,4);
 
@@ -364,7 +362,7 @@ function loadFinanceStats(lessons){
       if(m === thisMonth) paidMonth += price;
       if(y === thisYear) paidYear += price;
     } else {
-      if(m === thisMonth) debtMonth += price;
+      if(m === thisMonth && l.date <= iso(now)) debtMonth += price; // Долг считаем только за прошедшие уроки
     }
   });
 
@@ -379,7 +377,6 @@ function loadFinanceStats(lessons){
   $('#stDebt').textContent = debtMonth + ' ₽';
   $('#stSaved').textContent = saved + ' ₽';
 }
-
 // --- КОНЕЦ БЛОКА ФИНАНСОВ ---
 
 function tab(n){
@@ -388,8 +385,7 @@ function tab(n){
   if(n==6) loadFinance();
 }
 function renderStudents(){
- $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th>Расписание</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':
- `<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
+ $('#stT').innerHTML='<tr><th>Имя</th><th>id</th><th>Пароль</th><th>Расписание</th><th></th></tr>'+students.map((s,i)=>s.role==='teacher'?'':`<tr><td><input value="${esc(s.name)}" onchange="students[${i}].name=this.value;saveSt()"></td><td>${esc(s.id)}</td>
  <td><input value="${esc(s.password)}" onchange="students[${i}].password=this.value;saveSt()"></td>
  <td><input class="t" value="${esc(fmtSch(s))}" onchange="setSch(${i},this.value)"></td>
  <td><button class="g" onclick="preview(${i})">👁 Как ученик</button> <button class="r" onclick="rmStudent(${i})">Удалить</button></td></tr>`).join('')}
