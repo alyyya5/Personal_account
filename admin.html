@@ -22,12 +22,18 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 .stat-lbl{font-size:0.85rem;color:#657087;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
 .stat-sub{font-size:0.8rem;color:#99a3b5;margin-top:4px}
 
-.ls-fin{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;border-radius:6px;padding:4px 6px;margin-top:4px;cursor:pointer;user-select:none;transition:0.2s}
+.ls-fin{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;border-radius:6px;padding:4px 6px;margin-top:4px;cursor:pointer;user-select:none;transition:0.2s; position:relative; gap:5px;}
 .ls-fin.paid{background:#e6f4ea;color:#2f9d68;border:1px solid #b7e1c4}
 .ls-fin.unpaid{background:#fce8e6;color:#d85c5c;border:1px solid #f5c2c0}
 .ls-fin:hover{transform:scale(1.02); filter:brightness(0.95)}
+.ls-fin .btn-del{opacity:0.4; font-size:1.1rem; font-weight:bold; cursor:pointer; margin-left:auto; padding:0 4px;}
+.ls-fin .btn-del:hover{opacity:1; color:#d85c5c;}
+
+.month-res{display:flex; gap:20px; justify-content:center; margin: 15px 0; padding: 10px; background: #eef1fb; border-radius: 10px; border: 1px dashed #cfd6ea;}
+.month-res div{font-weight:700; font-size:1.1rem; color:#3567c9;}
+.month-res div span{font-size:0.85rem; color:#657087; font-weight:500; display:block; text-align:center; text-transform:uppercase; margin-bottom:2px;}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 8</small></h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 9</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -135,7 +141,15 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
        <b id="finTitle" style="min-width:150px; text-align:center; font-size:1.1rem;"></b>
        <button class="g" onclick="finOff++; renderFinCalendar()">▶</button>
      </div>
-     <p style="text-align:center; color:#657087; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;">Кликните на урок, чтобы отметить оплату</p>
+
+     <!-- ПЛАШКА С ИТОГАМИ ЗА ОТКРЫТЫЙ МЕСЯЦ -->
+     <div class="month-res">
+       <div><span>Заработано за месяц</span><b id="mResPaid">0 ₽</b></div>
+       <div><span>Отложено за месяц</span><b id="mResSaved">0 ₽</b></div>
+       <div><span>Долг за месяц</span><b id="mResDebt" style="color:#d98a26;">0 ₽</b></div>
+     </div>
+
+     <p style="text-align:center; color:#657087; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;">Кликните на урок, чтобы отметить оплату. Нажмите ✕, чтобы убрать урок из подсчета.</p>
      
      <div class="sg" id="finG"></div>
    </div>
@@ -240,6 +254,8 @@ async function loadFinance(){
     if(!finData.prices) finData.prices = {};
     if(!finData.paid) finData.paid = {};
     if(!finData.saved) finData.saved = {};
+    if(!finData.skipped) finData.skipped = {}; // { studentId: ["2026-11-25", ...] }
+    
     $('#finInit').style.display='none'; $('#finApp').style.display='block';
     renderPrices();
     
@@ -247,7 +263,6 @@ async function loadFinance(){
     finLessonsAll = [];
     const activeStudents = students.filter(s=>s.role!=='teacher');
     
-    // Показываем сообщение о загрузке
     $('#finG').innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:20px; color:#657087;">Загрузка расписания...</div>';
     
     await Promise.all(activeStudents.map(async s => {
@@ -267,7 +282,7 @@ async function loadFinance(){
 
 async function initFinance(){
   if(!confirm('Создать файл базы финансов?')) return;
-  finData = { prices: {}, paid: {}, saved: {} };
+  finData = { prices: {}, paid: {}, saved: {}, skipped: {} };
   try {
     await put('config/finance.json', finData, 'init finance');
     msg('✅ База создана');
@@ -294,12 +309,23 @@ async function updatePrice(id, val){
 }
 
 async function editSaved(){
-  const m = new Date().toISOString().slice(0,7);
-  const v = prompt('Сколько отложено за этот месяц?', finData.saved[m] || 0);
+  const f = new Date(new Date().getFullYear(), new Date().getMonth() + finOff, 1);
+  const m = f.toISOString().slice(0,7);
+  const v = prompt(`Сколько отложено за ${f.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}?`, finData.saved[m] || 0);
   if(v===null) return;
   finData.saved[m] = Number(v);
   try { await put('config/finance.json', finData, 'update saved'); msg('Сохранено'); renderFinCalendar(); }
   catch(e) { msg('❌ '+e.message); }
+}
+
+async function skipLesson(id, date) {
+  if(!confirm('Удалить этот урок из календаря оплаты? (В основном расписании он останется)')) return;
+  if(!finData.skipped[id]) finData.skipped[id] = [];
+  if(!finData.skipped[id].includes(date)) finData.skipped[id].push(date);
+  try {
+    await put('config/finance.json', finData, 'skip lesson');
+    renderFinCalendar();
+  } catch(e) { msg('❌ '+e.message); }
 }
 
 function renderFinCalendar(){
@@ -319,7 +345,13 @@ function renderFinCalendar(){
   $('#finG').innerHTML = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>`<b>${x}</b>`).join('') + 
   days.map(d => {
     const k = iso(d);
-    const ls = finLessonsAll.filter(l => l.date === k).sort((x,y) => x.studentName.localeCompare(y.studentName));
+    // Исключаем те уроки, которые отмечены как "удаленные" из финансов
+    const ls = finLessonsAll.filter(l => {
+      if(l.date !== k) return false;
+      const isSkipped = finData.skipped[l.studentId] && finData.skipped[l.studentId].includes(l.date);
+      return !isSkipped;
+    }).sort((x,y) => x.studentName.localeCompare(y.studentName));
+
     return `<div class="dc${k===iso(t)?' td':''}${d.getMonth()!==f.getMonth()?' ot':''}">
       <small>${d.getDate()}</small>
       ${ls.map(l => {
@@ -328,6 +360,7 @@ function renderFinCalendar(){
         return `<div class="ls-fin ${isPaid?'paid':'unpaid'}" onclick="togglePay('${l.studentId}', '${l.date}')" title="${esc(l.topic)}">
           <b>${esc(l.studentName.split(' ')[0])}</b>
           <span>${isPaid ? '✅' : price+'₽'}</span>
+          <span class="btn-del" onclick="event.stopPropagation(); skipLesson('${l.studentId}', '${l.date}')" title="Удалить из оплаты">✕</span>
         </div>`;
       }).join('')}
     </div>`;
@@ -341,7 +374,7 @@ async function togglePay(id, date){
   finData.paid[id][date] = !finData.paid[id][date];
   try {
     await put('config/finance.json', finData, 'toggle pay');
-    renderFinCalendar(); // Перерисовываем сразу
+    renderFinCalendar(); 
   } catch(e) { msg('❌ '+e.message); }
 }
 
@@ -350,32 +383,55 @@ function loadFinanceStats(){
   const thisMonth = now.toISOString().slice(0,7);
   const thisYear = now.getFullYear().toString();
 
-  let paidMonth = 0, paidYear = 0, debtMonth = 0;
+  // Статистика за текущий реальный месяц и год (верхние карточки)
+  let paidMonthAll = 0, paidYearAll = 0, debtMonthAll = 0;
   
+  // Статистика за ОТКРЫТЫЙ в календаре месяц (нижняя плашка)
+  let paidMonthView = 0, debtMonthView = 0;
+  
+  const fView = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
+  const viewMonth = fView.toISOString().slice(0,7);
+
   finLessonsAll.forEach(l => {
+    // Пропускаем удаленные уроки
+    const isSkipped = finData.skipped[l.studentId] && finData.skipped[l.studentId].includes(l.date);
+    if(isSkipped) return;
+
     const isPaid = finData.paid[l.studentId] && finData.paid[l.studentId][l.date];
     const price = finData.prices[l.studentId] || 0;
     const m = l.date.slice(0,7);
     const y = l.date.slice(0,4);
 
+    // Общая статистика (текущий месяц)
     if(isPaid) {
-      if(m === thisMonth) paidMonth += price;
-      if(y === thisYear) paidYear += price;
+      if(m === thisMonth) paidMonthAll += price;
+      if(y === thisYear) paidYearAll += price;
     } else {
-      if(m === thisMonth && l.date <= iso(now)) debtMonth += price; // Долг считаем только за прошедшие уроки
+      if(m === thisMonth && l.date <= iso(now)) debtMonthAll += price;
+    }
+
+    // Статистика для выбранного месяца (листалка)
+    if(m === viewMonth) {
+      if(isPaid) paidMonthView += price;
+      else if(l.date <= iso(now)) debtMonthView += price;
     }
   });
 
-  const saved = finData.saved[thisMonth] || 0;
+  const savedThisMonth = finData.saved[thisMonth] || 0;
+  const savedViewMonth = finData.saved[viewMonth] || 0;
 
-  $('#stMonth').textContent = paidMonth + ' ₽';
+  // Верхние карточки
+  $('#stMonth').textContent = paidMonthAll + ' ₽';
   $('#stMonthSub').textContent = `за ${now.toLocaleDateString('ru-RU',{month:'long'})}`;
-  
-  $('#stYear').textContent = paidYear + ' ₽';
+  $('#stYear').textContent = paidYearAll + ' ₽';
   $('#stYearSub').textContent = `за ${thisYear} год`;
-  
-  $('#stDebt').textContent = debtMonth + ' ₽';
-  $('#stSaved').textContent = saved + ' ₽';
+  $('#stDebt').textContent = debtMonthAll + ' ₽';
+  $('#stSaved').textContent = savedThisMonth + ' ₽';
+
+  // Плашка под календарем
+  $('#mResPaid').textContent = paidMonthView + ' ₽';
+  $('#mResSaved').textContent = savedViewMonth + ' ₽';
+  $('#mResDebt').textContent = debtMonthView + ' ₽';
 }
 // --- КОНЕЦ БЛОКА ФИНАНСОВ ---
 
