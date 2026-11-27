@@ -1,5 +1,7 @@
 {
-  "prices": {},
+  "prices": {
+    "valeriya": 600
+  },
   "paid": {},
   "saved": {}
 }
