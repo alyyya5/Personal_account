@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория | Уравнения, Задачи и Формулы</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #0b1a33 0%, #1d2f4a 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: #0b1a33;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-left: 8px solid #2a6fdb;
+        }
+        .card.pink { border-left-color: #ec4899; }
+        .card.green { border-left-color: #06d6a0; }
+        .card.purple { border-left-color: #7c4dff; }
+        .card.orange { border-left-color: #f5a623; }
+        .card.teal { border-left-color: #14b8a6; }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card h2 .badge {
+            background: #2a6fdb;
+            color: white;
+            font-size: 0.95rem;
+            padding: 0 16px;
+            border-radius: 40px;
+            line-height: 2;
+        }
+        .card h2 .badge.pink { background: #ec4899; }
+        .card h2 .badge.green { background: #06d6a0; color: #0b1a33; }
+        .card h2 .badge.purple { background: #7c4dff; }
+        .card h2 .badge.orange { background: #f5a623; color: #0b1a33; }
+        .card h2 .badge.teal { background: #14b8a6; }
+        .card p, .card li { line-height: 1.75; color: #2c3e5a; font-size: 1.02rem; }
+        .card ul, .card ol { margin: 12px 0 8px 22px; }
+        .card li { margin-bottom: 6px; }
+
+        .formula-box {
+            background: #eef4ff;
+            border: 2px solid #2a6fdb;
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin: 14px 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 2;
+        }
+        .note-box {
+            background: #f0f7f0;
+            border-left: 6px solid #06d6a0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+        .note-box strong { color: #059669; }
+        .define-box {
+            background: #fdf2f8;
+            border-left: 6px solid #ec4899;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 14px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .define-box strong { color: #be185d; }
+
+        .section-divider {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            padding: 8px 0 18px;
+            letter-spacing: 6px;
+        }
+        .mini-divider {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7c4dff;
+            padding: 4px 0 8px;
+            letter-spacing: 3px;
+        }
+        .highlight { background: #fff3d6; padding: 2px 6px; border-radius: 6px; }
+
+        @media print {
+            body { background: white; padding: 10px; }
+            .card { box-shadow: none !important; break-inside: avoid; }
+            .section-divider { color: #ccc; }
+        }
+        @media (max-width: 500px) {
+            .card { padding: 16px; }
+            .card h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="section-divider">✦ ТЕОРИЯ ДЛЯ ДОМАШНЕГО ЗАДАНИЯ ✦</div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 1. ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ                          -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ПОКАЗАТЕЛЬНЫЕ УРАВНЕНИЯ ◆</div>
+
+    <div class="card pink">
+        <h2><span class="badge pink">§1</span> Как решать показательные уравнения</h2>
+
+        <p>Главный метод решения — привести обе части к одному основанию.</p>
+
+        <div class="formula-box">
+            Если \(a^{f(x)} = a^{g(x)}\), то \(f(x) = g(x)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Полезные преобразования:</strong>
+            <ul style="margin-top:6px;">
+                <li>Дроби вида \(\frac{1}{16}\) — это \(2^{-4}\), \(\frac{1}{27}\) — это \(3^{-3}\), \(\frac{1}{49}\) — это \(7^{-2}\).</li>
+                <li>Числа типа \(125\) — это \(5^3\), \(81\) — это \(3^4\), \(49\) — это \(7^2\).</li>
+                <li>Если основание — дробь, её можно перевернуть, поменяв знак степени: \(\left(\frac{1}{5}\right)^n = 5^{-n}\).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 2. ЛОГАРИФМИЧЕСКИЕ УРАВНЕНИЯ                        -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ЛОГАРИФМЫ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§2</span> Как решать логарифмические уравнения</h2>
+
+        <div class="formula-box">
+            <strong>Определение логарифма:</strong><br>
+            \(\log_a b = c \quad \Leftrightarrow \quad a^c = b\)
+        </div>
+
+        <div class="note-box">
+            <strong>1. Если логарифмы равны (с одинаковым основанием):</strong><br>
+            \(\log_a f(x) = \log_a g(x) \implies f(x) = g(x)\)<br>
+            <em>При этом аргументы должны быть положительными!</em>
+        </div>
+
+        <div class="note-box">
+            <strong>2. Если дан просто логарифм и число:</strong><br>
+            Используйте определение: подставьте основание в степень числа.<br>
+            <em>Пример: \(\log_4(x-4) = 3 \implies x-4 = 4^3\).</em>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 3. ЗАДАЧИ НА РАБОТУ И ТРУБЫ                         -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ АЛГЕБРА · ТЕКСТОВЫЕ ЗАДАЧИ ◆</div>
+
+    <div class="card orange">
+        <h2><span class="badge orange">§3</span> Задачи на совместную работу</h2>
+
+        <p>Вся работа принимается за <strong>1</strong>. Производительность — это часть работы, выполняемая за 1 единицу времени (час, минуту).</p>
+
+        <div class="formula-box">
+            <strong>Производительность = \(\frac{1}{\text{Время}}\)</strong><br><br>
+            <em>При совместной работе производительности складываются.</em>
+        </div>
+
+        <div class="note-box">
+            <strong>Алгоритм для грядок/заказов:</strong>
+            <ul style="margin-top:6px;">
+                <li>Пусть время одного рабочего \(x\), тогда его производительность \(\frac{1}{x}\).</li>
+                <li>Если вдвоем они работают \(t\) времени, их общая производительность \(\frac{1}{t}\).</li>
+                <li>Уравнение: \(\frac{1}{x} + \frac{1}{y} = \frac{1}{t}\), где \(y\) — время второго.</li>
+            </ul>
+        </div>
+
+        <div class="note-box">
+            <strong>Задачи на трубы (объём воды):</strong><br>
+            Вместо «всей работы» (1) используется объём резервуара.<br>
+            Производительность трубы — это скорость (литров в минуту).<br>
+            Если первая труба пропускает на \(k\) литров меньше, то её скорость \(x\), а второй — \(x + k\).
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 4. ФОРМУЛЫ СОКРАЩЕННОГО УМНОЖЕНИЯ                   -->
+    <!-- ============================================================ -->
+
+    <div class="section-divider">✦ ТЕОРИЯ · ФОРМУЛЫ И СВОЙСТВА ✦</div>
+
+    <div class="mini-divider">◆ АЛГЕБРА · ФСУ ◆</div>
+
+    <div class="card purple">
+        <h2><span class="badge purple">§4</span> Формулы сокращенного умножения</h2>
+
+        <div class="formula-box">
+            <strong>Разность квадратов:</strong><br>
+            \(a^2 - b^2 = (a-b)(a+b)\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Квадрат суммы:</strong><br>
+            \((a+b)^2 = a^2 + 2ab + b^2\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Квадрат разности:</strong><br>
+            \((a-b)^2 = a^2 - 2ab + b^2\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Куб суммы:</strong><br>
+            \((a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Куб разности:</strong><br>
+            \((a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Сумма кубов:</strong><br>
+            \(a^3 + b^3 = (a+b)(a^2 - ab + b^2)\)
+        </div>
+
+        <div class="formula-box">
+            <strong>Разность кубов:</strong><br>
+            \(a^3 - b^3 = (a-b)(a^2 + ab + b^2)\)
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--    ЧАСТЬ 5. СТЕПЕНИ И ЛОГАРИФМЫ (ТЕОРИЯ)                     -->
+    <!-- ============================================================ -->
+
+    <div class="mini-divider">◆ ТЕОРИЯ · СТЕПЕНИ ◆</div>
+
+    <div class="card green">
+        <h2><span class="badge green">§5</span> Свойства степеней</h2>
+
+        <div class="formula-box">
+            <strong>1. Умножение:</strong> \(a^m \cdot a^n = a^{m+n}\)<br><br>
+            <strong>2. Деление:</strong> \(\frac{a^m}{a^n} = a^{m-n}\)<br><br>
+            <strong>3. Степень в степени:</strong> \((a^m)^n = a^{m \cdot n}\)
+        </div>
+    </div>
+
+    <div class="mini-divider">◆ ТЕОРИЯ · ЛОГАРИФМЫ ◆</div>
+
+    <div class="card teal">
+        <h2><span class="badge teal">§6</span> Свойства логарифмов</h2>
+
+        <div class="formula-box">
+            <strong>1. Произведение:</strong> \(\log_a(x \cdot y) = \log_a(x) + \log_a(y)\)
+        </div>
+
+        <div class="formula-box">
+            <strong>2. Частное:</strong> \(\log_a\left(\frac{x}{y}\right) = \log_a(x) - \log_a(y)\)
+        </div>
+
+        <div class="formula-box">
+            <strong>3. Степень:</strong> \(\log_a(x^p) = p \cdot \log_a(x)\)
+        </div>
+
+        <div class="note-box">
+            <strong>Важные следствия:</strong>
+            <ul style="margin-top:6px;">
+                <li>\(\log_a a = 1\)</li>
+                <li>\(\log_a 1 = 0\)</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
