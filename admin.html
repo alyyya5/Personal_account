@@ -33,7 +33,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 .month-res div{font-weight:700; font-size:1.1rem; color:#3567c9; display:flex; flex-direction:column; align-items:center;}
 .month-res div span{font-size:0.85rem; color:#657087; font-weight:500; text-transform:uppercase; margin-bottom:2px;}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 10.1</small></h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 10.2</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -307,11 +307,14 @@ async function updatePrice(id, val){
 }
 
 async function editSaved(){
-  const f = new Date(new Date().getFullYear(), new Date().getMonth() + finOff, 1);
-  const m = f.toISOString().slice(0,7);
-  const v = prompt(`Сколько отложено за ${f.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}?`, finData.saved[m] || 0);
+  const now = new Date();
+  const targetDate = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
+  const viewMonth = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}`;
+  
+  const v = prompt(`Сколько отложено за ${targetDate.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}?`, finData.saved[viewMonth] || 0);
   if(v===null) return;
-  finData.saved[m] = Number(v);
+  
+  finData.saved[viewMonth] = Number(v);
   try { await put('config/finance.json', finData, 'update saved'); msg('Сохранено'); renderFinCalendar(); }
   catch(e) { msg('❌ '+e.message); }
 }
@@ -378,10 +381,10 @@ async function togglePay(id, date){
 function loadFinanceStats(){
   const now = new Date();
   
-  // Определяем месяц и год, который СЕЙЧАС ОТКРЫТ В КАЛЕНДАРЕ
-  const fView = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
-  const viewMonth = fView.toISOString().slice(0,7); // например, '2026-09'
-  const viewYear = fView.getFullYear().toString();  // например, '2026'
+  // Определяем месяц и год, который СЕЙЧАС ОТКРЫТ В КАЛЕНДАРЕ (без ошибок UTC)
+  const targetDate = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
+  const viewMonth = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}`; 
+  const viewYear = targetDate.getFullYear().toString();
 
   let paidMonth = 0, paidYear = 0, debtMonth = 0;
   let savedAllTime = 0;
@@ -397,8 +400,8 @@ function loadFinanceStats(){
 
     const isPaid = finData.paid[l.studentId] && finData.paid[l.studentId][l.date];
     const price = finData.prices[l.studentId] || 0;
-    const m = l.date.slice(0,7);
-    const y = l.date.slice(0,4);
+    const m = l.date.slice(0,7); // YYYY-MM
+    const y = l.date.slice(0,4); // YYYY
 
     // Считаем ИМЕННО ЗА ОТКРЫТЫЙ МЕСЯЦ
     if(isPaid) {
@@ -414,7 +417,7 @@ function loadFinanceStats(){
 
   // Верхние карточки (показывают данные того месяца, который открыт)
   $('#stMonth').textContent = paidMonth + ' ₽';
-  $('#stMonthSub').textContent = `за ${fView.toLocaleDateString('ru-RU',{month:'long'})}`;
+  $('#stMonthSub').textContent = `за ${targetDate.toLocaleDateString('ru-RU',{month:'long'})}`;
   
   $('#stYear').textContent = paidYear + ' ₽';
   $('#stYearSub').textContent = `за ${viewYear} год`;
