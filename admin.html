@@ -33,7 +33,7 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 .month-res div{font-weight:700; font-size:1.1rem; color:#3567c9; display:flex; flex-direction:column; align-items:center;}
 .month-res div span{font-size:0.85rem; color:#657087; font-weight:500; text-transform:uppercase; margin-bottom:2px;}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 10</small></h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 10.1</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -375,59 +375,22 @@ async function togglePay(id, date){
   } catch(e) { msg('❌ '+e.message); }
 }
 
-  function loadFinanceStats(){
-    const now = new Date();
-    
-    // Определяем месяц и год, который СЕЙЧАС ОТКРЫТ В КАЛЕНДАРЕ
-    const fView = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
-    const viewMonth = fView.toISOString().slice(0,7); // например, '2026-09'
-    const viewYear = fView.getFullYear().toString();  // например, '2026'
+function loadFinanceStats(){
+  const now = new Date();
   
-    let paidMonth = 0, paidYear = 0, debtMonth = 0;
-    let savedAllTime = 0;
-  
-    // Считаем общую отложенную сумму за всё время
-    for(let k in finData.saved) {
-      savedAllTime += Number(finData.saved[k] || 0);
-    }
-  
-    finLessonsAll.forEach(l => {
-      const isSkipped = finData.skipped[l.studentId] && finData.skipped[l.studentId].includes(l.date);
-      if(isSkipped) return;
-  
-      const isPaid = finData.paid[l.studentId] && finData.paid[l.studentId][l.date];
-      const price = finData.prices[l.studentId] || 0;
-      const m = l.date.slice(0,7);
-      const y = l.date.slice(0,4);
-  
-      // Считаем ИМЕННО ЗА ОТКРЫТЫЙ МЕСЯЦ
-      if(isPaid) {
-        if(m === viewMonth) paidMonth += price;
-        if(y === viewYear) paidYear += price;
-      } else {
-        // Долг считаем только для прошедших дат открытого месяца
-        if(m === viewMonth && l.date <= iso(now)) debtMonth += price;
-      }
-    });
-  
-    const savedView = finData.saved[viewMonth] || 0;
-  
-    // Верхние карточки (показывают данные того месяца, который открыт)
-    $('#stMonth').textContent = paidMonth + ' ₽';
-    $('#stMonthSub').textContent = `за ${fView.toLocaleDateString('ru-RU',{month:'long'})}`;
-    
-    $('#stYear').textContent = paidYear + ' ₽';
-    $('#stYearSub').textContent = `за ${viewYear} год`;
-    
-    $('#stDebt').textContent = debtMonth + ' ₽';
-    
-    $('#stSavedAll').textContent = savedAllTime + ' ₽';
-  
-    // Плашка под календарём (дублирует для удобства)
-    $('#mResPaid').textContent = paidMonth + ' ₽';
-    $('#mResSaved').textContent = savedView + ' ₽';
-    $('#mResDebt').textContent = debtMonth + ' ₽';
+  // Определяем месяц и год, который СЕЙЧАС ОТКРЫТ В КАЛЕНДАРЕ
+  const fView = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
+  const viewMonth = fView.toISOString().slice(0,7); // например, '2026-09'
+  const viewYear = fView.getFullYear().toString();  // например, '2026'
+
+  let paidMonth = 0, paidYear = 0, debtMonth = 0;
+  let savedAllTime = 0;
+
+  // Считаем общую отложенную сумму за всё время
+  for(let k in finData.saved) {
+    savedAllTime += Number(finData.saved[k] || 0);
   }
+
   finLessonsAll.forEach(l => {
     const isSkipped = finData.skipped[l.studentId] && finData.skipped[l.studentId].includes(l.date);
     if(isSkipped) return;
@@ -437,36 +400,33 @@ async function togglePay(id, date){
     const m = l.date.slice(0,7);
     const y = l.date.slice(0,4);
 
-    // Считаем верхние карточки (только текущий реальный месяц)
+    // Считаем ИМЕННО ЗА ОТКРЫТЫЙ МЕСЯЦ
     if(isPaid) {
-      if(m === thisMonth) topPaidMonth += price;
-      if(y === thisYear) topPaidYear += price;
+      if(m === viewMonth) paidMonth += price;
+      if(y === viewYear) paidYear += price;
     } else {
-      if(m === thisMonth && l.date <= iso(now)) topDebt += price;
-    }
-
-    // Считаем плашку (месяц, который открыт в календаре)
-    if(m === viewMonth) {
-      if(isPaid) viewPaid += price;
-      else if(l.date <= iso(now)) viewDebt += price;
+      // Долг считаем только для прошедших дат открытого месяца
+      if(m === viewMonth && l.date <= iso(now)) debtMonth += price;
     }
   });
 
-  // Верхние карточки
-  $('#stMonth').textContent = topPaidMonth + ' ₽';
-  $('#stMonthSub').textContent = `за ${now.toLocaleDateString('ru-RU',{month:'long'})}`;
+  const savedView = finData.saved[viewMonth] || 0;
+
+  // Верхние карточки (показывают данные того месяца, который открыт)
+  $('#stMonth').textContent = paidMonth + ' ₽';
+  $('#stMonthSub').textContent = `за ${fView.toLocaleDateString('ru-RU',{month:'long'})}`;
   
-  $('#stYear').textContent = topPaidYear + ' ₽';
-  $('#stYearSub').textContent = `за ${thisYear} год`;
+  $('#stYear').textContent = paidYear + ' ₽';
+  $('#stYearSub').textContent = `за ${viewYear} год`;
   
-  $('#stDebt').textContent = topDebt + ' ₽';
+  $('#stDebt').textContent = debtMonth + ' ₽';
   
   $('#stSavedAll').textContent = savedAllTime + ' ₽';
 
-  // Плашка под календарём
-  $('#mResPaid').textContent = viewPaid + ' ₽';
-  $('#mResSaved').textContent = (finData.saved[viewMonth] || 0) + ' ₽';
-  $('#mResDebt').textContent = viewDebt + ' ₽';
+  // Плашка под календарём (дублирует для удобства)
+  $('#mResPaid').textContent = paidMonth + ' ₽';
+  $('#mResSaved').textContent = savedView + ' ₽';
+  $('#mResDebt').textContent = debtMonth + ' ₽';
 }
 // --- КОНЕЦ БЛОКА ФИНАНСОВ ---
 
