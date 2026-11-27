@@ -6,7 +6,11 @@
     "sanie": 600,
     "yaromir": 800
   },
-  "paid": {},
+  "paid": {
+    "valeriya": {
+      "2026-09-09": true
+    }
+  },
   "saved": {
     "2026-11": 15000
   }
