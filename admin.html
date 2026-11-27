@@ -28,12 +28,8 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
 .ls-fin:hover{transform:scale(1.02); filter:brightness(0.95)}
 .ls-fin .btn-del{opacity:0.4; font-size:1.1rem; font-weight:bold; cursor:pointer; margin-left:auto; padding:0 4px;}
 .ls-fin .btn-del:hover{opacity:1; color:#d85c5c;}
-
-.month-res{display:flex; gap:20px; justify-content:center; margin: 15px 0; padding: 10px; background: #eef1fb; border-radius: 10px; border: 1px dashed #cfd6ea;}
-.month-res div{font-weight:700; font-size:1.1rem; color:#3567c9;}
-.month-res div span{font-size:0.85rem; color:#657087; font-weight:500; display:block; text-align:center; text-transform:uppercase; margin-bottom:2px;}
 </style></head><body><div class="w">
-<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 9.1</small></h1>
+<h1>🛠 Панель учителя <small style="font-size:.5em;opacity:.6">версия 9.2</small></h1>
 
 <div class="c" id="setup">
  <h2>Подключение к GitHub</h2>
@@ -105,12 +101,12 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
    <div id="finApp" style="display:none">
      <div class="row" style="justify-content:space-between; align-items:flex-start; flex-wrap:nowrap; gap:20px; align-items:stretch;">
        <div style="flex:1;">
-         <h2 style="margin:0">Статистика</h2>
+         <h2 style="margin:0">Статистика <span id="statMonthLabel" style="font-size:0.8rem; font-weight:normal; color:#657087;"></span></h2>
          <div class="stats-grid" style="margin-top:10px;">
            <div class="stat-card">
-             <div class="stat-lbl">Заработано за месяц</div>
+             <div class="stat-lbl">Заработано</div>
              <div class="stat-val" id="stMonth">0 ₽</div>
-             <div class="stat-sub" id="stMonthSub">в этом месяце</div>
+             <div class="stat-sub" id="stMonthSub">за этот месяц</div>
            </div>
            <div class="stat-card">
              <div class="stat-lbl">Заработано за год</div>
@@ -118,12 +114,12 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
              <div class="stat-sub" id="stYearSub">в этом году</div>
            </div>
            <div class="stat-card" style="background:#fff4e5;">
-             <div class="stat-lbl" style="color:#d98a26">Должны за месяц</div>
+             <div class="stat-lbl" style="color:#d98a26">Должны</div>
              <div class="stat-val" id="stDebt" style="color:#d98a26">0 ₽</div>
-             <div class="stat-sub">все неоплаченные</div>
+             <div class="stat-sub">неоплаченные за месяц</div>
            </div>
            <div class="stat-card" style="background:#e6f4ea;">
-             <div class="stat-lbl" style="color:#2f9d68">Отложено (за тек. месяц)</div>
+             <div class="stat-lbl" style="color:#2f9d68">Отложено</div>
              <div class="stat-val" id="stSaved" style="color:#2f9d68">0 ₽</div>
              <button class="g" style="padding:4px 8px; font-size:0.75rem; margin-top:6px;" onclick="editSaved()">Изменить</button>
            </div>
@@ -140,13 +136,6 @@ td input,td select{width:100%;min-width:90px}.t{min-width:260px}
        <button class="g" onclick="finOff--; renderFinCalendar()">◀</button>
        <b id="finTitle" style="min-width:150px; text-align:center; font-size:1.1rem;"></b>
        <button class="g" onclick="finOff++; renderFinCalendar()">▶</button>
-     </div>
-
-     <!-- ПЛАШКА С ИТОГАМИ ЗА ОТКРЫТЫЙ МЕСЯЦ -->
-     <div class="month-res">
-       <div><span>Заработано за месяц</span><b id="mResPaid">0 ₽</b></div>
-       <div><span>Отложено за месяц</span><b id="mResSaved">0 ₽</b> <button class="g" style="padding:2px 6px; font-size:0.65rem; margin-left:5px;" onclick="editSaved()">✎</button></div>
-       <div><span>Долг за месяц</span><b id="mResDebt" style="color:#d98a26;">0 ₽</b></div>
      </div>
 
      <p style="text-align:center; color:#657087; font-size:0.85rem; margin-top:-5px; margin-bottom:10px;">Кликните на урок, чтобы отметить оплату. Нажмите ✕, чтобы убрать урок из подсчета.</p>
@@ -259,10 +248,8 @@ async function loadFinance(){
     $('#finInit').style.display='none'; $('#finApp').style.display='block';
     renderPrices();
     
-    // Загружаем уроки ВСЕХ учеников для календаря
     finLessonsAll = [];
     const activeStudents = students.filter(s=>s.role!=='teacher');
-    
     $('#finG').innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:20px; color:#657087;">Загрузка расписания...</div>';
     
     await Promise.all(activeStudents.map(async s => {
@@ -379,14 +366,12 @@ async function togglePay(id, date){
 
 function loadFinanceStats(){
   const now = new Date();
-  const thisMonth = now.toISOString().slice(0,7);
-  const thisYear = now.getFullYear().toString();
-
-  let paidMonthAll = 0, paidYearAll = 0, debtMonthAll = 0;
-  let paidMonthView = 0, debtMonthView = 0;
-  
+  // Определяем месяц и год, который сейчас открыт в календаре
   const fView = new Date(now.getFullYear(), now.getMonth() + finOff, 1);
-  const viewMonth = fView.toISOString().slice(0,7);
+  const viewMonth = fView.toISOString().slice(0,7); // '2026-11'
+  const viewYear = fView.getFullYear().toString();
+
+  let paidMonth = 0, paidYear = 0, debtMonth = 0;
 
   finLessonsAll.forEach(l => {
     const isSkipped = finData.skipped[l.studentId] && finData.skipped[l.studentId].includes(l.date);
@@ -398,33 +383,28 @@ function loadFinanceStats(){
     const y = l.date.slice(0,4);
 
     if(isPaid) {
-      if(m === thisMonth) paidMonthAll += price;
-      if(y === thisYear) paidYearAll += price;
+      if(m === viewMonth) paidMonth += price;
+      if(y === viewYear) paidYear += price;
     } else {
-      if(m === thisMonth && l.date <= iso(now)) debtMonthAll += price;
-    }
-
-    if(m === viewMonth) {
-      if(isPaid) paidMonthView += price;
-      else if(l.date <= iso(now)) debtMonthView += price;
+      // Долг считаем только для прошедших дат открытого месяца
+      if(m === viewMonth && l.date <= iso(now)) debtMonth += price;
     }
   });
 
-  const savedThisMonth = finData.saved[thisMonth] || 0;
-  const savedViewMonth = finData.saved[viewMonth] || 0;
+  const savedView = finData.saved[viewMonth] || 0;
 
-  // Верхние карточки
-  $('#stMonth').textContent = paidMonthAll + ' ₽';
-  $('#stMonthSub').textContent = `за ${now.toLocaleDateString('ru-RU',{month:'long'})}`;
-  $('#stYear').textContent = paidYearAll + ' ₽';
-  $('#stYearSub').textContent = `за ${thisYear} год`;
-  $('#stDebt').textContent = debtMonthAll + ' ₽';
-  $('#stSaved').textContent = savedThisMonth + ' ₽';
-
-  // Плашка под календарем (за открытый месяц)
-  $('#mResPaid').textContent = paidMonthView + ' ₽';
-  $('#mResSaved').textContent = savedViewMonth + ' ₽';
-  $('#mResDebt').textContent = debtMonthView + ' ₽';
+  // Выводим данные в карточки
+  $('#statMonthLabel').textContent = `(${fView.toLocaleDateString('ru-RU',{month:'long', year:'numeric'})})`;
+  
+  $('#stMonth').textContent = paidMonth + ' ₽';
+  $('#stMonthSub').textContent = `за ${fView.toLocaleDateString('ru-RU',{month:'long'})}`;
+  
+  $('#stYear').textContent = paidYear + ' ₽';
+  $('#stYearSub').textContent = `за ${viewYear} год`;
+  
+  $('#stDebt').textContent = debtMonth + ' ₽';
+  
+  $('#stSaved').textContent = savedView + ' ₽';
 }
 // --- КОНЕЦ БЛОКА ФИНАНСОВ ---
 
