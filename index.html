@@ -107,7 +107,7 @@
         .top-bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 26px; flex-wrap: wrap; }
         .welcome-block { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
         .welcome-block h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; width: 100%; }
+        .welcome-block p { margin-top: 7px; color: var(--text-secondary); font-size: 0.98rem; width: 100%; white-space: pre-line;}
         .page { display: none; }
         .page.active { display: block; }
         .section-title { margin-bottom: 20px; font-size: 1.35rem; font-weight: 800; }
@@ -571,7 +571,7 @@
                 homework: { title: 'Домашние задания', subtitle: 'Здесь находятся задания после уроков' },
                 materials: { title: 'Материалы', subtitle: 'Все полезные материалы для занятий' },
                 progress: { title: 'Мой прогресс', subtitle: 'Посмотри, как у тебя всё получается!' },
-                parents: { title: 'Оплата занятий', subtitle: 'Информация об оплате уроков. Статус может обновляться с небольшой задержкой. Если перевод уже был, но урок не отмечен — пришлите чек, мы быстро всё поправим' }
+                parents: { title: 'Оплата занятий', subtitle: 'Информация об оплате уроков. Статус может обновляться с небольшой задержкой.\nЕсли перевод уже был, но урок не отмечен — пришлите чек, мы быстро всё поправим' }
             };
 
             if (page === 'schedule') {
